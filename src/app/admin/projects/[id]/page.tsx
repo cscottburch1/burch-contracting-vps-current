@@ -1,22 +1,32 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { Section } from '@/components/ui/Section';
-import { Button } from '@/components/ui/Button';
-import { Icon } from '@/components/ui/Icon';
-import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Icon from '@/components/ui/Icon';
+import { use } from 'react';
 
 interface Project {
   id: number;
   customer_id: number;
-  title: string;
+  customer_name: string;
+  customer_email: string;
+  project_name: string;
+  project_type: string;
   description: string;
-  status: 'pending' | 'active' | 'completed' | 'cancelled';
-  budget: number;
+  status: 'scheduled' | 'in_progress' | 'on_hold' | 'completed' | 'cancelled';
+  completion_percentage: number;
   start_date: string;
-  end_date: string;
+  estimated_completion_date: string;
+  actual_completion_date: string;
+  street_address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  estimated_budget: number;
+  actual_cost: number;
+  notes: string;
+  created_at: string;
 }
 
 interface ProjectUpdate {
