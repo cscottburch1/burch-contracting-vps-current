@@ -47,10 +47,13 @@ interface Document {
   created_at: string;
 }
 
-export default function ProjectManagementPage() {
+export default function ProjectManagementPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const params = useParams();
-  const projectId = params.id as string;
+  const [projectId, setProjectId] = useState<string>('');
+
+  useEffect(() => {
+    params.then(p => setProjectId(p.id));
+  }, [params]);
 
   const [project, setProject] = useState<Project | null>(null);
   const [updates, setUpdates] = useState<ProjectUpdate[]>([]);
