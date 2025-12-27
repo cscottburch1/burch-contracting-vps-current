@@ -35,11 +35,16 @@ export default function CustomerDetailPage() {
 
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [documents, setDocuments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadCategory, setUploadCategory] = useState('general');
+  const [uploadDescription, setUploadDescription] = useState('');
   const [editForm, setEditForm] = useState({
     name: '',
     email: '',
@@ -62,6 +67,7 @@ export default function CustomerDetailPage() {
   useEffect(() => {
     if (authenticated && customerId) {
       fetchCustomerDetails();
+      fetchDocuments();
     }
   }, [authenticated, customerId]);
 
@@ -152,6 +158,89 @@ export default function CustomerDetailPage() {
     } finally {
       setShowDeleteConfirm(false);
     }
+  };
+
+  const fetchDocuments = async () => {
+    try {
+      const response = await fetch(`/api/admin/documents?customer_id=${customerId}`, {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setDocuments(data.documents || []);
+      }
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  };
+
+  const handleUploadDocument = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadFile) return;
+
+    try {
+      const formData = new FormData();
+      formData.append('file', uploadFile);
+      formData.append('customer_id', customerId);
+      formData.append('category', uploadCategory);
+      formData.append('description', uploadDescription);
+
+      const response = await fetch('/api/admin/documents', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+
+      if (response.ok) {
+        alert('Document uploaded successfully!');
+        setShowUploadModal(false);
+        setUploadFile(null);
+        setUploadCategory('general');
+        setUploadDescription('');
+        fetchDocuments();
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to upload document');
+      }
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      alert('Failed to upload document');
+    }
+  };
+
+  const handleDeleteDocument = async (docId: number) => {
+    if (!confirm('Are you sure you want to delete this document?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/documents/${docId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        alert('Document deleted successfully');
+        fetchDocuments();
+      } else {
+        alert('Failed to delete document');
+      }
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      alert('Failed to delete document');
+    }
+  };
+
+  const getFileIcon = (fileType: string) => {
+    if (fileType.includes('pdf')) return 'FileText';
+    if (fileType.includes('image')) return 'Image';
+    if (fileType.includes('word') || fileType.includes('document')) return 'FileText';
+    if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'FileSpreadsheet';
+    return 'File';
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
   const handleCreateProject = async (e: React.FormEvent) => {
@@ -349,6 +438,53 @@ export default function CustomerDetailPage() {
                     {formatCurrency(projects.reduce((sum, p) => sum + (p.budget || 0), 0))}
                   </span>
                 </div>
+              </div>
+            </Card>
+
+            {/* Documents */}
+            <Card>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Documents</h3>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowUploadModal(true)}
+                >
+                  <Icon name="Upload" size={14} className="mr-1" />
+                  Upload
+                </Button>
+              </div>
+              <div className="space-y-2">
+                {documents.length === 0 ? (
+                  <p className="text-sm text-gray-500 text-center py-4">No documents uploaded</p>
+                ) : (
+                  documents.map((doc) => (
+                    <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <Icon name={getFileIcon(doc.file_type)} size={20} className="text-blue-600 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <a 
+                            href={`/uploads/${doc.filename}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-gray-900 hover:text-blue-600 block truncate"
+                          >
+                            {doc.original_name}
+                          </a>
+                          <p className="text-xs text-gray-500">
+                            {formatFileSize(doc.file_size)} • {formatDate(doc.created_at)}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteDocument(doc.id)}
+                        className="text-red-600 hover:text-red-700 p-1 flex-shrink-0"
+                      >
+                        <Icon name="Trash2" size={16} />
+                      </button>
+                    </div>
+                  ))
+                )}
               </div>
             </Card>
           </div>
@@ -564,6 +700,74 @@ export default function CustomerDetailPage() {
                   Delete Customer
                 </Button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Upload Document Modal */}
+      {showUploadModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Upload Document</h2>
+                <button
+                  onClick={() => setShowUploadModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="X" size={24} />
+                </button>
+              </div>
+
+              <form onSubmit={handleUploadDocument} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">File *</label>
+                  <input
+                    type="file"
+                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                    accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.txt"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Max 10MB. PDF, Images, Word, Excel accepted.</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                  <select
+                    value={uploadCategory}
+                    onChange={(e) => setUploadCategory(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="general">General</option>
+                    <option value="contract">Contract</option>
+                    <option value="invoice">Invoice</option>
+                    <option value="permit">Permit</option>
+                    <option value="photo">Photo</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
+                    value={uploadDescription}
+                    onChange={(e) => setUploadDescription(e.target.value)}
+                    rows={3}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Optional description..."
+                  />
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <Button type="button" variant="outline" onClick={() => setShowUploadModal(false)} className="flex-1">
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="primary" className="flex-1">
+                    Upload
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
