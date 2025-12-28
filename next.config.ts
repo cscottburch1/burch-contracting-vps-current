@@ -18,9 +18,17 @@ const nextConfig: NextConfig = {
   // Optimize production build
   poweredByHeader: false,
   
-  // Optimize CSS
+  // Remove console logs in production and optimize packages
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+  
+  // Optimize CSS and package imports
   experimental: {
     optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
   },
   
   // Headers for caching

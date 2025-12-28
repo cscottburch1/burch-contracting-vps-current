@@ -89,10 +89,29 @@ export default function RootLayout({
             strategy="lazyOnload"
           />
         )}
-        {/* Tidio Live Chat Widget */}
+        {/* Tidio Live Chat Widget - Load only after user interaction */}
         <Script
-          src="//code.tidio.co/burchcontracting.js"
-          strategy="lazyOnload"
+          id="tidio-loader"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              let tidioLoaded = false;
+              function loadTidio() {
+                if (tidioLoaded) return;
+                tidioLoaded = true;
+                const script = document.createElement('script');
+                script.src = '//code.tidio.co/burchcontracting.js';
+                script.async = true;
+                document.body.appendChild(script);
+              }
+              // Load on any interaction
+              ['scroll', 'mousemove', 'touchstart', 'click'].forEach(event => {
+                window.addEventListener(event, loadTidio, { once: true, passive: true });
+              });
+              // Fallback: load after 5 seconds
+              setTimeout(loadTidio, 5000);
+            `
+          }}
         />
       </body>
     </html>
