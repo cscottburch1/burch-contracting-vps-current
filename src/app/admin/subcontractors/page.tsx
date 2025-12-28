@@ -56,10 +56,35 @@ export default function SubcontractorsManagementPage() {
           {error && <p className="text-red-600">Error: {error}</p>}
           {!loading && subcontractors.length > 0 && (
             <div className="mt-4">
-              <p className="font-semibold">Count: {subcontractors.length}</p>
-              <pre className="mt-2 bg-gray-100 p-2 text-xs overflow-auto max-h-40">
-                {JSON.stringify(subcontractors[0], null, 2)}
-              </pre>
+              <p className="font-semibold mb-4">Count: {subcontractors.length}</p>
+              <table className="w-full">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Email</th>
+                    <th className="px-4 py-2 text-left">Phone</th>
+                    <th className="px-4 py-2 text-left">Status</th>
+                    <th className="px-4 py-2 text-left">Specialties</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {subcontractors.map((sub) => (
+                    <tr key={sub.id} className="border-b">
+                      <td className="px-4 py-2">{sub.company_name || sub.name}</td>
+                      <td className="px-4 py-2">{sub.email}</td>
+                      <td className="px-4 py-2">{sub.phone}</td>
+                      <td className="px-4 py-2">{sub.status}</td>
+                      <td className="px-4 py-2">
+                        {sub.specialties && sub.specialties.length > 0 ? (
+                          <span>{sub.specialties.slice(0, 2).join(', ')}</span>
+                        ) : (
+                          <span className="text-gray-400">None</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
           <button
