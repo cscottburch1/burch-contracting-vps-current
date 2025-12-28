@@ -123,6 +123,11 @@ export async function PATCH(
       values.push(body.rating);
     }
 
+    if (body.business_type !== undefined) {
+      updates.push('business_type = ?');
+      values.push(body.business_type);
+    }
+
     if (body.total_projects !== undefined) {
       updates.push('total_projects = ?');
       values.push(body.total_projects);

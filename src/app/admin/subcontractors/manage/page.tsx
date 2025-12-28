@@ -19,7 +19,21 @@ interface Subcontractor {
   license_number: string;
   status: string;
   admin_notes: string;
+  rating: number;
+  total_projects: number;
+  business_type: string;
   created_at: string;
+}
+
+interface SubcontractorProject {
+  id: number;
+  title: string;
+  status: string;
+  start_date: string;
+  end_date?: string;
+  role: string;
+  amount_quoted: number;
+  amount_paid: number;
 }
 
 const SPECIALTIES = ['Plumbing', 'Electrical', 'HVAC', 'Carpentry', 'Painting', 'Roofing', 'Flooring', 'Drywall', 'Concrete', 'Landscaping'];
@@ -36,6 +50,9 @@ export default function SubcontractorsCRUD() {
   const [success, setSuccess] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSubForDetails, setSelectedSubForDetails] = useState<Subcontractor | null>(null);
+  const [subProjects, setSubProjects] = useState<SubcontractorProject[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(false);
 
   const [formData, setFormData] = useState({
     company_name: '',
@@ -51,7 +68,9 @@ export default function SubcontractorsCRUD() {
     insurance_info: '',
     license_number: '',
     status: 'pending',
-    admin_notes: ''
+    admin_notes: '',
+    rating: 0,
+    business_type: 'llc'
   });
 
   useEffect(() => {
@@ -114,7 +133,9 @@ export default function SubcontractorsCRUD() {
       insurance_info: '',
       license_number: '',
       status: 'pending',
-      admin_notes: ''
+      admin_notes: '',
+      rating: 0,
+      business_type: 'llc'
     });
     setEditingId(null);
     setShowForm(false);
@@ -162,7 +183,9 @@ export default function SubcontractorsCRUD() {
       insurance_info: sub.insurance_info || '',
       license_number: sub.license_number || '',
       status: sub.status,
-      admin_notes: sub.admin_notes || ''
+      admin_notes: sub.admin_notes || '',
+      rating: sub.rating || 0,
+      business_type: sub.business_type || 'llc'
     });
     setEditingId(sub.id);
     setShowForm(true);
@@ -192,6 +215,39 @@ export default function SubcontractorsCRUD() {
         ? prev.specialties.filter(s => s !== specialty)
         : [...prev.specialties, specialty]
     }));
+  };
+
+  const loadSubcontractorProjects = async (subId: number) => {
+    setLoadingProjects(true);
+    try {
+      const res = await fetch(`/api/admin/subcontractors/${subId}/projects`);
+      if (res.ok) {
+        const data = await res.json();
+        setSubProjects(data.projects || []);
+      }
+    } catch (err) {
+      console.error('Failed to load projects');
+    } finally {
+      setLoadingProjects(false);
+    }
+  };
+
+  const viewDetails = (sub: Subcontractor) => {
+    setSelectedSubForDetails(sub);
+    loadSubcontractorProjects(sub.id);
+  };
+
+  const renderStars = (rating: number) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[1, 2, 3, 4, 5].map(star => (
+          <span key={star} className={star <= rating ? 'text-yellow-400 text-xl' : 'text-gray-300 text-xl'}>
+            ★
+          </span>
+        ))}
+        <span className="ml-2 text-sm text-gray-600">({rating.toFixed(1)})</span>
+      </div>
+    );
   };
 
   const getStatusColor = (status: string) => {
@@ -395,7 +451,34 @@ export default function SubcontractorsCRUD() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Business Type</label>
+                  <select
+                    value={formData.business_type}
+                    onChange={(e) => setFormData({ ...formData, business_type: e.target.value })}
+                    className="w-full border rounded-lg px-4 py-2"
+                  >
+                    <option value="sole_proprietor">Sole Proprietor</option>
+                    <option value="llc">LLC</option>
+                    <option value="corporation">Corporation</option>
+                    <option value="partnership">Partnership</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Rating (0-5)</label>
+                  <input
+                    type="number"
+                    value={formData.rating}
+                    onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) || 0 })}
+                    className="w-full border rounded-lg px-4 py-2"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                  />
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-2">Status</label>
                   <select
@@ -484,6 +567,14 @@ export default function SubcontractorsCRUD() {
                       <span>📞 {sub.phone}</span>
                       {sub.years_experience > 0 && <span>⏱️ {sub.years_experience} years exp</span>}
                     </div>
+                    <div className="mt-2">
+                      {renderStars(Number(sub.rating) || 0)}
+                    </div>
+                    {sub.total_projects > 0 && (
+                      <div className="mt-2 text-sm text-gray-600">
+                        📊 {sub.total_projects} project{sub.total_projects !== 1 ? 's' : ''} completed
+                      </div>
+                    )}
                     {sub.specialties && sub.specialties.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {sub.specialties.map(spec => (
@@ -501,6 +592,12 @@ export default function SubcontractorsCRUD() {
                   </div>
 
                   <div className="flex gap-2 ml-4">
+                    <button
+                      onClick={() => viewDetails(sub)}
+                      className="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition"
+                    >
+                      Details
+                    </button>
                     <button
                       onClick={() => handleEdit(sub)}
                       className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
@@ -533,6 +630,128 @@ export default function SubcontractorsCRUD() {
             )}
           </div>
         </div>
+
+        {/* Details Modal */}
+        {selectedSubForDetails && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900">{selectedSubForDetails.company_name}</h2>
+                    <p className="text-gray-600 mt-1">{selectedSubForDetails.contact_name}</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedSubForDetails(null);
+                      setSubProjects([]);
+                    }}
+                    className="text-gray-400 hover:text-gray-600 text-2xl"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6">
+                {/* Rating and Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-600 mb-2">Overall Rating</div>
+                    {renderStars(Number(selectedSubForDetails.rating) || 0)}
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-600 mb-2">Total Projects</div>
+                    <div className="text-3xl font-bold text-gray-900">{selectedSubForDetails.total_projects || 0}</div>
+                  </div>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-600 mb-2">Years Experience</div>
+                    <div className="text-3xl font-bold text-gray-900">{selectedSubForDetails.years_experience || 0}</div>
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                  <h3 className="font-bold text-lg mb-3">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div><strong>Email:</strong> {selectedSubForDetails.email}</div>
+                    <div><strong>Phone:</strong> {selectedSubForDetails.phone}</div>
+                    <div><strong>Address:</strong> {selectedSubForDetails.address}</div>
+                    <div><strong>City/State/Zip:</strong> {selectedSubForDetails.city}, {selectedSubForDetails.state} {selectedSubForDetails.zip_code}</div>
+                  </div>
+                </div>
+
+                {/* Business Details */}
+                <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                  <h3 className="font-bold text-lg mb-3">Business Details</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div><strong>Business Type:</strong> {selectedSubForDetails.business_type?.replace('_', ' ').toUpperCase() || 'N/A'}</div>
+                    <div><strong>License #:</strong> {selectedSubForDetails.license_number || 'N/A'}</div>
+                    <div className="md:col-span-2"><strong>Insurance:</strong> {selectedSubForDetails.insurance_info || 'N/A'}</div>
+                  </div>
+                </div>
+
+                {/* Specialties */}
+                {selectedSubForDetails.specialties && selectedSubForDetails.specialties.length > 0 && (
+                  <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                    <h3 className="font-bold text-lg mb-3">Specialties</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedSubForDetails.specialties.map(spec => (
+                        <span key={spec} className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-semibold">
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Admin Notes */}
+                {selectedSubForDetails.admin_notes && (
+                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-6">
+                    <h3 className="font-bold text-lg mb-2">Admin Notes</h3>
+                    <p className="text-sm">{selectedSubForDetails.admin_notes}</p>
+                  </div>
+                )}
+
+                {/* Project History */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-bold text-lg mb-3">Project History</h3>
+                  {loadingProjects ? (
+                    <p className="text-center text-gray-500 py-4">Loading projects...</p>
+                  ) : subProjects.length === 0 ? (
+                    <p className="text-center text-gray-500 py-4">No projects assigned yet</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {subProjects.map(project => (
+                        <div key={project.id} className="bg-white p-4 rounded-lg border border-gray-200">
+                          <div className="flex justify-between items-start mb-2">
+                            <div>
+                              <h4 className="font-semibold text-gray-900">{project.title}</h4>
+                              <p className="text-sm text-gray-600">{project.role}</p>
+                            </div>
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                              project.status === 'completed' ? 'bg-green-100 text-green-800' :
+                              project.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {project.status.replace('_', ' ').toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                            <div>Started: {new Date(project.start_date).toLocaleDateString()}</div>
+                            {project.end_date && <div>Ended: {new Date(project.end_date).toLocaleDateString()}</div>}
+                            <div>Quoted: ${project.amount_quoted?.toLocaleString() || 0}</div>
+                            <div>Paid: ${project.amount_paid?.toLocaleString() || 0}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
