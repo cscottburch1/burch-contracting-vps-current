@@ -12,6 +12,7 @@ export default function SubcontractorsManagementPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [pageError, setPageError] = useState<string | null>(null);
   
   // Filters
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -56,7 +57,9 @@ export default function SubcontractorsManagementPage() {
       const data = await res.json();
       setSubcontractors(data.subcontractors || []);
     } catch (err) {
+      console.error('Load subcontractors error:', err);
       setError('Failed to load subcontractors');
+      setPageError(`Failed to load subcontractors: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
@@ -158,6 +161,23 @@ export default function SubcontractorsManagementPage() {
   const allSpecialties = Array.from(
     new Set(subcontractors.flatMap(s => s.specialties || []))
   ).sort();
+
+  if (pageError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg max-w-2xl">
+          <h2 className="text-xl font-bold mb-2">Page Error</h2>
+          <p>{pageError}</p>
+          <button
+            onClick={() => { setPageError(null); loadSubcontractors(); }}
+            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
