@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Subcontractor } from '@/types/subcontractor';
 
+const SPECIALTIES = ['Plumbing', 'Electrical', 'HVAC', 'Carpentry', 'Painting', 'Roofing', 'Flooring', 'Drywall', 'Concrete', 'Landscaping'];
+const STATUSES = ['pending', 'approved', 'active', 'suspended', 'rejected'];
+
 export default function SubcontractorsManagementPage() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -24,6 +27,26 @@ export default function SubcontractorsManagementPage() {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [adminNotes, setAdminNotes] = useState('');
+  const [showAddEditForm, setShowAddEditForm] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [formData, setFormData] = useState({
+    company_name: '',
+    contact_name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: 'SC',
+    zip_code: '',
+    specialties: [] as string[],
+    years_experience: 0,
+    insurance_info: '',
+    license_number: '',
+    status: 'pending',
+    admin_notes: '',
+    rating: 0,
+    business_type: 'llc'
+  });
 
   useEffect(() => {
     checkAuth();
@@ -143,6 +166,115 @@ export default function SubcontractorsManagementPage() {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      company_name: '',
+      contact_name: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: 'SC',
+      zip_code: '',
+      specialties: [],
+      years_experience: 0,
+      insurance_info: '',
+      license_number: '',
+      status: 'pending',
+      admin_notes: '',
+      rating: 0,
+      business_type: 'llc'
+    });
+    setEditingId(null);
+    setShowAddEditForm(false);
+  };
+
+  const handleAddNew = () => {
+    resetForm();
+    setShowAddEditForm(true);
+  };
+
+  const handleEdit = (sub: Subcontractor) => {
+    setFormData({
+      company_name: sub.company_name,
+      contact_name: sub.contact_name,
+      email: sub.email,
+      phone: sub.phone,
+      address: sub.address || '',
+      city: sub.city || '',
+      state: sub.state || 'SC',
+      zip_code: sub.zip || '',
+      specialties: sub.specialties || [],
+      years_experience: sub.years_in_business || 0,
+      insurance_info: sub.insurance_provider || '',
+      license_number: sub.license_number || '',
+      status: sub.status,
+      admin_notes: sub.admin_notes || '',
+      rating: Number(sub.rating) || 0,
+      business_type: sub.business_type || 'llc'
+    });
+    setEditingId(sub.id);
+    setShowAddEditForm(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const url = editingId ? `/api/admin/subcontractors/${editingId}` : '/api/admin/subcontractors';
+      const method = editingId ? 'PATCH' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setSuccess(editingId ? 'Subcontractor updated!' : 'Subcontractor created!');
+        resetForm();
+        loadSubcontractors();
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Failed to save subcontractor');
+        setTimeout(() => setError(''), 3000);
+      }
+    } catch (err) {
+      setError('Failed to save subcontractor');
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  const handleDelete = async (id: number, name: string) => {
+    if (!confirm(`Delete ${name}? This cannot be undone.`)) return;
+
+    try {
+      const res = await fetch(`/api/admin/subcontractors/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setSuccess('Subcontractor deleted!');
+        loadSubcontractors();
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        setError('Failed to delete subcontractor');
+        setTimeout(() => setError(''), 3000);
+      }
+    } catch (err) {
+      setError('Failed to delete subcontractor');
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  const toggleSpecialty = (specialty: string) => {
+    setFormData(prev => ({
+      ...prev,
+      specialties: prev.specialties.includes(specialty)
+        ? prev.specialties.filter(s => s !== specialty)
+        : [...prev.specialties, specialty]
+    }));
+  };
+
   const getStatusBadge = (status: string) => {
     const colors: any = {
       pending: 'bg-yellow-100 text-yellow-800',
@@ -233,7 +365,7 @@ export default function SubcontractorsManagementPage() {
           </div>
           <div className="flex gap-4">
             <button
-              onClick={() => router.push('/admin/subcontractors/manage')}
+              onClick={handleAddNew}
               className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
             >
               + Add New Subcontractor
@@ -349,6 +481,228 @@ export default function SubcontractorsManagementPage() {
           </div>
         </div>
 
+        {/* Add/Edit Form */}
+        {showAddEditForm && (
+          <div className="bg-white rounded-lg shadow p-6 mb-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">{editingId ? 'Edit Subcontractor' : 'Add New Subcontractor'}</h2>
+              <button
+                onClick={resetForm}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Company Name *</label>
+                  <input
+                    type="text"
+                    value={formData.company_name}
+                    onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Contact Name *</label>
+                  <input
+                    type="text"
+                    value={formData.contact_name}
+                    onChange={(e) => setFormData({ ...formData, contact_name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Email *</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Phone *</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">Address</label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">City</label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">State</label>
+                  <input
+                    type="text"
+                    value={formData.state}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    maxLength={2}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Zip Code</label>
+                  <input
+                    type="text"
+                    value={formData.zip_code}
+                    onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  />
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">Specialties</label>
+                <div className="flex flex-wrap gap-2">
+                  {SPECIALTIES.map(spec => (
+                    <button
+                      key={spec}
+                      type="button"
+                      onClick={() => toggleSpecialty(spec)}
+                      className={`px-4 py-2 rounded-lg border transition ${
+                        formData.specialties.includes(spec)
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-white text-gray-700 border-gray-300 hover:border-blue-600'
+                      }`}
+                    >
+                      {spec}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Years Experience</label>
+                  <input
+                    type="number"
+                    value={formData.years_experience}
+                    onChange={(e) => setFormData({ ...formData, years_experience: parseInt(e.target.value) || 0 })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    min="0"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">License Number</label>
+                  <input
+                    type="text"
+                    value={formData.license_number}
+                    onChange={(e) => setFormData({ ...formData, license_number: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  />
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">Insurance Info</label>
+                <textarea
+                  value={formData.insurance_info}
+                  onChange={(e) => setFormData({ ...formData, insurance_info: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  rows={2}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Business Type</label>
+                  <select
+                    value={formData.business_type}
+                    onChange={(e) => setFormData({ ...formData, business_type: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  >
+                    <option value="sole_proprietor">Sole Proprietor</option>
+                    <option value="llc">LLC</option>
+                    <option value="corporation">Corporation</option>
+                    <option value="partnership">Partnership</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Rating (0-5)</label>
+                  <input
+                    type="number"
+                    value={formData.rating}
+                    onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) || 0 })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  >
+                    {STATUSES.map(status => (
+                      <option key={status} value={status}>{status.charAt(0).toUpperCase() + status.slice(1)}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">Admin Notes</label>
+                <textarea
+                  value={formData.admin_notes}
+                  onChange={(e) => setFormData({ ...formData, admin_notes: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  rows={3}
+                />
+              </div>
+
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  {editingId ? 'Update' : 'Create'}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
         {/* Subcontractors Table */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="overflow-x-auto">
@@ -460,6 +814,20 @@ export default function SubcontractorsManagementPage() {
                             className="text-gray-600 hover:text-gray-800 text-sm font-semibold"
                           >
                             {sub.admin_notes ? 'Edit Notes' : 'Add Notes'}
+                          </button>
+                          
+                          <button
+                            onClick={() => handleEdit(sub)}
+                            className="text-purple-600 hover:text-purple-800 text-sm font-semibold"
+                          >
+                            Edit
+                          </button>
+                          
+                          <button
+                            onClick={() => handleDelete(sub.id, sub.company_name)}
+                            className="text-red-600 hover:text-red-800 text-sm font-semibold"
+                          >
+                            Delete
                           </button>
                         </div>
                       </td>
