@@ -88,6 +88,28 @@ export default function AdminToolsPage() {
               </p>
             </div>
 
+            {isOwner && (
+              <a
+                href="/api/admin/diagnose-projects"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-yellow-400"
+              >
+                <div className="flex items-center mb-3">
+                  <span className="text-4xl mr-3">🔍</span>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                    Diagnose Projects
+                  </h3>
+                </div>
+                <p className="text-gray-600">
+                  Check projects table structure and find orphaned projects
+                </p>
+                <div className="mt-4 text-sm font-semibold text-yellow-600">
+                  Owner Only - Opens in new tab →
+                </div>
+              </a>
+            )}
+
             <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
               <div className="flex items-center mb-3">
                 <span className="text-4xl mr-3">🔧</span>
