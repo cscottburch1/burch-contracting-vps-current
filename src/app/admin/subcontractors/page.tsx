@@ -187,6 +187,10 @@ export default function SubcontractorsManagementPage() {
     );
   }
 
+  console.log('Subcontractors:', subcontractors.length);
+  console.log('Filtered:', filteredSubcontractors.length);
+  console.log('All specialties:', allSpecialties);
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
