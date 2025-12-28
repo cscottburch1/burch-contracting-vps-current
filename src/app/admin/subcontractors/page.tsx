@@ -32,9 +32,12 @@ export default function SubcontractorsManagementPage() {
   }, []);
 
   useEffect(() => {
-    filterSubcontractors();
+    // Defer filtering until data is loaded
+    if (!loading && subcontractors.length >= 0) {
+      filterSubcontractors();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subcontractors, statusFilter, searchQuery, specialtyFilter]);
+  }, [subcontractors, statusFilter, searchQuery, specialtyFilter, loading]);
 
   const checkAuth = async () => {
     try {
