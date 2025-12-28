@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
     // Insert new customer
     const result = await query(
-      'INSERT INTO customers (name, email, phone, address, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
+      'INSERT INTO customers (name, email, phone, address, password_hash, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
       [name, email, phone, address || null, hashedPassword]
     );
 
