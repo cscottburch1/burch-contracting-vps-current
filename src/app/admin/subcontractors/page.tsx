@@ -181,6 +181,21 @@ export default function SubcontractorsManagementPage() {
     }
   }, [subcontractors]);
 
+  const stats = React.useMemo(() => {
+    try {
+      return {
+        total: subcontractors.length,
+        pending: subcontractors.filter(s => s && s.status === 'pending').length,
+        active: subcontractors.filter(s => s && s.status === 'active').length,
+        approved: subcontractors.filter(s => s && s.status === 'approved').length,
+        suspended: subcontractors.filter(s => s && s.status === 'suspended').length,
+      };
+    } catch (err) {
+      console.error('Error computing stats:', err);
+      return { total: 0, pending: 0, active: 0, approved: 0, suspended: 0 };
+    }
+  }, [subcontractors]);
+
   if (pageError) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -251,31 +266,31 @@ export default function SubcontractorsManagementPage() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl font-bold text-blue-600">
-              {subcontractors.length}
+              {stats.total}
             </div>
             <div className="text-gray-600">Total</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl font-bold text-yellow-600">
-              {subcontractors.filter(s => s.status === 'pending').length}
+              {stats.pending}
             </div>
             <div className="text-gray-600">Pending</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl font-bold text-green-600">
-              {subcontractors.filter(s => s.status === 'active').length}
+              {stats.active}
             </div>
             <div className="text-gray-600">Active</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl font-bold text-blue-600">
-              {subcontractors.filter(s => s.status === 'approved').length}
+              {stats.approved}
             </div>
             <div className="text-gray-600">Approved</div>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <div className="text-3xl font-bold text-red-600">
-              {subcontractors.filter(s => s.status === 'suspended').length}
+              {stats.suspended}
             </div>
             <div className="text-gray-600">Suspended</div>
           </div>
