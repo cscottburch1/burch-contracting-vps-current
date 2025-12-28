@@ -77,10 +77,10 @@ export default function SubcontractorsManagementPage() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(s => 
-        s.company_name.toLowerCase().includes(query) ||
-        s.contact_name.toLowerCase().includes(query) ||
-        s.email.toLowerCase().includes(query) ||
-        s.phone.includes(query)
+        (s.company_name && s.company_name.toLowerCase().includes(query)) ||
+        (s.contact_name && s.contact_name.toLowerCase().includes(query)) ||
+        (s.email && s.email.toLowerCase().includes(query)) ||
+        (s.phone && s.phone.includes(query))
       );
     }
 
