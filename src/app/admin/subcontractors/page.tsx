@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 interface Subcontractor {
   id: number;
   name: string;
+  company_name?: string;
+  contact_name?: string;
   email: string;
   phone: string;
   specialties?: string[];
