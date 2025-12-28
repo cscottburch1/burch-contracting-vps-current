@@ -404,9 +404,9 @@ export default function SubcontractorsManagementPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center">
-                          {getRatingStars(Math.round(sub.rating || 0))}
+                          {getRatingStars(Math.round(Number(sub.rating) || 0))}
                           <span className="ml-2 text-sm text-gray-600">
-                            ({(sub.rating || 0).toFixed(1)})
+                            ({(Number(sub.rating) || 0).toFixed(1)})
                           </span>
                         </div>
                       </td>
@@ -527,7 +527,7 @@ export default function SubcontractorsManagementPage() {
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Performance</h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-gray-900">{(selectedSubcontractor.rating || 0).toFixed(1)}</div>
+                        <div className="text-2xl font-bold text-gray-900">{(Number(selectedSubcontractor.rating) || 0).toFixed(1)}</div>
                         <div className="text-sm text-gray-600">Average Rating</div>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-lg">
