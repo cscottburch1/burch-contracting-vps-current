@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Subcontractor } from '@/types/subcontractor';
 
@@ -158,9 +158,20 @@ export default function SubcontractorsManagementPage() {
     return stars;
   };
 
-  const allSpecialties = Array.from(
-    new Set(subcontractors.flatMap(s => s.specialties || []))
-  ).sort();
+  const allSpecialties = React.useMemo(() => {
+    try {
+      return Array.from(
+        new Set(
+          subcontractors
+            .flatMap(s => Array.isArray(s.specialties) ? s.specialties : [])
+            .filter(Boolean)
+        )
+      ).sort();
+    } catch (err) {
+      console.error('Error computing specialties:', err);
+      return [];
+    }
+  }, [subcontractors]);
 
   if (pageError) {
     return (
