@@ -846,11 +846,11 @@ export default function SubcontractorsManagementPage() {
               <div className="p-8">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-3xl font-bold text-gray-900">{selectedSubcontractor.company_name || 'N/A'}</h2>
-                  <button 
+                  <button
                     onClick={() => setShowDetailsModal(false)}
                     className="text-gray-500 hover:text-gray-700 text-3xl"
                   >
-                    ├ù
+                    ×
                   </button>
                 </div>
 
@@ -919,9 +919,51 @@ export default function SubcontractorsManagementPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Documents Section */}
+                  <div className="md:col-span-2">
+                    <h3 className="text-lg font-bold mb-3 text-gray-900">📎 Documents</h3>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
+                          <div className="text-2xl mb-1">📄</div>
+                          <div className="text-xs font-semibold text-gray-700">License</div>
+                          <div className="text-xs text-gray-500 mt-1">Upload</div>
+                        </div>
+                        <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
+                          <div className="text-2xl mb-1">🛡️</div>
+                          <div className="text-xs font-semibold text-gray-700">Insurance</div>
+                          <div className="text-xs text-gray-500 mt-1">Upload</div>
+                        </div>
+                        <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
+                          <div className="text-2xl mb-1">📋</div>
+                          <div className="text-xs font-semibold text-gray-700">W-9</div>
+                          <div className="text-xs text-gray-500 mt-1">Upload</div>
+                        </div>
+                        <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
+                          <div className="text-2xl mb-1">⭐</div>
+                          <div className="text-xs font-semibold text-gray-700">Certificates</div>
+                          <div className="text-xs text-gray-500 mt-1">Upload</div>
+                        </div>
+                      </div>
+                      <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center gap-2">
+                        <span>📤</span>
+                        Upload Documents
+                      </button>
+                      <div className="mt-3 text-xs text-gray-600 text-center">
+                        Supported: PDF, JPG, PNG, DOC, DOCX (Max 10MB)
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-end gap-3">
+                  <button
+                    onClick={() => handleEdit(selectedSubcontractor)}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Edit Details
+                  </button>
                   <button
                     onClick={() => setShowDetailsModal(false)}
                     className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition"

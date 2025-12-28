@@ -21,15 +21,28 @@ export async function POST(
     }
 
     const result = await query(
-      `INSERT INTO projects (customer_id, title, description, budget, start_date, end_date, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [id, title, description, budget || null, start_date || null, end_date || null, status || 'pending']
+      `INSERT INTO projects (
+        customer_id, 
+        project_name, 
+        project_type,
+        description,
+        start_date,
+        estimated_completion_date,
+        total_cost,
+        status,
+        completion_percentage,
+        created_at
+      ) VALUES (?, ?, 'General', ?, ?, ?, ?, ?, 0, NOW())`,
+      [id, title, description, start_date || null, end_date || null, budget || null, status || 'scheduled']
     );
 
     const projectId = (result as any).insertId;
     const project = await query('SELECT * FROM projects WHERE id = ?', [projectId]);
 
-    return NextResponse.json({ project: project[0] });
+    return NextResponse.json({ 
+      project: project[0],
+      message: 'Project created and automatically linked to customer - will appear in Project Tracker and Customer Portal'
+    });
   } catch (error) {
     console.error('Error creating project:', error);
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
