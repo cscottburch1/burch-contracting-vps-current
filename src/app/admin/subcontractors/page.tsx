@@ -66,32 +66,37 @@ export default function SubcontractorsManagementPage() {
   };
 
   const filterSubcontractors = () => {
-    let filtered = [...subcontractors];
+    try {
+      let filtered = [...subcontractors];
 
-    // Status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(s => s.status === statusFilter);
+      // Status filter
+      if (statusFilter !== 'all') {
+        filtered = filtered.filter(s => s.status === statusFilter);
+      }
+
+      // Search filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        filtered = filtered.filter(s => 
+          (s.company_name && s.company_name.toLowerCase().includes(query)) ||
+          (s.contact_name && s.contact_name.toLowerCase().includes(query)) ||
+          (s.email && s.email.toLowerCase().includes(query)) ||
+          (s.phone && s.phone.includes(query))
+        );
+      }
+
+      // Specialty filter
+      if (specialtyFilter !== 'all') {
+        filtered = filtered.filter(s => 
+          s.specialties && Array.isArray(s.specialties) && s.specialties.includes(specialtyFilter)
+        );
+      }
+
+      setFilteredSubcontractors(filtered);
+    } catch (err) {
+      console.error('Filter error:', err);
+      setPageError(`Filtering error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
-
-    // Search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(s => 
-        (s.company_name && s.company_name.toLowerCase().includes(query)) ||
-        (s.contact_name && s.contact_name.toLowerCase().includes(query)) ||
-        (s.email && s.email.toLowerCase().includes(query)) ||
-        (s.phone && s.phone.includes(query))
-      );
-    }
-
-    // Specialty filter
-    if (specialtyFilter !== 'all') {
-      filtered = filtered.filter(s => 
-        s.specialties && s.specialties.includes(specialtyFilter)
-      );
-    }
-
-    setFilteredSubcontractors(filtered);
   };
 
   const updateStatus = async (id: number, newStatus: string) => {
@@ -391,7 +396,7 @@ export default function SubcontractorsManagementPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-gray-900">
-                        {sub.total_projects}
+                        {sub.total_projects || 0}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-2">
