@@ -33,9 +33,10 @@ export default function SubcontractorsManagementPage() {
       const response = await fetch('/api/admin/subcontractors');
       if (!response.ok) throw new Error('Failed to load');
       const data = await response.json();
-      setSubcontractors(data);
-      setStatus(`loaded ${data.length} subcontractors`);
-      console.log('Loaded subcontractors:', data.length);
+      const subs = data.subcontractors || [];
+      setSubcontractors(subs);
+      setStatus(`loaded ${subs.length} subcontractors`);
+      console.log('Loaded subcontractors:', subs.length);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error loading');
       setStatus('error');
