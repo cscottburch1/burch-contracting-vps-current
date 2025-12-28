@@ -457,7 +457,7 @@ export default function SubcontractorsManagementPage() {
             <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8">
               <div className="p-8">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-3xl font-bold text-gray-900">{selectedSubcontractor.company_name}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">{selectedSubcontractor.company_name || 'N/A'}</h2>
                   <button 
                     onClick={() => setShowDetailsModal(false)}
                     className="text-gray-500 hover:text-gray-700 text-3xl"
@@ -470,9 +470,9 @@ export default function SubcontractorsManagementPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Contact Information</h3>
                     <div className="space-y-2 text-gray-700">
-                      <p><strong>Contact:</strong> {selectedSubcontractor.contact_name}</p>
-                      <p><strong>Email:</strong> {selectedSubcontractor.email}</p>
-                      <p><strong>Phone:</strong> {selectedSubcontractor.phone}</p>
+                      <p><strong>Contact:</strong> {selectedSubcontractor.contact_name || 'N/A'}</p>
+                      <p><strong>Email:</strong> {selectedSubcontractor.email || 'N/A'}</p>
+                      <p><strong>Phone:</strong> {selectedSubcontractor.phone || 'N/A'}</p>
                       <p><strong>Address:</strong> {selectedSubcontractor.address || 'N/A'}</p>
                       {selectedSubcontractor.city && (
                         <p><strong>City:</strong> {selectedSubcontractor.city}, {selectedSubcontractor.state} {selectedSubcontractor.zip}</p>
@@ -483,10 +483,10 @@ export default function SubcontractorsManagementPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Business Details</h3>
                     <div className="space-y-2 text-gray-700">
-                      <p><strong>Business Type:</strong> {selectedSubcontractor.business_type.replace('_', ' ')}</p>
+                      <p><strong>Business Type:</strong> {selectedSubcontractor.business_type ? selectedSubcontractor.business_type.replace('_', ' ') : 'N/A'}</p>
                       <p><strong>Years in Business:</strong> {selectedSubcontractor.years_in_business || 'N/A'}</p>
-                      <p><strong>License #:</strong> {selectedSubcontractor.license_number}</p>
-                      <p><strong>Insurance:</strong> {selectedSubcontractor.insurance_provider}</p>
+                      <p><strong>License #:</strong> {selectedSubcontractor.license_number || 'N/A'}</p>
+                      <p><strong>Insurance:</strong> {selectedSubcontractor.insurance_provider || 'N/A'}</p>
                       <p><strong>Insurance Expires:</strong> {selectedSubcontractor.insurance_expiry ? new Date(selectedSubcontractor.insurance_expiry).toLocaleDateString() : 'N/A'}</p>
                       <p><strong>W9 Submitted:</strong> {selectedSubcontractor.w9_submitted ? 'Yes' : 'No'}</p>
                     </div>
@@ -495,7 +495,7 @@ export default function SubcontractorsManagementPage() {
                   <div className="md:col-span-2">
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Specialties</h3>
                     <div className="flex flex-wrap gap-2">
-                      {selectedSubcontractor.specialties && selectedSubcontractor.specialties.map((spec, idx) => (
+                      {Array.isArray(selectedSubcontractor.specialties) && selectedSubcontractor.specialties.map((spec, idx) => (
                         <span key={idx} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg font-semibold">
                           {spec}
                         </span>
@@ -507,11 +507,11 @@ export default function SubcontractorsManagementPage() {
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Performance</h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-gray-900">{selectedSubcontractor.rating.toFixed(1)}</div>
+                        <div className="text-2xl font-bold text-gray-900">{(selectedSubcontractor.rating || 0).toFixed(1)}</div>
                         <div className="text-sm text-gray-600">Average Rating</div>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-gray-900">{selectedSubcontractor.total_projects}</div>
+                        <div className="text-2xl font-bold text-gray-900">{selectedSubcontractor.total_projects || 0}</div>
                         <div className="text-sm text-gray-600">Total Projects</div>
                       </div>
                       <div className="bg-gray-50 p-4 rounded-lg">
