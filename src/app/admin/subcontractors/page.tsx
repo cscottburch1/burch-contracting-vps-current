@@ -242,7 +242,7 @@ export default function SubcontractorsManagementPage() {
               onClick={() => router.push('/admin/dashboard')}
               className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition"
             >
-              ΓåÉ Back to Dashboard
+              ← Back to Dashboard
             </button>
           </div>
         </div>
