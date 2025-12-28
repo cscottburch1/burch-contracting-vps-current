@@ -328,14 +328,14 @@ export default function SubcontractorsManagementPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-1">
-                          {sub.specialties.slice(0, 3).map((spec, idx) => (
+                          {sub.specialties && sub.specialties.slice(0, 3).map((spec, idx) => (
                             <span key={idx} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                               {spec}
                             </span>
                           ))}
-                          {sub.specialties.length > 3 && (
+                          {sub.specialties && sub.specialties.length > 3 && (
                             <span className="text-xs text-gray-600">
-                              +{sub.specialties.length - 3}
+                              +{(sub.specialties?.length || 0) - 3}
                             </span>
                           )}
                         </div>
@@ -458,7 +458,7 @@ export default function SubcontractorsManagementPage() {
                   <div className="md:col-span-2">
                     <h3 className="text-lg font-bold mb-3 text-gray-900">Specialties</h3>
                     <div className="flex flex-wrap gap-2">
-                      {selectedSubcontractor.specialties.map((spec, idx) => (
+                      {selectedSubcontractor.specialties && selectedSubcontractor.specialties.map((spec, idx) => (
                         <span key={idx} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg font-semibold">
                           {spec}
                         </span>
