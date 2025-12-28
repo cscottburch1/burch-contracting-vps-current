@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Read SQL file
-    const sqlPath = path.join(process.cwd(), 'database', 'projects.sql');
+    const sqlPath = path.join(process.cwd(), 'database', 'project_tracker.sql');
     const sqlContent = fs.readFileSync(sqlPath, 'utf8');
 
     // Split into statements and execute
