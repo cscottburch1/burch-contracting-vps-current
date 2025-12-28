@@ -22,6 +22,17 @@ export default function AdminCustomersPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    password: ''
+  });
+  const [formError, setFormError] = useState('');
+  const [formSuccess, setFormSuccess] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -72,6 +83,40 @@ export default function AdminCustomersPage() {
     });
   };
 
+  const handleAddCustomer = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError('');
+    setFormSuccess('');
+    setSubmitting(true);
+
+    try {
+      const response = await fetch('/api/admin/customers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create customer');
+      }
+
+      setFormSuccess('Customer added successfully!');
+      setFormData({ name: '', email: '', phone: '', address: '', password: '' });
+      fetchCustomers();
+      
+      setTimeout(() => {
+        setShowAddModal(false);
+        setFormSuccess('');
+      }, 2000);
+    } catch (error: any) {
+      setFormError(error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   if (!authenticated || loading) {
     return (
       <Section padding="lg">
@@ -91,6 +136,10 @@ export default function AdminCustomersPage() {
           <p className="text-gray-600 mt-2">Manage portal customers and their projects</p>
         </div>
         <div className="flex gap-3">
+          <Button variant="primary" onClick={() => setShowAddModal(true)}>
+            <Icon name="UserPlus" size={16} className="mr-2" />
+            Add Customer
+          </Button>
           <Button variant="outline" href="/admin/crm">
             <Icon name="Users" size={16} className="mr-2" />
             View Leads
@@ -215,6 +264,141 @@ export default function AdminCustomersPage() {
           </table>
         </div>
       </Card>
+
+      {/* Add Customer Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900">Add New Customer</h2>
+                <button
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setFormError('');
+                    setFormSuccess('');
+                    setFormData({ name: '', email: '', phone: '', address: '', password: '' });
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="X" size={24} />
+                </button>
+              </div>
+            </div>
+
+            <form onSubmit={handleAddCustomer} className="p-6">
+              {formError && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                  {formError}
+                </div>
+              )}
+              
+              {formSuccess && (
+                <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                  {formSuccess}
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="john@example.com"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Phone <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="(864) 123-4567"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Password <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Minimum 6 characters"
+                    minLength={6}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Address
+                </label>
+                <textarea
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Street address, city, state, zip"
+                  rows={3}
+                />
+              </div>
+
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setFormError('');
+                    setFormSuccess('');
+                    setFormData({ name: '', email: '', phone: '', address: '', password: '' });
+                  }}
+                  className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                  disabled={submitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? 'Adding...' : 'Add Customer'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
