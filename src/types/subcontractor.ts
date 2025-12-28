@@ -17,7 +17,7 @@ export interface Subcontractor {
   insurance_expiry?: Date;
   
   // Specialties
-  specialties: string[];
+  specialties?: string[];
   
   // Status and ratings
   status: 'pending' | 'approved' | 'active' | 'suspended' | 'rejected';

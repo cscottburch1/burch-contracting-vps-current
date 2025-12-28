@@ -27,10 +27,12 @@ export default function SubcontractorsManagementPage() {
   useEffect(() => {
     checkAuth();
     loadSubcontractors();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     filterSubcontractors();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subcontractors, statusFilter, searchQuery, specialtyFilter]);
 
   const checkAuth = async () => {
