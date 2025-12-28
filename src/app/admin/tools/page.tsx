@@ -110,6 +110,26 @@ export default function AdminToolsPage() {
               </a>
             )}
 
+            {isOwner && (
+              <a
+                href="/admin/tools/fix-projects"
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-red-400"
+              >
+                <div className="flex items-center mb-3">
+                  <span className="text-4xl mr-3">🔧</span>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                    Fix Projects Schema
+                  </h3>
+                </div>
+                <p className="text-gray-600">
+                  Backup old table and create new projects table with correct schema
+                </p>
+                <div className="mt-4 text-sm font-semibold text-red-600">
+                  Owner Only - Click to fix →
+                </div>
+              </a>
+            )}
+
             <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
               <div className="flex items-center mb-3">
                 <span className="text-4xl mr-3">🔧</span>
