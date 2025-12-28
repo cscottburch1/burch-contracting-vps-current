@@ -344,13 +344,13 @@ export default function SubcontractorsManagementPage() {
                   filteredSubcontractors.map((sub) => (
                     <tr key={sub.id} className="border-b hover:bg-gray-50">
                       <td className="px-6 py-4">
-                        <div className="font-semibold text-gray-900">{sub.company_name}</div>
-                        <div className="text-sm text-gray-600">{sub.license_number}</div>
+                        <div className="font-semibold text-gray-900">{sub.company_name || 'N/A'}</div>
+                        <div className="text-sm text-gray-600">{sub.license_number || ''}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-gray-900">{sub.contact_name}</div>
-                        <div className="text-sm text-gray-600">{sub.email}</div>
-                        <div className="text-sm text-gray-600">{sub.phone}</div>
+                        <div className="text-gray-900">{sub.contact_name || 'N/A'}</div>
+                        <div className="text-sm text-gray-600">{sub.email || 'N/A'}</div>
+                        <div className="text-sm text-gray-600">{sub.phone || 'N/A'}</div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-1">
@@ -373,9 +373,9 @@ export default function SubcontractorsManagementPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center">
-                          {getRatingStars(Math.round(sub.rating))}
+                          {getRatingStars(Math.round(sub.rating || 0))}
                           <span className="ml-2 text-sm text-gray-600">
-                            ({sub.rating.toFixed(1)})
+                            ({(sub.rating || 0).toFixed(1)})
                           </span>
                         </div>
                       </td>
