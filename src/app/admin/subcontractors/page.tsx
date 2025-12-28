@@ -25,6 +25,7 @@ export default function SubcontractorsManagementPage() {
   // Modal states
   const [selectedSubcontractor, setSelectedSubcontractor] = useState<Subcontractor | null>(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [adminNotes, setAdminNotes] = useState('');
   const [showAddEditForm, setShowAddEditForm] = useState(false);
@@ -946,7 +947,12 @@ export default function SubcontractorsManagementPage() {
                           <div className="text-xs text-gray-500 mt-1">Upload</div>
                         </div>
                       </div>
-                      <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center gap-2">
+                      <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold flex items-center justify-center gap-2"
+                        onClick={() => {
+                          setShowDetailsModal(false);
+                          setShowDocumentsModal(true);
+                        }}
+                      >
                         <span>📤</span>
                         Upload Documents
                       </button>
@@ -1009,6 +1015,33 @@ export default function SubcontractorsManagementPage() {
             </div>
           </div>
         )}
+
+        {/* Documents Upload Modal */}
+        {showDocumentsModal && selectedSubcontractor && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full my-8">
+              <div className="p-8">
+                <h2 className="text-2xl font-bold mb-6 text-gray-900">
+                  📎 Document Management - {selectedSubcontractor.company_name}
+                </h2>
+
+                <DocumentUploadSection subcontractorId={selectedSubcontractor.id} />
+
+                <div className="mt-8 flex gap-4 justify-end">
+                  <button
+                    onClick={() => {
+                      setShowDocumentsModal(false);
+                      setShowDetailsModal(true);
+                    }}
+                    className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -1029,4 +1062,333 @@ export default function SubcontractorsManagementPage() {
       </div>
     );
   }
+}
+
+// Document Upload Component
+function DocumentUploadSection({ subcontractorId }: { subcontractorId: number }) {
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    loadDocuments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subcontractorId]);
+
+  const loadDocuments = async () => {
+    try {
+      const res = await fetch(`/api/admin/subcontractors/${subcontractorId}/documents`);
+      if (res.ok) {
+        const data = await res.json();
+        setDocuments(data.documents || []);
+      }
+    } catch (err) {
+      console.error('Error loading documents:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFileUpload = async (documentType: string, file: File, title: string, description: string, expirationDate?: string) => {
+    setUploading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('documentType', documentType);
+      formData.append('title', title);
+      formData.append('description', description);
+      if (expirationDate) {
+        formData.append('expirationDate', expirationDate);
+      }
+
+      const res = await fetch(`/api/admin/subcontractors/${subcontractorId}/documents`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Upload failed');
+      }
+
+      setSuccess('Document uploaded successfully!');
+      loadDocuments();
+    } catch (err: any) {
+      setError(err.message || 'Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDelete = async (documentId: number) => {
+    if (!confirm('Are you sure you want to delete this document?')) return;
+
+    try {
+      const res = await fetch(`/api/admin/subcontractors/${subcontractorId}/documents/${documentId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) throw new Error('Delete failed');
+
+      setSuccess('Document deleted successfully');
+      loadDocuments();
+    } catch (err: any) {
+      setError(err.message || 'Delete failed');
+    }
+  };
+
+  const handleStatusUpdate = async (documentId: number, newStatus: string) => {
+    try {
+      const res = await fetch(`/api/admin/subcontractors/${subcontractorId}/documents/${documentId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!res.ok) throw new Error('Update failed');
+
+      setSuccess('Status updated successfully');
+      loadDocuments();
+    } catch (err: any) {
+      setError(err.message || 'Update failed');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-800 p-4 rounded-lg">
+          {error}
+        </div>
+      )}
+      
+      {success && (
+        <div className="bg-green-100 border border-green-400 text-green-800 p-4 rounded-lg">
+          {success}
+        </div>
+      )}
+
+      {/* Quick Upload Buttons */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {['license', 'insurance', 'w9', 'certificate'].map((docType) => (
+          <DocumentUploadButton
+            key={docType}
+            documentType={docType}
+            onUpload={handleFileUpload}
+            uploading={uploading}
+          />
+        ))}
+      </div>
+
+      {/* Documents List */}
+      <div>
+        <h3 className="text-lg font-bold mb-4">Uploaded Documents ({documents.length})</h3>
+        {loading ? (
+          <div className="text-center py-8 text-gray-500">Loading documents...</div>
+        ) : documents.length === 0 ? (
+          <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-lg">
+            No documents uploaded yet. Use the buttons above to upload.
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {documents.map((doc) => (
+              <div key={doc.id} className="bg-gray-50 border rounded-lg p-4 flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">
+                      {doc.document_type === 'license' ? '📄' :
+                       doc.document_type === 'insurance' ? '🛡️' :
+                       doc.document_type === 'w9' ? '📋' :
+                       doc.document_type === 'certificate' ? '⭐' : '📎'}
+                    </span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{doc.title}</h4>
+                      <p className="text-sm text-gray-600">{doc.description}</p>
+                      <div className="flex items-center gap-4 mt-1 text-xs text-gray-500">
+                        <span>Type: {doc.document_type}</span>
+                        <span>Uploaded: {new Date(doc.created_at).toLocaleDateString()}</span>
+                        {doc.expiration_date && (
+                          <span className={new Date(doc.expiration_date) < new Date() ? 'text-red-600 font-semibold' : ''}>
+                            Expires: {new Date(doc.expiration_date).toLocaleDateString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <select
+                    value={doc.status}
+                    onChange={(e) => handleStatusUpdate(doc.id, e.target.value)}
+                    className={`text-sm px-3 py-1 rounded-full font-semibold ${
+                      doc.status === 'approved' ? 'bg-green-100 text-green-800' :
+                      doc.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                      doc.status === 'expired' ? 'bg-gray-100 text-gray-800' :
+                      'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="expired">Expired</option>
+                  </select>
+                  <a
+                    href={doc.file_path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline text-sm font-semibold"
+                  >
+                    Download
+                  </a>
+                  <button
+                    onClick={() => handleDelete(doc.id)}
+                    className="text-red-600 hover:underline text-sm font-semibold"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Document Upload Button Component
+function DocumentUploadButton({ 
+  documentType, 
+  onUpload, 
+  uploading 
+}: { 
+  documentType: string; 
+  onUpload: (type: string, file: File, title: string, description: string, expirationDate?: string) => void;
+  uploading: boolean;
+}) {
+  const [showForm, setShowForm] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [expirationDate, setExpirationDate] = useState('');
+
+  const icons: Record<string, string> = {
+    license: '📄',
+    insurance: '🛡️',
+    w9: '📋',
+    certificate: '⭐',
+  };
+
+  const labels: Record<string, string> = {
+    license: 'License',
+    insurance: 'Insurance',
+    w9: 'W-9 Form',
+    certificate: 'Certificate',
+  };
+
+  const handleSubmit = () => {
+    if (!file) {
+      alert('Please select a file');
+      return;
+    }
+    if (!title.trim()) {
+      alert('Please enter a title');
+      return;
+    }
+
+    onUpload(documentType, file, title, description, expirationDate || undefined);
+    
+    // Reset form
+    setFile(null);
+    setTitle('');
+    setDescription('');
+    setExpirationDate('');
+    setShowForm(false);
+  };
+
+  if (showForm) {
+    return (
+      <div className="col-span-2 md:col-span-4 bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
+        <h4 className="font-bold mb-4 text-lg flex items-center gap-2">
+          <span>{icons[documentType]}</span>
+          Upload {labels[documentType]}
+        </h4>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold mb-1">File *</label>
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
+              className="w-full border rounded p-2"
+            />
+            <p className="text-xs text-gray-600 mt-1">Max 10MB • PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</p>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold mb-1">Title *</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={`e.g., SC ${labels[documentType]} 2024`}
+              className="w-full border rounded p-2"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold mb-1">Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Optional notes about this document"
+              rows={2}
+              className="w-full border rounded p-2"
+            />
+          </div>
+          {(documentType === 'license' || documentType === 'insurance' || documentType === 'certificate') && (
+            <div>
+              <label className="block text-sm font-semibold mb-1">Expiration Date</label>
+              <input
+                type="date"
+                value={expirationDate}
+                onChange={(e) => setExpirationDate(e.target.value)}
+                className="w-full border rounded p-2"
+              />
+            </div>
+          )}
+          <div className="flex gap-3">
+            <button
+              onClick={handleSubmit}
+              disabled={uploading}
+              className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            >
+              {uploading ? 'Uploading...' : 'Upload'}
+            </button>
+            <button
+              onClick={() => setShowForm(false)}
+              disabled={uploading}
+              className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setShowForm(true)}
+      className="bg-white border-2 border-gray-300 hover:border-blue-500 p-4 rounded-lg text-center transition group"
+    >
+      <div className="text-3xl mb-2 group-hover:scale-110 transition">{icons[documentType]}</div>
+      <div className="font-semibold text-sm">{labels[documentType]}</div>
+      <div className="text-xs text-gray-500 mt-1">Click to upload</div>
+    </button>
+  );
 }

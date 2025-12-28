@@ -3,6 +3,19 @@ import { ServiceCard } from '@/components/ui/ServiceCard';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { businessConfig } from '@/config/business';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home Services | Burch Contracting - Simpsonville, SC',
+  description: 'Professional home repair, remodeling, and contracting services in Simpsonville, SC. Kitchen & bath remodels, decks, porches, handyman services, and more. Licensed and insured.',
+  keywords: ['home services', 'home repair', 'remodeling services', 'kitchen remodel', 'bathroom remodel', 'handyman', 'contractor services', 'Simpsonville SC', 'Greenville SC'],
+  openGraph: {
+    title: 'Home Services | Burch Contracting',
+    description: 'Comprehensive home repair and remodeling services in Simpsonville, SC. Quality craftsmanship you can trust.',
+    url: 'https://burchcontracting.com/services',
+    type: 'website',
+  },
+};
 
 export default function ServicesPage() {
   const services = businessConfig.services;

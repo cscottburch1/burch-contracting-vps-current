@@ -8,11 +8,15 @@ import Script from "next/script";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: 'swap',
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -82,7 +86,7 @@ export default function RootLayout({
         {recaptchaSiteKey && (
           <Script
             src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
         )}
         {/* Tidio Live Chat Widget */}
