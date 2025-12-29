@@ -1,7 +1,7 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import Icon, { IconName } from '@/components/ui/Icon';
 
 interface Project {
@@ -63,10 +63,10 @@ interface Subcontractor {
 
 type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontractors';
 
-export default function AdminProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default function AdminProjectDetailPage() {
   const router = useRouter();
-  const resolvedParams = use(params);
-  const projectId = resolvedParams.id;
+  const params = useParams();
+  const projectId = params.id as string;
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [project, setProject] = useState<Project | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
