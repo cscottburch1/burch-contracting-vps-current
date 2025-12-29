@@ -374,7 +374,7 @@ export default function CustomerDetailPage() {
                           <span>•</span>
                           <span>{formatDate(project.start_date)} - {formatDate(project.end_date)}</span>
                         </div>
-                        <Button variant="outline" size="sm" href={`/admin/projects/${project.id}`}>
+                        <Button variant="outline" size="sm" href={`/admin/project-detail?id=${project.id}`}>
                           Manage
                         </Button>
                       </div>

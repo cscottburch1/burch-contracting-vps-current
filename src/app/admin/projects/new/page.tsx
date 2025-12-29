@@ -60,7 +60,7 @@ export default function NewProjectPage() {
 
       if (res.ok) {
         const data = await res.json();
-        router.push(`/admin/projects/${data.projectId}`);
+        router.push(`/admin/project-detail?id=${data.projectId}`);
       } else {
         alert('Failed to create project');
       }
