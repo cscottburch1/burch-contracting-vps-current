@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon, { IconName } from '@/components/ui/Icon';
 
@@ -65,7 +65,8 @@ type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontracto
 
 export default function AdminProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const [projectId, setProjectId] = useState<string | null>(null);
+  const resolvedParams = use(params);
+  const projectId = resolvedParams.id;
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [project, setProject] = useState<Project | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -100,18 +101,12 @@ export default function AdminProjectDetailPage({ params }: { params: Promise<{ i
   const [availableSubcontractors, setAvailableSubcontractors] = useState<Array<{ id: number; name: string; company: string }>>([]);
 
   useEffect(() => {
-    params.then(p => setProjectId(p.id));
-  }, [params]);
-
-  useEffect(() => {
-    if (projectId) {
-      loadProject();
-      loadPhotos();
-      loadMilestones();
-      loadActivities();
-      loadSubcontractors();
-      loadAvailableSubcontractors();
-    }
+    loadProject();
+    loadPhotos();
+    loadMilestones();
+    loadActivities();
+    loadSubcontractors();
+    loadAvailableSubcontractors();
   }, [projectId]);
 
   const loadProject = async () => {
