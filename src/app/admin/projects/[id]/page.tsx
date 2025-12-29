@@ -99,25 +99,30 @@ export default function AdminProjectDetailPage() {
     status: 'pending' as Subcontractor['status']
   });
   const [availableSubcontractors, setAvailableSubcontractors] = useState<Array<{ id: number; name: string; company: string }>>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadProject();
-    loadPhotos();
-    loadMilestones();
-    loadActivities();
-    loadSubcontractors();
-    loadAvailableSubcontractors();
+    if (projectId) {
+      loadProject();
+      loadPhotos();
+      loadMilestones();
+      loadActivities();
+      loadSubcontractors();
+      loadAvailableSubcontractors();
+    }
   }, [projectId]);
 
   const loadProject = async () => {
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setProject(data.project);
+      if (!res.ok) {
+        throw new Error(`Failed to load project: ${res.status}`);
       }
-    } catch (error) {
+      const data = await res.json();
+      setProject(data.project);
+    } catch (error: any) {
       console.error('Failed to load project:', error);
+      setError(error.message || 'Failed to load project');
     } finally {
       setLoading(false);
     }
@@ -341,7 +346,20 @@ export default function AdminProjectDetailPage() {
       </div>
     );
   }
-
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="text-red-500 text-xl mb-4">Error Loading Project</div>
+        <div className="text-gray-600 mb-4">{error}</div>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
   if (!project) {
     return (
       <div className="flex items-center justify-center min-h-screen">
