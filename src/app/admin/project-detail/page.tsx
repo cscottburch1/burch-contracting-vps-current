@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Icon, { IconName } from '@/components/ui/Icon';
 
@@ -63,7 +63,7 @@ interface Subcontractor {
 
 type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontractors';
 
-export default function ProjectDetailPage() {
+function ProjectDetailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get('id');
@@ -441,5 +441,13 @@ export default function ProjectDetailPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProjectDetailPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-gray-600">Loading...</div></div>}>
+      <ProjectDetailContent />
+    </Suspense>
   );
 }
