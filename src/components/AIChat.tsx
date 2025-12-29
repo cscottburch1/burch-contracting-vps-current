@@ -82,8 +82,9 @@ export default function AIChat() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg transition-all hover:scale-110 z-50 flex items-center gap-2"
-          aria-label="Open chat"
+          className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg transition-all hover:scale-110 z-50 flex items-center gap-2 min-h-[56px]"
+          aria-label="Open chat - Get help with home repair and remodeling"
+          title="Chat with us"
         >
           <Icon name="MessageCircle" className="w-6 h-6" />
           <span className="font-semibold pr-2">Need Help?</span>
@@ -106,8 +107,9 @@ export default function AIChat() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
-              aria-label="Close chat"
+              className="text-white hover:bg-white/20 rounded-full p-2 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="Close chat window"
+              title="Close chat"
             >
               <Icon name="X" className="w-5 h-5" />
             </button>
@@ -160,8 +162,9 @@ export default function AIChat() {
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg px-4 py-2 transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg px-6 py-3 transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
                 aria-label="Send message"
+                title="Send message"
               >
                 <Icon name="Send" className="w-5 h-5" />
               </button>

@@ -188,62 +188,62 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-          <a href="/service-areas/simpsonville" className="group">
+          <a href="/service-areas/simpsonville" className="group" aria-label="Simpsonville service area - Our home base">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-blue-600">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-3" />
+              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Simpsonville</h3>
               <p className="text-sm text-gray-600 mb-3">Our Home Base</p>
               <div className="flex items-center justify-center text-blue-600 text-sm font-semibold">
                 Learn More
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
           </a>
 
-          <a href="/service-areas/greenville" className="group">
+          <a href="/service-areas/greenville" className="group" aria-label="Greenville service area - Upstate's hub">
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-green-600">
-              <Icon name="MapPin" size={32} className="text-green-600 mx-auto mb-3" />
+              <Icon name="MapPin" size={32} className="text-green-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Greenville</h3>
               <p className="text-sm text-gray-600 mb-3">Upstate's Hub</p>
               <div className="flex items-center justify-center text-green-600 text-sm font-semibold">
                 Learn More
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
           </a>
 
-          <a href="/service-areas/five-forks" className="group">
+          <a href="/service-areas/five-forks" className="group" aria-label="Five Forks service area - Family friendly">
             <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-sky-600">
-              <Icon name="MapPin" size={32} className="text-sky-600 mx-auto mb-3" />
+              <Icon name="MapPin" size={32} className="text-sky-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Five Forks</h3>
               <p className="text-sm text-gray-600 mb-3">Family Friendly</p>
               <div className="flex items-center justify-center text-sky-600 text-sm font-semibold">
                 Learn More
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
           </a>
 
-          <a href="/service-areas/woodruff" className="group">
+          <a href="/service-areas/woodruff" className="group" aria-label="Woodruff service area - Historic charm">
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-orange-600">
-              <Icon name="MapPin" size={32} className="text-orange-600 mx-auto mb-3" />
+              <Icon name="MapPin" size={32} className="text-orange-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Woodruff</h3>
               <p className="text-sm text-gray-600 mb-3">Historic Charm</p>
               <div className="flex items-center justify-center text-orange-600 text-sm font-semibold">
                 Learn More
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
           </a>
 
-          <a href="/service-areas/gray-court" className="group">
+          <a href="/service-areas/gray-court" className="group" aria-label="Gray Court service area - Rural living">
             <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-teal-600">
-              <Icon name="MapPin" size={32} className="text-teal-600 mx-auto mb-3" />
+              <Icon name="MapPin" size={32} className="text-teal-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Gray Court</h3>
               <p className="text-sm text-gray-600 mb-3">Rural Living</p>
               <div className="flex items-center justify-center text-teal-600 text-sm font-semibold">
                 Learn More
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
           </a>
