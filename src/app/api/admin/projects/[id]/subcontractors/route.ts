@@ -50,7 +50,7 @@ export async function GET(
          ps.id, ps.project_id, ps.subcontractor_id, ps.role, ps.notes,
          ps.amount_quoted, ps.amount_paid, ps.status, ps.assigned_date,
          ps.start_date, ps.completion_date, ps.created_at,
-         s.name as subcontractor_name, s.trade, s.phone, s.email
+         s.company_name as subcontractor_name, s.trade, s.phone, s.email
        FROM project_subcontractors ps
        JOIN subcontractors s ON ps.subcontractor_id = s.id
        WHERE ps.project_id = ?
