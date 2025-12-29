@@ -103,28 +103,38 @@ export default function AdminProjectDetailPage() {
 
   useEffect(() => {
     if (projectId) {
-      loadProject();
-      loadPhotos();
-      loadMilestones();
-      loadActivities();
-      loadSubcontractors();
-      loadAvailableSubcontractors();
+      loadAllData();
     }
   }, [projectId]);
+
+  const loadAllData = async () => {
+    try {
+      await loadProject();
+      await loadPhotos();
+      await loadMilestones();
+      await loadActivities();
+      await loadSubcontractors();
+      await loadAvailableSubcontractors();
+    } catch (err: any) {
+      console.error('Error loading data:', err);
+      setError(err.message || 'Failed to load project data');
+      setLoading(false);
+    }
+  };
 
   const loadProject = async () => {
     try {
       const res = await fetch(`/api/admin/projects/${projectId}`);
       if (!res.ok) {
-        throw new Error(`Failed to load project: ${res.status}`);
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to load project: ${res.status}`);
       }
       const data = await res.json();
       setProject(data.project);
+      setLoading(false);
     } catch (error: any) {
       console.error('Failed to load project:', error);
-      setError(error.message || 'Failed to load project');
-    } finally {
-      setLoading(false);
+      throw error;
     }
   };
 
