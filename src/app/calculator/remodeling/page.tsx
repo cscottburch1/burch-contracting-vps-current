@@ -112,7 +112,7 @@ export default function RemodelingCalculator() {
             Remodeling <span className="gradient-text">Calculator</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto animate-fade-in-up stagger-1 opacity-0">
-            Get instant estimates for kitchen, bathroom, and home remodeling projects using Greenville area rates
+            Get instant estimates for kitchen, bathroom, and home remodeling projects using Simpsonville area rates
           </p>
         </div>
       </section>

@@ -8,9 +8,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Home Services | Burch Contracting - Simpsonville, SC',
   description: 'Professional home repair, remodeling, and contracting services in Simpsonville, SC. Kitchen & bath remodels, decks, porches, handyman services, and more. Licensed and insured.',
-  keywords: ['home services', 'home repair', 'remodeling services', 'kitchen remodel', 'bathroom remodel', 'handyman', 'contractor services', 'Simpsonville SC', 'Greenville SC'],
+  keywords: ['home services', 'home repair', 'remodeling services', 'kitchen remodel Simpsonville', 'bathroom remodel Simpsonville', 'handyman Simpsonville', 'contractor services', 'Simpsonville SC', 'kitchen renovation Simpsonville'],
   openGraph: {
-    title: 'Home Services | Burch Contracting',
+    title: 'Home Services | Burch Contracting - Simpsonville, SC',
     description: 'Comprehensive home repair and remodeling services in Simpsonville, SC. Quality craftsmanship you can trust.',
     url: 'https://burchcontracting.com/services',
     type: 'website',
