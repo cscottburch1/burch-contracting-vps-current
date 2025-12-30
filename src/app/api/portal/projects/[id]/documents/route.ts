@@ -2,7 +2,14 @@ import { NextResponse } from 'next/server';
 import pool from '@/lib/mysql';
 import { cookies } from 'next/headers';
 
-async function getCurrentCustomer() {
+interface Customer {
+  id: number;
+  email: string;
+  name: string;
+  phone: string;
+}
+
+async function getCurrentCustomer(): Promise<Customer | null> {
   try {
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get('customer_session');
