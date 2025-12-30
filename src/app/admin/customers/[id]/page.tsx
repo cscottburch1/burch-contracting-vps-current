@@ -45,6 +45,8 @@ export default function CustomerDetailPage() {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadCategory, setUploadCategory] = useState('general');
   const [uploadDescription, setUploadDescription] = useState('');
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
     email: '',
@@ -67,9 +69,14 @@ export default function CustomerDetailPage() {
   useEffect(() => {
     if (authenticated && customerId) {
       fetchCustomerDetails();
-      fetchDocuments();
     }
   }, [authenticated, customerId]);
+
+  useEffect(() => {
+    if (projects.length > 0) {
+      fetchDocuments();
+    }
+  }, [projects]);
 
   const checkAuth = async () => {
     try {
@@ -162,13 +169,23 @@ export default function CustomerDetailPage() {
 
   const fetchDocuments = async () => {
     try {
-      const response = await fetch(`/api/admin/documents?customer_id=${customerId}`, {
-        credentials: 'include'
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setDocuments(data.documents || []);
+      // Get all documents from all customer projects
+      const allDocs: any[] = [];
+      for (const project of projects) {
+        const response = await fetch(`/api/admin/projects/${project.id}/documents`, {
+          credentials: 'include'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.documents && Array.isArray(data.documents)) {
+            allDocs.push(...data.documents.map((doc: any) => ({
+              ...doc,
+              project_title: project.title
+            })));
+          }
+        }
       }
+      setDocuments(allDocs);
     } catch (error) {
       console.error('Error fetching documents:', error);
     }
@@ -176,28 +193,50 @@ export default function CustomerDetailPage() {
 
   const handleUploadDocument = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uploadFile) return;
+    if (!uploadFile || !selectedProjectId) return;
 
+    setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', uploadFile);
-      formData.append('customer_id', customerId);
-      formData.append('category', uploadCategory);
-      formData.append('description', uploadDescription);
+      // Convert file to base64 for storage
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        
+        const response = await fetch(`/api/admin/projects/${selectedProjectId}/documents`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            name: uploadFile.name,
+            url: base64String,
+            file_type: uploadFile.type,
+            file_size: uploadFile.size,
+            category: uploadCategory,
+            description: uploadDescription
+          })
+        });
 
-      const response = await fetch('/api/admin/documents', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData
-      });
-
-      if (response.ok) {
-        alert('Document uploaded successfully!');
-        setShowUploadModal(false);
-        setUploadFile(null);
-        setUploadCategory('general');
-        setUploadDescription('');
-        fetchDocuments();
+        if (response.ok) {
+          alert('Document uploaded successfully!');
+          setShowUploadModal(false);
+          setUploadFile(null);
+          setUploadCategory('general');
+          setUploadDescription('');
+          setSelectedProjectId(null);
+          fetchDocuments();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to upload document');
+        }
+        setUploading(false);
+      };
+      reader.readAsDataURL(uploadFile);
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      alert('Failed to upload document');
+      setUploading(false);
+    }
+  };
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to upload document');
@@ -208,11 +247,11 @@ export default function CustomerDetailPage() {
     }
   };
 
-  const handleDeleteDocument = async (docId: number) => {
+  const handleDeleteDocument = async (docId: number, projectId: number) => {
     if (!confirm('Are you sure you want to delete this document?')) return;
 
     try {
-      const response = await fetch(`/api/admin/documents/${docId}`, {
+      const response = await fetch(`/api/admin/projects/${projectId}/documents/${docId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -461,23 +500,27 @@ export default function CustomerDetailPage() {
                   documents.map((doc) => (
                     <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <Icon name={getFileIcon(doc.file_type)} size={20} className="text-blue-600 flex-shrink-0" />
+                        <Icon name={getFileIcon(doc.filetype)} size={20} className="text-blue-600 flex-shrink-0" />
                         <div className="min-w-0 flex-1">
                           <a 
-                            href={`/uploads/${doc.filename}`} 
+                            href={doc.filepath} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="text-sm font-medium text-gray-900 hover:text-blue-600 block truncate"
                           >
-                            {doc.original_name}
+                            {doc.filename}
                           </a>
                           <p className="text-xs text-gray-500">
-                            {formatFileSize(doc.file_size)} • {formatDate(doc.created_at)}
+                            {formatFileSize(doc.filesize)} • {doc.project_title || 'Unknown Project'}
+                            {doc.category && ` • ${doc.category}`}
                           </p>
+                          {doc.description && (
+                            <p className="text-xs text-gray-600 italic">{doc.description}</p>
+                          )}
                         </div>
                       </div>
                       <button
-                        onClick={() => handleDeleteDocument(doc.id)}
+                        onClick={() => handleDeleteDocument(doc.id, doc.project_id)}
                         className="text-red-600 hover:text-red-700 p-1 flex-shrink-0"
                       >
                         <Icon name="Trash2" size={16} />
@@ -713,7 +756,13 @@ export default function CustomerDetailPage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">Upload Document</h2>
                 <button
-                  onClick={() => setShowUploadModal(false)}
+                  onClick={() => {
+                    setShowUploadModal(false);
+                    setUploadFile(null);
+                    setUploadCategory('general');
+                    setUploadDescription('');
+                    setSelectedProjectId(null);
+                  }}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <Icon name="X" size={24} />
@@ -721,6 +770,28 @@ export default function CustomerDetailPage() {
               </div>
 
               <form onSubmit={handleUploadDocument} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Project *</label>
+                  <select
+                    value={selectedProjectId || ''}
+                    onChange={(e) => setSelectedProjectId(Number(e.target.value))}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    required
+                  >
+                    <option value="">Select a project...</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.title}
+                      </option>
+                    ))}
+                  </select>
+                  {projects.length === 0 && (
+                    <p className="text-xs text-orange-600 mt-1">
+                      Create a project first before uploading documents.
+                    </p>
+                  )}
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">File *</label>
                   <input
@@ -730,6 +801,11 @@ export default function CustomerDetailPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     required
                   />
+                  {uploadFile && (
+                    <p className="text-xs text-gray-600 mt-1">
+                      {uploadFile.name} ({formatFileSize(uploadFile.size)})
+                    </p>
+                  )}
                   <p className="text-xs text-gray-500 mt-1">Max 10MB. PDF, Images, Word, Excel accepted.</p>
                 </div>
 
@@ -745,6 +821,7 @@ export default function CustomerDetailPage() {
                     <option value="invoice">Invoice</option>
                     <option value="permit">Permit</option>
                     <option value="photo">Photo</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
 
@@ -755,16 +832,33 @@ export default function CustomerDetailPage() {
                     onChange={(e) => setUploadDescription(e.target.value)}
                     rows={3}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                    placeholder="Optional description..."
+                    placeholder="Optional description or notes about this document..."
                   />
                 </div>
 
                 <div className="flex gap-3 mt-6">
-                  <Button type="button" variant="outline" onClick={() => setShowUploadModal(false)} className="flex-1">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => {
+                      setShowUploadModal(false);
+                      setUploadFile(null);
+                      setUploadCategory('general');
+                      setUploadDescription('');
+                      setSelectedProjectId(null);
+                    }}
+                    className="flex-1"
+                    disabled={uploading}
+                  >
                     Cancel
                   </Button>
-                  <Button type="submit" variant="primary" className="flex-1">
-                    Upload
+                  <Button 
+                    type="submit" 
+                    variant="primary" 
+                    className="flex-1"
+                    disabled={!uploadFile || !selectedProjectId || uploading || projects.length === 0}
+                  >
+                    {uploading ? 'Uploading...' : 'Upload'}
                   </Button>
                 </div>
               </form>

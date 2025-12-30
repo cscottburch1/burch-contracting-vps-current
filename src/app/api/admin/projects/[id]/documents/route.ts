@@ -2,6 +2,30 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
 
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const adminUser = await verifyAdminAuth(request);
+    if (!adminUser) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id } = await context.params;
+
+    const documents = await query(
+      'SELECT * FROM documents WHERE project_id = ? ORDER BY created_at DESC',
+      [id]
+    );
+
+    return NextResponse.json({ documents: documents || [] });
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    return NextResponse.json({ error: 'Failed to fetch documents' }, { status: 500 });
+  }
+}
+
 export async function POST(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -14,15 +38,15 @@ export async function POST(
 
     const { id } = await context.params;
     const body = await request.json();
-    const { name, url, file_type, file_size } = body;
+    const { name, url, file_type, file_size, category, description } = body;
 
     if (!name || !url) {
       return NextResponse.json({ error: 'Name and URL are required' }, { status: 400 });
     }
 
     const result = await query(
-      'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)',
-      [id, name, url, file_type || 'unknown', file_size || 0, 'admin']
+      'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by, category, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [id, name, url, file_type || 'unknown', file_size || 0, 'admin', category || 'general', description || '']
     );
 
     const docId = (result as any).insertId;
