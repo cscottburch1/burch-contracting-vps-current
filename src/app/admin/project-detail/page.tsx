@@ -61,7 +61,19 @@ interface Subcontractor {
   completion_date: string | null;
 }
 
-type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontractors';
+interface Document {
+  id: number;
+  filename: string;
+  filepath: string;
+  filetype: string;
+  filesize: number;
+  category: string;
+  description: string;
+  uploaded_by: string;
+  created_at: string;
+}
+
+type TabType = 'overview' | 'photos' | 'documents' | 'milestones' | 'activity' | 'subcontractors';
 
 function ProjectDetailContent() {
   const router = useRouter();
@@ -71,11 +83,35 @@ function ProjectDetailContent() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [project, setProject] = useState<Project | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [subcontractors, setSubcontractors] = useState<Subcontractor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Modal states
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
+  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
+  const [showMilestoneForm, setShowMilestoneForm] = useState(false);
+  const [showSubcontractorForm, setShowSubcontractorForm] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  
+  // Form states
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoCategory, setPhotoCategory] = useState<'before' | 'progress' | 'after' | 'other'>('progress');
+  const [photoCaption, setPhotoCaption] = useState('');
+  
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
+  const [documentCategory, setDocumentCategory] = useState('general');
+  const [documentDescription, setDocumentDescription] = useState('');
+  
+  const [milestoneForm, setMilestoneForm] = useState({
+    title: '',
+    description: '',
+    due_date: '',
+    status: 'pending' as 'pending' | 'in_progress' | 'completed' | 'delayed'
+  });
 
   useEffect(() => {
     if (!projectId) {
@@ -92,6 +128,7 @@ function ProjectDetailContent() {
     try {
       await loadProject();
       await loadPhotos();
+      await loadDocuments();
       await loadMilestones();
       await loadActivities();
       await loadSubcontractors();
@@ -129,6 +166,18 @@ function ProjectDetailContent() {
     }
   };
 
+  const loadDocuments = async () => {
+    try {
+      const res = await fetch(`/api/admin/projects/${projectId}/documents`);
+      if (res.ok) {
+        const data = await res.json();
+        setDocuments(data.documents || []);
+      }
+    } catch (error) {
+      console.error('Failed to load documents:', error);
+    }
+  };
+
   const loadMilestones = async () => {
     try {
       const res = await fetch(`/api/admin/projects/${projectId}/milestones`);
@@ -163,6 +212,215 @@ function ProjectDetailContent() {
     } catch (error) {
       console.error('Failed to load subcontractors:', error);
     }
+  };
+
+  const handlePhotoUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!photoFile || !projectId) return;
+
+    setUploading(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        
+        const response = await fetch(`/api/admin/projects/${projectId}/photos`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: photoFile.name,
+            data: base64String,
+            category: photoCategory,
+            caption: photoCaption
+          })
+        });
+
+        if (response.ok) {
+          alert('Photo uploaded successfully!');
+          setShowPhotoUpload(false);
+          setPhotoFile(null);
+          setPhotoCaption('');
+          await loadPhotos();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to upload photo');
+        }
+        setUploading(false);
+      };
+      reader.readAsDataURL(photoFile);
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+      alert('Failed to upload photo');
+      setUploading(false);
+    }
+  };
+
+  const handleDocumentUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!documentFile || !projectId) return;
+
+    setUploading(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        
+        const response = await fetch(`/api/admin/projects/${projectId}/documents`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: documentFile.name,
+            url: base64String,
+            file_type: documentFile.type,
+            file_size: documentFile.size,
+            category: documentCategory,
+            description: documentDescription
+          })
+        });
+
+        if (response.ok) {
+          alert('Document uploaded successfully!');
+          setShowDocumentUpload(false);
+          setDocumentFile(null);
+          setDocumentCategory('general');
+          setDocumentDescription('');
+          await loadDocuments();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to upload document');
+        }
+        setUploading(false);
+      };
+      reader.readAsDataURL(documentFile);
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      alert('Failed to upload document');
+      setUploading(false);
+    }
+  };
+
+  const handleCreateMilestone = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!projectId) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/milestones`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(milestoneForm)
+      });
+
+      if (response.ok) {
+        alert('Milestone created successfully!');
+        setShowMilestoneForm(false);
+        setMilestoneForm({
+          title: '',
+          description: '',
+          due_date: '',
+          status: 'pending'
+        });
+        await loadMilestones();
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to create milestone');
+      }
+    } catch (error) {
+      console.error('Error creating milestone:', error);
+      alert('Failed to create milestone');
+    }
+  };
+
+  const handleDeletePhoto = async (photoId: number) => {
+    if (!confirm('Are you sure you want to delete this photo?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/photos/${photoId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Photo deleted successfully');
+        await loadPhotos();
+      } else {
+        alert('Failed to delete photo');
+      }
+    } catch (error) {
+      console.error('Error deleting photo:', error);
+      alert('Failed to delete photo');
+    }
+  };
+
+  const handleDeleteDocument = async (docId: number) => {
+    if (!confirm('Are you sure you want to delete this document?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/documents/${docId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Document deleted successfully');
+        await loadDocuments();
+      } else {
+        alert('Failed to delete document');
+      }
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      alert('Failed to delete document');
+    }
+  };
+
+  const handleDeleteMilestone = async (milestoneId: number) => {
+    if (!confirm('Are you sure you want to delete this milestone?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/milestones/${milestoneId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Milestone deleted successfully');
+        await loadMilestones();
+      } else {
+        alert('Failed to delete milestone');
+      }
+    } catch (error) {
+      console.error('Error deleting milestone:', error);
+      alert('Failed to delete milestone');
+    }
+  };
+
+  const handleUpdateMilestoneStatus = async (milestoneId: number, newStatus: string) => {
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/milestones/${milestoneId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (response.ok) {
+        await loadMilestones();
+      } else {
+        alert('Failed to update milestone status');
+      }
+    } catch (error) {
+      console.error('Error updating milestone:', error);
+      alert('Failed to update milestone');
+    }
+  };
+
+  const getFileIcon = (fileType: string) => {
+    if (fileType.includes('pdf')) return 'FileText';
+    if (fileType.includes('image')) return 'Camera';
+    if (fileType.includes('word') || fileType.includes('document')) return 'FileText';
+    if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'FileText';
+    return 'File';
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
   if (loading) {
@@ -263,6 +521,20 @@ function ProjectDetailContent() {
             </span>
           </button>
           <button
+            onClick={() => setActiveTab('documents')}
+            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
+              activeTab === 'documents'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            <Icon name="File" className="mr-2" />
+            Documents
+            <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
+              {documents.length}
+            </span>
+          </button>
+          <button
             onClick={() => setActiveTab('milestones')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'milestones'
@@ -335,19 +607,104 @@ function ProjectDetailContent() {
 
         {activeTab === 'photos' && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Project Photos</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Project Photos</h2>
+              <button
+                onClick={() => setShowPhotoUpload(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+              >
+                <Icon name="Upload" className="mr-2" />
+                Upload Photo
+              </button>
+            </div>
             {photos.length === 0 ? (
               <p className="text-gray-500">No photos uploaded yet</p>
             ) : (
               <div className="grid grid-cols-3 gap-4">
                 {photos.map((photo) => (
-                  <div key={photo.id} className="border rounded-lg overflow-hidden">
+                  <div key={photo.id} className="border rounded-lg overflow-hidden relative group">
                     <div className="aspect-video bg-gray-100 flex items-center justify-center">
-                      <Icon name="Camera" className="text-gray-400" />
+                      <img 
+                        src={`/uploads/${photo.filename}`} 
+                        alt={photo.caption || photo.original_name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
+                      />
+                      <Icon name="Camera" className="text-gray-400 hidden" />
                     </div>
                     <div className="p-2">
-                      <p className="text-sm font-medium">{photo.category}</p>
+                      <p className="text-sm font-medium capitalize">{photo.category}</p>
                       {photo.caption && <p className="text-xs text-gray-500">{photo.caption}</p>}
+                      <p className="text-xs text-gray-400 mt-1">
+                        {new Date(photo.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleDeletePhoto(photo.id)}
+                      className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Icon name="Trash2" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'documents' && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Project Documents</h2>
+              <button
+                onClick={() => setShowDocumentUpload(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+              >
+                <Icon name="Upload" className="mr-2" />
+                Upload Document
+              </button>
+            </div>
+            {documents.length === 0 ? (
+              <p className="text-gray-500">No documents uploaded yet</p>
+            ) : (
+              <div className="space-y-3">
+                {documents.map((doc) => (
+                  <div key={doc.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div className="flex items-center flex-1">
+                      <Icon name={getFileIcon(doc.filetype) as IconName} className="text-gray-400 mr-3" />
+                      <div className="flex-1">
+                        <p className="font-medium">{doc.filename}</p>
+                        {doc.description && (
+                          <p className="text-sm text-gray-500">{doc.description}</p>
+                        )}
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                          <span className="capitalize">{doc.category}</span>
+                          <span>•</span>
+                          <span>{formatFileSize(doc.filesize)}</span>
+                          <span>•</span>
+                          <span>{new Date(doc.created_at).toLocaleDateString()}</span>
+                          <span>•</span>
+                          <span className="capitalize">{doc.uploaded_by}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={doc.filepath}
+                        download={doc.filename}
+                        className="bg-blue-50 text-blue-600 p-2 rounded-md hover:bg-blue-100"
+                      >
+                        <Icon name="Download" />
+                      </a>
+                      <button
+                        onClick={() => handleDeleteDocument(doc.id)}
+                        className="bg-red-50 text-red-600 p-2 rounded-md hover:bg-red-100"
+                      >
+                        <Icon name="Trash2" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -358,7 +715,16 @@ function ProjectDetailContent() {
 
         {activeTab === 'milestones' && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Project Milestones</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Project Milestones</h2>
+              <button
+                onClick={() => setShowMilestoneForm(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+              >
+                <Icon name="Plus" className="mr-2" />
+                Add Milestone
+              </button>
+            </div>
             {milestones.length === 0 ? (
               <p className="text-gray-500">No milestones created yet</p>
             ) : (
@@ -374,10 +740,30 @@ function ProjectDetailContent() {
                         <p className="text-sm text-gray-500 mt-2">
                           Due: {new Date(milestone.due_date).toLocaleDateString()}
                         </p>
+                        {milestone.completed_date && (
+                          <p className="text-sm text-green-600 mt-1">
+                            Completed: {new Date(milestone.completed_date).toLocaleDateString()}
+                          </p>
+                        )}
                       </div>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${statusColors[milestone.status] || 'bg-gray-100 text-gray-800'}`}>
-                        {milestone.status.replace('_', ' ')}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <select
+                          value={milestone.status}
+                          onChange={(e) => handleUpdateMilestoneStatus(milestone.id, e.target.value)}
+                          className={`px-2 py-1 rounded text-xs font-medium border ${statusColors[milestone.status] || 'bg-gray-100 text-gray-800'}`}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="in_progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                          <option value="delayed">Delayed</option>
+                        </select>
+                        <button
+                          onClick={() => handleDeleteMilestone(milestone.id)}
+                          className="bg-red-50 text-red-600 p-2 rounded-md hover:bg-red-100"
+                        >
+                          <Icon name="Trash2" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -440,6 +826,218 @@ function ProjectDetailContent() {
           </div>
         )}
       </div>
+
+      {/* Photo Upload Modal */}
+      {showPhotoUpload && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">Upload Photo</h3>
+            <form onSubmit={handlePhotoUpload}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Photo File</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select
+                  value={photoCategory}
+                  onChange={(e) => setPhotoCategory(e.target.value as any)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                >
+                  <option value="before">Before</option>
+                  <option value="progress">Progress</option>
+                  <option value="after">After</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Caption (Optional)</label>
+                <textarea
+                  value={photoCaption}
+                  onChange={(e) => setPhotoCaption(e.target.value)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  rows={3}
+                />
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPhotoUpload(false);
+                    setPhotoFile(null);
+                    setPhotoCaption('');
+                  }}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  disabled={uploading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+                  disabled={uploading || !photoFile}
+                >
+                  {uploading ? 'Uploading...' : 'Upload'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Document Upload Modal */}
+      {showDocumentUpload && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">Upload Document</h3>
+            <form onSubmit={handleDocumentUpload}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Document File</label>
+                <input
+                  type="file"
+                  onChange={(e) => setDocumentFile(e.target.files?.[0] || null)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                />
+                {documentFile && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    {documentFile.name} ({formatFileSize(documentFile.size)})
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select
+                  value={documentCategory}
+                  onChange={(e) => setDocumentCategory(e.target.value)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                >
+                  <option value="general">General</option>
+                  <option value="contract">Contract</option>
+                  <option value="permit">Permit</option>
+                  <option value="invoice">Invoice</option>
+                  <option value="photo">Photo</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+                <textarea
+                  value={documentDescription}
+                  onChange={(e) => setDocumentDescription(e.target.value)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  rows={3}
+                  placeholder="Add a description for this document..."
+                />
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDocumentUpload(false);
+                    setDocumentFile(null);
+                    setDocumentCategory('general');
+                    setDocumentDescription('');
+                  }}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  disabled={uploading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+                  disabled={uploading || !documentFile}
+                >
+                  {uploading ? 'Uploading...' : 'Upload'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Milestone Form Modal */}
+      {showMilestoneForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">Add Milestone</h3>
+            <form onSubmit={handleCreateMilestone}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  value={milestoneForm.title}
+                  onChange={(e) => setMilestoneForm({ ...milestoneForm, title: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
+                <textarea
+                  value={milestoneForm.description}
+                  onChange={(e) => setMilestoneForm({ ...milestoneForm, description: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  rows={3}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
+                <input
+                  type="date"
+                  value={milestoneForm.due_date}
+                  onChange={(e) => setMilestoneForm({ ...milestoneForm, due_date: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <select
+                  value={milestoneForm.status}
+                  onChange={(e) => setMilestoneForm({ ...milestoneForm, status: e.target.value as any })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="delayed">Delayed</option>
+                </select>
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowMilestoneForm(false);
+                    setMilestoneForm({
+                      title: '',
+                      description: '',
+                      due_date: '',
+                      status: 'pending'
+                    });
+                  }}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                  Create Milestone
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
