@@ -51,6 +51,11 @@ export default function ProjectDetailsPage() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'updates' | 'documents'>('overview');
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadCategory, setUploadCategory] = useState('general');
+  const [uploadDescription, setUploadDescription] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetchProjectDetails();
@@ -110,6 +115,71 @@ export default function ProjectDetailsPage() {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  };
+
+  const handleUploadDocument = async () => {
+    if (!uploadFile) return;
+
+    setUploading(true);
+    try {
+      // In a real application, you would upload to cloud storage (S3, Cloudinary, etc.)
+      // For now, we'll simulate with a data URL
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        
+        const response = await fetch(`/api/portal/projects/${params.id}/documents`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: uploadFile.name,
+            url: base64String, // In production, this would be a real URL
+            file_type: uploadFile.type,
+            file_size: uploadFile.size,
+            category: uploadCategory,
+            description: uploadDescription
+          })
+        });
+
+        if (response.ok) {
+          alert('Document uploaded successfully!');
+          setShowUploadModal(false);
+          setUploadFile(null);
+          setUploadCategory('general');
+          setUploadDescription('');
+          fetchProjectDetails();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to upload document');
+        }
+        setUploading(false);
+      };
+      reader.readAsDataURL(uploadFile);
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      alert('Failed to upload document');
+      setUploading(false);
+    }
+  };
+
+  const handleDeleteDocument = async (docId: number) => {
+    if (!confirm('Are you sure you want to delete this document?')) return;
+
+    try {
+      const response = await fetch(`/api/portal/projects/${params.id}/documents?documentId=${docId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Document deleted successfully');
+        fetchProjectDetails();
+      } else {
+        alert('Failed to delete document');
+      }
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      alert('Failed to delete document');
+    }
   };
 
   if (loading) {
@@ -305,10 +375,22 @@ export default function ProjectDetailsPage() {
 
         {activeTab === 'documents' && (
           <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold">Project Documents</h2>
+              <Button onClick={() => setShowUploadModal(true)}>
+                <Icon name="Upload" size={16} className="mr-2" />
+                Upload Document
+              </Button>
+            </div>
+
             {documents.length === 0 ? (
               <Card className="p-12 text-center">
                 <Icon name="FileText" size={32} className="text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-600">No documents yet</p>
+                <p className="text-gray-600 mb-4">No documents yet</p>
+                <Button onClick={() => setShowUploadModal(true)} variant="outline">
+                  <Icon name="Upload" size={16} className="mr-2" />
+                  Upload Your First Document
+                </Button>
               </Card>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -328,16 +410,27 @@ export default function ProjectDetailsPage() {
                           <span className="capitalize">{doc.uploaded_by}</span>
                         </div>
                       </div>
-                      <a
-                        href={doc.filepath}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        download
-                      >
-                        <Button variant="outline" size="sm">
-                          <Icon name="Download" size={16} />
-                        </Button>
-                      </a>
+                      <div className="flex gap-2">
+                        <a
+                          href={doc.filepath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                        >
+                          <Button variant="outline" size="sm">
+                            <Icon name="Download" size={16} />
+                          </Button>
+                        </a>
+                        {doc.uploaded_by === 'customer' && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleDeleteDocument(doc.id)}
+                          >
+                            <Icon name="Trash2" size={16} className="text-red-600" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </Card>
                 ))}
@@ -346,6 +439,101 @@ export default function ProjectDetailsPage() {
           </div>
         )}
       </div>
+
+      {/* Upload Document Modal */}
+      {showUploadModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Upload Document</h3>
+              <button 
+                onClick={() => {
+                  setShowUploadModal(false);
+                  setUploadFile(null);
+                  setUploadCategory('general');
+                  setUploadDescription('');
+                }}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Icon name="X" size={24} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select File *
+                </label>
+                <input
+                  type="file"
+                  onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+                />
+                {uploadFile && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Selected: {uploadFile.name} ({formatFileSize(uploadFile.size)})
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category
+                </label>
+                <select
+                  value={uploadCategory}
+                  onChange={(e) => setUploadCategory(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                >
+                  <option value="general">General</option>
+                  <option value="contract">Contract</option>
+                  <option value="permit">Permit</option>
+                  <option value="invoice">Invoice</option>
+                  <option value="photo">Photo</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description (Optional)
+                </label>
+                <textarea
+                  value={uploadDescription}
+                  onChange={(e) => setUploadDescription(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                  rows={3}
+                  placeholder="Add notes about this document..."
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  onClick={() => {
+                    setShowUploadModal(false);
+                    setUploadFile(null);
+                    setUploadCategory('general');
+                    setUploadDescription('');
+                  }}
+                  variant="outline"
+                  className="flex-1"
+                  disabled={uploading}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleUploadDocument}
+                  className="flex-1"
+                  disabled={!uploadFile || uploading}
+                >
+                  {uploading ? 'Uploading...' : 'Upload'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
