@@ -51,7 +51,7 @@ export async function GET(
     const projectRows = await pool.query(
       'SELECT * FROM projects WHERE id = ? AND customer_id = ?',
       [projectId, customer.id]
-    );
+    ) as any[];
 
     if (!Array.isArray(projectRows) || projectRows.length === 0) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
@@ -61,7 +61,7 @@ export async function GET(
     const documents = await pool.query(
       'SELECT * FROM documents WHERE project_id = ? ORDER BY created_at DESC',
       [projectId]
-    );
+    ) as any[];
 
     return NextResponse.json({ documents: documents || [] });
   } catch (error) {
