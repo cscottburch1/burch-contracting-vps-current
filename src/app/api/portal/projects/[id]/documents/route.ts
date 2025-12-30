@@ -21,10 +21,10 @@ async function getCurrentCustomer(): Promise<Customer | null> {
     const rows = await pool.query(
       'SELECT id, email, name, phone FROM customers WHERE session_token = ?',
       [sessionCookie.value]
-    );
+    ) as any[];
 
     if (Array.isArray(rows) && rows.length > 0) {
-      return rows[0];
+      return rows[0] as Customer;
     }
 
     return null;
