@@ -237,15 +237,6 @@ export default function CustomerDetailPage() {
       setUploading(false);
     }
   };
-      } else {
-        const data = await response.json();
-        alert(data.error || 'Failed to upload document');
-      }
-    } catch (error) {
-      console.error('Error uploading document:', error);
-      alert('Failed to upload document');
-    }
-  };
 
   const handleDeleteDocument = async (docId: number, projectId: number) => {
     if (!confirm('Are you sure you want to delete this document?')) return;
