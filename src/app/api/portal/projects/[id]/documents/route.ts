@@ -87,7 +87,7 @@ export async function POST(
     const projectRows = await pool.query(
       'SELECT * FROM projects WHERE id = ? AND customer_id = ?',
       [projectId, customer.id]
-    );
+    ) as any[];
 
     if (!Array.isArray(projectRows) || projectRows.length === 0) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
@@ -106,7 +106,7 @@ export async function POST(
     );
 
     const docId = (result as any).insertId;
-    const document = await pool.query('SELECT * FROM documents WHERE id = ?', [docId]);
+    const document = await pool.query('SELECT * FROM documents WHERE id = ?', [docId]) as any[];
 
     return NextResponse.json({ document: document[0] });
   } catch (error) {
@@ -139,7 +139,7 @@ export async function DELETE(
        INNER JOIN projects p ON d.project_id = p.id
        WHERE d.id = ? AND p.customer_id = ? AND d.uploaded_by = 'customer'`,
       [documentId, customer.id]
-    );
+    ) as any[];
 
     if (!Array.isArray(docRows) || docRows.length === 0) {
       return NextResponse.json({ error: 'Document not found or unauthorized' }, { status: 404 });
