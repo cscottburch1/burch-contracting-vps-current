@@ -109,7 +109,7 @@ export async function POST(
 
     // Verify subcontractor exists
     const subs = await query(
-      'SELECT name FROM subcontractors WHERE id = ?',
+      'SELECT company_name, contact_name FROM subcontractors WHERE id = ?',
       [subcontractor_id]
     );
     if (!Array.isArray(subs) || subs.length === 0) {
@@ -137,7 +137,7 @@ export async function POST(
     await query(
       `INSERT INTO project_activity (project_id, activity_type, description, user_name)
        VALUES (?, 'subcontractor_assigned', ?, ?)`,
-      [projectId, `Assigned subcontractor: ${sub.name}${role ? ` (${role})` : ''}`, adminUser.name]
+      [projectId, `Assigned subcontractor: ${sub.company_name}${role ? ` (${role})` : ''}`, adminUser.name]
     );
 
     return NextResponse.json({
