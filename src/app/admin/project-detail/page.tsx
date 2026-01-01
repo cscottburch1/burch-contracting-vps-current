@@ -61,6 +61,16 @@ interface Subcontractor {
   completion_date: string | null;
 }
 
+interface AvailableSubcontractor {
+  id: number;
+  company_name: string;
+  contact_name: string;
+  phone: string;
+  email: string;
+  trade: string;
+  specialties: string;
+}
+
 interface Document {
   id: number;
   filename: string;
@@ -87,6 +97,9 @@ function ProjectDetailContent() {
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [subcontractors, setSubcontractors] = useState<Subcontractor[]>([]);
+  const [availableSubcontractors, setAvailableSubcontractors] = useState<AvailableSubcontractor[]>([]);
+  const [filteredSubcontractors, setFilteredSubcontractors] = useState<AvailableSubcontractor[]>([]);
+  const [trades, setTrades] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -112,6 +125,17 @@ function ProjectDetailContent() {
     due_date: '',
     status: 'pending' as 'pending' | 'in_progress' | 'completed' | 'delayed'
   });
+  
+  const [subcontractorForm, setSubcontractorForm] = useState({
+    subcontractor_id: '',
+    role: '',
+    notes: '',
+    amount_quoted: '',
+    status: 'pending' as 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
+  });
+  
+  const [selectedTrade, setSelectedTrade] = useState<string>('');
+  const [subcontractorSearch, setSubcontractorSearch] = useState<string>('');
 
   useEffect(() => {
     if (!projectId) {
@@ -120,7 +144,28 @@ function ProjectDetailContent() {
       return;
     }
     loadAllData();
+    loadAvailableSubcontractors();
   }, [projectId]);
+
+  useEffect(() => {
+    // Filter subcontractors based on trade and search
+    let filtered = availableSubcontractors;
+    
+    if (selectedTrade) {
+      filtered = filtered.filter(sub => sub.trade === selectedTrade);
+    }
+    
+    if (subcontractorSearch) {
+      const searchLower = subcontractorSearch.toLowerCase();
+      filtered = filtered.filter(sub => 
+        sub.company_name.toLowerCase().includes(searchLower) ||
+        sub.contact_name.toLowerCase().includes(searchLower) ||
+        sub.trade.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    setFilteredSubcontractors(filtered);
+  }, [selectedTrade, subcontractorSearch, availableSubcontractors]);
 
   const loadAllData = async () => {
     if (!projectId) return;
@@ -211,6 +256,24 @@ function ProjectDetailContent() {
       }
     } catch (error) {
       console.error('Failed to load subcontractors:', error);
+    }
+  };
+
+  const loadAvailableSubcontractors = async () => {
+    try {
+      const res = await fetch('/api/admin/subcontractors');
+      if (res.ok) {
+        const data = await res.json();
+        const subs = data.subcontractors || [];
+        setAvailableSubcontractors(subs);
+        setFilteredSubcontractors(subs);
+        
+        // Extract unique trades
+        const uniqueTrades = Array.from(new Set(subs.map((s: AvailableSubcontractor) => s.trade).filter(Boolean)));
+        setTrades(uniqueTrades as string[]);
+      }
+    } catch (error) {
+      console.error('Failed to load available subcontractors:', error);
     }
   };
 
@@ -320,6 +383,7 @@ function ProjectDetailContent() {
           status: 'pending'
         });
         await loadMilestones();
+        await loadActivities();
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to create milestone');
@@ -327,6 +391,48 @@ function ProjectDetailContent() {
     } catch (error) {
       console.error('Error creating milestone:', error);
       alert('Failed to create milestone');
+    }
+  };
+
+  const handleAssignSubcontractor = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!projectId || !subcontractorForm.subcontractor_id) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/subcontractors`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subcontractor_id: parseInt(subcontractorForm.subcontractor_id),
+          role: subcontractorForm.role,
+          notes: subcontractorForm.notes,
+          amount_quoted: subcontractorForm.amount_quoted ? parseFloat(subcontractorForm.amount_quoted) : null,
+          status: subcontractorForm.status,
+          assigned_date: new Date().toISOString().split('T')[0]
+        })
+      });
+
+      if (response.ok) {
+        alert('Subcontractor assigned successfully!');
+        setShowSubcontractorForm(false);
+        setSubcontractorForm({
+          subcontractor_id: '',
+          role: '',
+          notes: '',
+          amount_quoted: '',
+          status: 'pending'
+        });
+        setSelectedTrade('');
+        setSubcontractorSearch('');
+        await loadSubcontractors();
+        await loadActivities();
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to assign subcontractor');
+      }
+    } catch (error) {
+      console.error('Error assigning subcontractor:', error);
+      alert('Failed to assign subcontractor');
     }
   };
 
@@ -797,7 +903,16 @@ function ProjectDetailContent() {
 
         {activeTab === 'subcontractors' && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Assigned Subcontractors</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Assigned Subcontractors</h2>
+              <button
+                onClick={() => setShowSubcontractorForm(true)}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
+              >
+                <Icon name="Plus" className="mr-2" />
+                Assign Subcontractor
+              </button>
+            </div>
             {subcontractors.length === 0 ? (
               <p className="text-gray-500">No subcontractors assigned yet</p>
             ) : (
@@ -1032,6 +1147,145 @@ function ProjectDetailContent() {
                   className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                 >
                   Create Milestone
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Subcontractor Assignment Modal */}
+      {showSubcontractorForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h3 className="text-xl font-semibold mb-4">Assign Subcontractor</h3>
+            <form onSubmit={handleAssignSubcontractor}>
+              {/* Trade Filter */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Trade</label>
+                <select
+                  value={selectedTrade}
+                  onChange={(e) => setSelectedTrade(e.target.value)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                >
+                  <option value="">All Trades</option>
+                  {trades.map((trade) => (
+                    <option key={trade} value={trade}>{trade}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Search Box */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Search Subcontractors</label>
+                <input
+                  type="text"
+                  value={subcontractorSearch}
+                  onChange={(e) => setSubcontractorSearch(e.target.value)}
+                  placeholder="Search by company name, contact, or trade..."
+                  className="w-full border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              {/* Subcontractor Selection */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Select Subcontractor *</label>
+                <select
+                  value={subcontractorForm.subcontractor_id}
+                  onChange={(e) => setSubcontractorForm({ ...subcontractorForm, subcontractor_id: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                >
+                  <option value="">Choose a subcontractor...</option>
+                  {filteredSubcontractors.map((sub) => (
+                    <option key={sub.id} value={sub.id}>
+                      {sub.company_name} - {sub.contact_name} ({sub.trade})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  Showing {filteredSubcontractors.length} of {availableSubcontractors.length} subcontractors
+                </p>
+              </div>
+
+              {/* Role/Position */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Role/Position</label>
+                <input
+                  type="text"
+                  value={subcontractorForm.role}
+                  onChange={(e) => setSubcontractorForm({ ...subcontractorForm, role: e.target.value })}
+                  placeholder="e.g., Electrical Work, Plumbing Installation..."
+                  className="w-full border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              {/* Amount Quoted */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Amount Quoted</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  value={subcontractorForm.amount_quoted}
+                  onChange={(e) => setSubcontractorForm({ ...subcontractorForm, amount_quoted: e.target.value })}
+                  placeholder="0.00"
+                  className="w-full border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              {/* Status */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <select
+                  value={subcontractorForm.status}
+                  onChange={(e) => setSubcontractorForm({ ...subcontractorForm, status: e.target.value as any })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              {/* Notes */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+                <textarea
+                  value={subcontractorForm.notes}
+                  onChange={(e) => setSubcontractorForm({ ...subcontractorForm, notes: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  rows={3}
+                  placeholder="Add any special instructions or notes..."
+                />
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSubcontractorForm(false);
+                    setSubcontractorForm({
+                      subcontractor_id: '',
+                      role: '',
+                      notes: '',
+                      amount_quoted: '',
+                      status: 'pending'
+                    });
+                    setSelectedTrade('');
+                    setSubcontractorSearch('');
+                  }}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  disabled={!subcontractorForm.subcontractor_id}
+                >
+                  Assign Subcontractor
                 </button>
               </div>
             </form>
