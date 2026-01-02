@@ -4,7 +4,7 @@ import pool from '@/lib/mysql';
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ customerId: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const currentUser = await getCurrentAdminUser();
@@ -13,7 +13,7 @@ export async function GET(
     }
 
     const resolvedParams = await params;
-    const custId = parseInt(resolvedParams.customerId);
+    const custId = parseInt(resolvedParams.id);
 
     const connection = await pool.getConnection();
     try {

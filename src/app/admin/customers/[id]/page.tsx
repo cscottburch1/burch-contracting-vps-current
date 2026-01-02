@@ -42,6 +42,8 @@ export default function CustomerDetailPage() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showEditProjectModal, setShowEditProjectModal] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadCategory, setUploadCategory] = useState('general');
   const [uploadDescription, setUploadDescription] = useState('');
@@ -60,6 +62,14 @@ export default function CustomerDetailPage() {
     start_date: '',
     end_date: '',
     status: 'pending'
+  });
+  const [editProjectForm, setEditProjectForm] = useState({
+    title: '',
+    description: '',
+    budget: '',
+    start_date: '',
+    end_date: '',
+    status: 'pending' as 'pending' | 'active' | 'completed' | 'cancelled'
   });
 
   useEffect(() => {
@@ -304,6 +314,46 @@ export default function CustomerDetailPage() {
     }
   };
 
+  const openEditProjectModal = (project: Project) => {
+    setEditingProject(project);
+    setEditProjectForm({
+      title: project.title,
+      description: project.description,
+      budget: project.budget?.toString() || '',
+      start_date: project.start_date ? project.start_date.split('T')[0] : '',
+      end_date: project.end_date ? project.end_date.split('T')[0] : '',
+      status: project.status
+    });
+    setShowEditProjectModal(true);
+  };
+
+  const handleUpdateProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProject) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${editingProject.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          ...editProjectForm,
+          budget: editProjectForm.budget ? parseFloat(editProjectForm.budget) : null
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to update project');
+
+      alert('Project updated successfully!');
+      setShowEditProjectModal(false);
+      setEditingProject(null);
+      fetchCustomerDetails();
+    } catch (error) {
+      console.error('Error updating project:', error);
+      alert('Failed to update project');
+    }
+  };
+
   const getStatusColor = (status: string) => {
     const colors: Record<string, 'blue' | 'green' | 'gray' | 'orange'> = {
       pending: 'orange',
@@ -404,9 +454,15 @@ export default function CustomerDetailPage() {
                           <span>•</span>
                           <span>{formatDate(project.start_date)} - {formatDate(project.end_date)}</span>
                         </div>
-                        <Button variant="outline" size="sm" href={`/admin/project-detail?id=${project.id}`}>
-                          Manage
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" onClick={() => openEditProjectModal(project)}>
+                            <Icon name="Edit" size={14} className="mr-1" />
+                            Edit
+                          </Button>
+                          <Button variant="outline" size="sm" href={`/admin/project-detail?id=${project.id}`}>
+                            Manage
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -850,6 +906,120 @@ export default function CustomerDetailPage() {
                     disabled={!uploadFile || !selectedProjectId || uploading || projects.length === 0}
                   >
                     {uploading ? 'Uploading...' : 'Upload'}
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Project Modal */}
+      {showEditProjectModal && editingProject && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Edit Project</h2>
+                <button
+                  onClick={() => {
+                    setShowEditProjectModal(false);
+                    setEditingProject(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="X" size={24} />
+                </button>
+              </div>
+
+              <form onSubmit={handleUpdateProject} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Project Title *</label>
+                  <input
+                    type="text"
+                    value={editProjectForm.title}
+                    onChange={(e) => setEditProjectForm({ ...editProjectForm, title: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
+                    value={editProjectForm.description}
+                    onChange={(e) => setEditProjectForm({ ...editProjectForm, description: e.target.value })}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Project description..."
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Budget ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={editProjectForm.budget}
+                      onChange={(e) => setEditProjectForm({ ...editProjectForm, budget: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      placeholder="0.00"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                    <select
+                      value={editProjectForm.status}
+                      onChange={(e) => setEditProjectForm({ ...editProjectForm, status: e.target.value as any })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      required
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="active">Active</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                    <input
+                      type="date"
+                      value={editProjectForm.start_date}
+                      onChange={(e) => setEditProjectForm({ ...editProjectForm, start_date: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                    <input
+                      type="date"
+                      value={editProjectForm.end_date}
+                      onChange={(e) => setEditProjectForm({ ...editProjectForm, end_date: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => {
+                      setShowEditProjectModal(false);
+                      setEditingProject(null);
+                    }}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" variant="primary" className="flex-1">
+                    Save Changes
                   </Button>
                 </div>
               </form>
