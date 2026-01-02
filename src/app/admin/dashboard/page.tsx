@@ -31,30 +31,6 @@ export default async function AdminDashboard() {
             </form>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl mb-2">👥</div>
-              <div className="text-2xl font-bold mb-1">Quick</div>
-              <div className="text-blue-100">Customers</div>
-            </div>
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl mb-2">🏗️</div>
-              <div className="text-2xl font-bold mb-1">Fast</div>
-              <div className="text-purple-100">Projects</div>
-            </div>
-            <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl mb-2">💰</div>
-              <div className="text-2xl font-bold mb-1">Easy</div>
-              <div className="text-green-100">Invoicing</div>
-            </div>
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl mb-2">🔧</div>
-              <div className="text-2xl font-bold mb-1">Simple</div>
-              <div className="text-orange-100">Subs</div>
-            </div>
-          </div>
-
           {/* Primary Workflow */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-gray-900 flex items-center gap-2">
