@@ -54,7 +54,7 @@ export async function PUT(
     const params: any[] = [];
 
     if (title !== undefined) {
-      updates.push('title = ?');
+      updates.push('project_name = ?');
       params.push(title);
     }
     if (description !== undefined) {
@@ -62,7 +62,7 @@ export async function PUT(
       params.push(description);
     }
     if (budget !== undefined) {
-      updates.push('budget = ?');
+      updates.push('total_cost = ?');
       params.push(budget);
     }
     if (start_date !== undefined) {
@@ -70,7 +70,7 @@ export async function PUT(
       params.push(start_date);
     }
     if (end_date !== undefined) {
-      updates.push('end_date = ?');
+      updates.push('estimated_completion_date = ?');
       params.push(end_date);
     }
     if (status !== undefined) {
