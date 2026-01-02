@@ -26,6 +26,8 @@ export default function AdminProjectsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingProject, setDeletingProject] = useState<Project | null>(null);
 
   useEffect(() => {
     fetchProjects();
@@ -44,6 +46,27 @@ export default function AdminProjectsPage() {
       console.error('Failed to fetch projects:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    if (!deletingProject) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${deletingProject.id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (!response.ok) throw new Error('Failed to delete project');
+
+      alert('Project deleted successfully!');
+      setShowDeleteModal(false);
+      setDeletingProject(null);
+      fetchProjects();
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      alert('Failed to delete project');
     }
   };
 
@@ -219,11 +242,10 @@ export default function AdminProjectsPage() {
             {filteredProjects.map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition cursor-pointer"
-                onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
+                  <div className="flex-1 cursor-pointer" onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}>
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-xl font-bold text-gray-900">{project.project_name}</h3>
                       <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold border ${getStatusColor(project.status)}`}>
@@ -250,10 +272,26 @@ export default function AdminProjectsPage() {
                       </div>
                     </div>
                   </div>
-                  <button className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2">
-                    Manage
-                    <Icon name="ArrowRight" size={20} />
-                  </button>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
+                      className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition"
+                    >
+                      Manage
+                      <Icon name="ArrowRight" size={20} />
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeletingProject(project);
+                        setShowDeleteModal(true);
+                      }}
+                      className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-50 transition"
+                    >
+                      <Icon name="Trash2" size={20} />
+                      Delete
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -280,6 +318,55 @@ export default function AdminProjectsPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteModal && deletingProject && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Delete Project?</h2>
+                  <button
+                    onClick={() => {
+                      setShowDeleteModal(false);
+                      setDeletingProject(null);
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <Icon name="X" size={24} />
+                  </button>
+                </div>
+
+                <div className="mb-6">
+                  <p className="text-gray-700 mb-4">
+                    Are you sure you want to delete the project <strong>"{deletingProject.project_name}"</strong>?
+                  </p>
+                  <p className="text-red-600 font-semibold">
+                    This action cannot be undone. All project data, documents, photos, and milestones will be permanently deleted.
+                  </p>
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setShowDeleteModal(false);
+                      setDeletingProject(null);
+                    }}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleDeleteProject}
+                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold"
+                  >
+                    Delete Project
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
