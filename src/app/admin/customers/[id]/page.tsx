@@ -43,7 +43,9 @@ export default function CustomerDetailPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showEditProjectModal, setShowEditProjectModal] = useState(false);
+  const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [deletingProject, setDeletingProject] = useState<Project | null>(null);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadCategory, setUploadCategory] = useState('general');
   const [uploadDescription, setUploadDescription] = useState('');
@@ -354,6 +356,27 @@ export default function CustomerDetailPage() {
     }
   };
 
+  const handleDeleteProject = async () => {
+    if (!deletingProject) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${deletingProject.id}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (!response.ok) throw new Error('Failed to delete project');
+
+      alert('Project deleted successfully!');
+      setShowDeleteProjectModal(false);
+      setDeletingProject(null);
+      fetchCustomerDetails();
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      alert('Failed to delete project');
+    }
+  };
+
   const getStatusColor = (status: string) => {
     const colors: Record<string, 'blue' | 'green' | 'gray' | 'orange'> = {
       pending: 'orange',
@@ -461,6 +484,18 @@ export default function CustomerDetailPage() {
                           </Button>
                           <Button variant="outline" size="sm" href={`/admin/project-detail?id=${project.id}`}>
                             Manage
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => {
+                              setDeletingProject(project);
+                              setShowDeleteProjectModal(true);
+                            }}
+                            className="text-red-600 hover:text-red-700 hover:border-red-600"
+                          >
+                            <Icon name="Trash2" size={14} className="mr-1" />
+                            Delete
                           </Button>
                         </div>
                       </div>
@@ -909,6 +944,58 @@ export default function CustomerDetailPage() {
                   </Button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Project Confirmation Modal */}
+      {showDeleteProjectModal && deletingProject && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Delete Project?</h2>
+                <button
+                  onClick={() => {
+                    setShowDeleteProjectModal(false);
+                    setDeletingProject(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="X" size={24} />
+                </button>
+              </div>
+
+              <div className="mb-6">
+                <p className="text-gray-700 mb-4">
+                  Are you sure you want to delete the project <strong>"{deletingProject.title}"</strong>?
+                </p>
+                <p className="text-red-600 font-semibold">
+                  This action cannot be undone. All project data, documents, photos, and milestones will be permanently deleted.
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowDeleteProjectModal(false);
+                    setDeletingProject(null);
+                  }}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="button" 
+                  onClick={handleDeleteProject}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                >
+                  Delete Project
+                </Button>
+              </div>
             </div>
           </div>
         </div>
