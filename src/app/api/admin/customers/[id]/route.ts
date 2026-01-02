@@ -19,7 +19,15 @@ export async function GET(
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 });
     }
 
-    const projects = await query('SELECT * FROM projects WHERE customer_id = ? ORDER BY created_at DESC', [id]);
+    const projectsRaw = await query('SELECT * FROM projects WHERE customer_id = ? ORDER BY created_at DESC', [id]);
+    
+    // Map database fields to frontend expected fields
+    const projects = projectsRaw.map((p: any) => ({
+      ...p,
+      title: p.project_name,
+      budget: p.total_cost,
+      end_date: p.estimated_completion_date
+    }));
 
     return NextResponse.json({ customer, projects });
   } catch (error) {

@@ -14,10 +14,18 @@ export async function GET(
 
     const { id } = await context.params;
     
-    const project = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
-    if (!project) {
+    const projectRaw = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
+    if (!projectRaw) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
+
+    // Map database fields to frontend expected fields
+    const project = {
+      ...projectRaw,
+      title: projectRaw.project_name,
+      budget: projectRaw.total_cost,
+      end_date: projectRaw.estimated_completion_date
+    };
 
     const updates = await query(
       'SELECT * FROM project_updates WHERE project_id = ? ORDER BY created_at DESC',
@@ -86,7 +94,15 @@ export async function PUT(
       );
     }
 
-    const project = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
+    const projectRaw = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
+    
+    // Map database fields to frontend expected fields
+    const project = {
+      ...projectRaw,
+      title: projectRaw.project_name,
+      budget: projectRaw.total_cost,
+      end_date: projectRaw.estimated_completion_date
+    };
 
     return NextResponse.json({ project });
   } catch (error) {
