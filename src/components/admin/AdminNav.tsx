@@ -100,7 +100,7 @@ export function AdminNav() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-[60] bg-blue-600 text-white p-2 rounded-lg shadow-lg"
       >
         {mobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -117,7 +117,7 @@ export function AdminNav() {
       <nav
         className={`
           fixed top-0 left-0 h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white
-          transition-all duration-300 ease-in-out z-40
+          transition-all duration-300 ease-in-out z-50
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
