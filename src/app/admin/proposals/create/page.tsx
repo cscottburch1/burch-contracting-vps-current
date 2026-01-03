@@ -39,6 +39,8 @@ export default function CreateProposalPage() {
   const handleProposalTypeSelect = (type: string) => {
     if (type === 'handyman') {
       router.push('/admin/proposals/create/handyman');
+    } else if (type === 'kitchen-bath') {
+      router.push('/admin/proposals/create/kitchen-bath');
     } else {
       alert(`${type} proposal template coming soon!`);
     }
@@ -96,7 +98,7 @@ export default function CreateProposalPage() {
 
           {/* Kitchen/Bath Remodeling */}
           <button
-            onClick={() => handleProposalTypeSelect('Kitchen/Bath Remodeling')}
+            onClick={() => handleProposalTypeSelect('kitchen-bath')}
             className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 text-left group"
           >
             <div className="flex items-center justify-center mb-6">

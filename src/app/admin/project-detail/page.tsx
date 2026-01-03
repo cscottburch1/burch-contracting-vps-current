@@ -1085,12 +1085,45 @@ function ProjectDetailContent() {
             <h3 className="text-xl font-semibold mb-4">Add Milestone</h3>
             <form onSubmit={handleCreateMilestone}>
               <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Construction Phase</label>
+                <select
+                  value={milestoneForm.title}
+                  onChange={(e) => setMilestoneForm({ ...milestoneForm, title: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                  required
+                >
+                  <option value="">Select a phase...</option>
+                  <option value="Pre-Construction">Pre-Construction</option>
+                  <option value="Site Preparation">Site Preparation</option>
+                  <option value="Foundation">Foundation</option>
+                  <option value="Framing">Framing</option>
+                  <option value="Rough-In Plumbing">Rough-In Plumbing</option>
+                  <option value="Rough-In Electrical">Rough-In Electrical</option>
+                  <option value="Rough-In HVAC">Rough-In HVAC</option>
+                  <option value="Insulation">Insulation</option>
+                  <option value="Drywall Installation">Drywall Installation</option>
+                  <option value="Interior Painting">Interior Painting</option>
+                  <option value="Flooring">Flooring</option>
+                  <option value="Cabinetry & Countertops">Cabinetry & Countertops</option>
+                  <option value="Trim & Finish Carpentry">Trim & Finish Carpentry</option>
+                  <option value="Plumbing Fixtures">Plumbing Fixtures</option>
+                  <option value="Electrical Fixtures">Electrical Fixtures</option>
+                  <option value="Final Inspections">Final Inspections</option>
+                  <option value="Exterior Finishes">Exterior Finishes</option>
+                  <option value="Landscaping">Landscaping</option>
+                  <option value="Final Walkthrough">Final Walkthrough</option>
+                  <option value="Project Closeout">Project Closeout</option>
+                  <option value="Custom">Custom (Enter Below)</option>
+                </select>
+              </div>
+              <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
                 <input
                   type="text"
                   value={milestoneForm.title}
                   onChange={(e) => setMilestoneForm({ ...milestoneForm, title: e.target.value })}
                   className="w-full border border-gray-300 rounded-md p-2"
+                  placeholder="Enter custom title or modify selected phase"
                   required
                 />
               </div>

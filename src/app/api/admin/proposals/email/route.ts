@@ -31,16 +31,56 @@ export async function POST(request: Request) {
       proposalType
     } = data;
 
-    // Generate HTML email with proposal details
-    const itemsHtml = items.map((item: any) => `
-      <tr>
-        <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${item.service}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${item.quantity}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right;">$${item.price.toFixed(2)}</td>
-        <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">$${item.total.toFixed(2)}</td>
-      </tr>
-      ${item.notes ? `<tr><td colspan="4" style="padding: 5px 10px; font-size: 12px; color: #6b7280; font-style: italic;">Note: ${item.notes}</td></tr>` : ''}
-    `).join('');
+    // Generate HTML for items based on proposal type
+    let itemsHtml = '';
+    
+    if (proposalType === 'Kitchen/Bath Remodeling') {
+      // Kitchen/Bath format with category, description, qty, unit, price, total
+      itemsHtml = items.map((item: any) => `
+        <tr>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #1f2937;">${item.category || ''}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${item.description || ''}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${item.quantity}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${item.unit || 'ea'}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right;">$${item.unitPrice?.toFixed(2) || '0.00'}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">$${item.total?.toFixed(2) || '0.00'}</td>
+        </tr>
+      `).join('');
+    } else {
+      // Handyman format with service, qty, price, total
+      itemsHtml = items.map((item: any) => `
+        <tr>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${item.service}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: center;">${item.quantity}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right;">$${item.price.toFixed(2)}</td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">$${item.total.toFixed(2)}</td>
+        </tr>
+        ${item.notes ? `<tr><td colspan="4" style="padding: 5px 10px; font-size: 12px; color: #6b7280; font-style: italic;">Note: ${item.notes}</td></tr>` : ''}
+      `).join('');
+    }
+
+    // Table header based on proposal type
+    const tableHeader = proposalType === 'Kitchen/Bath Remodeling' ? `
+      <thead>
+        <tr style="background-color: #f3f4f6; border-bottom: 2px solid #d1d5db;">
+          <th style="padding: 12px; text-align: left; color: #111827; font-weight: 600;">Category</th>
+          <th style="padding: 12px; text-align: left; color: #111827; font-weight: 600;">Description</th>
+          <th style="padding: 12px; text-align: center; color: #111827; font-weight: 600;">Qty</th>
+          <th style="padding: 12px; text-align: center; color: #111827; font-weight: 600;">Unit</th>
+          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Unit Price</th>
+          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Total</th>
+        </tr>
+      </thead>
+    ` : `
+      <thead>
+        <tr style="background-color: #f3f4f6; border-bottom: 2px solid #d1d5db;">
+          <th style="padding: 12px; text-align: left; color: #111827; font-weight: 600;">Service Description</th>
+          <th style="padding: 12px; text-align: center; color: #111827; font-weight: 600;">Qty</th>
+          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Price</th>
+          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Total</th>
+        </tr>
+      </thead>
+    `;
 
     const emailHtml = `
 <!DOCTYPE html>
@@ -101,14 +141,7 @@ export async function POST(request: Request) {
 
     <!-- Services Table -->
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-      <thead>
-        <tr style="background-color: #f3f4f6; border-bottom: 2px solid #d1d5db;">
-          <th style="padding: 12px; text-align: left; color: #111827; font-weight: 600;">Service Description</th>
-          <th style="padding: 12px; text-align: center; color: #111827; font-weight: 600;">Qty</th>
-          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Price</th>
-          <th style="padding: 12px; text-align: right; color: #111827; font-weight: 600;">Total</th>
-        </tr>
-      </thead>
+      ${tableHeader}
       <tbody>
         ${itemsHtml}
       </tbody>
