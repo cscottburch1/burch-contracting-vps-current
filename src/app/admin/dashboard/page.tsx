@@ -19,16 +19,9 @@ export default async function AdminDashboard() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10 mb-6">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Admin Control Center</h1>
-              <p className="text-lg text-gray-600">Manage your entire business from one place</p>
-            </div>
-            <form action="/api/admin/logout" method="post">
-              <button className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-semibold">
-                Logout
-              </button>
-            </form>
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Admin Control Center</h1>
+            <p className="text-lg text-gray-600">Manage your entire business from one place</p>
           </div>
 
           {/* Primary Workflow */}
