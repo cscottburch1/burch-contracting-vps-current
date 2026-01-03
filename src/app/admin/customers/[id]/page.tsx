@@ -419,6 +419,15 @@ export default function CustomerDetailPage() {
   return (
     <Section padding="lg" background="white">
       <div className="max-w-7xl mx-auto">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+          <a href="/admin/dashboard" className="hover:text-blue-600">Dashboard</a>
+          <span>›</span>
+          <a href="/admin/customers" className="hover:text-blue-600">Customers</a>
+          <span>›</span>
+          <span className="text-gray-900 font-semibold">{customer.name}</span>
+        </div>
+
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -430,6 +439,10 @@ export default function CustomerDetailPage() {
             <p className="text-gray-600 mt-2">{customer.email} • {customer.phone}</p>
           </div>
           <div className="flex gap-3">
+            <Button variant="outline" href="/admin/dashboard">
+              <Icon name="LayoutDashboard" size={16} className="mr-2" />
+              Dashboard
+            </Button>
             <Button variant="outline" onClick={() => setShowEditForm(true)}>
               <Icon name="Edit" size={16} className="mr-2" />
               Edit Customer

@@ -132,6 +132,13 @@ export default function AdminProjectsPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+          <a href="/admin/dashboard" className="hover:text-blue-600">Dashboard</a>
+          <span>›</span>
+          <span className="text-gray-900 font-semibold">Projects</span>
+        </div>
+
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-6">

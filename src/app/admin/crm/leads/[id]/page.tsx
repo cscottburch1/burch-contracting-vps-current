@@ -227,6 +227,15 @@ export default function LeadDetailPage() {
   return (
     <Section padding="lg" background="white">
       <div className="max-w-7xl mx-auto">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+          <a href="/admin/dashboard" className="hover:text-blue-600">Dashboard</a>
+          <span>›</span>
+          <a href="/admin/crm" className="hover:text-blue-600">CRM / Leads</a>
+          <span>›</span>
+          <span className="text-gray-900 font-semibold">{lead.name}</span>
+        </div>
+
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>

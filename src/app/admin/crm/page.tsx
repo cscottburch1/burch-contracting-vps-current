@@ -136,6 +136,13 @@ export default function AdminCRMPage() {
   return (
     <>
       <Section padding="lg" background="white">
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+          <a href="/admin/dashboard" className="hover:text-blue-600">Dashboard</a>
+          <span>›</span>
+          <span className="text-gray-900 font-semibold">CRM / Leads</span>
+        </div>
+
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Lead Management</h1>
