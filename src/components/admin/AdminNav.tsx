@@ -117,7 +117,7 @@ export function AdminNav() {
       <nav
         className={`
           fixed top-0 left-0 h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white
-          transition-all duration-300 ease-in-out z-[100]
+          transition-all duration-300 ease-in-out z-[100] pt-28
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
