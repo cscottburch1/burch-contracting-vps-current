@@ -22,7 +22,7 @@ export const businessConfig = {
     city: "Simpsonville",
     state: "SC",
     zip: "29681",
-    hours: "Monday - Friday: 8:00 AM - 5:00 PM\nSaturday: Appt Only"
+    hours: "Monday - Friday: 8:00 AM - 5:00 PM\nSaturday: By Appt Only\nSunday: Closed"
   },
 
   social: {
