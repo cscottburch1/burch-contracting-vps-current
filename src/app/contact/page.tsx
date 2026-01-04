@@ -263,7 +263,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
                       Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -282,7 +282,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
                       Phone <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -303,7 +303,7 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -322,7 +322,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="address" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="address" className="block text-sm font-semibold text-gray-900 mb-2">
                       Address or City/Area <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -343,7 +343,7 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="serviceType" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="serviceType" className="block text-sm font-semibold text-gray-900 mb-2">
                       Service Type <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -365,7 +365,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="budgetRange" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="budgetRange" className="block text-sm font-semibold text-gray-900 mb-2">
                       Budget Range <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -393,7 +393,7 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="timeframe" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="timeframe" className="block text-sm font-semibold text-gray-900 mb-2">
                       Project Timeframe <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -417,7 +417,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="referralSource" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="referralSource" className="block text-sm font-semibold text-gray-900 mb-2">
                       How Did You Hear About Us? <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -444,7 +444,7 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="preferredDate" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="preferredDate" className="block text-sm font-semibold text-gray-900 mb-2">
                       Preferred Consultation Date <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -463,7 +463,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="preferredTime" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="preferredTime" className="block text-sm font-semibold text-gray-900 mb-2">
                       Preferred Time <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -493,7 +493,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="description" className="block text-sm font-semibold text-gray-900 mb-2">
                     Project Description <span className="text-red-500">*</span>
                   </label>
                   <textarea

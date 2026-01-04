@@ -116,14 +116,14 @@ export function AdminNav() {
       {/* Sidebar */}
       <nav
         className={`
-          fixed top-0 left-0 h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white
-          transition-all duration-300 ease-in-out z-[100] pt-28
+          fixed top-[112px] left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
+          transition-all duration-300 ease-in-out z-[100] flex flex-col
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+        <div className="flex items-center justify-between p-4 border-b border-gray-700 flex-shrink-0">
           {!collapsed && (
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">
@@ -145,7 +145,7 @@ export function AdminNav() {
         </div>
 
         {/* Main Navigation */}
-        <div className="flex-1 overflow-y-auto py-4 px-2">
+        <div className="flex-1 overflow-y-auto py-4 px-2 min-h-0">
           <div className="space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -231,7 +231,7 @@ export function AdminNav() {
 
         {/* Keyboard Shortcuts Hint */}
         {!collapsed && (
-          <div className="p-4 border-t border-gray-700">
+          <div className="p-4 border-t border-gray-700 flex-shrink-0">
             <div className="text-xs text-gray-400">
               <div className="font-semibold mb-1">Keyboard Shortcuts</div>
               <div>Alt + 1-8 for quick nav</div>

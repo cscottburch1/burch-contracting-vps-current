@@ -284,6 +284,13 @@ export default function AdminProjectsPage() {
                       onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
                       className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition"
                     >
+                      <Icon name="Edit" size={20} />
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
+                      className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition"
+                    >
                       Manage
                       <Icon name="ArrowRight" size={20} />
                     </button>
