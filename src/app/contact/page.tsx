@@ -272,7 +272,7 @@ export default function ContactPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="John Smith"
@@ -291,7 +291,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="(555) 123-4567"
@@ -312,7 +312,7 @@ export default function ContactPage() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="john@example.com"
@@ -331,7 +331,7 @@ export default function ContactPage() {
                       name="address"
                       value={formData.address}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.address ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="Simpsonville, SC"
@@ -351,7 +351,7 @@ export default function ContactPage() {
                       name="serviceType"
                       value={formData.serviceType}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.serviceType ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -373,7 +373,7 @@ export default function ContactPage() {
                       name="budgetRange"
                       value={formData.budgetRange}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.budgetRange ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -401,7 +401,7 @@ export default function ContactPage() {
                       name="timeframe"
                       value={formData.timeframe}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.timeframe ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -425,7 +425,7 @@ export default function ContactPage() {
                       name="referralSource"
                       value={formData.referralSource}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.referralSource ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -454,7 +454,7 @@ export default function ContactPage() {
                       value={formData.preferredDate}
                       onChange={handleChange}
                       min={new Date().toISOString().split('T')[0]}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.preferredDate ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -471,7 +471,7 @@ export default function ContactPage() {
                       name="preferredTime"
                       value={formData.preferredTime}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
                         errors.preferredTime ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
@@ -502,7 +502,7 @@ export default function ContactPage() {
                     value={formData.description}
                     onChange={handleChange}
                     rows={6}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                       errors.description ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="Tell us about your project... What work needs to be done? Any specific requirements or concerns?"
