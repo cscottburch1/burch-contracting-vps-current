@@ -33,7 +33,7 @@ export const businessConfig = {
   },
 
   serviceArea: {
-    description: "Proudly serving Simpsonville and southeast communities",
+    description: "Proudly serving Simpsonville and the Upstate SC community",
     locations: ["Simpsonville", "Fountain Inn", "Gray Court", "Woodruff", "Laurens", "Greenville", "Mauldin", "Five Forks"]
   },
 
@@ -49,7 +49,7 @@ export const businessConfig = {
       id: "remodeling",
       title: "Kitchen & Bathroom Remodeling",
       icon: "Home",
-      description: "Complete kitchen & bath renovations with custom cabinets, granite countertops & tile work throughout southeast SC. Free design consultation.",
+      description: "Complete kitchen & bath renovations with custom cabinets, granite countertops & tile work throughout the Upstate SC region. Free design consultation.",
       tasks: ["Custom kitchen design", "Luxury bathroom remodels", "Countertops & tile installation"]
     },
     {

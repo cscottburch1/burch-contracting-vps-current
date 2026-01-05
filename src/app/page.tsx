@@ -52,7 +52,7 @@ export default function HomePage() {
       "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
       "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875"
     ],
-    "description": "#1 rated general contractor in Simpsonville, SC specializing in kitchen & bathroom remodeling, handyman services, decks, porches, and basement finishing. Licensed, insured, BBB A+ rated with 30+ years serving southeast Greenville County and Laurens County.",
+    "description": "#1 rated general contractor in Simpsonville, SC specializing in kitchen & bathroom remodeling, handyman services, decks, porches, and basement finishing. Licensed, insured, BBB A+ rated with 30+ years serving the Upstate SC region - Greenville County and Laurens County.",
     "areaServed": [
       {
         "@type": "City",
@@ -160,7 +160,7 @@ export default function HomePage() {
         "name": "What areas does Burch Contracting serve in South Carolina?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We proudly serve Simpsonville, Fountain Inn, Gray Court, Woodruff, Five Forks, Mauldin, Greenville, and Laurens throughout southeast Greenville County and Laurens County, South Carolina."
+          "text": "We proudly serve Simpsonville, Fountain Inn, Gray Court, Woodruff, Five Forks, Mauldin, Greenville, and Laurens throughout the Upstate SC region - Greenville County and Laurens County, South Carolina."
         }
       },
       {

@@ -24,7 +24,7 @@ const serviceContent: Record<string, {
   handyman: {
     title: "#1 Rated Handyman Services in Simpsonville, SC | Licensed & Insured",
     subtitle: "Simpsonville's Most Trusted Handyman - Same-Day Service Available",
-    description: "Looking for a reliable handyman in Simpsonville, SC? Burch Contracting is your #1 choice for professional handyman services in southeast Greenville County and Laurens County. From minor repairs to complete home maintenance, our licensed and insured handyman experts serve Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens. We handle everything from fixing squeaky doors to installing fixtures, drywall repair, plumbing fixes, and more. Call (864) 724-4600 for same-day service!",
+    description: "Looking for a reliable handyman in Simpsonville, SC? Burch Contracting is your #1 choice for professional handyman services in the Upstate SC region - Greenville County and Laurens County. From minor repairs to complete home maintenance, our licensed and insured handyman experts serve Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens. We handle everything from fixing squeaky doors to installing fixtures, drywall repair, plumbing fixes, and more. Call (864) 724-4600 for same-day service!",
     benefits: [
       "⚡ Same-Day Service Available - Call by noon for same-day repairs",
       "💰 Upfront Fixed Pricing - Know the cost before we start",
@@ -84,7 +84,7 @@ const serviceContent: Record<string, {
   },
   remodeling: {
     title: "#1 Kitchen & Bathroom Remodeling Contractor in Simpsonville, SC | Free Design",
-    subtitle: "Award-Winning Kitchen & Bath Remodels in Simpsonville & Southeast SC",
+    subtitle: "Award-Winning Kitchen & Bath Remodels in Simpsonville & Upstate SC",
     description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 30+ years experience.",
     benefits: [
       "🎨 Free Design Consultation & 3D Renderings",
@@ -326,7 +326,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const metadataMap: Record<string, any> = {
     handyman: {
       title: '#1 Handyman Services in Simpsonville, SC | Same-Day Service | (864) 724-4600',
-      description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving southeast Greenville County: Simpsonville, Fountain Inn, Gray Court, Woodruff. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
+      description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Greenville County - Simpsonville, Fountain Inn, Gray Court, Woodruff. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
       keywords: 'handyman Simpsonville SC, handyman near me, same day handyman, handyman Fountain Inn, handyman Gray Court, handyman Woodruff, licensed handyman Simpsonville, door repair Simpsonville, fixture installation, drywall repair, home repair Simpsonville, local handyman, affordable handyman services'
     },
     remodeling: {

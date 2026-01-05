@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   keywords: ['home services Simpsonville SC', 'contractor Simpsonville', 'kitchen remodeling Simpsonville SC', 'bathroom remodeling Simpsonville', 'basement finishing Simpsonville', 'handyman Simpsonville', 'deck builder Simpsonville', 'screened porch Simpsonville', 'home repair Fountain Inn', 'remodeling contractor Gray Court', 'basement contractor Woodruff', 'licensed contractor Laurens County'],
   openGraph: {
     title: 'Professional Home Services | Burch Contracting - Simpsonville, SC',
-    description: '#1 rated contractor in Simpsonville, SC. Kitchen & bath remodeling, basement finishing, decks, handyman services. Licensed, insured, BBB A+ rated. Serving southeast Greenville & Laurens Counties.',
+    description: '#1 rated contractor in Simpsonville, SC. Kitchen & bath remodeling, basement finishing, decks, handyman services. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Greenville & Laurens Counties.'
     url: 'https://burchcontracting.com/services',
     type: 'website',
     images: [{
@@ -53,7 +53,7 @@ export default function ServicesPage() {
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
               <Icon name="MapPin" size={20} className="text-blue-400" />
-              <span className="font-semibold">Serving Southeast SC</span>
+              <span className="font-semibold">Serving Upstate SC</span>
             </div>
           </div>
         </div>
