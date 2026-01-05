@@ -6,15 +6,24 @@ import { businessConfig } from '@/config/business';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Home Services | Burch Contracting - Simpsonville, SC',
-  description: 'Professional home repair, remodeling, and contracting services in Simpsonville, SC. Kitchen & bath remodels, decks, porches, handyman services, and more. Licensed and insured.',
-  keywords: ['home services', 'home repair', 'remodeling services', 'kitchen remodel Simpsonville', 'bathroom remodel Simpsonville', 'handyman Simpsonville', 'contractor services', 'Simpsonville SC', 'kitchen renovation Simpsonville'],
+  title: 'Home Services in Simpsonville, SC | Kitchen, Bath, Deck, Basement, Handyman | (864) 724-4600',
+  description: '#1 rated home services in Simpsonville, SC. Professional kitchen & bathroom remodeling, basement finishing, custom decks, screened porches, handyman services. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens County. 30+ years experience. Free estimates.',
+  keywords: ['home services Simpsonville SC', 'contractor Simpsonville', 'kitchen remodeling Simpsonville SC', 'bathroom remodeling Simpsonville', 'basement finishing Simpsonville', 'handyman Simpsonville', 'deck builder Simpsonville', 'screened porch Simpsonville', 'home repair Fountain Inn', 'remodeling contractor Gray Court', 'basement contractor Woodruff', 'licensed contractor Laurens County'],
   openGraph: {
-    title: 'Home Services | Burch Contracting - Simpsonville, SC',
-    description: 'Comprehensive home repair and remodeling services in Simpsonville, SC. Quality craftsmanship you can trust.',
+    title: 'Professional Home Services | Burch Contracting - Simpsonville, SC',
+    description: '#1 rated contractor in Simpsonville, SC. Kitchen & bath remodeling, basement finishing, decks, handyman services. Licensed, insured, BBB A+ rated. Serving southeast Greenville & Laurens Counties.',
     url: 'https://burchcontracting.com/services',
     type: 'website',
+    images: [{
+      url: 'https://burchcontracting.com/og-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Burch Contracting - Home Services in Simpsonville, SC'
+    }]
   },
+  alternates: {
+    canonical: 'https://burchcontracting.com/services'
+  }
 };
 
 export default function ServicesPage() {
@@ -28,11 +37,25 @@ export default function ServicesPage() {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-            Our <span className="gradient-text">Services</span>
+            Simpsonville's <span className="gradient-text">#1 Rated</span> Home Services
           </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed animate-fade-in-up stagger-1 opacity-0">
-            Comprehensive contracting solutions built on quality craftsmanship, clear communication, and dependable delivery.
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed animate-fade-in-up stagger-1 opacity-0 mb-6">
+            Professional kitchen & bathroom remodeling, basement finishing, custom decks, screened porches, and handyman services throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. Licensed, insured, and BBB A+ rated with 30+ years experience.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-2 opacity-0">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+              <Icon name="Star" size={20} className="text-yellow-400" />
+              <span className="font-semibold">BBB A+ Rated</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+              <Icon name="ShieldCheck" size={20} className="text-green-400" />
+              <span className="font-semibold">Licensed & Insured</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+              <Icon name="MapPin" size={20} className="text-blue-400" />
+              <span className="font-semibold">Serving Southeast SC</span>
+            </div>
+          </div>
         </div>
       </section>
 

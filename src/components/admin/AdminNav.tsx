@@ -116,8 +116,8 @@ export function AdminNav() {
       {/* Sidebar */}
       <nav
         className={`
-          fixed top-[112px] left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
-          transition-all duration-300 ease-in-out z-[100] flex flex-col
+          fixed top-0 left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
+          transition-all duration-300 ease-in-out z-50 flex flex-col
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}

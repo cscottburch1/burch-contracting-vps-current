@@ -33,31 +33,38 @@ export const businessConfig = {
   },
 
   serviceArea: {
-    description: "Proudly serving Simpsonville and surrounding communities",
-    locations: ["Simpsonville", "Greenville", "Five Forks", "Fountain Inn", "Mauldin", "Laurens", "Woodruff", "Gray Court"]
+    description: "Proudly serving Simpsonville and southeast communities",
+    locations: ["Simpsonville", "Fountain Inn", "Gray Court", "Woodruff", "Laurens", "Greenville", "Mauldin", "Five Forks"]
   },
 
   services: [
     {
       id: "handyman",
-      title: "General Handyman Services",
+      title: "Professional Handyman Services",
       icon: "Wrench",
-      description: "From small repairs to routine maintenance.",
-      tasks: ["Door repairs", "Cabinet installation", "Fixture replacement"]
+      description: "Same-day repairs, installations & maintenance for homes in Simpsonville, Fountain Inn, Gray Court & Woodruff. Licensed & insured.",
+      tasks: ["Door repairs & hardware", "Cabinet & fixture installation", "Drywall & minor plumbing"]
     },
     {
       id: "remodeling",
-      title: "Kitchen & Bathroom Remodels",
+      title: "Kitchen & Bathroom Remodeling",
       icon: "Home",
-      description: "Transform your spaces with quality materials.",
-      tasks: ["Kitchen renovations", "Bathroom makeovers", "Countertop installation"]
+      description: "Complete kitchen & bath renovations with custom cabinets, granite countertops & tile work throughout southeast SC. Free design consultation.",
+      tasks: ["Custom kitchen design", "Luxury bathroom remodels", "Countertops & tile installation"]
     },
     {
       id: "additions",
-      title: "Screened Porches & Decks",
+      title: "Decks, Porches & Room Additions",
       icon: "Paintbrush",
-      description: "Professional additions and outdoor living spaces.",
-      tasks: ["Screened porch construction", "Deck building", "Room Additions"]
+      description: "Expert deck builders & porch contractors serving Simpsonville to Laurens. Custom composite & wood decks, screened porches, room additions.",
+      tasks: ["Custom deck construction", "Screened porch building", "Outdoor living spaces"]
+    },
+    {
+      id: "basement",
+      title: "Basement Finishing & Renovations",
+      icon: "Building",
+      description: "Transform unfinished basements into beautiful living spaces. Rec rooms, home theaters, offices & in-law suites in Simpsonville & Laurens County.",
+      tasks: ["Complete basement finishing", "Rec rooms & home theaters", "Waterproofing & egress windows"]
     }
   ],
 

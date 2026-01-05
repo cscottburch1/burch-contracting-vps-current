@@ -22,15 +22,16 @@ const serviceContent: Record<string, {
   cta: string;
 }> = {
   handyman: {
-    title: "Professional Handyman Services in Simpsonville, SC",
-    subtitle: "Expert repairs and maintenance for your home or business",
-    description: "From minor repairs to routine maintenance, our skilled handyman services cover all your home improvement needs. We handle everything from fixing squeaky doors to installing new fixtures, ensuring your property stays in top condition.",
+    title: "#1 Rated Handyman Services in Simpsonville, SC | Licensed & Insured",
+    subtitle: "Simpsonville's Most Trusted Handyman - Same-Day Service Available",
+    description: "Looking for a reliable handyman in Simpsonville, SC? Burch Contracting is your #1 choice for professional handyman services in southeast Greenville County and Laurens County. From minor repairs to complete home maintenance, our licensed and insured handyman experts serve Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens. We handle everything from fixing squeaky doors to installing fixtures, drywall repair, plumbing fixes, and more. Call (864) 724-4600 for same-day service!",
     benefits: [
-      "Quick response time - same-day service available",
-      "Fixed, upfront pricing - no surprises",
-      "Licensed, insured professionals",
-      "Satisfaction guaranteed on all work",
-      "One call handles multiple repairs"
+      "⚡ Same-Day Service Available - Call by noon for same-day repairs",
+      "💰 Upfront Fixed Pricing - Know the cost before we start",
+      "🏆 Licensed, Insured & BBB A+ Rated Professionals",
+      "✅ 100% Satisfaction Guarantee on All Handyman Work",
+      "🔧 One Call Fixes Everything - Handle multiple repairs in one visit",
+      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
     ],
     features: [
       {
@@ -82,15 +83,16 @@ const serviceContent: Record<string, {
     cta: "Need a reliable handyman? Get your free quote today!"
   },
   remodeling: {
-    title: "Kitchen & Bathroom Remodeling in Simpsonville, SC",
-    subtitle: "Transform your space with expert remodeling services",
-    description: "Whether you're looking to modernize your kitchen, upgrade your bathroom, or create your dream space, our experienced team delivers quality remodeling that increases your home's value and functionality. We handle everything from design consultation to final installation.",
+    title: "#1 Kitchen & Bathroom Remodeling Contractor in Simpsonville, SC | Free Design",
+    subtitle: "Award-Winning Kitchen & Bath Remodels in Simpsonville & Southeast SC",
+    description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 30+ years experience.",
     benefits: [
-      "Complete design-to-completion service",
-      "Licensed contractors and skilled craftsmen",
-      "Quality materials from trusted suppliers",
-      "Detailed project timeline and budget",
-      "Clean, professional work site daily"
+      "🎨 Free Design Consultation & 3D Renderings",
+      "🏆 BBB A+ Rated - Licensed & Insured Remodeling Contractors",
+      "💎 Premium Materials - Granite, Quartz, Custom Cabinets",
+      "📅 Transparent Timeline & Fixed-Price Quotes",
+      "🧹 Daily Cleanup - Professional, Respectful Crews",
+      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
     ],
     features: [
       {
@@ -147,15 +149,16 @@ const serviceContent: Record<string, {
     cta: "Ready to transform your space? Schedule your free design consultation!"
   },
   additions: {
-    title: "Screened Porches, Decks & Room Additions in Simpsonville, SC",
-    subtitle: "Expand your living space with quality outdoor and home additions",
-    description: "Increase your home's living space and value with professionally built screened porches, decks, and room additions. Our experienced team creates beautiful, functional outdoor living areas and home expansions that seamlessly blend with your existing structure.",
+    title: "#1 Deck Builder & Screened Porch Contractor in Simpsonville, SC | Custom Designs",
+    subtitle: "Simpsonville's Premier Deck & Porch Builder - Award-Winning Outdoor Living Spaces",
+    description: "Add value and living space to your Simpsonville home with the region's premier deck builder and screened porch contractor. Burch Contracting specializes in custom composite decks, wood decks, screened porches, sunrooms, pergolas, and room additions throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. We handle permits, design, construction, and inspections. Enjoy your outdoor space year-round with expertly built, code-compliant additions that blend seamlessly with your home. Free estimates & custom design available.",
     benefits: [
-      "Increase your home's value and usable space",
-      "Custom designs tailored to your home",
-      "Quality materials built to last",
-      "Proper permits and inspections handled",
-      "Warranty on workmanship and materials"
+      "🏗️ Custom Designs - Tailored to Your Home's Architecture",
+      "✅ All Permits & Inspections Handled - Full Building Code Compliance",
+      "🌟 Premium Materials - Composite, Cedar, Pressure-Treated Options",
+      "🔨 Expert Craftsmanship - 30+ Years Building Experience",
+      "🛡️ Warranty Included - Guaranteed Workmanship & Materials",
+      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
     ],
     features: [
       {
@@ -210,6 +213,93 @@ const serviceContent: Record<string, {
       { title: "Room Addition", description: "Seamless home addition adding 400 sq ft of living space" }
     ],
     cta: "Expand your living space! Request your free addition consultation today!"
+  },
+  basement: {
+    title: "#1 Basement Finishing & Renovation Contractor in Simpsonville, SC | Transform Your Space",
+    subtitle: "Simpsonville's Premier Basement Remodeling Experts - Add Living Space & Value",
+    description: "Transform your unfinished basement into beautiful, functional living space with Simpsonville's #1 basement finishing contractor. Burch Contracting specializes in complete basement renovations, finishing, waterproofing, rec rooms, home theaters, home offices, and in-law suites throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. We handle framing, insulation, drywall, flooring, electrical, plumbing, and finishing touches. Increase your home's value and usable square footage. Licensed, insured, BBB A+ rated with 30+ years experience. Free estimates & design consultation.",
+    benefits: [
+      "🏡 Add 500-1500+ Sq Ft of Living Space to Your Home",
+      "💰 Increase Home Value by 70% of Investment Cost",
+      "🎨 Free Design Consultation & 3D Layout Planning",
+      "🏆 Licensed, Insured & BBB A+ Rated Contractors",
+      "💎 Complete Service - Framing to Finishing Touches",
+      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
+    ],
+    features: [
+      {
+        title: "Complete Basement Finishing",
+        description: "Full-service basement remodeling from bare concrete to finished space. Framing, insulation, drywall, flooring, lighting, and trim work for a complete transformation.",
+        icon: "Home"
+      },
+      {
+        title: "Rec Rooms & Entertainment Spaces",
+        description: "Custom family rooms, game rooms, home theaters, and entertainment areas. Built-in shelving, wet bars, and media centers designed for your lifestyle.",
+        icon: "Tv"
+      },
+      {
+        title: "Basement Bathrooms & Kitchenettes",
+        description: "Expert plumbing installation for full bathrooms, powder rooms, and wet bars. Perfect for in-law suites or rental units.",
+        icon: "Droplets"
+      },
+      {
+        title: "Home Offices & Guest Suites",
+        description: "Professional home office spaces with built-in desks and storage, or comfortable guest bedrooms with egress windows and proper ventilation.",
+        icon: "BriefcaseBusiness"
+      },
+      {
+        title: "Basement Waterproofing & Moisture Control",
+        description: "Professional moisture barrier installation, sump pump systems, and vapor barriers to keep your basement dry and healthy.",
+        icon: "ShieldCheck"
+      },
+      {
+        title: "Egress Windows & Safety Compliance",
+        description: "Proper egress window installation for code compliance and safety. Full permits and inspections handled professionally.",
+        icon: "DoorOpen"
+      }
+    ],
+    process: [
+      { step: 1, title: "Free Consultation & Inspection", description: "Assess your basement's condition, discuss your vision, and identify any moisture or structural issues" },
+      { step: 2, title: "Custom Design & Planning", description: "Create detailed floor plans, select finishes, and plan electrical/plumbing layouts" },
+      { step: 3, title: "Permits & Approvals", description: "Handle all building permits, egress requirements, and code compliance documentation" },
+      { step: 4, title: "Basement Preparation", description: "Address any moisture issues, install vapor barriers, and prepare the space for construction" },
+      { step: 5, title: "Framing & Rough-Ins", description: "Frame walls, install electrical and plumbing rough-ins, add insulation" },
+      { step: 6, title: "Finishing & Details", description: "Drywall, flooring, trim, fixtures, and final touches for a beautiful finished space" },
+      { step: 7, title: "Final Inspection & Walkthrough", description: "Complete all inspections and review your stunning new living space" }
+    ],
+    faq: [
+      {
+        question: "How long does it take to finish a basement in Simpsonville?",
+        answer: "Most basement finishing projects take 6-10 weeks depending on size and scope. A basic 800 sq ft rec room may take 6-8 weeks, while a complete basement with bathroom, kitchenette, and multiple rooms can take 10-12 weeks. We'll provide a detailed timeline during consultation."
+      },
+      {
+        question: "Do I need permits to finish my basement?",
+        answer: "Yes, finishing a basement requires building permits in Greenville and Laurens Counties. We handle all permit applications, inspections, and ensure your basement meets egress window requirements, electrical codes, and safety standards."
+      },
+      {
+        question: "What's the cost to finish a basement in Simpsonville, SC?",
+        answer: "Basement finishing typically costs $30-$75 per square foot depending on finishes and features. A basic 800 sq ft basement runs $24,000-$60,000, while luxury finishes with bathrooms can be $50,000-$100,000+. We provide detailed estimates based on your specific needs."
+      },
+      {
+        question: "Will you handle moisture and waterproofing issues?",
+        answer: "Absolutely! We assess all basements for moisture issues before starting. We can install vapor barriers, sump pumps, and proper drainage solutions. If significant waterproofing is needed, we'll address that first to ensure a dry, healthy basement."
+      },
+      {
+        question: "Can you add a bathroom to my basement?",
+        answer: "Yes! We're experts at basement bathroom installation. We handle all plumbing, including ejector pumps if needed, proper venting, and fixtures. Basement bathrooms are perfect for in-law suites, rental units, or convenience."
+      },
+      {
+        question: "Do basement bedrooms need egress windows?",
+        answer: "Yes, any basement bedroom must have a code-compliant egress window for fire safety. We install proper egress windows with window wells and ensure all work meets building codes and passes inspection."
+      }
+    ],
+    gallery: [
+      { title: "Modern Basement Family Room", description: "Complete basement transformation with custom entertainment center and built-in shelving" },
+      { title: "Basement Home Theater", description: "Luxury media room with tiered seating, acoustic panels, and ambient lighting" },
+      { title: "Basement In-Law Suite", description: "Private living space with bedroom, full bathroom, and kitchenette" },
+      { title: "Home Office & Gym Combo", description: "Multi-functional basement with professional office area and workout space" }
+    ],
+    cta: "Ready to transform your basement? Get your free consultation & estimate today!"
   }
 };
 
@@ -233,18 +323,61 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     };
   }
 
-  return {
+  const metadataMap: Record<string, any> = {
+    handyman: {
+      title: '#1 Handyman Services in Simpsonville, SC | Same-Day Service | (864) 724-4600',
+      description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving southeast Greenville County: Simpsonville, Fountain Inn, Gray Court, Woodruff. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
+      keywords: 'handyman Simpsonville SC, handyman near me, same day handyman, handyman Fountain Inn, handyman Gray Court, handyman Woodruff, licensed handyman Simpsonville, door repair Simpsonville, fixture installation, drywall repair, home repair Simpsonville, local handyman, affordable handyman services'
+    },
+    remodeling: {
+      title: 'Kitchen & Bathroom Remodeling Simpsonville, SC | Free Design | (864) 724-4600',
+      description: '#1 rated kitchen & bathroom remodeling contractor in Simpsonville, SC. Custom cabinets, granite countertops, tile work. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens. 30+ years experience. Free estimates & design consultation. Call today!',
+      keywords: 'kitchen remodeling Simpsonville SC, bathroom remodeling Simpsonville, kitchen renovation Fountain Inn, bathroom renovation Gray Court, custom kitchen cabinets, granite countertops Simpsonville, quartz countertops, tile installation, kitchen contractor Simpsonville, bathroom contractor Woodruff, home remodeling Laurens County'
+    },
+    additions: {
+      title: 'Deck Builder & Screened Porch Contractor Simpsonville, SC | (864) 724-4600',
+      description: 'Premier deck builder & screened porch contractor in Simpsonville, SC. Custom composite decks, wood decks, screened porches, sunrooms. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens. Permits handled. Free estimates. 30+ years experience.',
+      keywords: 'deck builder Simpsonville SC, screened porch Simpsonville, deck contractor Fountain Inn, porch builder Gray Court, composite deck, wood deck, outdoor living spaces Simpsonville, room addition contractor, sunroom builder Woodruff, pergola construction, custom deck Simpsonville, screened in porch Laurens'
+    },
+    basement: {
+      title: 'Basement Finishing & Renovation Simpsonville, SC | Add Living Space | (864) 724-4600',
+      description: '#1 basement finishing contractor in Simpsonville, SC. Transform unfinished basements into rec rooms, home theaters, offices, in-law suites. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens County. Free estimates & design.',
+      keywords: 'basement finishing Simpsonville SC, basement remodeling Simpsonville, basement contractor Fountain Inn, finish basement Gray Court, basement renovation Woodruff, basement waterproofing, rec room Simpsonville, home theater basement, basement bathroom installation, in-law suite basement, basement egress windows Laurens'
+    }
+  };
+
+  const meta = metadataMap[slug] || {
     title: `${service.title} | Burch Contracting`,
     description: service.description,
-    keywords: `${slug}, ${service.title.toLowerCase()}, simpsonville sc, contractor`,
+    keywords: `${slug}, ${service.title.toLowerCase()}, simpsonville sc, contractor`
+  };
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
     openGraph: {
-      title: service.title,
-      description: service.description,
+      title: meta.title,
+      description: meta.description,
       url: `https://burchcontracting.com/services/${slug}`,
       siteName: 'Burch Contracting',
       locale: 'en_US',
       type: 'website',
+      images: [{
+        url: 'https://burchcontracting.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: `Burch Contracting - ${service.title}`
+      }]
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: meta.title,
+      description: meta.description,
+    },
+    alternates: {
+      canonical: `https://burchcontracting.com/services/${slug}`
+    }
   };
 }
 
