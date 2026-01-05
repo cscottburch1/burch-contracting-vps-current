@@ -13,7 +13,7 @@ export async function GET(
     }
 
     const { id } = await context.params;
-    const lead = await queryOne('SELECT * FROM leads WHERE id = ?', [id]);
+    const lead = await queryOne('SELECT * FROM contact_leads WHERE id = ?', [id]);
 
     if (!lead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
@@ -53,7 +53,7 @@ export async function PUT(
       description
     } = body;
 
-    const oldLead = await queryOne<any>('SELECT * FROM leads WHERE id = ?', [id]);
+    const oldLead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
     if (!oldLead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
@@ -116,7 +116,7 @@ export async function PUT(
     if (updates.length > 0) {
       params.push(id);
       await query(
-        `UPDATE leads SET ${updates.join(', ')} WHERE id = ?`,
+        `UPDATE contact_leads SET ${updates.join(', ')} WHERE id = ?`,
         params
       );
     }
@@ -129,7 +129,7 @@ export async function PUT(
       );
     }
 
-    const updatedLead = await queryOne('SELECT * FROM leads WHERE id = ?', [id]);
+    const updatedLead = await queryOne('SELECT * FROM contact_leads WHERE id = ?', [id]);
 
     return NextResponse.json({ lead: updatedLead });
   } catch (error) {
@@ -149,7 +149,7 @@ export async function DELETE(
     }
 
     const { id } = await context.params;
-    await query('DELETE FROM leads WHERE id = ?', [id]);
+    await query('DELETE FROM contact_leads WHERE id = ?', [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

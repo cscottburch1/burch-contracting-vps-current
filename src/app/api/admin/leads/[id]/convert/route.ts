@@ -22,7 +22,7 @@ export async function POST(
     }
 
     // Get lead details
-    const lead = await queryOne<any>('SELECT * FROM leads WHERE id = ?', [id]);
+    const lead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
     if (!lead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
@@ -46,7 +46,7 @@ export async function POST(
     const customerId = (result as any).insertId;
 
     // Update lead status to "won" and add note about conversion
-    await query('UPDATE leads SET status = ?, assigned_to = ? WHERE id = ?', ['won', 'converted', id]);
+    await query('UPDATE contact_leads SET status = ?, assigned_to = ? WHERE id = ?', ['won', 'converted', id]);
     await query(
       'INSERT INTO lead_notes (lead_id, content, note_type, created_by) VALUES (?, ?, ?, ?)',
       [id, `Lead converted to customer (ID: ${customerId})`, 'general', adminUser.email]

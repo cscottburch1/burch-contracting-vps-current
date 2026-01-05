@@ -11,27 +11,27 @@ export async function GET(request: Request) {
 
     // Get lead counts by status
     const statusStats = await query<{ status: string; count: number }>(
-      'SELECT status, COUNT(*) as count FROM leads GROUP BY status'
+      'SELECT status, COUNT(*) as count FROM contact_leads GROUP BY status'
     );
 
     // Get lead counts by priority
     const priorityStats = await query<{ priority: string; count: number }>(
-      'SELECT priority, COUNT(*) as count FROM leads GROUP BY priority'
+      'SELECT priority, COUNT(*) as count FROM contact_leads GROUP BY priority'
     );
 
     // Get total estimated value
     const valueStats = await query<{ total_value: number }>(
-      'SELECT SUM(estimated_value) as total_value FROM leads WHERE status NOT IN ("lost")'
+      'SELECT SUM(estimated_value) as total_value FROM contact_leads WHERE status NOT IN ("lost")'
     );
 
     // Get recent activity
     const recentLeads = await query(
-      'SELECT COUNT(*) as count FROM leads WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)'
+      'SELECT COUNT(*) as count FROM contact_leads WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)'
     );
 
     // Get conversion rate
-    const wonLeads = await query('SELECT COUNT(*) as count FROM leads WHERE status = "won"');
-    const totalLeads = await query('SELECT COUNT(*) as count FROM leads');
+    const wonLeads = await query('SELECT COUNT(*) as count FROM contact_leads WHERE status = "won"');
+    const totalLeads = await query('SELECT COUNT(*) as count FROM contact_leads');
 
     const conversionRate = (totalLeads[0] as any).count > 0
       ? ((wonLeads[0] as any).count / (totalLeads[0] as any).count) * 100

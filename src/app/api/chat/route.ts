@@ -123,7 +123,7 @@ export async function POST(request: Request) {
         
         if (extractedPhone || extractedEmail) {
           await pool.query(
-            `INSERT INTO leads (name, email, phone, message, source, status, created_at)
+            `INSERT INTO contact_leads (name, email, phone, message, source, status, created_at)
              VALUES (?, ?, ?, ?, 'ai_chat', 'new', NOW())`,
             [
               'AI Chat Lead',

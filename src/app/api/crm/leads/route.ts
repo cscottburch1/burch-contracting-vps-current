@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     const priority = searchParams.get('priority');
     const search = searchParams.get('search');
 
-    let sql = 'SELECT * FROM leads WHERE 1=1';
+    let sql = 'SELECT * FROM contact_leads WHERE 1=1';
     const params: any[] = [];
 
     if (status && status !== 'all') {
