@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import { Icon } from '../ui/Icon';
 import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
+import { analytics } from '@/lib/analytics';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -22,13 +25,21 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2">
                 <Icon name="Phone" size={18} className="mt-1" />
-                <a href={`tel:${businessConfig.contact.phone}`} className="hover:text-white">
+                <a 
+                  href={`tel:${businessConfig.contact.phone}`} 
+                  className="hover:text-white"
+                  onClick={() => analytics.trackPhoneClick()}
+                >
                   {businessConfig.contact.phone}
                 </a>
               </li>
               <li className="flex items-start gap-2">
                 <Icon name="Mail" size={18} className="mt-1" />
-                <a href={`mailto:${businessConfig.contact.email}`} className="hover:text-white">
+                <a 
+                  href={`mailto:${businessConfig.contact.email}`} 
+                  className="hover:text-white"
+                  onClick={() => analytics.trackEmailClick()}
+                >
                   {businessConfig.contact.email}
                 </a>
               </li>

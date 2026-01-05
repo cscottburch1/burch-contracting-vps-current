@@ -5,6 +5,7 @@ import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
 import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
+import { analytics } from '@/lib/analytics';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,7 +24,11 @@ export const Header: React.FC = () => {
       <div className="bg-gray-900 text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between text-sm">
-            <a href={`tel:${businessConfig.contact.phone}`} className="flex items-center gap-2">
+            <a 
+              href={`tel:${businessConfig.contact.phone}`} 
+              className="flex items-center gap-2"
+              onClick={() => analytics.trackPhoneClick()}
+            >
               <Icon name="Phone" size={16} />
               <span>{businessConfig.contact.phone}</span>
             </a>

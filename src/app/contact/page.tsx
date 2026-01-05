@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { businessConfig } from '@/config/business';
+import { analytics } from '@/lib/analytics';
 
 interface FormData {
   name: string;
@@ -142,6 +143,9 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
+        // Track successful contact form submission
+        analytics.trackContactForm(formData.serviceType || 'general');
+        
         setSubmitSuccess(true);
         setFormData({
           name: '',
