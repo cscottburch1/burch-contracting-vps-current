@@ -28,25 +28,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Service pages - all your service offerings
   const services = [
-    'general-handyman',
-    'kitchen-remodels',
-    'bathroom-remodels',
-    'screened-porches',
-    'decks-patios',
-    'flooring',
-    'painting',
-    'carpentry',
-    'drywall-repair',
-    'tile-work',
-    'home-repairs',
-    'light-commercial'
+    'handyman',
+    'remodeling',
+    'additions',
+    'basement'
   ];
 
   const serviceRoutes = services.map(service => ({
     url: `${baseUrl}/services/${service}`,
     lastModified: currentDate,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
+
+  // Calculators
+  const calculators = [
+    'handyman',
+    'remodeling',
+    'additions'
+  ];
+
+  const calculatorRoutes = calculators.map(calc => ({
+    url: `${baseUrl}/calculator/${calc}`,
+    lastModified: currentDate,
     changeFrequency: 'monthly' as const,
-    priority: 0.8,
+    priority: 0.7,
   }));
 
   // Service areas - cities you serve
@@ -55,17 +61,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'greenville',
     'mauldin',
     'fountain-inn',
-    'greer',
     'five-forks',
-    'woodruff'
+    'woodruff',
+    'gray-court',
+    'laurens'
   ];
 
   const areaRoutes = serviceAreas.map(area => ({
     url: `${baseUrl}/service-areas/${area}`,
     lastModified: currentDate,
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    priority: 0.8,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...areaRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes];
 }

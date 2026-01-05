@@ -21,7 +21,7 @@ export default function HomePage() {
     "url": "https://burchcontracting.com",
     "telephone": "(864) 724-4600",
     "email": "estimates@burchcontracting.com",
-    "priceRange": "$$",
+    "priceRange": "$$-$$$",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "",
@@ -48,25 +48,161 @@ export default function HomePage() {
       "closes": "17:00"
     },
     "sameAs": [
-      "https://www.facebook.com/burchcontracting"
+      "https://www.facebook.com/burchcontracting",
+      "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
+      "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875"
     ],
-    "description": "Professional residential and light commercial contracting services in Simpsonville, SC. Quality craftsmanship, clear communication, and dependable service.",
-    "areaServed": {
-      "@type": "GeoCircle",
-      "geoMidpoint": {
-        "@type": "GeoCoordinates",
-        "latitude": 34.7371,
-        "longitude": -82.2543
+    "description": "#1 rated general contractor in Simpsonville, SC specializing in kitchen & bathroom remodeling, handyman services, decks, porches, and basement finishing. Licensed, insured, BBB A+ rated with 30+ years serving southeast Greenville County and Laurens County.",
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Simpsonville",
+        "@id": "https://en.wikipedia.org/wiki/Simpsonville,_South_Carolina"
       },
-      "geoRadius": "50000"
+      {
+        "@type": "City",
+        "name": "Fountain Inn"
+      },
+      {
+        "@type": "City",
+        "name": "Gray Court"
+      },
+      {
+        "@type": "City",
+        "name": "Woodruff"
+      },
+      {
+        "@type": "City",
+        "name": "Five Forks"
+      },
+      {
+        "@type": "City",
+        "name": "Mauldin"
+      },
+      {
+        "@type": "City",
+        "name": "Greenville"
+      },
+      {
+        "@type": "City",
+        "name": "Laurens"
+      }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Home Improvement Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Kitchen Remodeling",
+            "description": "Complete kitchen renovations with custom cabinets, countertops, tile, and fixtures"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Bathroom Remodeling",
+            "description": "Full bathroom renovations including vanities, tile, showers, and fixtures"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Handyman Services",
+            "description": "Same-day handyman repairs, installations, and home maintenance"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Deck Construction",
+            "description": "Custom deck building with composite or wood materials"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Screened Porches",
+            "description": "Custom screened porch construction and installation"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Basement Finishing",
+            "description": "Complete basement remodeling and finishing services"
+          }
+        }
+      ]
     },
-    "serviceType": [
-      "Home Repair",
-      "Remodeling",
-      "Renovation",
-      "General Contracting",
-      "Handyman Services",
-      "Commercial Contracting"
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What areas does Burch Contracting serve in South Carolina?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We proudly serve Simpsonville, Fountain Inn, Gray Court, Woodruff, Five Forks, Mauldin, Greenville, and Laurens throughout southeast Greenville County and Laurens County, South Carolina."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Burch Contracting licensed and insured?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Burch Contracting is fully licensed and insured with an A+ BBB rating since 2014. We've been serving the Upstate SC area for over 30 years with professional, reliable service."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What types of home improvement services do you offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We specialize in kitchen and bathroom remodeling, handyman services, deck and porch construction, screened porches, basement finishing, room additions, and general home repairs. We handle both residential and light commercial projects."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer free estimates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! We provide free, no-obligation estimates for all services. Contact us at (864) 724-4600 or through our website to schedule your free consultation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does a typical kitchen remodel take in Simpsonville?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most kitchen remodels take 4-6 weeks depending on scope. A cabinet and countertop refresh takes 2-3 weeks, while a complete gut renovation takes 8-12 weeks. We provide detailed timelines during your free consultation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer same-day handyman services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! We offer same-day handyman service when you call by noon. Perfect for urgent repairs like door fixes, leaky faucets, drywall patches, and fixture installations throughout Simpsonville and surrounding areas."
+        }
+      }
     ]
   };
 
@@ -76,6 +212,11 @@ export default function HomePage() {
         id="structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       
       {/* Emergency Services Banner */}
