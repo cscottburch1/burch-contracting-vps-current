@@ -23,17 +23,14 @@ export async function POST(
     const result = await query(
       `INSERT INTO projects (
         customer_id, 
-        project_name, 
-        project_type,
+        title, 
         description,
         start_date,
-        estimated_completion_date,
-        total_cost,
-        status,
-        completion_percentage,
-        created_at
-      ) VALUES (?, ?, 'General', ?, ?, ?, ?, ?, 0, NOW())`,
-      [id, title, description, start_date || null, end_date || null, budget || null, status || 'scheduled']
+        end_date,
+        budget,
+        status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [id, title, description, start_date || null, end_date || null, budget || null, status || 'active']
     );
 
     const projectId = (result as any).insertId;
@@ -41,7 +38,7 @@ export async function POST(
 
     return NextResponse.json({ 
       project: project[0],
-      message: 'Project created and automatically linked to customer - will appear in Project Tracker and Customer Portal'
+      message: 'Project created successfully'
     });
   } catch (error) {
     console.error('Error creating project:', error);
