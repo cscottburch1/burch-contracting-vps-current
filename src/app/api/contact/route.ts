@@ -67,9 +67,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // Save lead to database
+    // Save lead to database (using contact_leads table for CRM integration)
     const result = await query<any>(
-      `INSERT INTO leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority)
+      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', 'medium')`,
       [name, phone, email, address || null, serviceType || null, budgetRange || null, timeframe || null, referralSource || null, description]
     );
