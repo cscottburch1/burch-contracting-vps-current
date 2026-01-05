@@ -43,7 +43,8 @@ const CATEGORIES = [
   'Cleanup & Disposal',
   'Project Management',
   'Permits & Inspections',
-  'Contingency'
+  'Contingency',
+  'Overhead & Profit'
 ];
 
 const UNITS = ['ea', 'sf', 'lf', 'lot', 'ls', 'hr', 'day'];

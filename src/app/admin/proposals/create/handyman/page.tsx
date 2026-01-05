@@ -61,6 +61,12 @@ const HANDYMAN_SERVICES: ServiceItem[] = [
       { name: 'Curtain rod installation', price: 65 },
       { name: 'Blinds installation (per window)', price: 85 },
     ]
+  },
+  {
+    category: 'Overhead & Profit',
+    items: [
+      { name: 'Overhead & Profit', price: 0 },
+    ]
   }
 ];
 
