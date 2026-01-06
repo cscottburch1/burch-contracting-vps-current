@@ -1094,6 +1094,7 @@ function ProjectDetailContent() {
                 >
                   <option value="">Select a phase...</option>
                   <option value="Pre-Construction">Pre-Construction</option>
+                  <option value="Demolition">Demolition</option>
                   <option value="Site Preparation">Site Preparation</option>
                   <option value="Foundation">Foundation</option>
                   <option value="Framing">Framing</option>
