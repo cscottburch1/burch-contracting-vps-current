@@ -288,31 +288,25 @@ function ProjectDetailContent() {
 
       for (const file of photoFiles) {
         try {
-          const reader = new FileReader();
-          const base64String = await new Promise<string>((resolve, reject) => {
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('category', photoCategory);
+          formData.append('caption', photoCaption);
           
           const response = await fetch(`/api/admin/projects/${projectId}/photos`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              filename: file.name,
-              data: base64String,
-              category: photoCategory,
-              caption: photoCaption
-            })
+            body: formData
           });
 
           if (response.ok) {
             successCount++;
           } else {
             failCount++;
+            console.error(`Failed to upload ${file.name}`);
           }
         } catch (err) {
           failCount++;
+          console.error(`Error uploading ${file.name}:`, err);
         }
       }
 
