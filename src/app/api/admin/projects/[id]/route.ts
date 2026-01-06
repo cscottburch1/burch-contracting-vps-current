@@ -19,13 +19,8 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    // Map database fields to frontend expected fields
-    const project = {
-      ...projectRaw,
-      title: projectRaw.project_name,
-      budget: projectRaw.total_cost,
-      end_date: projectRaw.estimated_completion_date
-    };
+    // The projects table already has the correct field names: title, budget, end_date
+    const project = projectRaw;
 
     const updates = await query(
       'SELECT * FROM project_updates WHERE project_id = ? ORDER BY created_at DESC',
@@ -62,7 +57,7 @@ export async function PUT(
     const params: any[] = [];
 
     if (title !== undefined) {
-      updates.push('project_name = ?');
+      updates.push('title = ?');
       params.push(title);
     }
     if (description !== undefined) {
@@ -70,7 +65,7 @@ export async function PUT(
       params.push(description);
     }
     if (budget !== undefined) {
-      updates.push('total_cost = ?');
+      updates.push('budget = ?');
       params.push(budget);
     }
     if (start_date !== undefined) {
@@ -78,7 +73,7 @@ export async function PUT(
       params.push(start_date);
     }
     if (end_date !== undefined) {
-      updates.push('estimated_completion_date = ?');
+      updates.push('end_date = ?');
       params.push(end_date);
     }
     if (status !== undefined) {
@@ -96,13 +91,8 @@ export async function PUT(
 
     const projectRaw = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
     
-    // Map database fields to frontend expected fields
-    const project = {
-      ...projectRaw,
-      title: projectRaw.project_name,
-      budget: projectRaw.total_cost,
-      end_date: projectRaw.estimated_completion_date
-    };
+    // The projects table already has the correct field names: title, budget, end_date
+    const project = projectRaw;
 
     return NextResponse.json({ project });
   } catch (error) {
