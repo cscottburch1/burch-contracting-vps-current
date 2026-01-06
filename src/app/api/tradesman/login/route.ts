@@ -1,0 +1,41 @@
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { authenticateTradesman, createTradesmanToken } from '@/lib/tradesmanAuth';
+
+export async function POST(request: Request) {
+  try {
+    const { email, pin } = await request.json();
+    
+    if (!email || !pin) {
+      return NextResponse.json({ error: 'Email and PIN are required' }, { status: 400 });
+    }
+    
+    const user = await authenticateTradesman(email, pin);
+    
+    if (!user) {
+      return NextResponse.json({ error: 'Invalid email or PIN' }, { status: 401 });
+    }
+    
+    const token = await createTradesmanToken(user.id);
+    
+    const cookieStore = await cookies();
+    cookieStore.set('tradesman_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30 // 30 days
+    });
+    
+    return NextResponse.json({ 
+      success: true,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    return NextResponse.json({ error: 'Login failed' }, { status: 500 });
+  }
+}

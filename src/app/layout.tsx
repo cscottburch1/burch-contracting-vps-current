@@ -32,6 +32,12 @@ export const metadata: Metadata = {
     icon: '/favicon.webp',
     apple: '/favicon.webp',
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Burch Crew',
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -87,6 +93,17 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <AIChat />
+        <Script id="register-sw" strategy="afterInteractive">
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                  .then(reg => console.log('Service Worker registered'))
+                  .catch(err => console.log('Service Worker registration failed:', err));
+              });
+            }
+          `}
+        </Script>
         {recaptchaSiteKey && (
           <Script
             src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
