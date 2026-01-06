@@ -12,39 +12,58 @@ export async function GET() {
     const connection = await pool.getConnection();
     try {
       // Fetch all projects with customer info
-      const [projects] = await connection.execute(
+      // Map database columns to frontend expected field names
+      const [projectsRaw] = await connection.execute(
         `SELECT 
           p.id,
           p.customer_id,
-          p.project_name,
-          p.project_type,
+          p.title,
           p.description,
           p.start_date,
-          p.estimated_completion_date,
-          p.actual_completion_date,
+          p.end_date,
           p.status,
-          p.completion_percentage,
-          p.total_cost,
-          p.address_line1,
-          p.city,
-          p.state,
-          p.zip_code,
+          p.budget,
           p.created_at,
           p.updated_at,
           c.name as customer_name,
-          c.email as customer_email
+          c.email as customer_email,
+          c.city,
+          c.state
         FROM projects p
         LEFT JOIN customers c ON p.customer_id = c.id
         ORDER BY 
           CASE p.status
-            WHEN 'in_progress' THEN 1
-            WHEN 'scheduled' THEN 2
-            WHEN 'on_hold' THEN 3
-            WHEN 'completed' THEN 4
-            WHEN 'cancelled' THEN 5
+            WHEN 'active' THEN 1
+            WHEN 'pending' THEN 2
+            WHEN 'completed' THEN 3
+            WHEN 'cancelled' THEN 4
           END,
           p.start_date DESC`
       );
+
+      // Map database fields to frontend expected fields
+      const projects = (projectsRaw as any[]).map(p => ({
+        id: p.id,
+        customer_id: p.customer_id,
+        customer_name: p.customer_name,
+        customer_email: p.customer_email,
+        project_name: p.title,
+        project_type: 'Remodeling', // Default since not stored in this table
+        description: p.description,
+        start_date: p.start_date,
+        estimated_completion_date: p.end_date,
+        actual_completion_date: null,
+        status: p.status === 'active' ? 'in_progress' : 
+                p.status === 'pending' ? 'scheduled' : 
+                p.status === 'completed' ? 'completed' : 'cancelled',
+        completion_percentage: p.status === 'completed' ? 100 : 
+                               p.status === 'active' ? 50 : 0,
+        total_cost: p.budget,
+        city: p.city,
+        state: p.state,
+        created_at: p.created_at,
+        updated_at: p.updated_at
+      }));
 
       return NextResponse.json({ projects });
     } finally {
@@ -69,43 +88,30 @@ export async function POST(request: Request) {
     const data = await request.json();
     const {
       customer_id,
-      project_name,
-      project_type,
+      project_name, // will be mapped to 'title'
       description,
       start_date,
-      estimated_completion_date,
-      address_line1,
-      address_line2,
-      city,
-      state,
-      zip_code,
+      estimated_completion_date, // will be mapped to 'end_date'
     } = data;
 
-    if (!customer_id || !project_name || !address_line1 || !city || !state || !zip_code) {
+    if (!customer_id || !project_name) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     const connection = await pool.getConnection();
     try {
+      // Map frontend fields to database columns
       const [result] = await connection.execute(
         `INSERT INTO projects (
-          customer_id, project_name, project_type, description,
-          start_date, estimated_completion_date,
-          address_line1, address_line2, city, state, zip_code,
-          status, completion_percentage
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scheduled', 0)`,
+          customer_id, title, description,
+          start_date, end_date, status
+        ) VALUES (?, ?, ?, ?, ?, 'pending')`,
         [
           customer_id,
-          project_name,
-          project_type || 'Other',
+          project_name, // maps to 'title'
           description || null,
           start_date || null,
-          estimated_completion_date || null,
-          address_line1,
-          address_line2 || null,
-          city,
-          state,
-          zip_code,
+          estimated_completion_date || null, // maps to 'end_date'
         ]
       );
 
