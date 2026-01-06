@@ -26,9 +26,7 @@ export async function GET() {
           p.created_at,
           p.updated_at,
           c.name as customer_name,
-          c.email as customer_email,
-          c.city,
-          c.state
+          c.email as customer_email
         FROM projects p
         LEFT JOIN customers c ON p.customer_id = c.id
         ORDER BY 
@@ -59,8 +57,8 @@ export async function GET() {
         completion_percentage: p.status === 'completed' ? 100 : 
                                p.status === 'active' ? 50 : 0,
         total_cost: p.budget,
-        city: p.city,
-        state: p.state,
+        city: '',
+        state: '',
         created_at: p.created_at,
         updated_at: p.updated_at
       }));
