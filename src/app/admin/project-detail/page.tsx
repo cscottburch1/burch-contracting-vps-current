@@ -111,7 +111,7 @@ function ProjectDetailContent() {
   const [uploading, setUploading] = useState(false);
   
   // Form states
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoCategory, setPhotoCategory] = useState<'before' | 'progress' | 'after' | 'other'>('progress');
   const [photoCaption, setPhotoCaption] = useState('');
   
@@ -279,41 +279,56 @@ function ProjectDetailContent() {
 
   const handlePhotoUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!photoFile || !projectId) return;
+    if (photoFiles.length === 0 || !projectId) return;
 
     setUploading(true);
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result as string;
-        
-        const response = await fetch(`/api/admin/projects/${projectId}/photos`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            filename: photoFile.name,
-            data: base64String,
-            category: photoCategory,
-            caption: photoCaption
-          })
-        });
+      let successCount = 0;
+      let failCount = 0;
 
-        if (response.ok) {
-          alert('Photo uploaded successfully!');
-          setShowPhotoUpload(false);
-          setPhotoFile(null);
-          setPhotoCaption('');
-          await loadPhotos();
-        } else {
-          const data = await response.json();
-          alert(data.error || 'Failed to upload photo');
+      for (const file of photoFiles) {
+        try {
+          const reader = new FileReader();
+          const base64String = await new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+          
+          const response = await fetch(`/api/admin/projects/${projectId}/photos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              data: base64String,
+              category: photoCategory,
+              caption: photoCaption
+            })
+          });
+
+          if (response.ok) {
+            successCount++;
+          } else {
+            failCount++;
+          }
+        } catch (err) {
+          failCount++;
         }
-        setUploading(false);
-      };
-      reader.readAsDataURL(photoFile);
+      }
+
+      if (successCount > 0) {
+        alert(`${successCount} photo(s) uploaded successfully!${failCount > 0 ? ` ${failCount} failed.` : ''}`);
+        setShowPhotoUpload(false);
+        setPhotoFiles([]);
+        setPhotoCaption('');
+        await loadPhotos();
+      } else {
+        alert('All uploads failed. Please try again.');
+      }
     } catch (error) {
-      console.error('Error uploading photo:', error);
-      alert('Failed to upload photo');
+      console.error('Error uploading photos:', error);
+      alert('Failed to upload photos');
+    } finally {
       setUploading(false);
     }
   };
@@ -946,17 +961,21 @@ function ProjectDetailContent() {
       {showPhotoUpload && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-semibold mb-4">Upload Photo</h3>
+            <h3 className="text-xl font-semibold mb-4">Upload Photos</h3>
             <form onSubmit={handlePhotoUpload}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Photo File</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Photo Files (Multiple Allowed)</label>
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                  multiple
+                  onChange={(e) => setPhotoFiles(Array.from(e.target.files || []))}
                   className="w-full border border-gray-300 rounded-md p-2"
                   required
                 />
+                {photoFiles.length > 0 && (
+                  <p className="text-sm text-gray-600 mt-1">{photoFiles.length} file(s) selected</p>
+                )}
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
@@ -985,7 +1004,7 @@ function ProjectDetailContent() {
                   type="button"
                   onClick={() => {
                     setShowPhotoUpload(false);
-                    setPhotoFile(null);
+                    setPhotoFiles([]);
                     setPhotoCaption('');
                   }}
                   className="px-4 py-2 text-gray-600 hover:text-gray-800"
@@ -996,7 +1015,7 @@ function ProjectDetailContent() {
                 <button
                   type="submit"
                   className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-                  disabled={uploading || !photoFile}
+                  disabled={uploading || photoFiles.length === 0}
                 >
                   {uploading ? 'Uploading...' : 'Upload'}
                 </button>
