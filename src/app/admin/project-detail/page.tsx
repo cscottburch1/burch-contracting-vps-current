@@ -109,6 +109,15 @@ function ProjectDetailContent() {
   const [showMilestoneForm, setShowMilestoneForm] = useState(false);
   const [showSubcontractorForm, setShowSubcontractorForm] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [isEditingProject, setIsEditingProject] = useState(false);
+  const [editForm, setEditForm] = useState({
+    title: '',
+    description: '',
+    budget: '',
+    start_date: '',
+    end_date: '',
+    status: 'pending'
+  });
   
   // Form states
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
@@ -368,6 +377,55 @@ function ProjectDetailContent() {
       console.error('Error uploading document:', error);
       alert('Failed to upload document');
       setUploading(false);
+    }
+  };
+
+  const handleEditProject = () => {
+    if (project) {
+      setEditForm({
+        title: project.title,
+        description: project.description || '',
+        budget: project.budget?.toString() || '',
+        start_date: project.start_date || '',
+        end_date: project.end_date || '',
+        status: project.status || 'pending'
+      });
+      setIsEditingProject(true);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingProject(false);
+  };
+
+  const handleSaveProject = async () => {
+    if (!projectId) return;
+
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: editForm.title,
+          description: editForm.description,
+          budget: editForm.budget ? parseFloat(editForm.budget) : null,
+          start_date: editForm.start_date || null,
+          end_date: editForm.end_date || null,
+          status: editForm.status
+        })
+      });
+
+      if (response.ok) {
+        alert('Project updated successfully!');
+        setIsEditingProject(false);
+        await loadProject();
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to update project');
+      }
+    } catch (error) {
+      console.error('Error updating project:', error);
+      alert('Failed to update project');
     }
   };
 
@@ -698,25 +756,140 @@ function ProjectDetailContent() {
       <div className="bg-white rounded-lg shadow p-6">
         {activeTab === 'overview' && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Project Details</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-gray-500">Description</p>
-                <p className="font-medium">{project.description || 'No description'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Budget</p>
-                <p className="font-medium">${project.budget?.toLocaleString() || '0'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Start Date</p>
-                <p className="font-medium">{project.start_date ? new Date(project.start_date).toLocaleDateString() : 'Not set'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">End Date</p>
-                <p className="font-medium">{project.end_date ? new Date(project.end_date).toLocaleDateString() : 'Not set'}</p>
-              </div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Project Details</h2>
+              {!isEditingProject ? (
+                <button
+                  onClick={handleEditProject}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  <Icon name="Edit" size={18} />
+                  Edit Project
+                </button>
+              ) : (
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCancelEdit}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSaveProject}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                  >
+                    <Icon name="Check" size={18} />
+                    Save Changes
+                  </button>
+                </div>
+              )}
             </div>
+
+            {!isEditingProject ? (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Description</p>
+                  <p className="font-medium">{project.description || 'No description'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Budget</p>
+                  <p className="font-medium">${project.budget?.toLocaleString() || '0'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Start Date</p>
+                  <p className="font-medium">{project.start_date ? new Date(project.start_date).toLocaleDateString() : 'Not set'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">End Date</p>
+                  <p className="font-medium">{project.end_date ? new Date(project.end_date).toLocaleDateString() : 'Not set'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Status</p>
+                  <p className="font-medium capitalize">{project.status}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Project Title
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.title}
+                    onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Description
+                  </label>
+                  <textarea
+                    value={editForm.description}
+                    onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Budget ($)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={editForm.budget}
+                      onChange={(e) => setEditForm({ ...editForm, budget: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Status
+                    </label>
+                    <select
+                      value={editForm.status}
+                      onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="active">Active</option>
+                      <option value="completed">Completed</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Start Date
+                    </label>
+                    <input
+                      type="date"
+                      value={editForm.start_date}
+                      onChange={(e) => setEditForm({ ...editForm, start_date: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      End Date
+                    </label>
+                    <input
+                      type="date"
+                      value={editForm.end_date}
+                      onChange={(e) => setEditForm({ ...editForm, end_date: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
