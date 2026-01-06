@@ -21,10 +21,19 @@ interface User {
   email: string;
 }
 
+interface Stats {
+  activeProjects: number;
+  hoursThisWeek: number;
+  pendingRequests: number;
+  openIssues: number;
+  isClocked In: boolean;
+}
+
 export default function TradesmanDashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,9 +42,12 @@ export default function TradesmanDashboard() {
 
   const loadData = async () => {
     try {
-      const [userRes, projectsRes] = await Promise.all([
+      const [userRes, projectsRes, timeRes, materialsRes, issuesRes] = await Promise.all([
         fetch('/api/tradesman/me'),
-        fetch('/api/tradesman/projects')
+        fetch('/api/tradesman/projects'),
+        fetch('/api/tradesman/time'),
+        fetch('/api/tradesman/materials'),
+        fetch('/api/tradesman/issues')
       ]);
 
       if (!userRes.ok || !projectsRes.ok) {
@@ -48,6 +60,29 @@ export default function TradesmanDashboard() {
 
       setUser(userData.user);
       setProjects(projectsData.projects || []);
+
+      // Calculate stats
+      const timeData = timeRes.ok ? await timeRes.json() : { timeEntries: [], activeEntry: null };
+      const materialsData = materialsRes.ok ? await materialsRes.json() : { requests: [] };
+      const issuesData = issuesRes.ok ? await issuesRes.json() : { issues: [] };
+
+      const now = new Date();
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      
+      const hoursThisWeek = timeData.timeEntries
+        .filter((entry: any) => new Date(entry.clock_in) > weekAgo && entry.clock_out)
+        .reduce((total: number, entry: any) => {
+          const hours = (new Date(entry.clock_out).getTime() - new Date(entry.clock_in).getTime()) / (1000 * 60 * 60);
+          return total + hours - (entry.break_minutes || 0) / 60;
+        }, 0);
+
+      setStats({
+        activeProjects: projectsData.projects?.length || 0,
+        hoursThisWeek: Math.round(hoursThisWeek * 10) / 10,
+        pendingRequests: materialsData.requests?.filter((r: any) => r.status === 'pending').length || 0,
+        openIssues: issuesData.issues?.filter((i: any) => i.status === 'open').length || 0,
+        isClockedIn: !!timeData.activeEntry
+      });
     } catch (error) {
       console.error('Failed to load data:', error);
       router.push('/tradesman');
@@ -101,6 +136,41 @@ export default function TradesmanDashboard() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto p-4">
+        {/* Stats Cards */}
+        {stats && (
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-gray-500 text-sm mb-1">Active Projects</div>
+              <div className="text-3xl font-bold text-blue-600">{stats.activeProjects}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-gray-500 text-sm mb-1">Hours This Week</div>
+              <div className="text-3xl font-bold text-green-600">{stats.hoursThisWeek}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-gray-500 text-sm mb-1">Material Requests</div>
+              <div className="text-3xl font-bold text-orange-600">{stats.pendingRequests}</div>
+            </div>
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="text-gray-500 text-sm mb-1">Open Issues</div>
+              <div className="text-3xl font-bold text-red-600">{stats.openIssues}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Clock Status */}
+        {stats?.isClockedIn && (
+          <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="font-semibold text-green-900">You're clocked in</span>
+            </div>
+            <Link href="/tradesman/time" className="text-green-700 font-medium">
+              View Time →
+            </Link>
+          </div>
+        )}
+
         {projects.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-8 text-center">
             <div className="text-gray-400 text-6xl mb-4">📋</div>
