@@ -964,17 +964,27 @@ function ProjectDetailContent() {
             <h3 className="text-xl font-semibold mb-4">Upload Photos</h3>
             <form onSubmit={handlePhotoUpload}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Photo Files (Multiple Allowed)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select Photos
+                  <span className="ml-2 text-xs text-blue-600 font-normal">(Ctrl+Click or Shift+Click for multiple)</span>
+                </label>
                 <input
                   type="file"
                   accept="image/*"
                   multiple
                   onChange={(e) => setPhotoFiles(Array.from(e.target.files || []))}
-                  className="w-full border border-gray-300 rounded-md p-2"
+                  className="w-full border-2 border-dashed border-gray-300 rounded-md p-3 hover:border-blue-500 cursor-pointer"
                   required
                 />
-                {photoFiles.length > 0 && (
-                  <p className="text-sm text-gray-600 mt-1">{photoFiles.length} file(s) selected</p>
+                {photoFiles.length > 0 ? (
+                  <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded">
+                    <p className="text-sm font-medium text-blue-700">✓ {photoFiles.length} file(s) selected</p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      {photoFiles.map(f => f.name).join(', ')}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-gray-500 mt-1">Tip: Hold Ctrl (Windows) or Cmd (Mac) to select multiple files at once</p>
                 )}
               </div>
               <div className="mb-4">
