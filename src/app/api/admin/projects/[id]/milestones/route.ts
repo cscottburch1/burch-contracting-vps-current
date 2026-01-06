@@ -40,10 +40,11 @@ export async function GET(
     await ensureProjectMilestonesTable();
 
     const [milestones] = await pool.query(
-      `SELECT id, title, description, due_date, completed_date, status, order_index, created_at, updated_at
+      `SELECT id, milestone_name as title, description, scheduled_date as due_date, 
+              completed_date, status, order_num as order_index, created_at, updated_at
        FROM project_milestones 
        WHERE project_id = ?
-       ORDER BY order_index ASC, due_date ASC`,
+       ORDER BY order_num ASC, scheduled_date ASC`,
       [projectId]
     );
 
@@ -87,7 +88,7 @@ export async function POST(
 
     const [result] = await pool.query(
       `INSERT INTO project_milestones 
-       (project_id, title, description, due_date, status, order_index) 
+       (project_id, milestone_name, description, scheduled_date, status, order_num) 
        VALUES (?, ?, ?, ?, ?, ?)`,
       [projectId, title, description || null, due_date || null, status || 'pending', order_index || 0]
     );

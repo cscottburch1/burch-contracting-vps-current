@@ -23,7 +23,7 @@ export async function PATCH(
     const values: any[] = [];
 
     if (title !== undefined) {
-      updates.push('title = ?');
+      updates.push('milestone_name = ?');
       values.push(title);
     }
     if (description !== undefined) {
@@ -31,7 +31,7 @@ export async function PATCH(
       values.push(description);
     }
     if (due_date !== undefined) {
-      updates.push('due_date = ?');
+      updates.push('scheduled_date = ?');
       values.push(due_date);
     }
     if (status !== undefined) {
@@ -50,7 +50,7 @@ export async function PATCH(
       values.push(completed_date);
     }
     if (order_index !== undefined) {
-      updates.push('order_index = ?');
+      updates.push('order_num = ?');
       values.push(order_index);
     }
 
