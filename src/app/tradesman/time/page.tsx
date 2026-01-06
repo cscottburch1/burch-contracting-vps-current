@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function TradesmanTimeTracking() {
   const router = useRouter();
