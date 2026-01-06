@@ -26,7 +26,7 @@ interface Stats {
   hoursThisWeek: number;
   pendingRequests: number;
   openIssues: number;
-  isClocked In: boolean;
+  isClockedIn: boolean;
 }
 
 export default function TradesmanDashboard() {
