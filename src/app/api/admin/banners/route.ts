@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [title, message, button_text, button_link, bg_color || 'from-blue-600 to-blue-800', 
          text_color || 'white', icon, is_active || false, display_order || 0, 
-         start_date, end_date, currentUser.id]
+         start_date || null, end_date || null, currentUser.id]
       );
 
       const insertResult = result as any;

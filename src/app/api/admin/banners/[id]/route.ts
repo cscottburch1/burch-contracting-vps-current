@@ -58,11 +58,11 @@ export async function PATCH(
       }
       if (body.start_date !== undefined) {
         updateFields.push('start_date = ?');
-        values.push(body.start_date);
+        values.push(body.start_date || null);
       }
       if (body.end_date !== undefined) {
         updateFields.push('end_date = ?');
-        values.push(body.end_date);
+        values.push(body.end_date || null);
       }
 
       if (updateFields.length === 0) {
