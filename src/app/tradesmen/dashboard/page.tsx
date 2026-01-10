@@ -182,7 +182,7 @@ export default function TradesmanDashboard() {
             {projects.map((project) => (
               <Link
                 key={project.id}
-                href={`/tradesman/project/${project.id}`}
+                href={`/tradesmen/project/${project.id}`}
                 className="block bg-white rounded-lg shadow hover:shadow-md transition-shadow"
               >
                 <div className="p-4">
