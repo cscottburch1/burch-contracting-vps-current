@@ -17,7 +17,7 @@ export default function TradesmanLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/tradesman/login', {
+      const response = await fetch('/api/tradesmen/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, pin })
@@ -26,7 +26,7 @@ export default function TradesmanLoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        router.push('/tradesman/dashboard');
+        router.push('/tradesmen/dashboard');
       } else {
         setError(data.error || 'Login failed');
       }

@@ -46,7 +46,7 @@ export default function ProjectPhotoUploadPage() {
       ]);
 
       if (!projectRes.ok) {
-        router.push('/tradesman/dashboard');
+        router.push('/tradesmen/dashboard');
         return;
       }
 
@@ -146,7 +146,7 @@ export default function ProjectPhotoUploadPage() {
       {/* Header */}
       <div className="bg-blue-600 text-white p-4 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
-          <Link href="/tradesman/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2">
+          <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2">
             <span className="text-xl">←</span>
             <span className="ml-2 text-sm">Back to Projects</span>
           </Link>

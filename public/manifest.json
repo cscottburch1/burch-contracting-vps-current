@@ -2,7 +2,7 @@
   "name": "Burch Contracting Crew",
   "short_name": "Burch Crew",
   "description": "Photo upload app for Burch Contracting crew members",
-  "start_url": "/tradesman",
+  "start_url": "/tradesmen",
   "display": "standalone",
   "background_color": "#2563eb",
   "theme_color": "#2563eb",
@@ -35,7 +35,7 @@
       "name": "Upload Photo",
       "short_name": "Upload",
       "description": "Quick upload a photo",
-      "url": "/tradesman/dashboard",
+      "url": "/tradesmen/dashboard",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]

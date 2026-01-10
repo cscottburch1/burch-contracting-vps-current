@@ -43,11 +43,11 @@ export default function TradesmanDashboard() {
   const loadData = async () => {
     try {
       const [userRes, projectsRes, timeRes, materialsRes, issuesRes] = await Promise.all([
-        fetch('/api/tradesman/me'),
-        fetch('/api/tradesman/projects'),
-        fetch('/api/tradesman/time'),
-        fetch('/api/tradesman/materials'),
-        fetch('/api/tradesman/issues')
+        fetch('/api/tradesmen/me'),
+        fetch('/api/tradesmen/projects'),
+        fetch('/api/tradesmen/time'),
+        fetch('/api/tradesmen/materials'),
+        fetch('/api/tradesmen/issues')
       ]);
 
       if (!userRes.ok || !projectsRes.ok) {
@@ -92,7 +92,7 @@ export default function TradesmanDashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch('/api/tradesman/logout', { method: 'POST' });
+    await fetch('/api/tradesmen/logout', { method: 'POST' });
     router.push('/tradesman');
   };
 

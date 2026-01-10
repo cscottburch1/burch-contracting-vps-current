@@ -16,7 +16,7 @@ export default function TradesmanTimeTracking() {
 
   const loadTimeData = async () => {
     try {
-      const response = await fetch('/api/tradesman/time');
+      const response = await fetch('/api/tradesmen/time');
       if (response.ok) {
         const data = await response.json();
         setTimeEntries(data.timeEntries || []);
@@ -70,7 +70,7 @@ export default function TradesmanTimeTracking() {
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="bg-blue-600 text-white p-4 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
-          <button onClick={() => router.push('/tradesman/dashboard')} className="flex items-center text-blue-100 hover:text-white mb-2">
+          <button onClick={() => router.push('/tradesmen/dashboard')} className="flex items-center text-blue-100 hover:text-white mb-2">
             <span className="text-xl">←</span>
             <span className="ml-2 text-sm">Back to Dashboard</span>
           </button>

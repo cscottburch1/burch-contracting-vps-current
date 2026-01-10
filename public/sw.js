@@ -1,7 +1,7 @@
 const CACHE_NAME = 'burch-crew-v1';
 const urlsToCache = [
-  '/tradesman',
-  '/tradesman/dashboard',
+  '/tradesmen',
+  '/tradesmen/dashboard',
   '/offline.html'
 ];
 

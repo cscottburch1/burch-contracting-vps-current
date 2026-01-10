@@ -24,11 +24,11 @@ export default function TradesmanProjectPage() {
     try {
       const [projectRes, timeRes] = await Promise.all([
         fetch(`/api/admin/projects/${projectId}`),
-        fetch('/api/tradesman/time')
+        fetch('/api/tradesmen/time')
       ]);
 
       if (!projectRes.ok) {
-        router.push('/tradesman/dashboard');
+        router.push('/tradesmen/dashboard');
         return;
       }
 
@@ -48,7 +48,7 @@ export default function TradesmanProjectPage() {
 
   const handleClockIn = async () => {
     try {
-      const response = await fetch('/api/tradesman/time', {
+      const response = await fetch('/api/tradesmen/time', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'clock_in', project_id: projectId })
@@ -71,7 +71,7 @@ export default function TradesmanProjectPage() {
     if (breakMinutes === null) return;
 
     try {
-      const response = await fetch('/api/tradesman/time', {
+      const response = await fetch('/api/tradesmen/time', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -108,7 +108,7 @@ export default function TradesmanProjectPage() {
       {/* Header */}
       <div className="bg-blue-600 text-white p-4 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
-          <Link href="/tradesman/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2">
+          <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2">
             <span className="text-xl">←</span>
             <span className="ml-2 text-sm">Back to Projects</span>
           </Link>
@@ -210,7 +210,7 @@ export default function TradesmanProjectPage() {
               <div className="text-xs text-blue-600">Your time will be tracked automatically</div>
             </div>
             <Link 
-              href="/tradesman/time"
+              href="/tradesmen/time"
               className="block bg-white rounded-lg shadow p-4 text-center hover:shadow-md"
             >
               <div className="text-blue-600 font-semibold">View Full Time History →</div>
@@ -220,7 +220,7 @@ export default function TradesmanProjectPage() {
 
         {activeTab === 'photos' && (
           <Link
-            href={`/tradesman/project/${projectId}/photos`}
+            href={`/tradesmen/project/${projectId}/photos`}
             className="block bg-white rounded-lg shadow p-6 text-center hover:shadow-md"
           >
             <div className="text-6xl mb-4">📸</div>
@@ -250,7 +250,7 @@ export default function TradesmanProjectPage() {
               Feature interface coming soon...
             </p>
             <Link
-              href="/tradesman/dashboard"
+              href="/tradesmen/dashboard"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold"
             >
               Back to Dashboard
