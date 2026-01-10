@@ -40,21 +40,28 @@ export default function ProjectPhotoUploadPage() {
 
   const loadProjectData = async () => {
     try {
-      const [projectRes, photosRes] = await Promise.all([
-        fetch(`/api/admin/projects/${projectId}`),
-        fetch(`/api/admin/projects/${projectId}/photos`)
+      const [projectsRes, photosRes] = await Promise.all([
+        fetch(`/api/tradesmen/projects`),
+        fetch(`/api/tradesmen/projects/${projectId}/photos`)
       ]);
 
-      if (!projectRes.ok) {
+      if (!projectsRes.ok) {
         router.push('/tradesmen/dashboard');
         return;
       }
 
-      const projectData = await projectRes.json();
+      const projectsData = await projectsRes.json();
+      const currentProject = projectsData.projects?.find((p: any) => p.id === parseInt(projectId));
+      
+      if (!currentProject) {
+        router.push('/tradesmen/dashboard');
+        return;
+      }
+
       setProject({
-        id: projectData.project.id,
-        title: projectData.project.title,
-        customer_name: projectData.project.customer_name || 'Unknown'
+        id: currentProject.id,
+        title: currentProject.title,
+        customer_name: currentProject.customer_name || 'Unknown'
       });
 
       if (photosRes.ok) {
@@ -90,7 +97,7 @@ export default function ProjectPhotoUploadPage() {
         formData.append('category', category);
         formData.append('caption', caption || `Uploaded from mobile - ${new Date().toLocaleDateString()}`);
 
-        const response = await fetch(`/api/admin/projects/${projectId}/photos`, {
+        const response = await fetch(`/api/tradesmen/projects/${projectId}/photos`, {
           method: 'POST',
           body: formData
         });
