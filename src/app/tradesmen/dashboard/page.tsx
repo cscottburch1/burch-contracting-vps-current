@@ -76,9 +76,6 @@ export default function TradesmanDashboard() {
   };
 
   const loadData = async () => {
-  }, []);
-
-  const loadData = async () => {
     try {
       const [userRes, projectsRes, timeRes, materialsRes, issuesRes] = await Promise.all([
         fetch('/api/tradesmen/me'),
