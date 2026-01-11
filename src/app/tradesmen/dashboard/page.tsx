@@ -206,16 +206,7 @@ export default function TradesmanDashboard() {
         {/* Stats Cards */}
         {stats && (
           <div className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-5 sm:mb-6">
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-3xl sm:text-4xl">📁</span>
-                <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold text-blue-600">{stats.activeProjects}</div>
-                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Projects</div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+            <Link href="/tradesmen/time" className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-all active:scale-95">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-3xl sm:text-4xl">⏱️</span>
                 <div className="text-right">
@@ -223,25 +214,34 @@ export default function TradesmanDashboard() {
                   <div className="text-gray-500 text-xs sm:text-sm font-medium">Hours</div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+            </Link>
+            <Link href="/tradesmen/materials" className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-all active:scale-95">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-3xl sm:text-4xl">📦</span>
                 <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold text-orange-600">{stats.pendingRequests}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600">{stats.pendingRequests}</div>
                   <div className="text-gray-500 text-xs sm:text-sm font-medium">Materials</div>
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+            </Link>
+            <Link href="/tradesmen/issues" className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-all active:scale-95">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-3xl sm:text-4xl">⚠️</span>
                 <div className="text-right">
-                  <div className="text-2xl sm:text-3xl font-bold text-red-600">{stats.openIssues}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-orange-600">{stats.openIssues}</div>
                   <div className="text-gray-500 text-xs sm:text-sm font-medium">Issues</div>
                 </div>
               </div>
-            </div>
+            </Link>
+            <Link href="/tradesmen/reports" className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-all active:scale-95">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-3xl sm:text-4xl">📋</span>
+                <div className="text-right">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-600">{stats.activeProjects}</div>
+                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Reports</div>
+                </div>
+              </div>
+            </Link>
           </div>
         )}
 
