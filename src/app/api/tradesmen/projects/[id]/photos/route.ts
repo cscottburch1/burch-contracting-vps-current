@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getCurrentTradesman } from '@/lib/tradesmanAuth';
 import { query } from '@/lib/mysql';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
+import { existsSync } from 'fs';
 
 // Create project_photos table if it doesn't exist
 async function ensureProjectPhotosTable() {
@@ -135,6 +136,12 @@ export async function POST(
     const buffer = Buffer.from(bytes);
     
     const uploadDir = join(process.cwd(), 'public', 'uploads');
+    
+    // Ensure uploads directory exists
+    if (!existsSync(uploadDir)) {
+      await mkdir(uploadDir, { recursive: true });
+    }
+    
     const filepath = join(uploadDir, filename);
     
     await writeFile(filepath, buffer);
