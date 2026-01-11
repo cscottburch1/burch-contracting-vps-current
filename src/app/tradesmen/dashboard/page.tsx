@@ -117,17 +117,17 @@ export default function TradesmanDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-blue-600 text-white p-4 shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">Welcome, {user?.name?.split(' ')[0]}</h1>
-            <p className="text-blue-100 text-sm">Your Active Projects</p>
+          <div className="flex-1">
+            <h1 className="text-lg sm:text-xl font-bold truncate">Welcome, {user?.name?.split(' ')[0]}! 👋</h1>
+            <p className="text-blue-100 text-xs sm:text-sm">Your Active Projects</p>
           </div>
           <button
             onClick={handleLogout}
-            className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg text-sm font-medium"
+            className="bg-white/20 hover:bg-white/30 active:bg-white/40 px-4 py-2.5 rounded-xl text-sm font-semibold backdrop-blur-sm transition-all shadow-lg ml-3"
           >
             Logout
           </button>
@@ -135,87 +135,122 @@ export default function TradesmanDashboard() {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto p-4">
+      <div className="max-w-4xl mx-auto p-3 sm:p-4">
         {/* Stats Cards */}
         {stats && (
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-gray-500 text-sm mb-1">Active Projects</div>
-              <div className="text-3xl font-bold text-blue-600">{stats.activeProjects}</div>
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-5 sm:mb-6">
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-3xl sm:text-4xl">📁</span>
+                <div className="text-right">
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600">{stats.activeProjects}</div>
+                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Projects</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-gray-500 text-sm mb-1">Hours This Week</div>
-              <div className="text-3xl font-bold text-green-600">{stats.hoursThisWeek}</div>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-3xl sm:text-4xl">⏱️</span>
+                <div className="text-right">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-600">{stats.hoursThisWeek}</div>
+                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Hours</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-gray-500 text-sm mb-1">Material Requests</div>
-              <div className="text-3xl font-bold text-orange-600">{stats.pendingRequests}</div>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-3xl sm:text-4xl">📦</span>
+                <div className="text-right">
+                  <div className="text-2xl sm:text-3xl font-bold text-orange-600">{stats.pendingRequests}</div>
+                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Materials</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-4">
-              <div className="text-gray-500 text-sm mb-1">Open Issues</div>
-              <div className="text-3xl font-bold text-red-600">{stats.openIssues}</div>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 hover:shadow-lg transition-shadow">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-3xl sm:text-4xl">⚠️</span>
+                <div className="text-right">
+                  <div className="text-2xl sm:text-3xl font-bold text-red-600">{stats.openIssues}</div>
+                  <div className="text-gray-500 text-xs sm:text-sm font-medium">Issues</div>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
         {/* Clock Status */}
         {stats?.isClockedIn && (
-          <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="font-semibold text-green-900">You're clocked in</span>
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 mb-5 sm:mb-6 shadow-md">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                  <div className="w-4 h-4 bg-green-500 rounded-full absolute top-0 left-0 animate-ping"></div>
+                </div>
+                <span className="font-bold text-green-900 text-sm sm:text-base">You're Clocked In</span>
+              </div>
+              <Link href="/tradesmen/time" className="text-green-700 font-semibold text-sm bg-green-100 px-3 py-1.5 rounded-lg hover:bg-green-200 transition-colors">
+                View Time →
+              </Link>
             </div>
-            <Link href="/tradesman/time" className="text-green-700 font-medium">
-              View Time →
-            </Link>
           </div>
         )}
 
         {projects.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <div className="text-gray-400 text-6xl mb-4">📋</div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">No Active Projects</h2>
-            <p className="text-gray-600">You don't have any assigned projects at the moment.</p>
+          <div className="bg-white rounded-xl shadow-lg p-8 sm:p-10 text-center">
+            <div className="text-gray-300 text-6xl sm:text-7xl mb-4">📋</div>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No Active Projects</h2>
+            <p className="text-gray-600 text-sm sm:text-base">You don't have any assigned projects at the moment.</p>
           </div>
         ) : (
-          <div className="space-y-4">
-            {projects.map((project) => (
-              <Link
-                key={project.id}
-                href={`/tradesmen/project/${project.id}`}
-                className="block bg-white rounded-lg shadow hover:shadow-md transition-shadow"
-              >
-                <div className="p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-gray-900">{project.title}</h3>
-                      <p className="text-sm text-gray-600 mt-1">{project.customer_name}</p>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(project.status)}`}>
-                      {project.status}
-                    </span>
-                  </div>
-
-                  {project.description && (
-                    <p className="text-sm text-gray-700 mb-3 line-clamp-2">{project.description}</p>
-                  )}
-
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-4">
-                      <span className="text-gray-600">
-                        <span className="font-semibold">{project.role || 'Crew Member'}</span>
-                      </span>
-                      <span className="text-gray-500">
-                        📸 {project.photo_count} photos
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 px-1">Your Projects</h2>
+            <div className="space-y-3 sm:space-y-4">
+              {projects.map((project) => (
+                <Link
+                  key={project.id}
+                  href={`/tradesmen/project/${project.id}`}
+                  className="block bg-white rounded-xl shadow-md hover:shadow-xl active:scale-[0.98] transition-all border border-gray-100"
+                >
+                  <div className="p-5 sm:p-6">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1 leading-tight">{project.title}</h3>
+                        <p className="text-sm sm:text-base text-gray-600 flex items-center gap-2">
+                          <span>👤</span>
+                          {project.customer_name}
+                        </p>
+                      </div>
+                      <span className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap ${getStatusColor(project.status)}`}>
+                        {project.status}
                       </span>
                     </div>
-                    <div className="text-blue-600 font-semibold">
-                      Upload Photos →
+
+                    {project.description && (
+                      <p className="text-sm sm:text-base text-gray-700 mb-3 line-clamp-2 leading-relaxed">{project.description}</p>
+                    )}
+
+                    <div className="flex items-center justify-between text-sm sm:text-base pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <span className="text-gray-600 font-medium">
+                          {project.role || 'Crew Member'}
+                        </span>
+                        <span className="text-gray-500 flex items-center gap-1">
+                          <span className="text-lg">📸</span>
+                          <span className="font-semibold">{project.photo_count}</span>
+                        </span>
+                      </div>
+                      <div className="text-blue-600 font-bold flex items-center gap-1">
+                        Upload
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>

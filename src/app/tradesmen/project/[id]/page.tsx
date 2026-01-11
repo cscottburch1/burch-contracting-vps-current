@@ -149,24 +149,27 @@ export default function ProjectPhotoUploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-24">
       {/* Header */}
-      <div className="bg-blue-600 text-white p-4 shadow-lg sticky top-0 z-10">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
-          <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2">
-            <span className="text-xl">←</span>
-            <span className="ml-2 text-sm">Back to Projects</span>
+          <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2 group">
+            <span className="text-xl group-hover:translate-x-[-4px] transition-transform">←</span>
+            <span className="ml-2 text-sm sm:text-base font-medium">Back to Projects</span>
           </Link>
-          <h1 className="text-xl font-bold">{project?.title}</h1>
-          <p className="text-blue-100 text-sm">{project?.customer_name}</p>
+          <h1 className="text-lg sm:text-xl font-bold leading-tight">{project?.title}</h1>
+          <p className="text-blue-100 text-sm sm:text-base">{project?.customer_name}</p>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto p-4">
+      <div className="max-w-4xl mx-auto p-3 sm:p-4">
         {/* Upload Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">📸 Upload Photos</h2>
+        <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6 mb-5">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="text-2xl">📸</span>
+            Upload Photos
+          </h2>
 
           {/* Hidden file inputs */}
           <input
@@ -189,30 +192,31 @@ export default function ProjectPhotoUploadPage() {
 
           {/* Action Buttons */}
           {selectedFiles.length === 0 ? (
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-4">
               <button
                 onClick={openCamera}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-lg flex items-center justify-center gap-3 text-lg shadow-lg"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
               >
-                <span className="text-2xl">📷</span>
+                <span className="text-4xl">📷</span>
                 Take Photo
               </button>
               <button
                 onClick={openGallery}
-                className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-4 rounded-lg flex items-center justify-center gap-3 text-lg shadow-lg"
+                className="w-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
               >
-                <span className="text-2xl">🖼️</span>
+                <span className="text-4xl">🖼️</span>
                 Choose from Gallery
               </button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-5">
               {/* Selected Files */}
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
-                <p className="font-semibold text-blue-900 mb-2">
-                  ✓ {selectedFiles.length} photo(s) selected
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-4 sm:p-5">
+                <p className="font-bold text-blue-900 mb-2 text-base sm:text-lg flex items-center gap-2">
+                  <span className="text-2xl">✓</span>
+                  {selectedFiles.length} photo(s) selected
                 </p>
-                <div className="text-sm text-blue-700 space-y-1">
+                <div className="text-sm sm:text-base text-blue-700 space-y-1 max-h-40 overflow-y-auto">
                   {selectedFiles.map((file, idx) => (
                     <div key={idx} className="truncate">• {file.name}</div>
                   ))}
@@ -221,24 +225,24 @@ export default function ProjectPhotoUploadPage() {
 
               {/* Category Selection */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                   Photo Category
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as any)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-4 sm:py-5 border-2 border-gray-300 rounded-xl text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
                 >
-                  <option value="progress">Progress Update</option>
-                  <option value="before">Before</option>
-                  <option value="after">After</option>
-                  <option value="other">Other</option>
+                  <option value="progress">📊 Progress Update</option>
+                  <option value="before">⏪ Before</option>
+                  <option value="after">⏩ After</option>
+                  <option value="other">📂 Other</option>
                 </select>
               </div>
 
               {/* Caption */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm sm:text-base font-bold text-gray-700 mb-2">
                   Caption (Optional)
                 </label>
                 <input
@@ -246,40 +250,57 @@ export default function ProjectPhotoUploadPage() {
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="Add a description..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
               {/* Upload Progress */}
               {uploading && (
                 <div>
-                  <div className="bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div className="bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
                     <div
-                      className="bg-green-500 h-full transition-all duration-300"
+                      className="bg-gradient-to-r from-green-500 to-green-600 h-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
-                  <p className="text-center text-sm text-gray-600 mt-2">
+                  <p className="text-center text-sm sm:text-base font-semibold text-gray-700 mt-3 flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                     Uploading... {Math.round(uploadProgress)}%
                   </p>
                 </div>
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-3">
+              <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => setSelectedFiles([])}
                   disabled={uploading}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-lg disabled:opacity-50"
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 text-gray-800 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed text-base sm:text-lg transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpload}
                   disabled={uploading}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:scale-[0.98] text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg text-base sm:text-lg transition-all flex items-center justify-center gap-2"
                 >
-                  {uploading ? 'Uploading...' : 'Upload Photos'}
+                  {uploading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-xl">📤</span>
+                      Upload Photos
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -287,26 +308,33 @@ export default function ProjectPhotoUploadPage() {
         </div>
 
         {/* Recent Photos */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="bg-white rounded-xl shadow-lg p-5 sm:p-6">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span className="text-2xl">🖼️</span>
             Recent Photos ({photos.length})
           </h2>
           
           {photos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">No photos yet. Be the first to upload!</p>
+            <div className="text-center py-10">
+              <div className="text-gray-300 text-6xl mb-3">📷</div>
+              <p className="text-gray-500 text-sm sm:text-base">No photos yet. Be the first to upload!</p>
+            </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
-              {photos.slice(0, 10).map((photo) => (
-                <div key={photo.id} className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+              {photos.slice(0, 12).map((photo) => (
+                <div key={photo.id} className="relative aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                   <img
                     src={`/uploads/${photo.filename}`}
                     alt={photo.caption || 'Project photo'}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-2">
-                    <span className="inline-block px-2 py-0.5 bg-blue-600 rounded text-xs">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                    <span className="inline-block px-2.5 py-1 bg-blue-600 rounded-lg text-xs font-semibold text-white shadow-lg">
                       {photo.category}
                     </span>
+                    {photo.caption && (
+                      <p className="text-white text-xs mt-1 truncate">{photo.caption}</p>
+                    )}
                   </div>
                 </div>
               ))}
