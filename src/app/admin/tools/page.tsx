@@ -149,6 +149,24 @@ export default function AdminToolsPage() {
             User Management
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a
+              href="/admin/tradesmen"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-purple-400"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">👷</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Crew & Subcontractors
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Manage field workers, photo uploads, time tracking, and project assignments
+              </p>
+              <div className="mt-4 text-sm font-semibold text-purple-600">
+                Manage →
+              </div>
+            </a>
+
             {isOwner && (
               <a
                 href="/admin/settings"
