@@ -29,15 +29,53 @@ interface Stats {
   isClockedIn: boolean;
 }
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
 export default function TradesmanDashboard() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
 
   useEffect(() => {
     loadData();
+
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setShowInstallButton(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    // Check if already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setShowInstallButton(false);
+    }
+
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      setShowInstallButton(false);
+    }
+    
+    setDeferredPrompt(null);
+  };
+
+  const loadData = async () => {
   }, []);
 
   const loadData = async () => {
@@ -136,6 +174,27 @@ export default function TradesmanDashboard() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto p-3 sm:p-4">
+        {/* Install App Banner */}
+        {showInstallButton && (
+          <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center justify-between">
+            <div className="flex items-center gap-3 flex-1">
+              <svg className="w-8 h-8 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-sm sm:text-base">Install the App</p>
+                <p className="text-xs sm:text-sm text-green-100">Quick access from your home screen</p>
+              </div>
+            </div>
+            <button
+              onClick={handleInstallClick}
+              className="bg-white text-green-700 px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-50 active:scale-95 transition-all whitespace-nowrap ml-2"
+            >
+              Install
+            </button>
+          </div>
+        )}
+
         {/* Stats Cards */}
         {stats && (
           <div className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-5 sm:mb-6">
