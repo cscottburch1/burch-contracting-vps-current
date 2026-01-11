@@ -155,17 +155,28 @@ export default function TradesmanDashboard() {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex-1">
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex-1 min-w-0">
             <h1 className="text-lg sm:text-xl font-bold truncate">Welcome, {user?.name?.split(' ')[0]}! 👋</h1>
             <p className="text-blue-100 text-xs sm:text-sm">Your Active Projects</p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-white/20 hover:bg-white/30 active:bg-white/40 px-4 py-2.5 rounded-xl text-sm font-semibold backdrop-blur-sm transition-all shadow-lg ml-3"
-          >
-            Logout
-          </button>
+          <div className="flex items-center gap-2">
+            {(user as any)?.company_name && (
+              <Link
+                href="/tradesmen/profile"
+                className="bg-white/20 hover:bg-white/30 active:bg-white/40 px-3 py-2.5 rounded-xl text-sm font-semibold backdrop-blur-sm transition-all shadow-lg flex items-center gap-1"
+              >
+                <span>👤</span>
+                <span className="hidden sm:inline">Profile</span>
+              </Link>
+            )}
+            <button
+              onClick={handleLogout}
+              className="bg-white/20 hover:bg-white/30 active:bg-white/40 px-4 py-2.5 rounded-xl text-sm font-semibold backdrop-blur-sm transition-all shadow-lg"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 
