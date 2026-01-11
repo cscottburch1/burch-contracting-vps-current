@@ -543,6 +543,28 @@ export default function SubcontractorsManagementPage() {
               </div>
 
               <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">
+                  PIN for Crew App Access
+                  <span className="text-xs text-gray-500 ml-2">(6 digits - allows login at /tradesmen)</span>
+                </label>
+                <input
+                  type="text"
+                  value={(formData as any).pin || ''}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                    setFormData({ ...formData, pin: value } as any);
+                  }}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                  placeholder="123456"
+                  maxLength={6}
+                  pattern="[0-9]*"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Set a 6-digit PIN to allow this subcontractor to access the crew mobile app
+                </p>
+              </div>
+
+              <div className="mb-4">
                 <label className="block text-sm font-semibold mb-2">Address</label>
                 <input
                   type="text"
@@ -862,6 +884,12 @@ export default function SubcontractorsManagementPage() {
                       <p><strong>Contact:</strong> {selectedSubcontractor.contact_name || 'N/A'}</p>
                       <p><strong>Email:</strong> {selectedSubcontractor.email || 'N/A'}</p>
                       <p><strong>Phone:</strong> {selectedSubcontractor.phone || 'N/A'}</p>
+                      <p><strong>PIN:</strong> {(selectedSubcontractor as any).pin || 'Not set'}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {(selectedSubcontractor as any).pin 
+                          ? '🟢 Can login to crew app at burchcontracting.com/tradesmen' 
+                          : '🔴 Set PIN to enable crew app access'}
+                      </p>
                       <p><strong>Address:</strong> {selectedSubcontractor.address || 'N/A'}</p>
                       {selectedSubcontractor.city && (
                         <p><strong>City:</strong> {selectedSubcontractor.city}, {selectedSubcontractor.state} {selectedSubcontractor.zip}</p>

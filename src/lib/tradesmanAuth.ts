@@ -50,10 +50,19 @@ export async function getCurrentTradesman(): Promise<TradesmanUser | null> {
       return null;
     }
     
-    const user = await queryOne(
+    // Check tradesman_users table first
+    let user = await queryOne(
       'SELECT id, name, email, phone FROM tradesman_users WHERE id = ? AND is_active = true',
       [payload.userId]
     );
+    
+    // If not found, check subcontractors table
+    if (!user) {
+      user = await queryOne(
+        'SELECT id, contact_name as name, email, phone FROM subcontractors WHERE id = ? AND status IN ("approved", "active")',
+        [payload.userId]
+      );
+    }
     
     return user as TradesmanUser | null;
   } catch (error) {
@@ -64,10 +73,19 @@ export async function getCurrentTradesman(): Promise<TradesmanUser | null> {
 
 export async function authenticateTradesman(email: string, pin: string): Promise<TradesmanUser | null> {
   try {
-    const user = await queryOne(
+    // First try tradesman_users table
+    let user = await queryOne(
       'SELECT id, name, email, phone FROM tradesman_users WHERE email = ? AND pin = ? AND is_active = true',
       [email.toLowerCase(), pin]
     );
+    
+    // If not found, try subcontractors table
+    if (!user) {
+      user = await queryOne(
+        'SELECT id, contact_name as name, email, phone FROM subcontractors WHERE email = ? AND pin = ? AND status IN ("approved", "active")',
+        [email.toLowerCase(), pin]
+      );
+    }
     
     return user as TradesmanUser | null;
   } catch (error) {

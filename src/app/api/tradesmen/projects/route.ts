@@ -10,9 +10,9 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    // Get projects assigned to this tradesman
+    // Get projects from both tradesman_project_assignments and project_subcontractors
     const projects = await query(
-      `SELECT 
+      `SELECT DISTINCT
         p.id,
         p.title,
         p.description,
@@ -20,16 +20,17 @@ export async function GET() {
         p.start_date,
         p.end_date,
         c.name as customer_name,
-        tpa.role,
-        tpa.assigned_date,
+        COALESCE(tpa.role, ps.role, 'Crew Member') as role,
+        COALESCE(tpa.assigned_date, ps.assigned_date) as assigned_date,
         (SELECT COUNT(*) FROM project_photos WHERE project_id = p.id) as photo_count
-      FROM tradesman_project_assignments tpa
-      JOIN projects p ON tpa.project_id = p.id
+      FROM projects p
       LEFT JOIN customers c ON p.customer_id = c.id
-      WHERE tpa.tradesman_id = ?
-      AND p.status IN ('pending', 'active')
+      LEFT JOIN tradesman_project_assignments tpa ON tpa.project_id = p.id AND tpa.tradesman_id = ?
+      LEFT JOIN project_subcontractors ps ON ps.project_id = p.id AND ps.subcontractor_id = ?
+      WHERE (tpa.tradesman_id = ? OR ps.subcontractor_id = ?)
+      AND p.status IN ('pending', 'active', 'in_progress')
       ORDER BY p.start_date DESC`,
-      [tradesman.id]
+      [tradesman.id, tradesman.id, tradesman.id, tradesman.id]
     );
     
     return NextResponse.json({ projects });

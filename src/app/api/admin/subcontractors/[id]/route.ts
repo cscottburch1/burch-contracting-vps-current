@@ -42,6 +42,15 @@ export async function PATCH(
       values.push(body.phone);
     }
 
+    if (body.pin !== undefined) {
+      // Validate PIN is 6 digits
+      if (!/^\d{6}$/.test(body.pin)) {
+        return NextResponse.json({ error: 'PIN must be exactly 6 digits' }, { status: 400 });
+      }
+      updates.push('pin = ?');
+      values.push(body.pin);
+    }
+
     if (body.address !== undefined) {
       updates.push('address = ?');
       values.push(body.address);
