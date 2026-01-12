@@ -86,7 +86,7 @@ export default function TradesmanDashboard() {
       ]);
 
       if (!userRes.ok || !projectsRes.ok) {
-        router.push('/tradesman');
+        router.push('/tradesmen');
         return;
       }
 
@@ -120,7 +120,7 @@ export default function TradesmanDashboard() {
       });
     } catch (error) {
       console.error('Failed to load data:', error);
-      router.push('/tradesman');
+      router.push('/tradesmen');
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,8 @@ export default function TradesmanDashboard() {
 
   const handleLogout = async () => {
     await fetch('/api/tradesmen/logout', { method: 'POST' });
-    router.push('/tradesman');
+    alert('Logged out successfully!');
+    router.push('/tradesmen');
   };
 
   const getStatusColor = (status: string) => {
