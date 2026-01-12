@@ -124,7 +124,7 @@ function ProjectDetailContent() {
   const [photoCategory, setPhotoCategory] = useState<'before' | 'progress' | 'after' | 'other'>('progress');
   const [photoCaption, setPhotoCaption] = useState('');
   
-  const [documentFile, setDocumentFile] = useState<File | null>(null);
+  const [documentFile, setDocumentFile] = useState<FileList | null>(null);
   const [documentCategory, setDocumentCategory] = useState('general');
   const [documentDescription, setDocumentDescription] = useState('');
   
@@ -338,44 +338,41 @@ function ProjectDetailContent() {
 
   const handleDocumentUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!documentFile || !projectId) return;
+    if (!documentFile || documentFile.length === 0 || !projectId) return;
 
     setUploading(true);
+    
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result as string;
+      // Upload each file
+      for (let i = 0; i < documentFile.length; i++) {
+        const file = documentFile[i];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('category', documentCategory);
+        formData.append('description', documentDescription);
         
         const response = await fetch(`/api/admin/projects/${projectId}/documents`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: documentFile.name,
-            url: base64String,
-            file_type: documentFile.type,
-            file_size: documentFile.size,
-            category: documentCategory,
-            description: documentDescription
-          })
+          credentials: 'include',
+          body: formData
         });
 
-        if (response.ok) {
-          alert('Document uploaded successfully!');
-          setShowDocumentUpload(false);
-          setDocumentFile(null);
-          setDocumentCategory('general');
-          setDocumentDescription('');
-          await loadDocuments();
-        } else {
+        if (!response.ok) {
           const data = await response.json();
-          alert(data.error || 'Failed to upload document');
+          alert(`Failed to upload ${file.name}: ${data.error || 'Unknown error'}`);
         }
-        setUploading(false);
-      };
-      reader.readAsDataURL(documentFile);
+      }
+      
+      alert(`Successfully uploaded ${documentFile.length} document(s)!`);
+      setShowDocumentUpload(false);
+      setDocumentFile(null);
+      setDocumentCategory('general');
+      setDocumentDescription('');
+      await loadDocuments();
+      setUploading(false);
     } catch (error) {
-      console.error('Error uploading document:', error);
-      alert('Failed to upload document');
+      console.error('Error uploading documents:', error);
+      alert('Failed to upload documents');
       setUploading(false);
     }
   };
@@ -1209,18 +1206,24 @@ function ProjectDetailContent() {
             <h3 className="text-xl font-semibold mb-4">Upload Document</h3>
             <form onSubmit={handleDocumentUpload}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Document File</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Document File(s)</label>
                 <input
                   type="file"
-                  onChange={(e) => setDocumentFile(e.target.files?.[0] || null)}
+                  onChange={(e) => setDocumentFile(e.target.files)}
                   className="w-full border border-gray-300 rounded-md p-2"
+                  multiple
                   required
                 />
-                {documentFile && (
-                  <p className="text-sm text-gray-500 mt-1">
-                    {documentFile.name} ({formatFileSize(documentFile.size)})
-                  </p>
+                {documentFile && documentFile.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {Array.from(documentFile).map((file, index) => (
+                      <p key={index} className="text-sm text-gray-500">
+                        {file.name} ({formatFileSize(file.size)})
+                      </p>
+                    ))}
+                  </div>
                 )}
+                <p className="text-xs text-gray-500 mt-1">Max 10MB per file. You can select multiple files.</p>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
