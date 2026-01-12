@@ -94,7 +94,9 @@ export default function AdminProjectsPage() {
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'TBD';
-    return new Date(dateString).toLocaleDateString('en-US', {
+    // Parse as local date to avoid timezone shift
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
       year: 'numeric'

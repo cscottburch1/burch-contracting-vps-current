@@ -503,12 +503,18 @@ export default function AdminProjectDetailPage() {
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500">Start Date</dt>
-                <dd className="mt-1 text-sm text-gray-900">{new Date(project.start_date).toLocaleDateString()}</dd>
+                <dd className="mt-1 text-sm text-gray-900">{(() => {
+                  const [year, month, day] = project.start_date.split('-').map(Number);
+                  return new Date(year, month - 1, day).toLocaleDateString();
+                })()}</dd>
               </div>
               {project.end_date && (
                 <div>
                   <dt className="text-sm font-medium text-gray-500">End Date</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{new Date(project.end_date).toLocaleDateString()}</dd>
+                  <dd className="mt-1 text-sm text-gray-900">{(() => {
+                    const [year, month, day] = project.end_date.split('-').map(Number);
+                    return new Date(year, month - 1, day).toLocaleDateString();
+                  })()}</dd>
                 </div>
               )}
             </dl>
