@@ -309,7 +309,13 @@ export default function HomePage() {
               <ServiceCard
                 title={service.title}
                 description={service.description}
-                icon={<Icon name={service.icon as any} size={40} className="text-blue-600" />}
+                icon={
+                  service.icon.startsWith('/') ? (
+                    <img src={service.icon} alt={service.title} className="w-10 h-10" />
+                  ) : (
+                    <Icon name={service.icon as any} size={40} className="text-blue-600" />
+                  )
+                }
                 href={`/services/${service.id}`}
                 compact
               />
