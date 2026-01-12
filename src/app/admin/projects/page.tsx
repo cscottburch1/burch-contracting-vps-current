@@ -94,13 +94,25 @@ export default function AdminProjectsPage() {
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'TBD';
-    // Parse as local date to avoid timezone shift
-    const [year, month, day] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
+    try {
+      // Handle both date-only and datetime formats
+      const dateOnly = dateString.split('T')[0]; // Remove time if present
+      const [year, month, day] = dateOnly.split('-').map(Number);
+      
+      // Validate the parsed values
+      if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        return 'Invalid Date';
+      }
+      
+      return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    } catch (error) {
+      console.error('Error formatting date:', dateString, error);
+      return 'Invalid Date';
+    }
   };
 
   const filteredProjects = projects
