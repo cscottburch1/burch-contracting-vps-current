@@ -46,7 +46,7 @@ export default function CustomerDetailPage() {
   const [showDeleteProjectModal, setShowDeleteProjectModal] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [deletingProject, setDeletingProject] = useState<Project | null>(null);
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadFile, setUploadFile] = useState<FileList | null>(null);
   const [uploadCategory, setUploadCategory] = useState('general');
   const [uploadDescription, setUploadDescription] = useState('');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
@@ -205,47 +205,42 @@ export default function CustomerDetailPage() {
 
   const handleUploadDocument = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uploadFile || !selectedProjectId) return;
+    if (!uploadFile || uploadFile.length === 0 || !selectedProjectId) return;
 
     setUploading(true);
+    
     try {
-      // Convert file to base64 for storage
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result as string;
+      // Upload each file
+      for (let i = 0; i < uploadFile.length; i++) {
+        const file = uploadFile[i];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('category', uploadCategory);
+        formData.append('description', uploadDescription);
         
         const response = await fetch(`/api/admin/projects/${selectedProjectId}/documents`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({
-            name: uploadFile.name,
-            url: base64String,
-            file_type: uploadFile.type,
-            file_size: uploadFile.size,
-            category: uploadCategory,
-            description: uploadDescription
-          })
+          body: formData
         });
 
-        if (response.ok) {
-          alert('Document uploaded successfully!');
-          setShowUploadModal(false);
-          setUploadFile(null);
-          setUploadCategory('general');
-          setUploadDescription('');
-          setSelectedProjectId(null);
-          fetchDocuments();
-        } else {
+        if (!response.ok) {
           const data = await response.json();
-          alert(data.error || 'Failed to upload document');
+          alert(`Failed to upload ${file.name}: ${data.error || 'Unknown error'}`);
         }
-        setUploading(false);
-      };
-      reader.readAsDataURL(uploadFile);
+      }
+      
+      alert(`Successfully uploaded ${uploadFile.length} document(s)!`);
+      setShowUploadModal(false);
+      setUploadFile(null);
+      setUploadCategory('general');
+      setUploadDescription('');
+      setSelectedProjectId(null);
+      fetchDocuments();
+      setUploading(false);
     } catch (error) {
-      console.error('Error uploading document:', error);
-      alert('Failed to upload document');
+      console.error('Error uploading documents:', error);
+      alert('Failed to upload documents');
       setUploading(false);
     }
   };
@@ -888,20 +883,25 @@ export default function CustomerDetailPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">File *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">File(s) *</label>
                   <input
                     type="file"
-                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                    onChange={(e) => setUploadFile(e.target.files)}
                     accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx,.xls,.xlsx,.txt"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    multiple
                     required
                   />
-                  {uploadFile && (
-                    <p className="text-xs text-gray-600 mt-1">
-                      {uploadFile.name} ({formatFileSize(uploadFile.size)})
-                    </p>
+                  {uploadFile && uploadFile.length > 0 && (
+                    <div className="mt-2 space-y-1">
+                      {Array.from(uploadFile).map((file, index) => (
+                        <p key={index} className="text-xs text-gray-600">
+                          {file.name} ({formatFileSize(file.size)})
+                        </p>
+                      ))}
+                    </div>
                   )}
-                  <p className="text-xs text-gray-500 mt-1">Max 10MB. PDF, Images, Word, Excel accepted.</p>
+                  <p className="text-xs text-gray-500 mt-1">Max 10MB per file. PDF, Images, Word, Excel accepted. You can select multiple files.</p>
                 </div>
 
                 <div>

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 export async function GET(
   request: Request,
@@ -37,16 +40,40 @@ export async function POST(
     }
 
     const { id } = await context.params;
-    const body = await request.json();
-    const { name, url, file_type, file_size, category, description } = body;
+    const formData = await request.formData();
+    const file = formData.get('file') as File;
+    const category = formData.get('category') as string || 'general';
+    const description = formData.get('description') as string || '';
 
-    if (!name || !url) {
-      return NextResponse.json({ error: 'Name and URL are required' }, { status: 400 });
+    if (!file) {
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
+    // Check file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      return NextResponse.json({ error: 'File size exceeds 10MB limit' }, { status: 400 });
+    }
+
+    // Create uploads directory if it doesn't exist
+    const uploadsDir = join(process.cwd(), 'public', 'uploads');
+    if (!existsSync(uploadsDir)) {
+      await mkdir(uploadsDir, { recursive: true });
+    }
+
+    // Generate unique filename
+    const timestamp = Date.now();
+    const filename = `${timestamp}-${file.name}`;
+    const filepath = join(uploadsDir, filename);
+
+    // Save file
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    await writeFile(filepath, buffer);
+
+    // Save to database
     const result = await query(
       'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by, category, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [id, name, url, file_type || 'unknown', file_size || 0, 'admin', category || 'general', description || '']
+      [id, file.name, `/uploads/${filename}`, file.type || 'unknown', file.size, 'admin', category, description]
     );
 
     const docId = (result as any).insertId;
