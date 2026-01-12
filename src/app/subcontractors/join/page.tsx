@@ -84,12 +84,20 @@ export default function SubcontractorJoinPage() {
               <p className="text-2xl mb-8 text-blue-100">
                 Partner with Burch Contracting and grow your business
               </p>
-              <button 
-                onClick={() => setShowForm(true)}
-                className="bg-white text-blue-900 px-10 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition shadow-lg"
-              >
-                Apply Now
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button 
+                  onClick={() => setShowForm(true)}
+                  className="bg-white text-blue-900 px-10 py-4 rounded-lg text-xl font-bold hover:bg-blue-50 transition shadow-lg"
+                >
+                  Apply Now
+                </button>
+                <a
+                  href="/tradesmen"
+                  className="bg-blue-800 text-white px-10 py-4 rounded-lg text-xl font-bold hover:bg-blue-900 transition shadow-lg border-2 border-white"
+                >
+                  Login
+                </a>
+              </div>
             </div>
           </div>
         </section>
