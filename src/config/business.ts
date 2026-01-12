@@ -62,7 +62,7 @@ export const businessConfig = {
     {
       id: "basement",
       title: "Basement Finishing & Renovations",
-      icon: "/basement-icon.ico",
+      icon: "Building",
       image: "/basement-finishing.webp",
       description: "Transform unfinished basements into beautiful living spaces. Rec rooms, home theaters, offices & in-law suites in Simpsonville & Laurens County.",
       tasks: ["Complete basement finishing", "Rec rooms & home theaters", "Waterproofing & egress windows"]
