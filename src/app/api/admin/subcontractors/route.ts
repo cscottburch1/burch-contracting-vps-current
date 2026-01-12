@@ -15,11 +15,26 @@ export async function GET(request: Request) {
       `SELECT * FROM subcontractors ORDER BY created_at DESC`
     );
 
-    // Parse JSON fields
-    const parsed = subcontractors.map((sub: any) => ({
-      ...sub,
-      specialties: sub.specialties ? JSON.parse(sub.specialties) : [],
-    }));
+    // Parse JSON fields - handle both JSON arrays and comma-separated strings
+    const parsed = subcontractors.map((sub: any) => {
+      let specialties = [];
+      
+      if (sub.specialties) {
+        try {
+          // Try to parse as JSON first
+          const parsed = JSON.parse(sub.specialties);
+          specialties = Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          // If JSON parsing fails, treat as comma-separated string
+          specialties = sub.specialties.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+        }
+      }
+      
+      return {
+        ...sub,
+        specialties,
+      };
+    });
 
     return NextResponse.json({ subcontractors: parsed });
   } catch (error) {
