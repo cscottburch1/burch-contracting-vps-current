@@ -14,7 +14,13 @@ export async function GET(
 
     const { id } = await context.params;
     
-    const projectRaw = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
+    const projectRaw = await queryOne(
+      `SELECT p.*, c.name as customer_name, c.email as customer_email, c.phone as customer_phone, c.address as customer_address
+       FROM projects p
+       LEFT JOIN customers c ON p.customer_id = c.id
+       WHERE p.id = ?`,
+      [id]
+    );
     if (!projectRaw) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
