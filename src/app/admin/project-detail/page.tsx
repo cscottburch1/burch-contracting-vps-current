@@ -583,6 +583,20 @@ function ProjectDetailContent() {
     return 'File';
   };
 
+  const isImageFile = (fileType: string) => {
+    return fileType.includes('image') || 
+           fileType.includes('jpg') || 
+           fileType.includes('jpeg') || 
+           fileType.includes('png') || 
+           fileType.includes('gif') || 
+           fileType.includes('webp');
+  };
+
+  const handlePreviewDocument = (doc: Document) => {
+    // Open document in new tab for preview
+    window.open(doc.filepath, '_blank');
+  };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -955,7 +969,16 @@ function ProjectDetailContent() {
                 {documents.map((doc) => (
                   <div key={doc.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
                     <div className="flex items-center flex-1">
-                      <Icon name={getFileIcon(doc.filetype) as IconName} className="text-gray-400 mr-3" />
+                      {isImageFile(doc.filetype) ? (
+                        <img 
+                          src={doc.filepath} 
+                          alt={doc.filename}
+                          className="w-16 h-16 object-cover rounded mr-3 cursor-pointer"
+                          onClick={() => handlePreviewDocument(doc)}
+                        />
+                      ) : (
+                        <Icon name={getFileIcon(doc.filetype) as IconName} className="text-gray-400 mr-3" />
+                      )}
                       <div className="flex-1">
                         <p className="font-medium">{doc.filename}</p>
                         {doc.description && (
@@ -973,16 +996,25 @@ function ProjectDetailContent() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handlePreviewDocument(doc)}
+                        className="bg-green-50 text-green-600 p-2 rounded-md hover:bg-green-100"
+                        title="Preview"
+                      >
+                        <Icon name="Eye" />
+                      </button>
                       <a
                         href={doc.filepath}
                         download={doc.filename}
                         className="bg-blue-50 text-blue-600 p-2 rounded-md hover:bg-blue-100"
+                        title="Download"
                       >
                         <Icon name="Download" />
                       </a>
                       <button
                         onClick={() => handleDeleteDocument(doc.id)}
                         className="bg-red-50 text-red-600 p-2 rounded-md hover:bg-red-100"
+                        title="Delete"
                       >
                         <Icon name="Trash2" />
                       </button>

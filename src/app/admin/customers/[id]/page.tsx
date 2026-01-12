@@ -274,6 +274,20 @@ export default function CustomerDetailPage() {
     return 'File';
   };
 
+  const isImageFile = (fileType: string) => {
+    return fileType.includes('image') || 
+           fileType.includes('jpg') || 
+           fileType.includes('jpeg') || 
+           fileType.includes('png') || 
+           fileType.includes('gif') || 
+           fileType.includes('webp');
+  };
+
+  const handlePreviewDocument = (doc: any) => {
+    // Open document in new tab for preview
+    window.open(doc.filepath, '_blank');
+  };
+
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -590,7 +604,16 @@ export default function CustomerDetailPage() {
                   documents.map((doc) => (
                     <div key={doc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <Icon name={getFileIcon(doc.filetype)} size={20} className="text-blue-600 flex-shrink-0" />
+                        {isImageFile(doc.filetype) ? (
+                          <img 
+                            src={doc.filepath} 
+                            alt={doc.filename}
+                            className="w-12 h-12 object-cover rounded cursor-pointer flex-shrink-0"
+                            onClick={() => handlePreviewDocument(doc)}
+                          />
+                        ) : (
+                          <Icon name={getFileIcon(doc.filetype)} size={20} className="text-blue-600 flex-shrink-0" />
+                        )}
                         <div className="min-w-0 flex-1">
                           <a 
                             href={doc.filepath} 
@@ -609,12 +632,22 @@ export default function CustomerDetailPage() {
                           )}
                         </div>
                       </div>
-                      <button
-                        onClick={() => handleDeleteDocument(doc.id, doc.project_id)}
-                        className="text-red-600 hover:text-red-700 p-1 flex-shrink-0"
-                      >
-                        <Icon name="Trash2" size={16} />
-                      </button>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
+                          onClick={() => handlePreviewDocument(doc)}
+                          className="text-green-600 hover:text-green-700 p-1"
+                          title="Preview"
+                        >
+                          <Icon name="Eye" size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteDocument(doc.id, doc.project_id)}
+                          className="text-red-600 hover:text-red-700 p-1"
+                          title="Delete"
+                        >
+                          <Icon name="Trash2" size={16} />
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}
