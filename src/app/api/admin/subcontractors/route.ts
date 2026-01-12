@@ -20,13 +20,18 @@ export async function GET(request: Request) {
       let specialties = [];
       
       if (sub.specialties) {
-        try {
-          // Try to parse as JSON first
-          const parsed = JSON.parse(sub.specialties);
-          specialties = Array.isArray(parsed) ? parsed : [];
-        } catch (e) {
-          // If JSON parsing fails, treat as comma-separated string
-          specialties = sub.specialties.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+        // If it's already an array (MySQL JSON type), use it directly
+        if (Array.isArray(sub.specialties)) {
+          specialties = sub.specialties;
+        } else if (typeof sub.specialties === 'string') {
+          try {
+            // Try to parse as JSON first
+            const parsed = JSON.parse(sub.specialties);
+            specialties = Array.isArray(parsed) ? parsed : [];
+          } catch (e) {
+            // If JSON parsing fails, treat as comma-separated string
+            specialties = sub.specialties.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+          }
         }
       }
       
