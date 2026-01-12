@@ -348,8 +348,6 @@ function ProjectDetailContent() {
         const file = documentFile[i];
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('category', documentCategory);
-        formData.append('description', documentDescription);
         
         const response = await fetch(`/api/admin/projects/${projectId}/documents`, {
           method: 'POST',
@@ -366,8 +364,6 @@ function ProjectDetailContent() {
       alert(`Successfully uploaded ${documentFile.length} document(s)!`);
       setShowDocumentUpload(false);
       setDocumentFile(null);
-      setDocumentCategory('general');
-      setDocumentDescription('');
       await loadDocuments();
       setUploading(false);
     } catch (error) {
@@ -1225,39 +1221,12 @@ function ProjectDetailContent() {
                 )}
                 <p className="text-xs text-gray-500 mt-1">Max 10MB per file. You can select multiple files.</p>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                <select
-                  value={documentCategory}
-                  onChange={(e) => setDocumentCategory(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md p-2"
-                >
-                  <option value="general">General</option>
-                  <option value="contract">Contract</option>
-                  <option value="permit">Permit</option>
-                  <option value="invoice">Invoice</option>
-                  <option value="photo">Photo</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Optional)</label>
-                <textarea
-                  value={documentDescription}
-                  onChange={(e) => setDocumentDescription(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md p-2"
-                  rows={3}
-                  placeholder="Add a description for this document..."
-                />
-              </div>
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => {
                     setShowDocumentUpload(false);
                     setDocumentFile(null);
-                    setDocumentCategory('general');
-                    setDocumentDescription('');
                   }}
                   className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   disabled={uploading}

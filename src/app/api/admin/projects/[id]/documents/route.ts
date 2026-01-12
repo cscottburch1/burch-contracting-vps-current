@@ -42,8 +42,6 @@ export async function POST(
     const { id } = await context.params;
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const category = formData.get('category') as string || 'general';
-    const description = formData.get('description') as string || '';
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -72,8 +70,8 @@ export async function POST(
 
     // Save to database
     const result = await query(
-      'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by, category, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [id, file.name, `/uploads/${filename}`, file.type || 'unknown', file.size, 'admin', category, description]
+      'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)',
+      [id, file.name, `/uploads/${filename}`, file.type || 'unknown', file.size, 'admin']
     );
 
     const docId = (result as any).insertId;
