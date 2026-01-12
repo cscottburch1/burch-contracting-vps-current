@@ -430,7 +430,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <section className={`relative ${slug === 'basement' ? 'bg-cover bg-center' : 'bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900'} text-white py-24 md:py-32 overflow-hidden`}
         style={slug === 'basement' ? { backgroundImage: 'url(/basement-finishing.webp)' } : {}}>
         {slug === 'basement' && (
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/45 via-blue-800/45 to-gray-900/45 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-blue-800/20 to-gray-900/25 rounded-3xl"></div>
         )}
         {slug !== 'basement' && (
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
