@@ -22,7 +22,7 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
       alt="Burch Contracting Logo"
       width={size.width}
       height={size.height}
-      className={`${className} rounded-lg`}
+      className={`${className} rounded-lg ${variant === 'footer' ? 'bg-white p-3' : ''}`}
       priority={variant === 'header'}
     />
   );
