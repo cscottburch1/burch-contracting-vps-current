@@ -29,7 +29,7 @@ export default function CreateInvoicePage() {
     customerPhone: '',
     customerAddress: '',
     items: [
-      { id: '1', description: '', quantity: 1, rate: 0, amount: 0 }
+      { id: '1', description: '', quantity: 1, rate: 0, deduction: 0, amount: 0 }
     ],
     notes: '',
     terms: 'Payment is due within 30 days.\nPlease make checks payable to Burch Contracting.\nThank you for your business!',
@@ -108,6 +108,7 @@ export default function CreateInvoicePage() {
       description: '',
       quantity: 1,
       rate: 0,
+      deduction: 0,
       amount: 0,
     };
     updateInvoiceData({ items: [...invoiceData.items, newItem] });
@@ -121,8 +122,9 @@ export default function CreateInvoicePage() {
     const updatedItems = invoiceData.items.map(item => {
       if (item.id === id) {
         const updated = { ...item, [field]: value };
-        if (field === 'quantity' || field === 'rate') {
-          updated.amount = updated.quantity * updated.rate;
+        if (field === 'quantity' || field === 'rate' || field === 'deduction') {
+          const subtotal = updated.quantity * updated.rate;
+          updated.amount = subtotal - (updated.deduction || 0);
         }
         return updated;
       }
@@ -327,6 +329,17 @@ export default function CreateInvoicePage() {
                           value={item.rate}
                           onChange={(e) => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                          min="0"
+                          step="0.01"
+                        />
+                      </div>
+                      <div className="w-32">
+                        <input
+                          type="number"
+                          placeholder="Deduction"
+                          value={item.deduction || 0}
+                          onChange={(e) => updateItem(item.id, 'deduction', parseFloat(e.target.value) || 0)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-red-600"
                           min="0"
                           step="0.01"
                         />

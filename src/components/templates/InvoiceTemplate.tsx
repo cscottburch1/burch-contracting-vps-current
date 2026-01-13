@@ -9,6 +9,7 @@ export interface InvoiceItem {
   description: string;
   quantity: number;
   rate: number;
+  deduction?: number;
   amount: number;
 }
 
@@ -108,6 +109,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
                 <th className="text-left py-3 px-4">Description</th>
                 <th className="text-center py-3 px-4 w-24">Qty</th>
                 <th className="text-right py-3 px-4 w-32">Rate</th>
+                <th className="text-right py-3 px-4 w-32">Deduction</th>
                 <th className="text-right py-3 px-4 w-32">Amount</th>
               </tr>
             </thead>
@@ -117,6 +119,9 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
                   <td className="py-3 px-4 text-gray-900">{item.description}</td>
                   <td className="py-3 px-4 text-center text-gray-700">{item.quantity}</td>
                   <td className="py-3 px-4 text-right text-gray-700">{formatCurrency(item.rate)}</td>
+                  <td className="py-3 px-4 text-right text-red-600">
+                    {item.deduction && item.deduction > 0 ? `-${formatCurrency(item.deduction)}` : '-'}
+                  </td>
                   <td className="py-3 px-4 text-right font-semibold text-gray-900">{formatCurrency(item.amount)}</td>
                 </tr>
               ))}
