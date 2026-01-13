@@ -210,6 +210,109 @@ export default function SubcontractorJoinPage() {
           </div>
         </section>
 
+        {/* Mobile App Section */}
+        <section className="py-20 bg-gradient-to-r from-green-600 to-green-700">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">
+                📱 Install the Mobile App
+              </h2>
+              <p className="text-xl text-green-100">
+                Work on the go - Access your projects from your phone!
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-2xl p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">For iPhone Users (Safari)</h3>
+                  <ol className="space-y-3 text-gray-700">
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">1</span>
+                      <span>Go to <strong>burchcontracting.com/tradesmen</strong> and login</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">2</span>
+                      <span>Tap the <strong>Share</strong> button (box with arrow)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">3</span>
+                      <span>Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">4</span>
+                      <span>Tap <strong>"Add"</strong> in the top right</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">✓</span>
+                      <span>The app icon will appear on your home screen!</span>
+                    </li>
+                  </ol>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">For Android Users (Chrome)</h3>
+                  <ol className="space-y-3 text-gray-700">
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">1</span>
+                      <span>Go to <strong>burchcontracting.com/tradesmen</strong> and login</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">2</span>
+                      <span>Tap the <strong>"Install"</strong> button that appears at the top</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">3</span>
+                      <span>OR tap the <strong>three dots menu</strong> (⋮)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">4</span>
+                      <span>Select <strong>"Add to Home screen"</strong></span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5 flex-shrink-0">✓</span>
+                      <span>The app icon will appear on your home screen!</span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              <div className="border-t-2 border-gray-200 pt-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 flex items-center">
+                  <span className="text-2xl mr-2">⚡</span>
+                  App Features
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700">
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>View assigned projects</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>Upload project photos</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>Track time and materials</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>Report issues instantly</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>Communicate with office</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-600 mr-2">✓</span>
+                    <span>Works offline</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Requirements Section */}
         <section className="py-20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
