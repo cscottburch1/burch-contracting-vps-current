@@ -164,7 +164,7 @@ export default function CreateInvoicePage() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12">
+      <section className="no-print bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold">Create Invoice</h1>
           <p className="text-gray-300 mt-2">Generate professional invoices for your customers</p>
@@ -174,7 +174,7 @@ export default function CreateInvoicePage() {
       <Section background="gray" padding="lg">
         <div className="max-w-5xl mx-auto">
           <Card>
-            <form className="space-y-8">
+            <form className="no-print space-y-8">
               {/* Invoice Details */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Invoice Details</h3>
@@ -440,7 +440,7 @@ export default function CreateInvoicePage() {
               </div>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t">
+              <div className="no-print flex justify-end gap-3 pt-4 border-t">
                 <Button type="button" variant="outline" href="/admin/dashboard">
                   Cancel
                 </Button>

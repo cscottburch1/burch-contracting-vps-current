@@ -100,7 +100,7 @@ export function AdminNav() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-[60] bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+        className="no-print lg:hidden fixed top-4 left-4 z-[60] bg-blue-600 text-white p-2 rounded-lg shadow-lg"
       >
         {mobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -108,7 +108,7 @@ export function AdminNav() {
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="no-print lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -116,7 +116,7 @@ export function AdminNav() {
       {/* Sidebar */}
       <nav
         className={`
-          fixed top-0 left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
+          no-print fixed top-0 left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
           transition-all duration-300 ease-in-out z-50 flex flex-col
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -241,7 +241,7 @@ export function AdminNav() {
       </nav>
 
       {/* Spacer to push content right */}
-      <div className={`${collapsed ? 'lg:w-20' : 'lg:w-64'} transition-all duration-300`} />
+      <div className={`no-print ${collapsed ? 'lg:w-20' : 'lg:w-64'} transition-all duration-300`} />
     </>
   );
 }

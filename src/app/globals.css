@@ -200,6 +200,16 @@ html {
     display: none !important;
   }
 
+  /* Hide all navigation, headers, and UI elements */
+  nav,
+  header,
+  footer,
+  .admin-nav,
+  button,
+  [role="navigation"] {
+    display: none !important;
+  }
+
   .invoice-template,
   .proposal-template {
     box-shadow: none !important;
@@ -226,4 +236,19 @@ html {
   tr {
     page-break-inside: avoid;
   }
-}
+
+  /* Remove margins from body for cleaner prints */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Ensure only invoice content shows */
+  body > *:not(.invoice-template):not(.proposal-template) {
+    display: none !important;
+  }
+
+  /* Make sure the invoice template is visible */
+  .invoice-template,
+  .proposal-template {
+    display: block !important;
