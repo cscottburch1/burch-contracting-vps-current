@@ -301,23 +301,23 @@ export default function CreateInvoicePage() {
                 </div>
                 
                 {/* Column Headers */}
-                <div className="flex gap-3 items-center mb-2">
+                <div className="flex gap-3 items-center mb-2 px-1">
                   <div className="flex-1">
-                    <label className="block text-sm font-semibold text-gray-700">Description</label>
+                    <label className="block text-sm font-semibold text-gray-700 px-3">Description</label>
                   </div>
                   <div className="w-24">
-                    <label className="block text-sm font-semibold text-gray-700">Qty</label>
+                    <label className="block text-sm font-semibold text-gray-700 px-3">Qty</label>
                   </div>
                   <div className="w-32">
-                    <label className="block text-sm font-semibold text-gray-700">Rate</label>
+                    <label className="block text-sm font-semibold text-gray-700 px-3">Rate</label>
                   </div>
                   <div className="w-32">
-                    <label className="block text-sm font-semibold text-red-600">Deduction</label>
+                    <label className="block text-sm font-semibold text-red-600 px-3">Deduction</label>
                   </div>
                   <div className="w-32">
-                    <label className="block text-sm font-semibold text-gray-700 text-right">Amount</label>
+                    <label className="block text-sm font-semibold text-gray-700 text-right px-3">Amount</label>
                   </div>
-                  <div className="w-10"></div>
+                  {invoiceData.items.length > 1 && <div className="w-10"></div>}
                 </div>
 
                 <div className="space-y-3">
