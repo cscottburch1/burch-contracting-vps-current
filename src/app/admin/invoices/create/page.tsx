@@ -1,14 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { InvoiceTemplate, InvoiceData, InvoiceItem } from '@/components/templates/InvoiceTemplate';
 
+interface Customer {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
 export default function CreateInvoicePage() {
   const [showPreview, setShowPreview] = useState(false);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string>('');
+  const [loadingCustomers, setLoadingCustomers] = useState(true);
   const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
     invoiceDate: new Date().toISOString().split('T')[0],
@@ -27,6 +38,48 @@ export default function CreateInvoicePage() {
     taxRate: 7,
     total: 0,
   });
+
+  // Load customers on mount
+  useEffect(() => {
+    loadCustomers();
+  }, []);
+
+  const loadCustomers = async () => {
+    try {
+      const res = await fetch('/api/admin/customers');
+      if (res.ok) {
+        const data = await res.json();
+        setCustomers(data.customers || []);
+      }
+    } catch (error) {
+      console.error('Failed to load customers:', error);
+    } finally {
+      setLoadingCustomers(false);
+    }
+  };
+
+  const handleCustomerSelect = (customerId: string) => {
+    setSelectedCustomerId(customerId);
+    if (customerId) {
+      const customer = customers.find(c => c.id === parseInt(customerId));
+      if (customer) {
+        updateInvoiceData({
+          customerName: customer.name,
+          customerEmail: customer.email || '',
+          customerPhone: customer.phone || '',
+          customerAddress: customer.address || '',
+        });
+      }
+    } else {
+      // Clear customer fields if no customer selected
+      updateInvoiceData({
+        customerName: '',
+        customerEmail: '',
+        customerPhone: '',
+        customerAddress: '',
+      });
+    }
+  };
 
   const calculateTotals = (items: InvoiceItem[], taxRate: number) => {
     const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
@@ -164,6 +217,29 @@ export default function CreateInvoicePage() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Customer Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Customer Dropdown */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Select Existing Customer
+                    </label>
+                    <select
+                      value={selectedCustomerId}
+                      onChange={(e) => handleCustomerSelect(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                      disabled={loadingCustomers}
+                    >
+                      <option value="">-- Select a customer or enter manually below --</option>
+                      {customers.map((customer) => (
+                        <option key={customer.id} value={customer.id}>
+                          {customer.name} {customer.email ? `(${customer.email})` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    {loadingCustomers && (
+                      <p className="text-sm text-gray-500 mt-1">Loading customers...</p>
+                    )}
+                  </div>
+                  
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Customer Name *
