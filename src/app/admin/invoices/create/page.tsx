@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -16,10 +17,12 @@ interface Customer {
 }
 
 export default function CreateInvoicePage() {
+  const router = useRouter();
   const [showPreview, setShowPreview] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [selectedCustomerId, setSelectedCustomerId] = useState<string>('');
   const [loadingCustomers, setLoadingCustomers] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
     invoiceDate: new Date().toISOString().split('T')[0],
@@ -137,6 +140,58 @@ export default function CreateInvoicePage() {
     window.print();
   };
 
+  const handleSave = async (status: string = 'draft') => {
+    if (!invoiceData.customerName) {
+      alert('Please enter customer information');
+      return;
+    }
+
+    if (invoiceData.items.length === 0 || invoiceData.items[0].description === '') {
+      alert('Please add at least one line item');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const response = await fetch('/api/admin/invoices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          invoiceNumber: invoiceData.invoiceNumber,
+          customerId: selectedCustomerId ? parseInt(selectedCustomerId) : null,
+          customerName: invoiceData.customerName,
+          customerEmail: invoiceData.customerEmail,
+          customerPhone: invoiceData.customerPhone,
+          customerAddress: invoiceData.customerAddress,
+          invoiceDate: invoiceData.invoiceDate,
+          dueDate: invoiceData.dueDate,
+          items: invoiceData.items,
+          subtotal: invoiceData.subtotal,
+          taxRate: invoiceData.taxRate,
+          tax: invoiceData.tax,
+          total: invoiceData.total,
+          notes: invoiceData.notes,
+          invoiceType: 'standard',
+          status: status
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert('Invoice saved successfully!');
+        router.push('/admin/invoices');
+      } else {
+        const error = await response.json();
+        alert('Failed to save invoice: ' + (error.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error saving invoice:', error);
+      alert('Failed to save invoice. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   if (showPreview) {
     return (
       <div className="min-h-screen bg-gray-100 print:bg-white">
@@ -148,9 +203,25 @@ export default function CreateInvoicePage() {
                 <Icon name="Edit" size={18} />
                 Edit
               </Button>
-              <Button variant="primary" onClick={handlePrint}>
+              <Button 
+                variant="secondary" 
+                onClick={() => handleSave('draft')}
+                disabled={saving}
+              >
+                <Icon name="Save" size={18} />
+                {saving ? 'Saving...' : 'Save Draft'}
+              </Button>
+              <Button 
+                variant="primary" 
+                onClick={() => handleSave('sent')}
+                disabled={saving}
+              >
+                <Icon name="Check" size={18} />
+                {saving ? 'Saving...' : 'Save & Send'}
+              </Button>
+              <Button variant="outline" onClick={handlePrint}>
                 <Icon name="Printer" size={18} />
-                Print / Save PDF
+                Print
               </Button>
             </div>
           </div>
