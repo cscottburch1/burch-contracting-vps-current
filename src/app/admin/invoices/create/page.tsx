@@ -139,7 +139,7 @@ export default function CreateInvoicePage() {
 
   if (showPreview) {
     return (
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-gray-100 print:bg-white">
         <div className="no-print bg-white border-b border-gray-200 p-4 sticky top-0 z-10 shadow-sm">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <h2 className="text-xl font-bold text-gray-900">Invoice Preview</h2>
@@ -155,7 +155,7 @@ export default function CreateInvoicePage() {
             </div>
           </div>
         </div>
-        <div className="py-8">
+        <div className="py-8 print:py-0">
           <InvoiceTemplate data={invoiceData} />
         </div>
       </div>

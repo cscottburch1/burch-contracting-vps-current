@@ -194,34 +194,45 @@ html {
   body {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .no-print {
-    display: none !important;
-  }
-
-  /* Hide all navigation, headers, and UI elements */
+  /* Hide all UI elements except invoice content */
+  .no-print,
   nav,
   header,
   footer,
-  .admin-nav,
+  aside,
   button,
   [role="navigation"] {
     display: none !important;
   }
 
+  /* Remove all backgrounds and borders for clean print */
+  body,
+  main,
+  div {
+    background: white !important;
+    border: none !important;
+  }
+
+  /* Invoice template specific styles */
   .invoice-template,
   .proposal-template {
     box-shadow: none !important;
     margin: 0 !important;
     max-width: 100% !important;
+    display: block !important;
   }
 
-  /* Ensure backgrounds print */
-  .bg-gray-900,
-  .bg-blue-600 {
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
+  /* Ensure invoice backgrounds and borders print */
+  .invoice-template .border-blue-600,
+  .invoice-template .bg-gray-100,
+  .proposal-template .border-blue-600,
+  .proposal-template .bg-gray-100 {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
   /* Page break controls */
@@ -237,20 +248,11 @@ html {
     page-break-inside: avoid;
   }
 
-  /* Remove margins from body for cleaner prints */
-  body {
-    margin: 0 !important;
+  /* Remove padding from parent containers */
+  main,
+  section,
+  article {
     padding: 0 !important;
-  }
-
-  /* Ensure only invoice content shows */
-  body > *:not(.invoice-template):not(.proposal-template) {
-    display: none !important;
-  }
-
-  /* Make sure the invoice template is visible */
-  .invoice-template,
-  .proposal-template {
-    display: block !important;
+    margin: 0 !important;
   }
 }
