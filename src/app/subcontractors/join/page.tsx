@@ -555,29 +555,26 @@ export default function SubcontractorJoinPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold mb-2 text-gray-700">License Number *</label>
+                        <label className="block text-sm font-semibold mb-2 text-gray-700">License Number</label>
                         <input 
                           type="text" 
                           name="license_number"
-                          required
                           className="w-full border border-gray-300 rounded-lg p-3"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold mb-2 text-gray-700">Insurance Provider *</label>
+                        <label className="block text-sm font-semibold mb-2 text-gray-700">Insurance Provider</label>
                         <input 
                           type="text" 
                           name="insurance_provider"
-                          required
                           className="w-full border border-gray-300 rounded-lg p-3"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold mb-2 text-gray-700">Insurance Expiry Date *</label>
+                        <label className="block text-sm font-semibold mb-2 text-gray-700">Insurance Expiry Date</label>
                         <input 
                           type="date" 
                           name="insurance_expiry"
-                          required
                           className="w-full border border-gray-300 rounded-lg p-3"
                         />
                       </div>

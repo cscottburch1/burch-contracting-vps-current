@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 
     // Basic validation
     if (!company_name || !contact_name || !email || !phone || !business_type || 
-        !years_in_business || !license_number || !insurance_provider || !insurance_expiry) {
+        !years_in_business) {
       return NextResponse.json(
         { error: 'Please fill in all required fields' },
         { status: 400 }
