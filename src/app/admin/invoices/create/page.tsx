@@ -299,6 +299,27 @@ export default function CreateInvoicePage() {
                     Add Item
                   </Button>
                 </div>
+                
+                {/* Column Headers */}
+                <div className="flex gap-3 items-center mb-2">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold text-gray-700">Description</label>
+                  </div>
+                  <div className="w-24">
+                    <label className="block text-sm font-semibold text-gray-700">Qty</label>
+                  </div>
+                  <div className="w-32">
+                    <label className="block text-sm font-semibold text-gray-700">Rate</label>
+                  </div>
+                  <div className="w-32">
+                    <label className="block text-sm font-semibold text-red-600">Deduction</label>
+                  </div>
+                  <div className="w-32">
+                    <label className="block text-sm font-semibold text-gray-700 text-right">Amount</label>
+                  </div>
+                  <div className="w-10"></div>
+                </div>
+
                 <div className="space-y-3">
                   {invoiceData.items.map((item, index) => (
                     <div key={item.id} className="flex gap-3 items-start">
