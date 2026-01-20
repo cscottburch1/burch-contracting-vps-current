@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/mysql';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 
 // GET - List all SMS templates
 export async function GET(request: NextRequest) {
   try {
-    const user = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request as Request);
+    let user = null;
+    if (session) user = await findAdminById(session.userId);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -27,7 +29,9 @@ export async function GET(request: NextRequest) {
 // POST - Create new SMS template
 export async function POST(request: NextRequest) {
   try {
-    const user = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request as Request);
+    let user = null;
+    if (session) user = await findAdminById(session.userId);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

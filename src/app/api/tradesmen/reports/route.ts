@@ -38,24 +38,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { project_id, report_date, work_completed, hours_worked, materials_used, weather_conditions, safety_issues, notes } = await request.json();
+    const { project_id, report_date, work_completed, hours_worked, materials_used, weather_conditions, safety_issues, notes, photos } = await request.json();
 
     if (!project_id || !work_completed) {
       return NextResponse.json({ error: 'Project ID and work completed are required' }, { status: 400 });
     }
 
+    // Convert photos array to JSON string if provided
+    const photosJson = photos && photos.length > 0 ? JSON.stringify(photos) : null;
+
     const result = await query(
       `INSERT INTO tradesman_daily_reports 
-       (tradesman_id, project_id, report_date, work_completed, hours_worked, materials_used, weather_conditions, safety_issues, notes)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+       (tradesman_id, project_id, report_date, work_completed, hours_worked, materials_used, weather_conditions, safety_issues, notes, photos)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON DUPLICATE KEY UPDATE
        work_completed = VALUES(work_completed),
        hours_worked = VALUES(hours_worked),
        materials_used = VALUES(materials_used),
        weather_conditions = VALUES(weather_conditions),
        safety_issues = VALUES(safety_issues),
-       notes = VALUES(notes)`,
-      [tradesman.id, project_id, report_date || new Date().toISOString().split('T')[0], work_completed, hours_worked || null, materials_used || null, weather_conditions || null, safety_issues || null, notes || null]
+       notes = VALUES(notes),
+       photos = VALUES(photos)`,
+      [tradesman.id, project_id, report_date || new Date().toISOString().split('T')[0], work_completed, hours_worked || null, materials_used || null, weather_conditions || null, safety_issues || null, notes || null, photosJson]
     );
 
     return NextResponse.json({ success: true, id: (result as any).insertId });

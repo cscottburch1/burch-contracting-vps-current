@@ -13,6 +13,7 @@ export default function MigrationPage() {
   const [proposalsRunning, setProposalsRunning] = useState(false);
   const [documentsRunning, setDocumentsRunning] = useState(false);
   const [paymentsRunning, setPaymentsRunning] = useState(false);
+  const [leadScoringRunning, setLeadScoringRunning] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [passwordResetResult, setPasswordResetResult] = useState<any>(null);
   const [projectTrackerResult, setProjectTrackerResult] = useState<any>(null);
@@ -21,6 +22,7 @@ export default function MigrationPage() {
   const [proposalsResult, setProposalsResult] = useState<any>(null);
   const [documentsResult, setDocumentsResult] = useState<any>(null);
   const [paymentsResult, setPaymentsResult] = useState<any>(null);
+  const [leadScoringResult, setLeadScoringResult] = useState<any>(null);
   const [error, setError] = useState('');
   const [passwordResetError, setPasswordResetError] = useState('');
   const [projectTrackerError, setProjectTrackerError] = useState('');
@@ -29,6 +31,7 @@ export default function MigrationPage() {
   const [proposalsError, setProposalsError] = useState('');
   const [documentsError, setDocumentsError] = useState('');
   const [paymentsError, setPaymentsError] = useState('');
+  const [leadScoringError, setLeadScoringError] = useState('');
 
   const runMigration = async () => {
     setRunning(true);
@@ -227,6 +230,31 @@ export default function MigrationPage() {
       setPaymentsError(err.message || 'Failed to run migration');
     } finally {
       setPaymentsRunning(false);
+    }
+  };
+
+  const runLeadScoringMigration = async () => {
+    setLeadScoringRunning(true);
+    setLeadScoringError('');
+    setLeadScoringResult(null);
+
+    try {
+      const res = await fetch('/api/admin/migrate-lead-scoring', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setLeadScoringResult(data);
+      } else {
+        setLeadScoringError(data.error || 'Migration failed');
+      }
+    } catch (err: any) {
+      setLeadScoringError(err.message || 'Failed to run migration');
+    } finally {
+      setLeadScoringRunning(false);
     }
   };
 
@@ -701,6 +729,88 @@ export default function MigrationPage() {
                 onClick={() => {
                   setPaymentsError('');
                   runPaymentsMigration();
+                }}
+                className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Lead Scoring Migration */}
+        <div className="bg-white rounded-xl shadow-lg p-10 border-4 border-blue-400">
+          <h1 className="text-4xl font-bold mb-4">🎯 Lead Scoring & Intelligence Migration</h1>
+          <p className="text-gray-600 mb-6">
+            Add intelligent lead scoring to your CRM system. This migration adds the <code className="bg-gray-100 px-2 py-1 rounded">lead_score</code> column 
+            to automatically calculate and track lead quality based on budget, timeframe, service type, and referral source.
+          </p>
+          
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <p className="font-semibold text-blue-900">✨ What this enables:</p>
+            <ul className="list-disc list-inside text-sm text-blue-800 mt-2 space-y-1">
+              <li>Automatic priority assignment (Urgent/High/Medium/Low)</li>
+              <li>Lead quality scores (0-375 points)</li>
+              <li>Smart email notifications with priority badges</li>
+              <li>Visual indicators in CRM dashboard</li>
+              <li>Lead aging alerts and recommended actions</li>
+            </ul>
+          </div>
+
+          {!leadScoringResult && !leadScoringError && (
+            <button
+              onClick={runLeadScoringMigration}
+              disabled={leadScoringRunning}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 text-xl shadow-lg"
+            >
+              {leadScoringRunning ? 'Running Migration...' : '🚀 Run Lead Scoring Migration'}
+            </button>
+          )}
+
+          {leadScoringResult && (
+            <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
+              <div className="space-y-2 mb-4">
+                <p className="font-semibold">{leadScoringResult.message}</p>
+                <div className="text-sm mt-3">
+                  <p className="font-semibold mb-2">Changes applied:</p>
+                  <ul className="list-none space-y-1">
+                    {leadScoringResult.results?.map((line: string, idx: number) => (
+                      <li key={idx} className="pl-4">{line}</li>
+                    ))}
+                  </ul>
+                </div>
+                {leadScoringResult.tables && leadScoringResult.tables.length > 0 && (
+                  <p className="text-sm mt-2">
+                    <span className="font-semibold">Tables updated:</span> {leadScoringResult.tables.join(', ')}
+                  </p>
+                )}
+              </div>
+              <div className="mt-6 space-x-4">
+                <button
+                  onClick={() => router.push('/admin/crm')}
+                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition"
+                >
+                  View CRM Dashboard
+                </button>
+                <button
+                  onClick={() => router.push('/contact')}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
+                >
+                  Test Contact Form
+                </button>
+              </div>
+            </div>
+          )}
+
+          {leadScoringError && (
+            <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
+              <p className="mb-4">{leadScoringError}</p>
+              <button
+                onClick={() => {
+                  setLeadScoringError('');
+                  runLeadScoringMigration();
                 }}
                 className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
               >

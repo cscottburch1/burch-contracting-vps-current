@@ -11,6 +11,7 @@ export interface TradesmanUser {
   name: string;
   email: string;
   phone: string | null;
+  status?: string;
   website?: string | null;
   logo_url?: string | null;
   bio?: string | null;
@@ -70,11 +71,11 @@ export async function getCurrentTradesman(): Promise<TradesmanUser | null> {
     // If not found, check subcontractors table with full profile data
     if (!user) {
       user = await queryOne(
-        `SELECT id, contact_name as name, email, phone, website, logo_url, bio, 
+        `SELECT id, contact_name as name, email, phone, status, website, logo_url, bio, 
                 services_offered, specialties, years_in_business, license_number, 
                 insurance_provider, profile_theme, company_name, contact_name 
          FROM subcontractors 
-         WHERE id = ? AND status IN ("approved", "active")`,
+         WHERE id = ? AND status IN ("pending", "approved", "active")`,
         [payload.userId]
       );
       
@@ -103,10 +104,10 @@ export async function authenticateTradesman(email: string, pin: string): Promise
       [email.toLowerCase(), pin]
     );
     
-    // If not found, try subcontractors table
+    // If not found, try subcontractors table (allow pending, approved, and active)
     if (!user) {
       user = await queryOne(
-        'SELECT id, contact_name as name, email, phone FROM subcontractors WHERE email = ? AND pin = ? AND status IN ("approved", "active")',
+        'SELECT id, contact_name as name, email, phone, status FROM subcontractors WHERE email = ? AND pin = ? AND status IN ("pending", "approved", "active")',
         [email.toLowerCase(), pin]
       );
     }

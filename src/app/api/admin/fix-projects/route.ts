@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 import pool from '@/lib/mysql';
 
 export async function POST(request: Request) {
   try {
-    const currentUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let currentUser = null;
+    if (session) currentUser = await findAdminById(session.userId);
     if (!currentUser || currentUser.role !== 'owner') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

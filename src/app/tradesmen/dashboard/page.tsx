@@ -19,6 +19,7 @@ interface Project {
 interface User {
   name: string;
   email: string;
+  status?: string;
 }
 
 interface Stats {
@@ -183,6 +184,23 @@ export default function TradesmanDashboard() {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto p-3 sm:p-4">
+        {/* Pending Approval Banner */}
+        {(user as any)?.status === 'pending' && (
+          <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center gap-3">
+            <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-base sm:text-lg">⏳ Application Pending</p>
+              <p className="text-sm sm:text-base text-white/90 mt-1">
+                Your account is awaiting approval from our admin team. You'll be notified once approved and can access all features.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Install App Banner */}
         {showInstallButton && (
           <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center justify-between">

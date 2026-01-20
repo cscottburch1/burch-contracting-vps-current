@@ -55,7 +55,12 @@ export const Header: React.FC = () => {
             </Button>
           </div>
 
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2 text-gray-900">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-gray-900"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
             <Icon name={mobileMenuOpen ? 'X' : 'Menu'} size={28} />
           </button>
         </div>
@@ -64,11 +69,16 @@ export const Header: React.FC = () => {
           <div className="lg:hidden py-4 border-t">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a key={link.href} href={link.href} className="text-black font-semibold py-2 text-lg">
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-black font-semibold py-2 text-lg"
+                >
                   {link.label}
                 </a>
               ))}
-              <Button variant="primary" size="md" href="/contact" fullWidth>
+              <Button variant="primary" size="md" href="/contact" fullWidth onClick={() => setMobileMenuOpen(false)}>
                 Free Estimate
               </Button>
             </div>

@@ -17,6 +17,7 @@ export interface Lead {
   priority: LeadPriority;
   assigned_to?: string;
   estimated_value?: number;
+  lead_score?: number;
   scheduled_date?: string;
   last_contact_date?: string;
   source_url?: string;

@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 import { query } from '@/lib/mysql';
 
 // GET - List all tradesmen
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const adminUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let adminUser = null;
+    if (session) adminUser = await findAdminById(session.userId);
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -26,7 +28,9 @@ export async function GET() {
 // POST - Create new tradesman
 export async function POST(request: Request) {
   try {
-    const adminUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let adminUser = null;
+    if (session) adminUser = await findAdminById(session.userId);
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

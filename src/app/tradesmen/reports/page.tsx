@@ -13,6 +13,7 @@ interface DailyReport {
   weather_conditions: string | null;
   safety_issues: string | null;
   notes: string | null;
+  photos: string | null;
   created_at: string;
 }
 
@@ -25,6 +26,8 @@ export default function DailyReportsPage() {
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [timeEntries, setTimeEntries] = useState<any[]>([]);
+  const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
   
   const [formData, setFormData] = useState({
     project_id: '',
@@ -34,7 +37,8 @@ export default function DailyReportsPage() {
     materials_used: '',
     weather_conditions: '',
     safety_issues: '',
-    notes: ''
+    notes: '',
+    photos: [] as string[]
   });
 
   useEffect(() => {
@@ -100,6 +104,47 @@ export default function DailyReportsPage() {
     }
   };
 
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    const uploadPromises = Array.from(files).map(async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        return data.url;
+      }
+      return null;
+    });
+
+    try {
+      const urls = await Promise.all(uploadPromises);
+      const validUrls = urls.filter(url => url !== null) as string[];
+      const newPhotos = [...uploadedPhotos, ...validUrls];
+      setUploadedPhotos(newPhotos);
+      setFormData(prev => ({ ...prev, photos: newPhotos }));
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Some photos failed to upload');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removePhoto = (url: string) => {
+    const newPhotos = uploadedPhotos.filter(p => p !== url);
+    setUploadedPhotos(newPhotos);
+    setFormData(prev => ({ ...prev, photos: newPhotos }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -120,6 +165,7 @@ export default function DailyReportsPage() {
         setShowForm(false);
         loadReports(formData.project_id);
         // Reset form but keep project and date
+        setUploadedPhotos([]);
         setFormData(prev => ({
           ...prev,
           work_completed: '',
@@ -127,7 +173,8 @@ export default function DailyReportsPage() {
           materials_used: '',
           weather_conditions: '',
           safety_issues: '',
-          notes: ''
+          notes: '',
+          photos: []
         }));
       } else {
         alert('Failed to submit report');
@@ -331,6 +378,58 @@ export default function DailyReportsPage() {
                 />
               </div>
 
+              {/* Photo/Receipt Upload */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  📸 Photos & Receipts
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handlePhotoUpload}
+                    disabled={uploading}
+                    className="hidden"
+                    id="photo-upload"
+                  />
+                  <label
+                    htmlFor="photo-upload"
+                    className="cursor-pointer flex flex-col items-center justify-center py-4"
+                  >
+                    <svg className="w-12 h-12 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span className="text-sm font-semibold text-gray-600">
+                      {uploading ? 'Uploading...' : 'Tap to upload photos or receipts'}
+                    </span>
+                    <span className="text-xs text-gray-500 mt-1">Multiple images supported</span>
+                  </label>
+                </div>
+
+                {/* Photo Preview Grid */}
+                {uploadedPhotos.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 mt-3">
+                    {uploadedPhotos.map((url, index) => (
+                      <div key={index} className="relative group">
+                        <img
+                          src={url}
+                          alt={`Upload ${index + 1}`}
+                          className="w-full h-24 object-cover rounded-lg border-2 border-gray-200"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(url)}
+                          className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <button
                 type="submit"
                 disabled={submitting}
@@ -401,11 +500,44 @@ export default function DailyReportsPage() {
                     )}
 
                     {report.notes && (
-                      <div className="bg-gray-50 rounded-lg p-3 border-2 border-gray-200">
+                      <div className="bg-gray-50 rounded-lg p-3 mb-2 border-2 border-gray-200">
                         <div className="text-xs font-semibold text-gray-700 mb-1">📝 NOTES</div>
                         <div className="text-sm text-gray-800">{report.notes}</div>
                       </div>
                     )}
+
+                    {report.photos && (() => {
+                      try {
+                        const photoUrls = JSON.parse(report.photos);
+                        if (photoUrls.length > 0) {
+                          return (
+                            <div className="bg-purple-50 rounded-lg p-3 mb-2 border-2 border-purple-200">
+                              <div className="text-xs font-semibold text-purple-700 mb-2">📸 PHOTOS & RECEIPTS ({photoUrls.length})</div>
+                              <div className="grid grid-cols-4 gap-2">
+                                {photoUrls.map((url: string, idx: number) => (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block"
+                                  >
+                                    <img
+                                      src={url}
+                                      alt={`Photo ${idx + 1}`}
+                                      className="w-full h-20 object-cover rounded-lg border-2 border-purple-300 hover:border-purple-500 transition-colors"
+                                    />
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        }
+                      } catch (e) {
+                        return null;
+                      }
+                      return null;
+                    })()}
 
                     <div className="text-xs text-gray-400 mt-2">
                       Submitted: {new Date(report.created_at).toLocaleString()}

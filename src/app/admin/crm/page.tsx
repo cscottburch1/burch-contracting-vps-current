@@ -8,6 +8,7 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Lead } from '@/types/crm';
+import { calculateLeadAge, getLeadAgingStatus } from '@/lib/leadScoring';
 
 export default function AdminCRMPage() {
   const router = useRouter();
@@ -284,45 +285,77 @@ export default function AdminCRMPage() {
                     </td>
                   </tr>
                 ) : (
-                  leads.map((lead) => (
-                    <tr key={lead.id} className="border-b border-gray-100 hover:bg-gray-50">
-                      <td className="py-4 px-4">
-                        <p className="font-semibold text-gray-900">{lead.name}</p>
-                      </td>
-                      <td className="py-4 px-4">
-                        <p className="text-sm text-gray-600">{lead.email}</p>
-                        <p className="text-sm text-gray-600">{lead.phone}</p>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className="text-sm text-gray-700">{lead.service_type || 'N/A'}</span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(lead.status)}`}>
-                          {lead.status}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getPriorityColor(lead.priority)}`}>
-                          {lead.priority}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-700">
-                        {formatCurrency(lead.estimated_value)}
-                      </td>
-                      <td className="py-4 px-4 text-sm text-gray-600">
-                        {formatDate(lead.created_at)}
-                      </td>
-                      <td className="py-4 px-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          href={`/admin/crm/leads/${lead.id}`}
-                        >
-                          View
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
+                  leads.map((lead) => {
+                    const leadAge = calculateLeadAge(lead.created_at);
+                    const agingStatus = getLeadAgingStatus(lead.created_at, lead.status);
+                    
+                    return (
+                      <tr key={lead.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-4 px-4">
+                          <div className="flex items-start gap-2">
+                            <div>
+                              <p className="font-semibold text-gray-900">{lead.name}</p>
+                              {lead.lead_score && (
+                                <div className="flex items-center gap-1 mt-1">
+                                  <span className="text-xs text-gray-500">Score:</span>
+                                  <span className={`text-xs font-semibold ${
+                                    (lead.lead_score / 375) >= 0.67 ? 'text-green-600' :
+                                    (lead.lead_score / 375) >= 0.47 ? 'text-blue-600' :
+                                    (lead.lead_score / 375) >= 0.27 ? 'text-yellow-600' : 'text-gray-500'
+                                  }`}>
+                                    {lead.lead_score}/375
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4">
+                          <p className="text-sm text-gray-600">{lead.email}</p>
+                          <p className="text-sm text-gray-600">{lead.phone}</p>
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className="text-sm text-gray-700">{lead.service_type || 'N/A'}</span>
+                          {lead.budget_range && (
+                            <p className="text-xs text-gray-500 mt-1">{lead.budget_range}</p>
+                          )}
+                        </td>
+                        <td className="py-4 px-4">
+                          <Badge className={getStatusColor(lead.status)}>
+                            {lead.status}
+                          </Badge>
+                          {agingStatus.severity !== 'normal' && (
+                            <div className={`text-xs mt-1 ${
+                              agingStatus.severity === 'critical' ? 'text-red-600' :
+                              agingStatus.severity === 'warning' ? 'text-yellow-600' : 'text-gray-500'
+                            }`}>
+                              {agingStatus.severity === 'critical' ? '🔴' : '⚠️'} {leadAge}d old
+                            </div>
+                          )}
+                        </td>
+                        <td className="py-4 px-4">
+                          <Badge className={getPriorityColor(lead.priority)}>
+                            {lead.priority === 'urgent' ? '🔥' : ''} {lead.priority}
+                          </Badge>
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-700">
+                          {formatCurrency(lead.estimated_value)}
+                        </td>
+                        <td className="py-4 px-4 text-sm text-gray-600">
+                          {formatDate(lead.created_at)}
+                        </td>
+                        <td className="py-4 px-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            href={`/admin/crm/leads/${lead.id}`}
+                          >
+                            View
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

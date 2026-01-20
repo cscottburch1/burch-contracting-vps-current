@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser, findAdminById, updateAdminUser, changeAdminPassword } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById, updateAdminUser, changeAdminPassword } from '@/lib/adminAuth';
 import { AdminRole } from '@/types/admin';
 
 // PATCH /api/admin/users/[id] - Update user
@@ -8,8 +8,9 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const currentUser = await getCurrentAdminUser();
-    
+    const session = await verifyAdminAuth(request);
+    let currentUser = null;
+    if (session) currentUser = await findAdminById(session.userId);
     if (!currentUser || currentUser.role !== 'owner') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }

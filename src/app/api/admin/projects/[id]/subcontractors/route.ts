@@ -47,10 +47,10 @@ export async function GET(
 
     const assignments = await query(
       `SELECT 
-         ps.id, ps.project_id, ps.subcontractor_id, ps.role, ps.notes,
+         ps.id as assignment_id, ps.project_id, ps.subcontractor_id, ps.role, ps.notes,
          ps.amount_quoted, ps.amount_paid, ps.status, ps.assigned_date,
          ps.start_date, ps.completion_date, ps.created_at,
-         s.company_name as subcontractor_name, s.contact_name, s.phone, s.email
+         s.id, s.company_name as company, s.contact_name as name, s.phone, s.email
        FROM project_subcontractors ps
        JOIN subcontractors s ON ps.subcontractor_id = s.id
        WHERE ps.project_id = ?

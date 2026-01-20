@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 import { query } from '@/lib/mysql';
 
 // GET - Get specific tradesman
@@ -8,7 +8,9 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const adminUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let adminUser = null;
+    if (session) adminUser = await findAdminById(session.userId);
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -38,7 +40,9 @@ export async function PATCH(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const adminUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let adminUser = null;
+    if (session) adminUser = await findAdminById(session.userId);
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -101,7 +105,9 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const adminUser = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request);
+    let adminUser = null;
+    if (session) adminUser = await findAdminById(session.userId);
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

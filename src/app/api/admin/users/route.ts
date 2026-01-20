@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser, listAdminUsers, createAdminUser, updateAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById, listAdminUsers, createAdminUser, updateAdminUser } from '@/lib/adminAuth';
 import { AdminRole } from '@/types/admin';
 
 // GET /api/admin/users - List all users
 export async function GET(request: Request) {
   try {
-    const currentUser = await getCurrentAdminUser();
-    
+    const session = await verifyAdminAuth(request);
+    let currentUser = null;
+    if (session) currentUser = await findAdminById(session.userId);
     if (!currentUser || currentUser.role !== 'owner') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
@@ -26,8 +27,9 @@ export async function GET(request: Request) {
 // POST /api/admin/users - Create new user
 export async function POST(request: Request) {
   try {
-    const currentUser = await getCurrentAdminUser();
-    
+    const session = await verifyAdminAuth(request);
+    let currentUser = null;
+    if (session) currentUser = await findAdminById(session.userId);
     if (!currentUser || currentUser.role !== 'owner') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }

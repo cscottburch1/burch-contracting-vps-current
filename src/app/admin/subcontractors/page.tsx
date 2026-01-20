@@ -372,6 +372,32 @@ export default function SubcontractorsManagementPage() {
               + Add New Subcontractor
             </button>
             <button
+              onClick={async () => {
+                if (!confirm('Import queued applications now?')) return;
+                setLoading(true);
+                setError('');
+                setSuccess('');
+                try {
+                  const res = await fetch('/api/admin/subcontractors/import', { method: 'POST' });
+                  const data = await res.json();
+                  if (res.ok) {
+                    setSuccess(`Imported ${data.imported} entries; skipped ${data.skipped}; remaining ${data.remaining}`);
+                    loadSubcontractors();
+                  } else {
+                    setError(data.error || 'Import failed');
+                  }
+                } catch (err) {
+                  setError('Import failed');
+                } finally {
+                  setLoading(false);
+                  setTimeout(() => { setSuccess(''); setError(''); }, 5000);
+                }
+              }}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold"
+            >
+              Import Queued
+            </button>
+            <button
               onClick={() => router.push('/admin/dashboard')}
               className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition"
             >

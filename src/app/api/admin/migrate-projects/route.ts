@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/mysql';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 import fs from 'fs';
 import path from 'path';
 
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
-    const user = await getCurrentAdminUser();
+    const session = await verifyAdminAuth(request as Request);
+    let user = null;
+    if (session) user = await findAdminById(session.userId);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

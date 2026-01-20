@@ -107,6 +107,7 @@ function ProjectDetailContent() {
   const [showPhotoUpload, setShowPhotoUpload] = useState(false);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
   const [showMilestoneForm, setShowMilestoneForm] = useState(false);
+  const [editingMilestone, setEditingMilestone] = useState<Milestone | null>(null);
   const [showSubcontractorForm, setShowSubcontractorForm] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [isEditingProject, setIsEditingProject] = useState(false);
@@ -427,30 +428,57 @@ function ProjectDetailContent() {
     if (!projectId) return;
 
     try {
-      const response = await fetch(`/api/admin/projects/${projectId}/milestones`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(milestoneForm)
-      });
-
-      if (response.ok) {
-        alert('Milestone created successfully!');
-        setShowMilestoneForm(false);
-        setMilestoneForm({
-          title: '',
-          description: '',
-          due_date: '',
-          status: 'pending'
+      if (editingMilestone) {
+        // Update existing milestone
+        const response = await fetch(`/api/admin/projects/${projectId}/milestones/${editingMilestone.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(milestoneForm)
         });
-        await loadMilestones();
-        await loadActivities();
+
+        if (response.ok) {
+          alert('Milestone updated successfully!');
+          setShowMilestoneForm(false);
+          setEditingMilestone(null);
+          setMilestoneForm({
+            title: '',
+            description: '',
+            due_date: '',
+            status: 'pending'
+          });
+          await loadMilestones();
+          await loadActivities();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to update milestone');
+        }
       } else {
-        const data = await response.json();
-        alert(data.error || 'Failed to create milestone');
+        // Create new milestone
+        const response = await fetch(`/api/admin/projects/${projectId}/milestones`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(milestoneForm)
+        });
+
+        if (response.ok) {
+          alert('Milestone created successfully!');
+          setShowMilestoneForm(false);
+          setMilestoneForm({
+            title: '',
+            description: '',
+            due_date: '',
+            status: 'pending'
+          });
+          await loadMilestones();
+          await loadActivities();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to create milestone');
+        }
       }
     } catch (error) {
-      console.error('Error creating milestone:', error);
-      alert('Failed to create milestone');
+      console.error('Error saving milestone:', error);
+      alert('Failed to save milestone');
     }
   };
 
@@ -572,6 +600,62 @@ function ProjectDetailContent() {
     } catch (error) {
       console.error('Error updating milestone:', error);
       alert('Failed to update milestone');
+    }
+  };
+
+  const handleEditMilestone = (milestone: Milestone) => {
+    setEditingMilestone(milestone);
+    setMilestoneForm({
+      title: milestone.title,
+      description: milestone.description || '',
+      due_date: milestone.due_date.split('T')[0],
+      status: milestone.status
+    });
+    setShowMilestoneForm(true);
+  };
+
+  const handleMarkMilestoneComplete = async (milestoneId: number) => {
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/milestones/${milestoneId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'completed' })
+      });
+
+      if (response.ok) {
+        await loadMilestones();
+        alert('Milestone marked as complete!');
+      } else {
+        alert('Failed to complete milestone');
+      }
+    } catch (error) {
+      console.error('Error completing milestone:', error);
+      alert('Failed to complete milestone');
+    }
+  };
+
+  const handleDuplicateMilestone = async (milestone: Milestone) => {
+    try {
+      const response = await fetch(`/api/admin/projects/${projectId}/milestones`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: `${milestone.title} (Copy)`,
+          description: milestone.description,
+          due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          status: 'pending'
+        })
+      });
+
+      if (response.ok) {
+        await loadMilestones();
+        alert('Milestone duplicated successfully!');
+      } else {
+        alert('Failed to duplicate milestone');
+      }
+    } catch (error) {
+      console.error('Error duplicating milestone:', error);
+      alert('Failed to duplicate milestone');
     }
   };
 
@@ -1028,58 +1112,171 @@ function ProjectDetailContent() {
 
         {activeTab === 'milestones' && (
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold">Project Milestones</h2>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-semibold">Project Milestones</h2>
+                {milestones.length > 0 && (
+                  <p className="text-sm text-gray-600 mt-1">
+                    {milestones.filter(m => m.status === 'completed').length} of {milestones.length} completed
+                  </p>
+                )}
+              </div>
               <button
-                onClick={() => setShowMilestoneForm(true)}
+                onClick={() => {
+                  setEditingMilestone(null);
+                  setMilestoneForm({
+                    title: '',
+                    description: '',
+                    due_date: '',
+                    status: 'pending'
+                  });
+                  setShowMilestoneForm(true);
+                }}
                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
               >
                 <Icon name="Plus" className="mr-2" />
                 Add Milestone
               </button>
             </div>
+
+            {/* Progress Bar */}
+            {milestones.length > 0 && (
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">Overall Progress</span>
+                  <span className="text-sm font-medium text-blue-600">
+                    {Math.round((milestones.filter(m => m.status === 'completed').length / milestones.length) * 100)}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div
+                    className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                    style={{ width: `${(milestones.filter(m => m.status === 'completed').length / milestones.length) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
             {milestones.length === 0 ? (
-              <p className="text-gray-500">No milestones created yet</p>
+              <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                <Icon name="CheckSquare" className="mx-auto text-gray-400 mb-3" size={48} />
+                <p className="text-gray-600 mb-4">No milestones created yet</p>
+                <button
+                  onClick={() => setShowMilestoneForm(true)}
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  Create your first milestone
+                </button>
+              </div>
             ) : (
-              <div className="space-y-4">
-                {milestones.map((milestone) => (
-                  <div key={milestone.id} className="border rounded-lg p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="font-semibold">{milestone.title}</h3>
-                        {milestone.description && (
-                          <p className="text-gray-600 text-sm mt-1">{milestone.description}</p>
-                        )}
-                        <p className="text-sm text-gray-500 mt-2">
-                          Due: {new Date(milestone.due_date).toLocaleDateString()}
-                        </p>
-                        {milestone.completed_date && (
-                          <p className="text-sm text-green-600 mt-1">
-                            Completed: {new Date(milestone.completed_date).toLocaleDateString()}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <select
-                          value={milestone.status}
-                          onChange={(e) => handleUpdateMilestoneStatus(milestone.id, e.target.value)}
-                          className={`px-2 py-1 rounded text-xs font-medium border ${statusColors[milestone.status] || 'bg-gray-100 text-gray-800'}`}
-                        >
-                          <option value="pending">Pending</option>
-                          <option value="in_progress">In Progress</option>
-                          <option value="completed">Completed</option>
-                          <option value="delayed">Delayed</option>
-                        </select>
-                        <button
-                          onClick={() => handleDeleteMilestone(milestone.id)}
-                          className="bg-red-50 text-red-600 p-2 rounded-md hover:bg-red-100"
-                        >
-                          <Icon name="Trash2" />
-                        </button>
+              <div className="space-y-3">
+                {milestones.map((milestone) => {
+                  const isOverdue = new Date(milestone.due_date) < new Date() && milestone.status !== 'completed';
+                  const daysUntilDue = Math.ceil((new Date(milestone.due_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                  
+                  return (
+                    <div key={milestone.id} className={`border rounded-lg p-4 hover:shadow-md transition-shadow ${
+                      milestone.status === 'completed' ? 'bg-green-50 border-green-200' :
+                      isOverdue ? 'bg-red-50 border-red-200' :
+                      'bg-white'
+                    }`}>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            {milestone.status === 'completed' ? (
+                              <div className="flex-shrink-0 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                <Icon name="Check" size={16} className="text-white" />
+                              </div>
+                            ) : (
+                              <div className={`flex-shrink-0 w-6 h-6 rounded-full border-2 ${
+                                milestone.status === 'in_progress' ? 'border-blue-500 bg-blue-100' :
+                                isOverdue ? 'border-red-500 bg-red-100' :
+                                'border-gray-300 bg-white'
+                              }`}></div>
+                            )}
+                            <h3 className={`font-semibold text-lg ${
+                              milestone.status === 'completed' ? 'text-gray-600 line-through' : 'text-gray-900'
+                            }`}>
+                              {milestone.title}
+                            </h3>
+                          </div>
+                          
+                          {milestone.description && (
+                            <p className="text-gray-600 text-sm ml-9 mb-2">{milestone.description}</p>
+                          )}
+                          
+                          <div className="flex items-center gap-4 ml-9 text-sm">
+                            <div className="flex items-center gap-1">
+                              <Icon name="Calendar" size={14} className="text-gray-400" />
+                              <span className={isOverdue && milestone.status !== 'completed' ? 'text-red-600 font-medium' : 'text-gray-600'}>
+                                Due: {new Date(milestone.due_date).toLocaleDateString()}
+                                {milestone.status !== 'completed' && (
+                                  <span className="ml-1">({daysUntilDue > 0 ? `${daysUntilDue} days` : 'Overdue'})</span>
+                                )}
+                              </span>
+                            </div>
+                            {milestone.completed_date && (
+                              <div className="flex items-center gap-1">
+                                <Icon name="CheckCircle" size={14} className="text-green-600" />
+                                <span className="text-green-600">
+                                  Completed: {new Date(milestone.completed_date).toLocaleDateString()}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-col gap-2">
+                          <select
+                            value={milestone.status}
+                            onChange={(e) => handleUpdateMilestoneStatus(milestone.id, e.target.value)}
+                            className={`px-3 py-1.5 rounded-md text-xs font-medium border shadow-sm min-w-[130px] ${
+                              statusColors[milestone.status] || 'bg-gray-100 text-gray-800 border-gray-300'
+                            }`}
+                          >
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="delayed">Delayed</option>
+                          </select>
+                          
+                          <div className="flex gap-1">
+                            {milestone.status !== 'completed' && (
+                              <button
+                                onClick={() => handleMarkMilestoneComplete(milestone.id)}
+                                className="bg-green-50 text-green-600 p-1.5 rounded-md hover:bg-green-100 flex-1"
+                                title="Mark Complete"
+                              >
+                                <Icon name="CheckCircle" size={16} />
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleEditMilestone(milestone)}
+                              className="bg-blue-50 text-blue-600 p-1.5 rounded-md hover:bg-blue-100 flex-1"
+                              title="Edit"
+                            >
+                              <Icon name="Edit" size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDuplicateMilestone(milestone)}
+                              className="bg-gray-50 text-gray-600 p-1.5 rounded-md hover:bg-gray-100 flex-1"
+                              title="Duplicate"
+                            >
+                              <Icon name="Copy" size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMilestone(milestone.id)}
+                              className="bg-red-50 text-red-600 p-1.5 rounded-md hover:bg-red-100 flex-1"
+                              title="Delete"
+                            >
+                              <Icon name="Trash2" size={16} />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -1282,7 +1479,7 @@ function ProjectDetailContent() {
       {showMilestoneForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-semibold mb-4">Add Milestone</h3>
+            <h3 className="text-xl font-semibold mb-4">{editingMilestone ? 'Edit Milestone' : 'Add Milestone'}</h3>
             <form onSubmit={handleCreateMilestone}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Construction Phase</label>
@@ -1365,6 +1562,7 @@ function ProjectDetailContent() {
                   type="button"
                   onClick={() => {
                     setShowMilestoneForm(false);
+                    setEditingMilestone(null);
                     setMilestoneForm({
                       title: '',
                       description: '',
@@ -1380,7 +1578,7 @@ function ProjectDetailContent() {
                   type="submit"
                   className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
                 >
-                  Create Milestone
+                  {editingMilestone ? 'Update Milestone' : 'Create Milestone'}
                 </button>
               </div>
             </form>

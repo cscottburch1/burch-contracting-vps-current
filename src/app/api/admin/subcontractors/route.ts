@@ -1,19 +1,28 @@
 import { NextResponse } from 'next/server';
-import { getCurrentAdminUser } from '@/lib/adminAuth';
+import { getCurrentAdminUser, verifyAdminAuth, findAdminById } from '@/lib/adminAuth';
 import { query } from '@/lib/mysql';
 
 // GET /api/admin/subcontractors - List all subcontractors
 export async function GET(request: Request) {
   try {
-    const currentUser = await getCurrentAdminUser();
-    
+    // Try to resolve admin session from the incoming request (works for app routes)
+    const session = await verifyAdminAuth(request);
+    let currentUser = null;
+    if (session) {
+      currentUser = await findAdminById(session.userId);
+    }
+
     if (!currentUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    const subcontractors: any = await query(
-      `SELECT * FROM subcontractors ORDER BY created_at DESC`
-    );
+    let subcontractors: any[] = [];
+    try {
+      subcontractors = await query(`SELECT * FROM subcontractors ORDER BY created_at DESC`);
+    } catch (dbErr) {
+      console.error('DB fetch failed, will include queued applications if any:', dbErr);
+      subcontractors = [];
+    }
 
     // Parse JSON fields - handle both JSON arrays and comma-separated strings
     const parsed = subcontractors.map((sub: any) => {
@@ -40,6 +49,43 @@ export async function GET(request: Request) {
         specialties,
       };
     });
+
+    // Also include any queued applications saved to tmp/subcontractor_applications.json
+    try {
+      const path = require('path');
+      const fs = require('fs');
+      const queueFile = path.join(process.cwd(), 'tmp', 'subcontractor_applications.json');
+      if (fs.existsSync(queueFile)) {
+        const queuedRaw = JSON.parse(fs.readFileSync(queueFile, 'utf8') || '[]');
+        const queuedMapped = (queuedRaw || []).map((q: any, idx: number) => ({
+          id: q.id || `queued-${idx}`,
+          company_name: q.company_name,
+          contact_name: q.contact_name,
+          email: q.email,
+          phone: q.phone,
+          address: q.address,
+          city: q.city,
+          state: q.state,
+          zip: q.zip,
+          business_type: q.business_type,
+          years_in_business: q.years_in_business,
+          license_number: q.license_number,
+          insurance_provider: q.insurance_provider,
+          insurance_expiry: q.insurance_expiry,
+          specialties: Array.isArray(q.specialties) ? q.specialties : (typeof q.specialties === 'string' ? JSON.parse(q.specialties || '[]') : []),
+          status: q.status || 'queued',
+          admin_notes: q.admin_notes || '',
+          total_projects: 0,
+          rating: 0,
+          created_at: q.created_at || new Date().toISOString(),
+        }));
+
+        // Merge queued entries first so they appear at top
+        return NextResponse.json({ subcontractors: [...queuedMapped, ...parsed] });
+      }
+    } catch (fileErr) {
+      console.error('Failed to read queued applications file:', fileErr);
+    }
 
     return NextResponse.json({ subcontractors: parsed });
   } catch (error) {

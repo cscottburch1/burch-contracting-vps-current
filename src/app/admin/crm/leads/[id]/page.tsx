@@ -8,6 +8,13 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Lead, LeadNote, LeadActivity } from '@/types/crm';
+import { 
+  calculateLeadAge, 
+  getLeadAgingStatus, 
+  getRecommendedAction,
+  formatPhoneForCall,
+  generateEmailSubject 
+} from '@/lib/leadScoring';
 
 export default function LeadDetailPage() {
   const router = useRouter();
@@ -284,6 +291,110 @@ export default function LeadDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content - Left Column */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Quick Actions & Lead Scoring Card */}
+            {lead && (
+              <Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Quick Actions */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                    <div className="flex flex-col gap-2">
+                      <a 
+                        href={`tel:${formatPhoneForCall(lead.phone)}`}
+                        className="flex items-center gap-3 px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
+                      >
+                        <Icon name="Phone" size={20} />
+                        <div>
+                          <div className="font-semibold">Call Lead</div>
+                          <div className="text-sm">{lead.phone}</div>
+                        </div>
+                      </a>
+                      <a 
+                        href={`mailto:${lead.email}?subject=${encodeURIComponent(generateEmailSubject({ name: lead.name, serviceType: lead.service_type, status: lead.status }))}`}
+                        className="flex items-center gap-3 px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors"
+                      >
+                        <Icon name="Mail" size={20} />
+                        <div>
+                          <div className="font-semibold">Send Email</div>
+                          <div className="text-sm">{lead.email}</div>
+                        </div>
+                      </a>
+                      <a 
+                        href={`sms:${formatPhoneForCall(lead.phone)}`}
+                        className="flex items-center gap-3 px-4 py-3 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg transition-colors"
+                      >
+                        <Icon name="MessageSquare" size={20} />
+                        <div>
+                          <div className="font-semibold">Send SMS</div>
+                          <div className="text-sm">Text message</div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Lead Intelligence */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Lead Intelligence</h3>
+                    
+                    {/* Lead Score */}
+                    {lead.lead_score && (
+                      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                        <div className="text-sm text-gray-600 mb-1">Lead Score</div>
+                        <div className="text-2xl font-bold text-gray-900">{lead.lead_score}/375</div>
+                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                          <div 
+                            className={`h-2 rounded-full ${
+                              (lead.lead_score / 375) >= 0.67 ? 'bg-green-500' :
+                              (lead.lead_score / 375) >= 0.47 ? 'bg-blue-500' :
+                              (lead.lead_score / 375) >= 0.27 ? 'bg-yellow-500' : 'bg-gray-400'
+                            }`}
+                            style={{ width: `${(lead.lead_score / 375) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Lead Age & Status */}
+                    {lead.created_at && (
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between text-sm mb-2">
+                          <span className="text-gray-600">Lead Age</span>
+                          <span className="font-semibold text-gray-900">
+                            {calculateLeadAge(lead.created_at)} days
+                          </span>
+                        </div>
+                        {(() => {
+                          const agingStatus = getLeadAgingStatus(lead.created_at, lead.status);
+                          if (agingStatus.severity !== 'normal') {
+                            return (
+                              <div className={`p-2 rounded text-sm ${
+                                agingStatus.severity === 'critical' ? 'bg-red-100 text-red-800' :
+                                agingStatus.severity === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                                'bg-gray-100 text-gray-800'
+                              }`}>
+                                {agingStatus.severity === 'critical' ? '🔴' : '⚠️'} {agingStatus.message}
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
+                      </div>
+                    )}
+
+                    {/* Recommended Action */}
+                    <div className="p-3 bg-blue-50 border-l-4 border-blue-500 rounded">
+                      <div className="text-sm font-semibold text-blue-900 mb-1">
+                        💡 Recommended Action
+                      </div>
+                      <div className="text-sm text-blue-800">
+                        {getRecommendedAction({ status: lead.status, createdAt: lead.created_at, lastContactDate: lead.last_contact_date })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
+
             {/* Lead Details Card */}
             <Card>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Lead Information</h3>

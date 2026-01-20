@@ -3,6 +3,7 @@ import { sendLeadEmail } from '@/lib/mailer';
 import { query } from '@/lib/mysql';
 import { validateRecaptcha } from '@/lib/recaptcha';
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
+import { calculateLeadScore } from '@/lib/leadScoring';
 
 export async function POST(request: Request) {
   try {
@@ -68,10 +69,32 @@ export async function POST(request: Request) {
     }
 
     // Save lead to database (using contact_leads table for CRM integration)
+    // Calculate lead score and auto-assign priority
+    const leadScore = calculateLeadScore({
+      budgetRange,
+      timeframe,
+      serviceType,
+      referralSource,
+      description,
+    });
+
     const result = await query<any>(
-      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', 'medium')`,
-      [name, phone, email, address || null, serviceType || null, budgetRange || null, timeframe || null, referralSource || null, description]
+      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority, estimated_value, lead_score)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)`,
+      [
+        name, 
+        phone, 
+        email, 
+        address || null, 
+        serviceType || null, 
+        budgetRange || null, 
+        timeframe || null, 
+        referralSource || null, 
+        description,
+        leadScore.priority, // Auto-assigned priority
+        null, // estimated_value (can be set later)
+        leadScore.totalScore // Store the calculated score
+      ]
     );
 
     const leadId = (result as any).insertId;
@@ -80,12 +103,19 @@ export async function POST(request: Request) {
     const adminEmail = process.env.ADMIN_EMAIL;
     if (adminEmail) {
       try {
+        // Generate priority badge for email
+        const priorityBadge = leadScore.priority === 'urgent' ? '🔴 URGENT' :
+                              leadScore.priority === 'high' ? '🟠 HIGH PRIORITY' :
+                              leadScore.priority === 'medium' ? '🔵 MEDIUM' : '⚪ LOW';
+
         await sendLeadEmail({
           to: adminEmail,
-          subject: `New Lead: ${name} - ${serviceType || 'General Inquiry'}`,
+          subject: `${priorityBadge} New Lead: ${name} - ${serviceType || 'General Inquiry'}`,
           text: `
 New Lead Submission
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LEAD SCORE: ${leadScore.totalScore}/375 | PRIORITY: ${priorityBadge}
 
 Contact Information:
 • Name: ${name}
@@ -102,8 +132,15 @@ ${referralSource ? `• Referral Source: ${referralSource}` : ''}
 Message:
 ${description}
 
+Score Breakdown:
+• Budget: ${leadScore.breakdown.budgetScore}/100
+• Timeframe: ${leadScore.breakdown.timeframeScore}/100
+• Service Type: ${leadScore.breakdown.serviceScore}/100
+• Referral: ${leadScore.breakdown.referralScore}/50
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}
+View in CRM: ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admin/crm/leads/${leadId}
           `,
           replyTo: email,
         });
