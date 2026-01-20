@@ -23,10 +23,14 @@ export async function GET(
     
     // Map database fields to frontend expected fields
     const projects = projectsRaw.map((p: any) => ({
-      ...p,
-      title: p.project_name,
-      budget: p.total_cost,
-      end_date: p.estimated_completion_date
+      id: p.id,
+      title: p.project_name || p.title,
+      description: p.description || '',
+      status: p.status,
+      budget: p.total_cost || p.budget || 0,
+      start_date: p.start_date,
+      end_date: p.estimated_completion_date || p.end_date,
+      created_at: p.created_at
     }));
 
     return NextResponse.json({ customer, projects });
