@@ -4,9 +4,10 @@ import { query } from '@/lib/mysql';
 // GET - Fetch single event
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const events = await query(
       'SELECT * FROM calendar_events WHERE id = ?',
       [params.id]
@@ -29,9 +30,10 @@ export async function GET(
 // PUT - Update event
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     const body = await request.json();
     const {
       title,
@@ -75,9 +77,10 @@ export async function PUT(
 // DELETE - Delete event
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
     await query('DELETE FROM calendar_events WHERE id = ?', [params.id]);
 
     return NextResponse.json({ success: true }, { status: 200 });
