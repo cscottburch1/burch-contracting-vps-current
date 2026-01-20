@@ -231,12 +231,30 @@ export async function DELETE(
     const { id } = await params;
     const subId = parseInt(id);
 
-    // Delete subcontractor (cascading deletes will handle related records)
+    // Check for existing project assignments
+    const assignments: any = await query(
+      'SELECT COUNT(*) as count FROM project_subcontractors WHERE subcontractor_id = ?',
+      [subId]
+    );
+
+    if (assignments[0]?.count > 0) {
+      return NextResponse.json({ 
+        error: `Cannot delete subcontractor: ${assignments[0].count} project assignment(s) exist. Please remove project assignments first.` 
+      }, { status: 400 });
+    }
+
+    // Delete related records first to avoid foreign key constraints
+    await query('DELETE FROM subcontractor_documents WHERE subcontractor_id = ?', [subId]);
+    await query('DELETE FROM subcontractor_activity WHERE subcontractor_id = ?', [subId]);
+    
+    // Now delete the subcontractor
     await query('DELETE FROM subcontractors WHERE id = ?', [subId]);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting subcontractor:', error);
-    return NextResponse.json({ error: 'Failed to delete subcontractor' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error instanceof Error ? error.message : 'Failed to delete subcontractor' 
+    }, { status: 500 });
   }
 }

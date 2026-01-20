@@ -3,10 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-  // Ensure Turbopack uses this folder as the workspace root
-  turbopack: {
-    root: 'C:/Users/cscot/burch-contracting-fresh',
-  },
   
   // Optimize images
   images: {

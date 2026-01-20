@@ -258,8 +258,9 @@ export default function SubcontractorsManagementPage() {
         loadSubcontractors();
         setTimeout(() => setSuccess(''), 3000);
       } else {
-        setError('Failed to delete subcontractor');
-        setTimeout(() => setError(''), 3000);
+        const data = await res.json();
+        setError(data.error || 'Failed to delete subcontractor');
+        setTimeout(() => setError(''), 5000);
       }
     } catch (err) {
       setError('Failed to delete subcontractor');
