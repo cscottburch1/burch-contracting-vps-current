@@ -46,6 +46,8 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadError, setUploadError] = useState<string>('');
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -131,15 +133,21 @@ export default function ContactPage() {
         }
       }
 
+      // Use FormData for file upload support
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+      formDataToSend.append('recaptchaToken', recaptchaToken);
+      
+      // Append files
+      uploadedFiles.forEach((file, index) => {
+        formDataToSend.append(`file${index}`, file);
+      });
+
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaToken,
-        }),
+        body: formDataToSend,
       });
 
       if (response.ok) {
@@ -161,6 +169,8 @@ export default function ContactPage() {
           preferredTime: '',
           website: ''
         });
+        setUploadedFiles([]);
+        setUploadError('');
         // Scroll to top to show success message
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -180,6 +190,34 @@ export default function ContactPage() {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadError('');
+    const files = Array.from(e.target.files || []);
+    
+    // Validate file size (max 10MB per file)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    const invalidFiles = files.filter(file => file.size > maxSize);
+    
+    if (invalidFiles.length > 0) {
+      setUploadError(`Some files are too large. Maximum size is 10MB per file.`);
+      return;
+    }
+    
+    // Limit total files to 5
+    const totalFiles = uploadedFiles.length + files.length;
+    if (totalFiles > 5) {
+      setUploadError(`Maximum 5 files allowed. You can upload ${5 - uploadedFiles.length} more file(s).`);
+      return;
+    }
+    
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
+  const removeFile = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+    setUploadError('');
   };
 
   if (submitSuccess) {
@@ -513,6 +551,71 @@ export default function ContactPage() {
                     required
                   />
                   {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
+                </div>
+
+                {/* File Upload Section */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    Upload Images or Documents <span className="text-gray-500 font-normal">(Optional)</span>
+                  </label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                    <input
+                      type="file"
+                      id="fileUpload"
+                      multiple
+                      accept="image/*,.pdf,.doc,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="fileUpload"
+                      className="cursor-pointer flex flex-col items-center"
+                    >
+                      <Icon name="Upload" size={32} className="text-gray-400 mb-2" />
+                      <span className="text-sm font-medium text-gray-700 mb-1">
+                        Click to upload or drag and drop
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        PNG, JPG, PDF, DOC up to 10MB each (max 5 files)
+                      </span>
+                    </label>
+                  </div>
+                  
+                  {uploadError && (
+                    <p className="mt-2 text-sm text-red-500">{uploadError}</p>
+                  )}
+                  
+                  {uploadedFiles.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {uploadedFiles.map((file, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-lg"
+                        >
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <Icon name="File" size={16} className="text-blue-600 flex-shrink-0" />
+                            <span className="text-sm text-gray-700 truncate">
+                              {file.name}
+                            </span>
+                            <span className="text-xs text-gray-500 flex-shrink-0">
+                              ({(file.size / 1024).toFixed(0)} KB)
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeFile(index)}
+                            className="text-red-500 hover:text-red-700 flex-shrink-0 ml-2"
+                            aria-label="Remove file"
+                          >
+                            <Icon name="X" size={18} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <p className="mt-2 text-xs text-gray-500">
+                    💡 Tip: Upload photos of the area, inspiration images, or reference documents to help us better understand your project.
+                  </p>
                 </div>
 
                 {/* Honeypot field - hidden from humans, visible to bots */}

@@ -4,6 +4,9 @@ import { query } from '@/lib/mysql';
 import { validateRecaptcha } from '@/lib/recaptcha';
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import { calculateLeadScore } from '@/lib/leadScoring';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 export async function POST(request: Request) {
   try {
@@ -23,20 +26,20 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
-    const {
-      name,
-      phone,
-      email,
-      address,
-      serviceType,
-      budgetRange,
-      timeframe,
-      referralSource,
-      description,
-      recaptchaToken,
-      website, // Honeypot field
-    } = body;
+    // Parse FormData for file upload support
+    const formData = await request.formData();
+    
+    const name = formData.get('name') as string;
+    const phone = formData.get('phone') as string;
+    const email = formData.get('email') as string;
+    const address = formData.get('address') as string;
+    const serviceType = formData.get('serviceType') as string;
+    const budgetRange = formData.get('budgetRange') as string;
+    const timeframe = formData.get('timeframe') as string;
+    const referralSource = formData.get('referralSource') as string;
+    const description = formData.get('description') as string;
+    const recaptchaToken = formData.get('recaptchaToken') as string;
+    const website = formData.get('website') as string; // Honeypot field
 
     // Honeypot check
     if (website) {
@@ -68,7 +71,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // Save lead to database (using contact_leads table for CRM integration)
     // Calculate lead score and auto-assign priority
     const leadScore = calculateLeadScore({
       budgetRange,
@@ -78,6 +80,7 @@ export async function POST(request: Request) {
       description,
     });
 
+    // Save lead to database
     const result = await query<any>(
       `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority, estimated_value, lead_score)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)`,
@@ -91,22 +94,75 @@ export async function POST(request: Request) {
         timeframe || null, 
         referralSource || null, 
         description,
-        leadScore.priority, // Auto-assigned priority
-        null, // estimated_value (can be set later)
-        leadScore.totalScore // Store the calculated score
+        leadScore.priority,
+        null,
+        leadScore.totalScore
       ]
     );
 
     const leadId = (result as any).insertId;
 
+    // Handle file uploads
+    const uploadedFileNames: string[] = [];
+    const uploadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+    
+    // Collect files from formData
+    const files: File[] = [];
+    for (let i = 0; i < 10; i++) { // Check up to 10 files
+      const file = formData.get(`file${i}`) as File;
+      if (file && file.size > 0) {
+        files.push(file);
+      }
+    }
+
+    if (files.length > 0) {
+      try {
+        // Create upload directory if it doesn't exist
+        if (!existsSync(uploadDir)) {
+          await mkdir(uploadDir, { recursive: true });
+        }
+
+        // Save each file
+        for (const file of files) {
+          const bytes = await file.arrayBuffer();
+          const buffer = Buffer.from(bytes);
+          
+          // Sanitize filename
+          const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+          const timestamp = Date.now();
+          const fileName = `${timestamp}_${sanitizedName}`;
+          const filePath = join(uploadDir, fileName);
+          
+          await writeFile(filePath, buffer);
+          uploadedFileNames.push(fileName);
+          
+          console.log(`Saved file: ${fileName} (${(file.size / 1024).toFixed(2)} KB)`);
+        }
+
+        // Store file references in database
+        if (uploadedFileNames.length > 0) {
+          await query(
+            `UPDATE contact_leads SET attachments = ? WHERE id = ?`,
+            [JSON.stringify(uploadedFileNames), leadId]
+          );
+        }
+      } catch (fileError) {
+        console.error('Error saving uploaded files:', fileError);
+        // Don't fail the request if file upload fails
+      }
+    }
+
     // Send email notification to admin
     const adminEmail = process.env.ADMIN_EMAIL;
     if (adminEmail) {
       try {
-        // Generate priority badge for email
         const priorityBadge = leadScore.priority === 'urgent' ? '🔴 URGENT' :
                               leadScore.priority === 'high' ? '🟠 HIGH PRIORITY' :
                               leadScore.priority === 'medium' ? '🔵 MEDIUM' : '⚪ LOW';
+
+        const attachmentsText = uploadedFileNames.length > 0 
+          ? `\n\n📎 Attachments (${uploadedFileNames.length}):\n${uploadedFileNames.map(f => `  • ${f}`).join('\n')}\n`
+          : '';
 
         await sendLeadEmail({
           to: adminEmail,
@@ -130,7 +186,7 @@ ${timeframe ? `• Timeframe: ${timeframe}` : ''}
 ${referralSource ? `• Referral Source: ${referralSource}` : ''}
 
 Message:
-${description}
+${description}${attachmentsText}
 
 Score Breakdown:
 • Budget: ${leadScore.breakdown.budgetScore}/100
@@ -147,7 +203,6 @@ View in CRM: ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admi
         console.log('Lead email notification sent to admin');
       } catch (emailError) {
         console.error('Failed to send lead email:', emailError);
-        // Don't fail the request if email fails
       }
     }
 
@@ -156,10 +211,15 @@ View in CRM: ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admi
       phone,
       email,
       serviceType,
+      filesUploaded: uploadedFileNames.length,
       timestamp: new Date().toISOString()
     });
 
-    return NextResponse.json({ success: true, message: 'Contact form submitted successfully' });
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Contact form submitted successfully',
+      filesUploaded: uploadedFileNames.length
+    });
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json(
