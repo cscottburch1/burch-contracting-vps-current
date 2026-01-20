@@ -225,11 +225,25 @@ export default function InvoiceDetailPage() {
 
   const formatDate = (date?: string) => {
     if (!date) return 'N/A';
-    return new Date(date).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    });
+    try {
+      // Handle both date-only and datetime formats
+      const dateOnly = date.split('T')[0]; // Remove time if present
+      const [year, month, day] = dateOnly.split('-').map(Number);
+      
+      // Validate the parsed values
+      if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        return 'Invalid Date';
+      }
+      
+      return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    } catch (error) {
+      console.error('Error formatting date:', date, error);
+      return 'Invalid Date';
+    }
   };
 
   const balance = invoice ? parseFloat(invoice.total.toString()) - parseFloat(invoice.amount_paid.toString()) : 0;

@@ -124,11 +124,25 @@ export default function DashboardPage() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    try {
+      // Handle both date-only and datetime formats
+      const dateOnly = dateString.split('T')[0]; // Remove time if present
+      const [year, month, day] = dateOnly.split('-').map(Number);
+      
+      // Validate the parsed values
+      if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        return 'Invalid Date';
+      }
+      
+      return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    } catch (error) {
+      console.error('Error formatting date:', dateString, error);
+      return 'Invalid Date';
+    }
   };
 
   const formatCurrency = (amount: number) => {
