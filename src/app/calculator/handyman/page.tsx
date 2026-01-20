@@ -57,6 +57,28 @@ const serviceRates: ServiceRate[] = [
   { name: 'Drywall Repair (Large Area)', laborRate: 300, materialLow: 75, materialHigh: 200, timeHours: 4, category: 'Repairs' },
   { name: 'Deck Repair (per hour)', laborRate: 85, materialLow: 50, materialHigh: 200, timeHours: 1, category: 'Repairs' },
   { name: 'Fence Repair (per section)', laborRate: 150, materialLow: 50, materialHigh: 200, timeHours: 2, category: 'Repairs' },
+  
+  // Painting Services
+  { name: 'Single Room Interior Paint (12x12)', laborRate: 350, materialLow: 80, materialHigh: 150, timeHours: 6, category: 'Painting' },
+  { name: 'Large Room Interior Paint (15x20)', laborRate: 550, materialLow: 120, materialHigh: 220, timeHours: 8, category: 'Painting' },
+  { name: 'Bedroom Paint (Standard)', laborRate: 400, materialLow: 90, materialHigh: 160, timeHours: 6.5, category: 'Painting' },
+  { name: 'Living Room Paint (Standard)', laborRate: 600, materialLow: 140, materialHigh: 250, timeHours: 9, category: 'Painting' },
+  { name: 'Kitchen Paint (Walls Only)', laborRate: 450, materialLow: 100, materialHigh: 180, timeHours: 7, category: 'Painting' },
+  { name: 'Bathroom Paint (Small)', laborRate: 280, materialLow: 60, materialHigh: 110, timeHours: 4, category: 'Painting' },
+  { name: 'Bathroom Paint (Full)', laborRate: 380, materialLow: 85, materialHigh: 150, timeHours: 5.5, category: 'Painting' },
+  { name: 'Ceiling Paint (per room)', laborRate: 300, materialLow: 70, materialHigh: 130, timeHours: 5, category: 'Painting' },
+  { name: 'Accent Wall (Feature Wall)', laborRate: 180, materialLow: 40, materialHigh: 90, timeHours: 3, category: 'Painting' },
+  { name: 'Trim & Baseboards Paint (per room)', laborRate: 220, materialLow: 50, materialHigh: 100, timeHours: 4, category: 'Painting' },
+  { name: 'Door Painting (Interior, per door)', laborRate: 85, materialLow: 20, materialHigh: 40, timeHours: 1.5, category: 'Painting' },
+  { name: 'Cabinet Painting (per linear foot)', laborRate: 35, materialLow: 10, materialHigh: 25, timeHours: 0.5, category: 'Painting' },
+  { name: 'Exterior Door Painting', laborRate: 150, materialLow: 35, materialHigh: 70, timeHours: 2.5, category: 'Painting' },
+  { name: 'Deck Staining (per 100 sq ft)', laborRate: 200, materialLow: 60, materialHigh: 120, timeHours: 3, category: 'Painting' },
+  { name: 'Fence Staining (per 8ft section)', laborRate: 75, materialLow: 25, materialHigh: 50, timeHours: 1.5, category: 'Painting' },
+  { name: 'Garage Interior Paint (2-car)', laborRate: 650, materialLow: 150, materialHigh: 280, timeHours: 10, category: 'Painting' },
+  { name: 'Stairwell/Hallway Paint', laborRate: 380, materialLow: 90, materialHigh: 160, timeHours: 6, category: 'Painting' },
+  { name: 'Popcorn Ceiling Removal & Paint', laborRate: 800, materialLow: 150, materialHigh: 300, timeHours: 12, category: 'Painting' },
+  { name: 'Exterior Trim Paint (per section)', laborRate: 200, materialLow: 50, materialHigh: 100, timeHours: 3, category: 'Painting' },
+  { name: 'Shutters Paint (per pair)', laborRate: 90, materialLow: 25, materialHigh: 50, timeHours: 2, category: 'Painting' },
 ];
 
 export default function HandymanCalculator() {
@@ -103,7 +125,7 @@ export default function HandymanCalculator() {
             Handyman Services <span className="gradient-text">Calculator</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto animate-fade-in-up stagger-1 opacity-0">
-            Get instant estimates for common handyman services based on local Simpsonville market rates
+            Get instant estimates for common handyman services based on local Greenville, SC market rates
           </p>
         </div>
       </section>
@@ -285,7 +307,7 @@ export default function HandymanCalculator() {
               <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-3" />
               <h3 className="font-bold text-gray-900 mb-2">Local Rates</h3>
               <p className="text-sm text-gray-600">
-                Based on current Simpsonville, SC market rates
+                Based on current Greenville, SC market rates
               </p>
             </Card>
             <Card className="text-center">
