@@ -42,7 +42,7 @@ export default function CalendarPage() {
     end_datetime: '',
     location: '',
     attendees: '',
-    event_type: 'consultation' as const,
+    event_type: 'consultation' as 'consultation' | 'site_visit' | 'meeting' | 'follow_up' | 'other',
   });
 
   // Calendar sync settings
