@@ -306,7 +306,7 @@ export default function CalendarPage() {
                 <Button
                   key={v}
                   onClick={() => setView(v)}
-                  variant={view === v ? 'default' : 'outline'}
+                  variant={view === v ? 'primary' : 'outline'}
                   size="sm"
                 >
                   {v.charAt(0).toUpperCase() + v.slice(1)}
