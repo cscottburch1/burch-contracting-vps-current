@@ -20,6 +20,8 @@ export interface Lead {
   lead_score?: number;
   scheduled_date?: string;
   last_contact_date?: string;
+  preferred_date?: string;
+  preferred_time?: string;
   source_url?: string;
   tags?: string[];
   created_at: string;
