@@ -38,6 +38,8 @@ export async function POST(request: Request) {
     const timeframe = formData.get('timeframe') as string;
     const referralSource = formData.get('referralSource') as string;
     const description = formData.get('description') as string;
+    const preferredDate = formData.get('preferredDate') as string;
+    const preferredTime = formData.get('preferredTime') as string;
     const recaptchaToken = formData.get('recaptchaToken') as string;
     const website = formData.get('website') as string; // Honeypot field
 
@@ -82,8 +84,8 @@ export async function POST(request: Request) {
 
     // Save lead to database
     const result = await query<any>(
-      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, status, priority, estimated_value, lead_score)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)`,
+      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, preferred_date, preferred_time, status, priority, estimated_value, lead_score)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)`,
       [
         name, 
         phone, 
@@ -94,6 +96,8 @@ export async function POST(request: Request) {
         timeframe || null, 
         referralSource || null, 
         description,
+        preferredDate || null,
+        preferredTime || null,
         leadScore.priority,
         null,
         leadScore.totalScore
@@ -184,6 +188,10 @@ ${serviceType ? `• Service Type: ${serviceType}` : ''}
 ${budgetRange ? `• Budget Range: ${budgetRange}` : ''}
 ${timeframe ? `• Timeframe: ${timeframe}` : ''}
 ${referralSource ? `• Referral Source: ${referralSource}` : ''}
+
+Appointment Request:
+${preferredDate ? `• Preferred Date: ${preferredDate}` : ''}
+${preferredTime ? `• Preferred Time: ${preferredTime}` : ''}
 
 Message:
 ${description}${attachmentsText}

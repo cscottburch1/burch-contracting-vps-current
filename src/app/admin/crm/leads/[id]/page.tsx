@@ -486,6 +486,34 @@ export default function LeadDetailPage() {
                 </div>
 
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Consultation Date</label>
+                  {editMode ? (
+                    <input
+                      type="date"
+                      value={formData.preferred_date || ''}
+                      onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                  ) : (
+                    <p className="text-gray-900">{lead.preferred_date ? new Date(lead.preferred_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A'}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      value={formData.preferred_time || ''}
+                      onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                  ) : (
+                    <p className="text-gray-900">{lead.preferred_time || 'N/A'}</p>
+                  )}
+                </div>
+
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Value</label>
                   {editMode ? (
                     <input
