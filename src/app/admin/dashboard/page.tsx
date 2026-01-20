@@ -55,10 +55,14 @@ export default async function AdminDashboard() {
               <span className="text-purple-600">📄</span>
               Sales & Documents
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <a href="/admin/crm" className="bg-purple-600 text-white p-6 rounded-xl text-center hover:bg-purple-700 transition transform hover:scale-105 shadow-lg">
                 <div className="text-3xl mb-2">🎯</div>
                 <div className="text-lg font-bold">Leads / CRM</div>
+              </a>
+              <a href="/admin/calendar" className="bg-indigo-600 text-white p-6 rounded-xl text-center hover:bg-indigo-700 transition transform hover:scale-105 shadow-lg">
+                <div className="text-3xl mb-2">📅</div>
+                <div className="text-lg font-bold">Calendar</div>
               </a>
               <a href="/admin/proposals" className="bg-purple-500 text-white p-6 rounded-xl text-center hover:bg-purple-600 transition transform hover:scale-105 shadow-lg">
                 <div className="text-3xl mb-2">📋</div>
