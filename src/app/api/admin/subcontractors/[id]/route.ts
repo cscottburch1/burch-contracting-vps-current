@@ -231,6 +231,31 @@ export async function DELETE(
     const { id } = await params;
     const subId = parseInt(id);
 
+    // Ensure project_subcontractors table exists
+    await query(`
+      CREATE TABLE IF NOT EXISTS project_subcontractors (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        project_id INT NOT NULL,
+        subcontractor_id INT NOT NULL,
+        role VARCHAR(100),
+        notes TEXT,
+        amount_quoted DECIMAL(10, 2),
+        amount_paid DECIMAL(10, 2) DEFAULT 0,
+        status ENUM('pending', 'confirmed', 'in_progress', 'completed', 'cancelled') DEFAULT 'pending',
+        assigned_date DATE,
+        start_date DATE,
+        completion_date DATE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+        FOREIGN KEY (subcontractor_id) REFERENCES subcontractors(id) ON DELETE CASCADE,
+        UNIQUE KEY unique_project_sub (project_id, subcontractor_id, role),
+        INDEX idx_project_id (project_id),
+        INDEX idx_subcontractor_id (subcontractor_id),
+        INDEX idx_status (status)
+      )
+    `);
+
     // Check for existing project assignments
     const assignments: any = await query(
       'SELECT COUNT(*) as count FROM project_subcontractors WHERE subcontractor_id = ?',
@@ -246,6 +271,10 @@ export async function DELETE(
     // Delete related records first to avoid foreign key constraints
     await query('DELETE FROM subcontractor_documents WHERE subcontractor_id = ?', [subId]);
     await query('DELETE FROM subcontractor_activity WHERE subcontractor_id = ?', [subId]);
+    
+    // Delete from bid-related tables if they exist
+    await query('DELETE FROM subcontractor_bids WHERE subcontractor_id = ? AND 1=1', [subId]).catch(() => {});
+    await query('DELETE FROM subcontractor_reviews WHERE subcontractor_id = ? AND 1=1', [subId]).catch(() => {});
     
     // Now delete the subcontractor
     await query('DELETE FROM subcontractors WHERE id = ?', [subId]);

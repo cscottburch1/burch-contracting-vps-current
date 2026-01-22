@@ -201,10 +201,13 @@ export default function SubcontractorsCRUD() {
         loadSubs();
         setTimeout(() => setSuccess(''), 3000);
       } else {
-        setError('Failed to delete subcontractor');
+        const data = await res.json();
+        setError(data.error || 'Failed to delete subcontractor');
+        setTimeout(() => setError(''), 5000);
       }
     } catch (err) {
       setError('Failed to delete subcontractor');
+      setTimeout(() => setError(''), 5000);
     }
   };
 
