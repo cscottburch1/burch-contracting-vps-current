@@ -2,15 +2,15 @@
 -- This allows full content management for each service
 
 ALTER TABLE service_settings
-ADD COLUMN IF NOT EXISTS page_title VARCHAR(200) AFTER description,
-ADD COLUMN IF NOT EXISTS page_content TEXT AFTER page_title,
-ADD COLUMN IF NOT EXISTS meta_title VARCHAR(200) AFTER page_content,
-ADD COLUMN IF NOT EXISTS meta_description VARCHAR(300) AFTER meta_title,
-ADD COLUMN IF NOT EXISTS meta_keywords VARCHAR(500) AFTER meta_description,
-ADD COLUMN IF NOT EXISTS hero_image VARCHAR(500) AFTER meta_keywords,
-ADD COLUMN IF NOT EXISTS featured_image VARCHAR(500) AFTER hero_image,
-ADD COLUMN IF NOT EXISTS call_to_action_text VARCHAR(200) DEFAULT 'Get a Free Quote' AFTER featured_image,
-ADD COLUMN IF NOT EXISTS call_to_action_url VARCHAR(500) DEFAULT '/contact' AFTER call_to_action_text;
+ADD COLUMN page_title VARCHAR(200) AFTER description,
+ADD COLUMN page_content TEXT AFTER page_title,
+ADD COLUMN meta_title VARCHAR(200) AFTER page_content,
+ADD COLUMN meta_description VARCHAR(300) AFTER meta_title,
+ADD COLUMN meta_keywords VARCHAR(500) AFTER meta_description,
+ADD COLUMN hero_image VARCHAR(500) AFTER meta_keywords,
+ADD COLUMN featured_image VARCHAR(500) AFTER hero_image,
+ADD COLUMN call_to_action_text VARCHAR(200) DEFAULT 'Get a Free Quote' AFTER featured_image,
+ADD COLUMN call_to_action_url VARCHAR(500) DEFAULT '/contact' AFTER call_to_action_text;
 
 -- Update existing services with SEO-friendly content
 UPDATE service_settings SET
