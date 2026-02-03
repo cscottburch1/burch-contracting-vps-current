@@ -161,3 +161,97 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: 'Failed to update service' }, { status: 500 });
   }
 }
+
+// POST /api/admin/services - Create a new service
+export async function POST(request: Request) {
+  try {
+    const currentUser = await getCurrentAdminUser();
+    
+    if (!currentUser || currentUser.role !== 'owner') {
+      return NextResponse.json({ error: 'Unauthorized - Owner access required' }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { 
+      service_name,
+      service_slug,
+      description = '',
+      menu_label = service_name,
+      menu_order = 999,
+      enabled = true,
+      show_in_calculator = true,
+      show_in_services_page = true,
+      show_in_navigation = true,
+      page_title = '',
+      page_content = '',
+      meta_title = '',
+      meta_description = '',
+      meta_keywords = '',
+      hero_image = '',
+      featured_image = '',
+      call_to_action_text = 'Get a Free Quote',
+      call_to_action_url = '/contact'
+    } = body;
+
+    if (!service_name || !service_slug) {
+      return NextResponse.json({ error: 'Service name and slug are required' }, { status: 400 });
+    }
+
+    // Check if slug already exists
+    const existing: any = await query(
+      'SELECT id FROM service_settings WHERE service_slug = ?',
+      [service_slug]
+    );
+
+    if (existing.length > 0) {
+      return NextResponse.json({ error: 'Service slug already exists' }, { status: 400 });
+    }
+
+    // Insert new service
+    await query(
+      `INSERT INTO service_settings (
+        service_name, service_slug, description, menu_label, menu_order,
+        enabled, show_in_calculator, show_in_services_page, show_in_navigation,
+        page_title, page_content, meta_title, meta_description, meta_keywords,
+        hero_image, featured_image, call_to_action_text, call_to_action_url
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        service_name, service_slug, description, menu_label, menu_order,
+        enabled, show_in_calculator, show_in_services_page, show_in_navigation,
+        page_title, page_content, meta_title, meta_description, meta_keywords,
+        hero_image, featured_image, call_to_action_text, call_to_action_url
+      ]
+    );
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error creating service:', error);
+    return NextResponse.json({ error: 'Failed to create service' }, { status: 500 });
+  }
+}
+
+// DELETE /api/admin/services - Delete a service
+export async function DELETE(request: Request) {
+  try {
+    const currentUser = await getCurrentAdminUser();
+    
+    if (!currentUser || currentUser.role !== 'owner') {
+      return NextResponse.json({ error: 'Unauthorized - Owner access required' }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Service ID required' }, { status: 400 });
+    }
+
+    // Delete the service
+    await query('DELETE FROM service_settings WHERE id = ?', [id]);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting service:', error);
+    return NextResponse.json({ error: 'Failed to delete service' }, { status: 500 });
+  }
+}

@@ -35,6 +35,14 @@ export default function ServiceManagementPage() {
   const [error, setError] = useState('');
   const [editingService, setEditingService] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<Service>>({});
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createForm, setCreateForm] = useState({
+    service_name: '',
+    service_slug: '',
+    description: '',
+    menu_label: '',
+  });
+  const [deleting, setDeleting] = useState<number | null>(null);
 
   useEffect(() => {
     checkAuth();
@@ -152,6 +160,66 @@ export default function ServiceManagementPage() {
     }
   };
 
+  const createService = async () => {
+    if (!createForm.service_name || !createForm.service_slug) {
+      setError('Service name and slug are required');
+      return;
+    }
+
+    setError('');
+    setSuccess('');
+
+    try {
+      const res = await fetch('/api/admin/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(createForm),
+      });
+
+      if (res.ok) {
+        setSuccess('Service created successfully!');
+        setShowCreateModal(false);
+        setCreateForm({ service_name: '', service_slug: '', description: '', menu_label: '' });
+        loadServices();
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Failed to create service');
+      }
+    } catch (err) {
+      setError('Failed to create service');
+    }
+  };
+
+  const deleteService = async (serviceId: number, serviceName: string) => {
+    if (!confirm(`Are you sure you want to delete "${serviceName}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    setDeleting(serviceId);
+    setError('');
+    setSuccess('');
+
+    try {
+      const res = await fetch(`/api/admin/services?id=${serviceId}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        setSuccess('Service deleted successfully!');
+        loadServices();
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Failed to delete service');
+      }
+    } catch (err) {
+      setError('Failed to delete service');
+    } finally {
+      setDeleting(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -178,6 +246,13 @@ export default function ServiceManagementPage() {
                 <p className="text-gray-600 mt-1">Control which services are available on your website</p>
               </div>
             </div>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2 shadow-md"
+            >
+              <Icon name="Plus" className="w-5 h-5" />
+              Create New Service
+            </button>
           </div>
         </div>
       </div>
@@ -235,13 +310,23 @@ export default function ServiceManagementPage() {
                         <span className="text-sm text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
                           /{service.service_slug}
                         </span>
-                        <button
-                          onClick={() => isEditing ? cancelEditing() : startEditing(service)}
-                          className="ml-auto text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
-                        >
-                          <Icon name={isEditing ? "X" : "Edit"} className="w-4 h-4" />
-                          {isEditing ? 'Cancel' : 'Edit Content'}
-                        </button>
+                        <div className="ml-auto flex items-center gap-2">
+                          <button
+                            onClick={() => isEditing ? cancelEditing() : startEditing(service)}
+                            className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+                          >
+                            <Icon name={isEditing ? "X" : "Edit"} className="w-4 h-4" />
+                            {isEditing ? 'Cancel' : 'Edit Content'}
+                          </button>
+                          <button
+                            onClick={() => deleteService(service.id, service.service_name)}
+                            disabled={deleting === service.id}
+                            className="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1 disabled:opacity-50"
+                          >
+                            <Icon name={deleting === service.id ? "Loader" : "Trash2"} className={`w-4 h-4 ${deleting === service.id ? 'animate-spin' : ''}`} />
+                            Delete
+                          </button>
+                        </div>
                       </div>
                       {!isEditing && (
                         <p className="text-gray-600">{service.description}</p>
@@ -595,6 +680,105 @@ export default function ServiceManagementPage() {
           </div>
         )}
       </div>
+
+      {/* Create Service Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900">Create New Service</h2>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <Icon name="X" className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Service Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={createForm.service_name}
+                  onChange={(e) => setCreateForm({ ...createForm, service_name: e.target.value })}
+                  placeholder="e.g., Pool Installation"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Service Slug <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={createForm.service_slug}
+                  onChange={(e) => setCreateForm({ ...createForm, service_slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') })}
+                  placeholder="e.g., pool-installation"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  URL-friendly identifier (lowercase, hyphens only). Example: /services/pool-installation
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Menu Label
+                </label>
+                <input
+                  type="text"
+                  value={createForm.menu_label}
+                  onChange={(e) => setCreateForm({ ...createForm, menu_label: e.target.value })}
+                  placeholder="e.g., Pools (leave blank to use service name)"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Short Description
+                </label>
+                <textarea
+                  value={createForm.description}
+                  onChange={(e) => setCreateForm({ ...createForm, description: e.target.value })}
+                  placeholder="Brief description of the service..."
+                  rows={3}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+                  <Icon name="AlertCircle" className="w-5 h-5 text-red-600" />
+                  <span className="text-red-800">{error}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 border-t border-gray-200 flex items-center justify-end gap-3">
+              <button
+                onClick={() => setShowCreateModal(false)}
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={createService}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium flex items-center gap-2"
+              >
+                <Icon name="Plus" className="w-4 h-4" />
+                Create Service
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
