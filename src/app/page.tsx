@@ -10,8 +10,15 @@ import { businessConfig } from '@/config/business';
 import Script from 'next/script';
 import DynamicBanners from '@/components/EmergencyBanner';
 import RecentProjects from '@/components/RecentProjects';
+import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch active services from database
+  const dbServices = await getServicesForPage();
+  const services = dbServices.length > 0 
+    ? dbServices.map(mapToBusinessConfigFormat)
+    : businessConfig.services;
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -304,7 +311,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {businessConfig.services.map((service, index) => (
+          {services.map((service, index) => (
             <div key={service.id} className={`animate-fade-in-up opacity-0 stagger-${(index % 3) + 1} hover-lift`}>
               <ServiceCard
                 title={service.title}

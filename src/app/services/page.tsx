@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { businessConfig } from '@/config/business';
 import { Metadata } from 'next';
+import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 
 export const metadata: Metadata = {
   title: 'Home Services in Simpsonville, SC | Kitchen, Bath, Deck, Basement, Handyman | (864) 724-4600',
@@ -26,8 +27,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ServicesPage() {
-  const services = businessConfig.services;
+export default async function ServicesPage() {
+  // Fetch active services from database
+  const dbServices = await getServicesForPage();
+  
+  // Map to business config format for compatibility
+  const services = dbServices.length > 0 
+    ? dbServices.map(mapToBusinessConfigFormat)
+    : businessConfig.services; // Fallback to static config
 
   return (
     <>

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { businessConfig } from '@/config/business';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import Script from 'next/script';
+import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 
 // City-specific content with rich history and modern context
 const cityContent: Record<string, {
@@ -671,7 +672,10 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {businessConfig.services.map((service) => (
+          {(await (async () => {
+            const dbServices = await getServicesForPage();
+            return dbServices.length > 0 ? dbServices.map(mapToBusinessConfigFormat) : businessConfig.services;
+          })()).map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
