@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { businessConfig } from '@/config/business';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import Script from 'next/script';
+import { getServiceBySlug, getActiveServices, mapToBusinessConfigFormat } from '@/lib/services';
 
 // Service content database
 const serviceContent: Record<string, {
@@ -308,6 +309,16 @@ interface ServicePageProps {
 }
 
 export async function generateStaticParams() {
+  // Fetch active services from database
+  const dbServices = await getActiveServices();
+  
+  if (dbServices.length > 0) {
+    return dbServices.map((service) => ({
+      slug: service.service_slug,
+    }));
+  }
+  
+  // Fallback to static config
   return businessConfig.services.map((service) => ({
     slug: service.id,
   }));
@@ -383,6 +394,15 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
+  
+  // Check if service is enabled in database
+  const dbService = await getServiceBySlug(slug);
+  
+  // If service is disabled or not found in database, check if it exists in static content
+  if (!dbService && !serviceContent[slug]) {
+    notFound();
+  }
+  
   const service = serviceContent[slug];
   
   if (!service) {

@@ -7,6 +7,7 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
+import { ServiceSelector } from '@/components/ServiceSelector';
 
 interface FormData {
   name: string;
