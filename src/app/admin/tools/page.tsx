@@ -378,15 +378,23 @@ export default function AdminToolsPage() {
               </div>
             </a>
 
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
+            <a
+              href="/admin/tools/services"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
               <div className="flex items-center mb-3">
                 <span className="text-4xl mr-3">🎨</span>
-                <h3 className="text-xl font-bold text-gray-700">Service Pages</h3>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Service Management
+                </h3>
               </div>
-              <p className="text-gray-500">
-                Edit service descriptions and pricing (Coming Soon)
+              <p className="text-gray-600">
+                Enable/disable services and control where they appear
               </p>
-            </div>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
 
             <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
               <div className="flex items-center mb-3">
