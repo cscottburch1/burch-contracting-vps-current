@@ -518,7 +518,7 @@ export default function CustomerDetailPage() {
                             <Icon name="Edit" size={14} className="mr-1" />
                             Edit
                           </Button>
-                          <Button variant="outline" size="sm" href={`/admin/project-detail?id=${project.id}`}>
+                          <Button variant="outline" size="sm" href={`/admin/projects/${project.id}`}>
                             Manage
                           </Button>
                           <Button 

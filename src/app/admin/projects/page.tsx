@@ -266,7 +266,7 @@ export default function AdminProjectsPage() {
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1 cursor-pointer" onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}>
+                  <div className="flex-1 cursor-pointer" onClick={() => router.push(`/admin/projects/${project.id}`)}>
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-xl font-bold text-gray-900">{project.project_name}</h3>
                       <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold border ${getStatusColor(project.status)}`}>
@@ -295,14 +295,14 @@ export default function AdminProjectsPage() {
                   </div>
                   <div className="flex gap-2">
                     <button 
-                      onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
+                      onClick={() => router.push(`/admin/projects/${project.id}`)}
                       className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition"
                     >
                       <Icon name="Edit" size={20} />
                       Edit
                     </button>
                     <button 
-                      onClick={() => router.push(`/admin/project-detail?id=${project.id}`)}
+                      onClick={() => router.push(`/admin/projects/${project.id}`)}
                       className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-blue-50 transition"
                     >
                       Manage
