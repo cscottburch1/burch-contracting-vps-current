@@ -32,7 +32,26 @@ export async function PATCH(request: Request) {
     }
 
     const body = await request.json();
-    const { id, enabled, show_in_calculator, show_in_services_page, show_in_navigation, menu_order, description } = body;
+    const { 
+      id, 
+      enabled, 
+      show_in_calculator, 
+      show_in_services_page, 
+      show_in_navigation, 
+      menu_order, 
+      description,
+      service_name,
+      menu_label,
+      page_title,
+      page_content,
+      meta_title,
+      meta_description,
+      meta_keywords,
+      hero_image,
+      featured_image,
+      call_to_action_text,
+      call_to_action_url
+    } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'Service ID required' }, { status: 400 });
@@ -69,6 +88,61 @@ export async function PATCH(request: Request) {
     if (description !== undefined) {
       updates.push('description = ?');
       values.push(description);
+    }
+
+    if (service_name !== undefined) {
+      updates.push('service_name = ?');
+      values.push(service_name);
+    }
+
+    if (menu_label !== undefined) {
+      updates.push('menu_label = ?');
+      values.push(menu_label);
+    }
+
+    if (page_title !== undefined) {
+      updates.push('page_title = ?');
+      values.push(page_title);
+    }
+
+    if (page_content !== undefined) {
+      updates.push('page_content = ?');
+      values.push(page_content);
+    }
+
+    if (meta_title !== undefined) {
+      updates.push('meta_title = ?');
+      values.push(meta_title);
+    }
+
+    if (meta_description !== undefined) {
+      updates.push('meta_description = ?');
+      values.push(meta_description);
+    }
+
+    if (meta_keywords !== undefined) {
+      updates.push('meta_keywords = ?');
+      values.push(meta_keywords);
+    }
+
+    if (hero_image !== undefined) {
+      updates.push('hero_image = ?');
+      values.push(hero_image);
+    }
+
+    if (featured_image !== undefined) {
+      updates.push('featured_image = ?');
+      values.push(featured_image);
+    }
+
+    if (call_to_action_text !== undefined) {
+      updates.push('call_to_action_text = ?');
+      values.push(call_to_action_text);
+    }
+
+    if (call_to_action_url !== undefined) {
+      updates.push('call_to_action_url = ?');
+      values.push(call_to_action_url);
     }
 
     if (updates.length === 0) {
