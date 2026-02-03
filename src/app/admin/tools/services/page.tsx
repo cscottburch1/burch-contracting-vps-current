@@ -233,7 +233,7 @@ export default function ServiceManagementPage() {
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => router.push('/admin/tools')}
@@ -248,10 +248,10 @@ export default function ServiceManagementPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2 shadow-md"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold flex items-center justify-center gap-2 shadow-md whitespace-nowrap"
             >
               <Icon name="Plus" className="w-5 h-5" />
-              Create New Service
+              <span>Create New Service</span>
             </button>
           </div>
         </div>
