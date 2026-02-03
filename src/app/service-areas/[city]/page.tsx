@@ -501,6 +501,12 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
     notFound();
   }
 
+  // Fetch active services from database
+  const dbServices = await getServicesForPage();
+  const services = dbServices.length > 0 
+    ? dbServices.map(mapToBusinessConfigFormat)
+    : businessConfig.services;
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -672,10 +678,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {(await (async () => {
-            const dbServices = await getServicesForPage();
-            return dbServices.length > 0 ? dbServices.map(mapToBusinessConfigFormat) : businessConfig.services;
-          })()).map((service) => (
+          {services.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
