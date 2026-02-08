@@ -17,12 +17,20 @@ export async function GET() {
         `SELECT 
           p.id,
           p.customer_id,
-          p.title,
+          p.project_name,
+          p.project_type,
           p.description,
           p.start_date,
-          p.end_date,
+          p.estimated_completion_date,
+          p.actual_completion_date,
           p.status,
-          p.budget,
+          p.completion_percentage,
+          p.total_cost,
+          p.address_line1,
+          p.address_line2,
+          p.city,
+          p.state,
+          p.zip_code,
           p.created_at,
           p.updated_at,
           c.name as customer_name,
@@ -31,36 +39,20 @@ export async function GET() {
         LEFT JOIN customers c ON p.customer_id = c.id
         ORDER BY 
           CASE p.status
-            WHEN 'active' THEN 1
-            WHEN 'pending' THEN 2
+            WHEN 'in_progress' THEN 1
+            WHEN 'scheduled' THEN 2
             WHEN 'completed' THEN 3
             WHEN 'cancelled' THEN 4
+            WHEN 'on_hold' THEN 5
           END,
           p.start_date DESC`
       );
 
-      // Map database fields to frontend expected fields
+      // Ensure customer name shows even if customer was deleted
       const projects = (projectsRaw as any[]).map(p => ({
-        id: p.id,
-        customer_id: p.customer_id,
-        customer_name: p.customer_name,
-        customer_email: p.customer_email,
-        project_name: p.title,
-        project_type: 'Remodeling', // Default since not stored in this table
-        description: p.description,
-        start_date: p.start_date,
-        estimated_completion_date: p.end_date,
-        actual_completion_date: null,
-        status: p.status === 'active' ? 'in_progress' : 
-                p.status === 'pending' ? 'scheduled' : 
-                p.status === 'completed' ? 'completed' : 'cancelled',
-        completion_percentage: p.status === 'completed' ? 100 : 
-                               p.status === 'active' ? 50 : 0,
-        total_cost: p.budget,
-        city: '',
-        state: '',
-        created_at: p.created_at,
-        updated_at: p.updated_at
+        ...p,
+        customer_name: p.customer_name || 'Deleted Customer',
+        customer_email: p.customer_email || ''
       }));
 
       return NextResponse.json({ projects });
@@ -86,10 +78,11 @@ export async function POST(request: Request) {
     const data = await request.json();
     const {
       customer_id,
-      project_name, // will be mapped to 'title'
+      project_name,
+      project_type,
       description,
       start_date,
-      estimated_completion_date, // will be mapped to 'end_date'
+      estimated_completion_date,
     } = data;
 
     if (!customer_id || !project_name) {
@@ -98,18 +91,29 @@ export async function POST(request: Request) {
 
     const connection = await pool.getConnection();
     try {
-      // Map frontend fields to database columns
+      // Verify customer exists
+      const [customers] = await connection.execute(
+        'SELECT id FROM customers WHERE id = ?',
+        [customer_id]
+      );
+      
+      if (!Array.isArray(customers) || customers.length === 0) {
+        return NextResponse.json({ error: 'Customer not found' }, { status: 404 });
+      }
+
+      // Insert project with correct field names
       const [result] = await connection.execute(
         `INSERT INTO projects (
-          customer_id, title, description,
-          start_date, end_date, status
-        ) VALUES (?, ?, ?, ?, ?, 'pending')`,
+          customer_id, project_name, project_type, description,
+          start_date, estimated_completion_date, status
+        ) VALUES (?, ?, ?, ?, ?, ?, 'scheduled')`,
         [
           customer_id,
-          project_name, // maps to 'title'
+          project_name,
+          project_type || 'General',
           description || null,
           start_date || null,
-          estimated_completion_date || null, // maps to 'end_date'
+          estimated_completion_date || null,
         ]
       );
 

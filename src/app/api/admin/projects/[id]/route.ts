@@ -25,8 +25,19 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    // The projects table already has the correct field names: title, budget, end_date
-    const project = projectRaw;
+    // Map database fields to frontend expected fields
+    const project = {
+      ...projectRaw,
+      title: projectRaw.project_name,
+      budget: projectRaw.total_cost,
+      end_date: projectRaw.estimated_completion_date,
+      street_address: projectRaw.address_line1,
+      // Ensure customer fields are present even if customer was deleted
+      customer_name: projectRaw.customer_name || 'Deleted Customer',
+      customer_email: projectRaw.customer_email || '',
+      customer_phone: projectRaw.customer_phone || '',
+      customer_address: projectRaw.customer_address || ''
+    };
 
     const updates = await query(
       'SELECT * FROM project_updates WHERE project_id = ? ORDER BY created_at DESC',
@@ -95,10 +106,23 @@ export async function PUT(
       );
     }
 
-    const projectRaw = await queryOne('SELECT * FROM projects WHERE id = ?', [id]);
+    const projectRaw = await queryOne(
+      `SELECT p.*, c.name as customer_name 
+       FROM projects p 
+       LEFT JOIN customers c ON p.customer_id = c.id 
+       WHERE p.id = ?`,
+      [id]
+    );
     
-    // The projects table already has the correct field names: title, budget, end_date
-    const project = projectRaw;
+    // Map database fields to frontend expected fields
+    const project = {
+      ...projectRaw,
+      title: projectRaw.project_name,
+      budget: projectRaw.total_cost,
+      end_date: projectRaw.estimated_completion_date,
+      street_address: projectRaw.address_line1,
+      customer_name: projectRaw.customer_name || 'Deleted Customer'
+    };
 
     return NextResponse.json({ project });
   } catch (error) {
