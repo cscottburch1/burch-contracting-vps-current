@@ -915,7 +915,26 @@ export default function SubcontractorsManagementPage() {
                       <p className="text-xs text-gray-500 mt-1">
                         {(selectedSubcontractor as any).pin 
                           ? '🟢 Can login to crew app at burchcontracting.com/tradesmen' 
-                          : '🔴 Set PIN to enable crew app access'}
+                          : (
+                            <button
+                              onClick={() => {
+                                setShowDetailsModal(false);
+                                router.push('/admin/subcontractors/manage');
+                                // Let the page load, then trigger edit
+                                setTimeout(() => {
+                                  const editButtons = document.querySelectorAll('[data-subcontractor-id]');
+                                  editButtons.forEach((btn) => {
+                                    if (btn.getAttribute('data-subcontractor-id') === String(selectedSubcontractor.id)) {
+                                      (btn as HTMLButtonElement).click();
+                                    }
+                                  });
+                                }, 500);
+                              }}
+                              className="text-red-600 hover:text-red-800 underline"
+                            >
+                              🔴 Set PIN to enable crew app access
+                            </button>
+                          )}
                       </p>
                       <p><strong>Address:</strong> {selectedSubcontractor.address || 'N/A'}</p>
                       {selectedSubcontractor.city && (
