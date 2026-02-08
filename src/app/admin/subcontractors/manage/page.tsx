@@ -59,6 +59,7 @@ export default function SubcontractorsCRUD() {
     contact_name: '',
     email: '',
     phone: '',
+    pin: '',
     address: '',
     city: '',
     state: 'SC',
@@ -124,6 +125,7 @@ export default function SubcontractorsCRUD() {
       contact_name: '',
       email: '',
       phone: '',
+      pin: '',
       address: '',
       city: '',
       state: 'SC',
@@ -174,6 +176,7 @@ export default function SubcontractorsCRUD() {
       contact_name: sub.contact_name,
       email: sub.email,
       phone: sub.phone,
+      pin: (sub as any).pin || '',
       address: sub.address,
       city: sub.city,
       state: sub.state,
@@ -358,14 +361,38 @@ export default function SubcontractorsCRUD() {
                 </div>
               </div>
 
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Address</label>
-                <input
-                  type="text"
-                  value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full border rounded-lg px-4 py-2"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Login PIN (6 digits) 
+                    <span className="text-gray-500 text-xs ml-2">Used for tradesman portal login</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.pin}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                      setFormData({ ...formData, pin: value });
+                    }}
+                    className="w-full border rounded-lg px-4 py-2"
+                    placeholder="123456"
+                    maxLength={6}
+                    pattern="\d{6}"
+                  />
+                  {formData.pin && formData.pin.length !== 6 && (
+                    <p className="text-red-600 text-xs mt-1">PIN must be exactly 6 digits</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Address</label>
+                  <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    className="w-full border rounded-lg px-4 py-2"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
