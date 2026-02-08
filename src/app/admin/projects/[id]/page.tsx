@@ -499,21 +499,29 @@ export default function AdminProjectDetailPage() {
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500">Budget</dt>
-                <dd className="mt-1 text-sm text-gray-900">${project.budget.toLocaleString()}</dd>
+                <dd className="mt-1 text-sm text-gray-900">${project.budget?.toLocaleString() || '0'}</dd>
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500">Start Date</dt>
-                <dd className="mt-1 text-sm text-gray-900">{(() => {
-                  const [year, month, day] = project.start_date.split('-').map(Number);
-                  return new Date(year, month - 1, day).toLocaleDateString();
-                })()}</dd>
+                <dd className="mt-1 text-sm text-gray-900">{project.start_date ? (() => {
+                  try {
+                    const [year, month, day] = project.start_date.split('-').map(Number);
+                    return new Date(year, month - 1, day).toLocaleDateString();
+                  } catch {
+                    return project.start_date;
+                  }
+                })() : 'N/A'}</dd>
               </div>
               {project.end_date && (
                 <div>
                   <dt className="text-sm font-medium text-gray-500">End Date</dt>
                   <dd className="mt-1 text-sm text-gray-900">{(() => {
-                    const [year, month, day] = project.end_date.split('-').map(Number);
-                    return new Date(year, month - 1, day).toLocaleDateString();
+                    try {
+                      const [year, month, day] = project.end_date.split('-').map(Number);
+                      return new Date(year, month - 1, day).toLocaleDateString();
+                    } catch {
+                      return project.end_date;
+                    }
                   })()}</dd>
                 </div>
               )}
@@ -707,10 +715,22 @@ export default function AdminProjectDetailPage() {
                       <p className="text-gray-600 mb-3">{milestone.description}</p>
                     )}
                     <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span>Due: {new Date(milestone.due_date).toLocaleDateString()}</span>
+                      <span>Due: {(() => {
+                        try {
+                          return new Date(milestone.due_date).toLocaleDateString();
+                        } catch {
+                          return milestone.due_date || 'N/A';
+                        }
+                      })()}</span>
                       {milestone.completed_date && (
                         <span className="text-green-600">
-                          Completed: {new Date(milestone.completed_date).toLocaleDateString()}
+                          Completed: {(() => {
+                            try {
+                              return new Date(milestone.completed_date).toLocaleDateString();
+                            } catch {
+                              return milestone.completed_date;
+                            }
+                          })()}
                         </span>
                       )}
                     </div>
@@ -764,7 +784,13 @@ export default function AdminProjectDetailPage() {
                     <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
                       <span>{activity.user_name}</span>
                       <span>•</span>
-                      <span>{new Date(activity.created_at).toLocaleString()}</span>
+                      <span>{(() => {
+                        try {
+                          return new Date(activity.created_at).toLocaleString();
+                        } catch {
+                          return activity.created_at || 'N/A';
+                        }
+                      })()}</span>
                       <span className="bg-gray-100 px-2 py-0.5 rounded">{activity.activity_type}</span>
                     </div>
                   </div>
