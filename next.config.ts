@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   
+  // Disable Turbopack for production builds to improve stability
+  turbopack: false,
+  
   // Optimize images
   images: {
     formats: ['image/avif', 'image/webp'],
