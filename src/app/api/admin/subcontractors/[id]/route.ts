@@ -67,7 +67,7 @@ export async function PATCH(
     }
 
     if (body.zip_code !== undefined) {
-      updates.push('zip_code = ?');
+      updates.push('zip = ?');
       values.push(body.zip_code);
     }
 
@@ -77,12 +77,12 @@ export async function PATCH(
     }
 
     if (body.years_experience !== undefined) {
-      updates.push('years_experience = ?');
+      updates.push('years_in_business = ?');
       values.push(body.years_experience);
     }
 
     if (body.insurance_info !== undefined) {
-      updates.push('insurance_info = ?');
+      updates.push('insurance_provider = ?');
       values.push(body.insurance_info);
     }
 
@@ -268,13 +268,11 @@ export async function DELETE(
       }, { status: 400 });
     }
 
-    // Delete related records first to avoid foreign key constraints
-    await query('DELETE FROM subcontractor_documents WHERE subcontractor_id = ?', [subId]);
-    await query('DELETE FROM subcontractor_activity WHERE subcontractor_id = ?', [subId]);
-    
-    // Delete from bid-related tables if they exist
-    await query('DELETE FROM subcontractor_bids WHERE subcontractor_id = ? AND 1=1', [subId]).catch(() => {});
-    await query('DELETE FROM subcontractor_reviews WHERE subcontractor_id = ? AND 1=1', [subId]).catch(() => {});
+    // Delete related records first to avoid foreign key constraints (safely ignore missing tables)
+    await query('DELETE FROM subcontractor_activity WHERE subcontractor_id = ?', [subId]).catch(() => {});
+    await query('DELETE FROM subcontractor_documents WHERE subcontractor_id = ?', [subId]).catch(() => {});
+    await query('DELETE FROM subcontractor_bids WHERE subcontractor_id = ?', [subId]).catch(() => {});
+    await query('DELETE FROM subcontractor_reviews WHERE subcontractor_id = ?', [subId]).catch(() => {});
     
     // Now delete the subcontractor
     await query('DELETE FROM subcontractors WHERE id = ?', [subId]);

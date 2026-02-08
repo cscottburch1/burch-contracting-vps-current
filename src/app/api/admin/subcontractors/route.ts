@@ -129,14 +129,15 @@ export async function POST(request: Request) {
 
     const result: any = await query(
       `INSERT INTO subcontractors 
-       (company_name, contact_name, email, phone, address, city, state, zip_code, 
-        specialties, years_experience, insurance_info, license_number, status, admin_notes)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (company_name, contact_name, email, phone, pin, address, city, state, zip, 
+        specialties, years_in_business, insurance_provider, license_number, status, admin_notes)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         company_name,
         contact_name,
         email,
         phone,
+        body.pin || null,
         address || '',
         city || '',
         state || '',
