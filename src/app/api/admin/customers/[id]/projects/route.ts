@@ -23,14 +23,15 @@ export async function POST(
     const result = await query(
       `INSERT INTO projects (
         customer_id, 
-        title, 
+        project_name, 
+        project_type,
         description,
         start_date,
-        end_date,
-        budget,
+        estimated_completion_date,
+        total_cost,
         status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [id, title, description, start_date || null, end_date || null, budget || null, status || 'active']
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, title, 'General', description, start_date || null, end_date || null, budget || null, status || 'scheduled']
     );
 
     const projectId = (result as any).insertId;
