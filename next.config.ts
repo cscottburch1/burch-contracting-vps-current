@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
 
+  // Skip ESLint during production builds (CI/lint should run separately)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // Avoid bundling Node-only modules for the browser
   webpack: (config, { isServer }) => {
     if (!isServer) {
