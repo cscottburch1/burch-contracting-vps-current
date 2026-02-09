@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  reactCompiler: true,
+  reactCompiler: false,
   
   // Optimize images
   images: {
@@ -20,15 +20,12 @@ const nextConfig: NextConfig = {
   
   // Remove console logs in production and optimize packages
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
+    removeConsole: false,
   },
   
-  // Optimize CSS and package imports
+  // Simplify experimental features
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['lucide-react'],
+    optimizeCss: false,
   },
   
   // Headers for caching
