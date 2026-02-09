@@ -1,32 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: false,
+  /* Minimal config for stable builds */
   
-  // Optimize images
+  // Basic image optimization
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
   },
   
-  // Compress responses
+  // Basic optimizations
   compress: true,
-  
-  // Optimize production build
   poweredByHeader: false,
-  
-  // Remove console logs in production and optimize packages
-  compiler: {
-    removeConsole: false,
-  },
-  
-  // Simplify experimental features
-  experimental: {
-    optimizeCss: false,
-  },
   
   // Headers for caching
   async headers() {
