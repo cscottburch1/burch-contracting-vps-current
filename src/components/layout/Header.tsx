@@ -23,7 +23,8 @@ export const Header: React.FC = () => {
     fetch('/api/services/active')
       .then(res => res.json())
       .then(data => {
-        const navServices = (data || []).filter((s: any) => s.show_in_navigation);
+        const servicesList = data.services || [];
+        const navServices = servicesList.filter((s: any) => s.show_in_navigation);
         setServices(navServices);
       })
       .catch(err => console.error('Failed to load services:', err));
