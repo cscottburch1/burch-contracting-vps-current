@@ -13,6 +13,24 @@ const nextConfig: NextConfig = {
   // Basic optimizations
   compress: true,
   poweredByHeader: false,
+
+  // Avoid bundling Node-only modules for the browser
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        buffer: false,
+        util: false,
+        string_decoder: false,
+      };
+    }
+    return config;
+  },
   
   // Headers for caching
   async headers() {
