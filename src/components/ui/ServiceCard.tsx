@@ -36,13 +36,7 @@ export const ServiceCard = ({
 
   return (
     <div className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ${compact ? 'p-4' : 'p-8'} ${className}`}>
-      {href ? (
-        <a href={href} className="block h-full">
-          {content}
-        </a>
-      ) : (
-        content
-      )}
+      {content}
     </div>
   );
 };

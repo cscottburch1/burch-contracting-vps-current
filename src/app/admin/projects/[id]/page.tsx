@@ -439,7 +439,7 @@ export default function AdminProjectDetailPage() {
             <Icon name="Camera" className="mr-2" />
             Photos
             <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
-              {photos.length}
+              {photos?.length || 0}
             </span>
           </button>
           <button
@@ -453,7 +453,7 @@ export default function AdminProjectDetailPage() {
             <Icon name="Target" className="mr-2" />
             Milestones
             <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
-              {milestones.length}
+              {milestones?.length || 0}
             </span>
           </button>
           <button
@@ -467,7 +467,7 @@ export default function AdminProjectDetailPage() {
             <Icon name="Clock" className="mr-2" />
             Activity
             <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
-              {activities.length}
+              {activities?.length || 0}
             </span>
           </button>
           <button
@@ -481,7 +481,7 @@ export default function AdminProjectDetailPage() {
             <Icon name="Users" className="mr-2" />
             Subcontractors
             <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
-              {subcontractors.length}
+              {subcontractors?.length || 0}
             </span>
           </button>
         </nav>
@@ -600,7 +600,7 @@ export default function AdminProjectDetailPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {photos.map((photo) => (
+            {(photos || []).map((photo) => (
               <div key={photo.id} className="bg-white rounded-lg shadow overflow-hidden group">
                 <div className="relative aspect-square">
                   <img
@@ -703,7 +703,7 @@ export default function AdminProjectDetailPage() {
           )}
 
           <div className="space-y-4">
-            {milestones.map((milestone, idx) => (
+            {(milestones || []).map((milestone, idx) => (
               <div key={milestone.id} className="bg-white p-6 rounded-lg shadow">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -772,7 +772,7 @@ export default function AdminProjectDetailPage() {
           <div className="p-6">
             <h2 className="text-lg font-semibold mb-4">Activity Timeline</h2>
             <div className="space-y-4">
-              {activities.map((activity) => (
+              {(activities || []).map((activity) => (
                 <div key={activity.id} className="flex gap-4 pb-4 border-b last:border-b-0">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -833,7 +833,7 @@ export default function AdminProjectDetailPage() {
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   >
                     <option value="">Select...</option>
-                    {availableSubcontractors.map((sub) => (
+                    {(availableSubcontractors || []).map((sub) => (
                       <option key={sub.id} value={sub.id}>
                         {sub.name} - {sub.company}
                       </option>
@@ -901,7 +901,7 @@ export default function AdminProjectDetailPage() {
           )}
 
           <div className="space-y-4">
-            {subcontractors.map((sub) => (
+            {(subcontractors || []).map((sub) => (
               <div key={sub.assignment_id} className="bg-white p-6 rounded-lg shadow">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
