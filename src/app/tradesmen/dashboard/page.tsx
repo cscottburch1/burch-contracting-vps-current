@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import BottomNav from '@/components/tradesmen/BottomNav';
+import QuickActions from '@/components/tradesmen/QuickActions';
 
 interface Project {
   id: number;
@@ -264,6 +266,11 @@ export default function TradesmanDashboard() {
           </div>
         )}
 
+        {/* Quick Actions */}
+        {projects.length > 0 && stats && (
+          <QuickActions projects={projects} isClockedIn={stats.isClockedIn} />
+        )}
+
         {/* Clock Status */}
         {stats?.isClockedIn && (
           <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 mb-5 sm:mb-6 shadow-md">
@@ -340,6 +347,9 @@ export default function TradesmanDashboard() {
           </div>
         )}
       </div>
+      
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   );
 }
