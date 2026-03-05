@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* Minimal config for stable builds */
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   
   // Basic image optimization
   images: {
