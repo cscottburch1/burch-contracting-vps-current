@@ -13,7 +13,10 @@ interface FormData {
   name: string;
   phone: string;
   email: string;
-  address: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
   serviceType: string;
   budgetRange: string;
   timeframe: string;
@@ -33,7 +36,10 @@ export default function ContactPage() {
     name: '',
     phone: '',
     email: '',
-    address: '',
+    streetAddress: '',
+    city: '',
+    state: 'SC',
+    zipCode: '',
     serviceType: '',
     budgetRange: '',
     timeframe: '',
@@ -69,8 +75,22 @@ export default function ContactPage() {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.address.trim()) {
-      newErrors.address = 'Address or city/area is required';
+    if (!formData.streetAddress.trim()) {
+      newErrors.streetAddress = 'Street address is required';
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required';
+    }
+
+    if (!formData.state.trim()) {
+      newErrors.state = 'State is required';
+    }
+
+    if (!formData.zipCode.trim()) {
+      newErrors.zipCode = 'Zip code is required';
+    } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
+      newErrors.zipCode = 'Please enter a valid zip code';
     }
 
     if (!formData.serviceType) {
@@ -139,6 +159,9 @@ export default function ContactPage() {
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
+      // Combine address fields for backend
+      const fullAddress = `${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
+      formDataToSend.append('address', fullAddress);
       formDataToSend.append('recaptchaToken', recaptchaToken);
       
       // Append files
@@ -160,7 +183,10 @@ export default function ContactPage() {
           name: '',
           phone: '',
           email: '',
-          address: '',
+          streetAddress: '',
+          city: '',
+          state: 'SC',
+          zipCode: '',
           serviceType: '',
           budgetRange: '',
           timeframe: '',
@@ -344,43 +370,151 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="john@example.com"
-                      required
-                    />
-                    {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-                  </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="john@example.com"
+                    required
+                  />
+                  {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+                </div>
 
+                <div>
+                  <label htmlFor="streetAddress" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Street Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="streetAddress"
+                    name="streetAddress"
+                    value={formData.streetAddress}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                      errors.streetAddress ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="123 Main Street"
+                    required
+                  />
+                  {errors.streetAddress && <p className="mt-1 text-sm text-red-500">{errors.streetAddress}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label htmlFor="address" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Address or City/Area <span className="text-red-500">*</span>
+                    <label htmlFor="city" className="block text-sm font-semibold text-gray-900 mb-2">
+                      City <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
-                      id="address"
-                      name="address"
-                      value={formData.address}
+                      id="city"
+                      name="city"
+                      value={formData.city}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                        errors.address ? 'border-red-500' : 'border-gray-300'
+                        errors.city ? 'border-red-500' : 'border-gray-300'
                       }`}
-                      placeholder="Simpsonville, SC"
+                      placeholder="Simpsonville"
                       required
                     />
-                    {errors.address && <p className="mt-1 text-sm text-red-500">{errors.address}</p>}
+                    {errors.city && <p className="mt-1 text-sm text-red-500">{errors.city}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="state" className="block text-sm font-semibold text-gray-900 mb-2">
+                      State <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
+                        errors.state ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      required
+                    >
+                      <option value="AL">Alabama</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AZ">Arizona</option>
+                      <option value="AR">Arkansas</option>
+                      <option value="CA">California</option>
+                      <option value="CO">Colorado</option>
+                      <option value="CT">Connecticut</option>
+                      <option value="DE">Delaware</option>
+                      <option value="FL">Florida</option>
+                      <option value="GA">Georgia</option>
+                      <option value="HI">Hawaii</option>
+                      <option value="ID">Idaho</option>
+                      <option value="IL">Illinois</option>
+                      <option value="IN">Indiana</option>
+                      <option value="IA">Iowa</option>
+                      <option value="KS">Kansas</option>
+                      <option value="KY">Kentucky</option>
+                      <option value="LA">Louisiana</option>
+                      <option value="ME">Maine</option>
+                      <option value="MD">Maryland</option>
+                      <option value="MA">Massachusetts</option>
+                      <option value="MI">Michigan</option>
+                      <option value="MN">Minnesota</option>
+                      <option value="MS">Mississippi</option>
+                      <option value="MO">Missouri</option>
+                      <option value="MT">Montana</option>
+                      <option value="NE">Nebraska</option>
+                      <option value="NV">Nevada</option>
+                      <option value="NH">New Hampshire</option>
+                      <option value="NJ">New Jersey</option>
+                      <option value="NM">New Mexico</option>
+                      <option value="NY">New York</option>
+                      <option value="NC">North Carolina</option>
+                      <option value="ND">North Dakota</option>
+                      <option value="OH">Ohio</option>
+                      <option value="OK">Oklahoma</option>
+                      <option value="OR">Oregon</option>
+                      <option value="PA">Pennsylvania</option>
+                      <option value="RI">Rhode Island</option>
+                      <option value="SC">South Carolina</option>
+                      <option value="SD">South Dakota</option>
+                      <option value="TN">Tennessee</option>
+                      <option value="TX">Texas</option>
+                      <option value="UT">Utah</option>
+                      <option value="VT">Vermont</option>
+                      <option value="VA">Virginia</option>
+                      <option value="WA">Washington</option>
+                      <option value="WV">West Virginia</option>
+                      <option value="WI">Wisconsin</option>
+                      <option value="WY">Wyoming</option>
+                      <option value="DC">Washington DC</option>
+                    </select>
+                    {errors.state && <p className="mt-1 text-sm text-red-500">{errors.state}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="zipCode" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Zip Code <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="zipCode"
+                      name="zipCode"
+                      value={formData.zipCode}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                        errors.zipCode ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="29681"
+                      maxLength={10}
+                      required
+                    />
+                    {errors.zipCode && <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>}
                   </div>
                 </div>
 
