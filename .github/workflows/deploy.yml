@@ -1,0 +1,27 @@
+name: Deploy to Hostinger VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || '22' }}
+          script: |
+            cd /var/www/burchcontracting-fresh || cd ~/burchcontracting-fresh
+            git pull origin main
+            npm install --production
+            npm run build
+            pm2 restart all || pm2 restart burchcontracting || systemctl restart burchcontracting
+            pm2 list || systemctl status burchcontracting

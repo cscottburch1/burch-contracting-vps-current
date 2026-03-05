@@ -25,14 +25,14 @@ const serviceContent: Record<string, {
   handyman: {
     title: "#1 Rated Handyman Services in Simpsonville, SC | Licensed & Insured",
     subtitle: "Simpsonville's Most Trusted Handyman - Same-Day Service Available",
-    description: "Looking for a reliable handyman in Simpsonville, SC? Burch Contracting is your #1 choice for professional handyman services in the Upstate SC region - Greenville County and Laurens County. From minor repairs to complete home maintenance, our licensed and insured handyman experts serve Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens. We handle everything from fixing squeaky doors to installing fixtures, drywall repair, plumbing fixes, and more. Call (864) 724-4600 for same-day service!",
+    description: "Looking for a reliable handyman in Simpsonville, SC? Burch Contracting is your #1 choice for professional handyman services in the Upstate SC region. From minor repairs to complete home maintenance, our licensed and insured handyman experts serve Simpsonville, Fountain Inn, Woodruff, and Laurens SC. We handle everything from fixing squeaky doors to installing fixtures, drywall repair, plumbing fixes, and more. Call (864) 724-4600 for same-day service!",
     benefits: [
       "⚡ Same-Day Service Available - Call by noon for same-day repairs",
       "💰 Upfront Fixed Pricing - Know the cost before we start",
       "🏆 Licensed, Insured & BBB A+ Rated Professionals",
       "✅ 100% Satisfaction Guarantee on All Handyman Work",
       "🔧 One Call Fixes Everything - Handle multiple repairs in one visit",
-      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
+      "📍 Serving Simpsonville, Fountain Inn, Woodruff & Laurens SC"
     ],
     features: [
       {
@@ -86,14 +86,15 @@ const serviceContent: Record<string, {
   remodeling: {
     title: "#1 Kitchen & Bathroom Remodeling Contractor in Simpsonville, SC | Free Design",
     subtitle: "Award-Winning Kitchen & Bath Remodels in Simpsonville & Upstate SC",
-    description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 30+ years experience.",
+    description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, bath to tile shower conversions, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 30+ years experience.",
     benefits: [
       "🎨 Free Design Consultation & 3D Renderings",
       "🏆 BBB A+ Rated - Licensed & Insured Remodeling Contractors",
       "💎 Premium Materials - Granite, Quartz, Custom Cabinets",
+      "🚿 Bath to Tile Shower Conversions - Walk-in Showers",
       "📅 Transparent Timeline & Fixed-Price Quotes",
       "🧹 Daily Cleanup - Professional, Respectful Crews",
-      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
+      "📍 Serving Simpsonville, Fountain Inn, Woodruff & Laurens SC"
     ],
     features: [
       {
@@ -105,6 +106,11 @@ const serviceContent: Record<string, {
         title: "Bathroom Renovations",
         description: "New vanities, tile work, shower/tub replacement, plumbing fixtures, lighting, and modern amenities.",
         icon: "Droplets"
+      },
+      {
+        title: "Bath to Tile Shower Conversions",
+        description: "Replace outdated tub/shower combos with beautiful walk-in tile showers featuring custom tile, frameless glass doors, and modern fixtures.",
+        icon: "Shower"
       },
       {
         title: "Countertop Installation",
@@ -130,6 +136,10 @@ const serviceContent: Record<string, {
         answer: "Most kitchen remodels take 4-6 weeks depending on the scope. A simple refresh (cabinets and countertops) may take 2-3 weeks, while a complete gut renovation can take 8-12 weeks. We'll provide a detailed timeline during consultation."
       },
       {
+        question: "Do you offer bath to tile shower conversions?",
+        answer: "Yes! Bath to tile shower conversions are one of our specialties. We can replace your outdated tub with a beautiful walk-in tile shower featuring custom tile work, frameless glass doors, grab bars, and built-in shelving. Most conversions take 5-7 days. Perfect for aging-in-place or creating a modern, spa-like bathroom."
+      },
+      {
         question: "Can I stay in my home during the remodel?",
         answer: "Yes! While there will be some inconvenience, most homeowners stay in their homes during remodeling. We'll set up a temporary kitchen area and maintain a clean, safe work environment. We work efficiently to minimize disruption."
       },
@@ -139,7 +149,7 @@ const serviceContent: Record<string, {
       },
       {
         question: "What's the cost range for a bathroom remodel?",
-        answer: "Bathroom remodels typically range from $8,000-$25,000+ depending on size and scope. A basic refresh starts around $8,000-$12,000, while a complete renovation with high-end finishes can be $20,000-$35,000. We'll provide a detailed estimate based on your specific needs."
+        answer: "Bathroom remodels typically range from $8,000-$25,000+ depending on size and scope. A bath-to-shower conversion starts around $6,500-$10,000. A basic refresh starts around $8,000-$12,000, while a complete renovation with high-end finishes can be $20,000-$35,000. We'll provide a detailed estimate based on your specific needs."
       }
     ],
     gallery: [
@@ -152,14 +162,14 @@ const serviceContent: Record<string, {
   additions: {
     title: "#1 Deck Builder & Screened Porch Contractor in Simpsonville, SC | Custom Designs",
     subtitle: "Simpsonville's Premier Deck & Porch Builder - Award-Winning Outdoor Living Spaces",
-    description: "Add value and living space to your Simpsonville home with the region's premier deck builder and screened porch contractor. Burch Contracting specializes in custom composite decks, wood decks, screened porches, sunrooms, pergolas, and room additions throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. We handle permits, design, construction, and inspections. Enjoy your outdoor space year-round with expertly built, code-compliant additions that blend seamlessly with your home. Free estimates & custom design available.",
+    description: "Add value and living space to your Simpsonville home with the region's premier deck builder and screened porch contractor. Burch Contracting specializes in custom composite decks, wood decks, screened porches, sunrooms, pergolas, and room additions throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. We handle permits, design, construction, and inspections. Enjoy your outdoor space year-round with expertly built, code-compliant additions that blend seamlessly with your home. Free estimates & custom design available.",
     benefits: [
       "🏗️ Custom Designs - Tailored to Your Home's Architecture",
       "✅ All Permits & Inspections Handled - Full Building Code Compliance",
       "🌟 Premium Materials - Composite, Cedar, Pressure-Treated Options",
       "🔨 Expert Craftsmanship - 30+ Years Building Experience",
       "🛡️ Warranty Included - Guaranteed Workmanship & Materials",
-      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
+      "📍 Serving Simpsonville, Fountain Inn, Woodruff & Laurens SC"
     ],
     features: [
       {
@@ -218,14 +228,14 @@ const serviceContent: Record<string, {
   basement: {
     title: "#1 Basement Finishing & Renovation Contractor in Simpsonville, SC | Transform Your Space",
     subtitle: "Simpsonville's Premier Basement Remodeling Experts - Add Living Space & Value",
-    description: "Transform your unfinished basement into beautiful, functional living space with Simpsonville's #1 basement finishing contractor. Burch Contracting specializes in complete basement renovations, finishing, waterproofing, rec rooms, home theaters, home offices, and in-law suites throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. We handle framing, insulation, drywall, flooring, electrical, plumbing, and finishing touches. Increase your home's value and usable square footage. Licensed, insured, BBB A+ rated with 30+ years experience. Free estimates & design consultation.",
+    description: "Transform your unfinished basement into beautiful, functional living space with Simpsonville's #1 basement finishing contractor. Burch Contracting specializes in complete basement renovations, finishing, waterproofing, rec rooms, home theaters, home offices, and in-law suites throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. We handle framing, insulation, drywall, flooring, electrical, plumbing, and finishing touches. Increase your home's value and usable square footage. Licensed, insured, BBB A+ rated with 30+ years experience. Free estimates & design consultation.",
     benefits: [
       "🏡 Add 500-1500+ Sq Ft of Living Space to Your Home",
       "💰 Increase Home Value by 70% of Investment Cost",
       "🎨 Free Design Consultation & 3D Layout Planning",
       "🏆 Licensed, Insured & BBB A+ Rated Contractors",
       "💎 Complete Service - Framing to Finishing Touches",
-      "📍 Serving Simpsonville, Fountain Inn, Gray Court, Woodruff & Laurens"
+      "📍 Serving Simpsonville, Fountain Inn, Woodruff & Laurens SC"
     ],
     features: [
       {
@@ -337,23 +347,23 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const metadataMap: Record<string, any> = {
     handyman: {
       title: '#1 Handyman Services in Simpsonville, SC | Same-Day Service | (864) 724-4600',
-      description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Greenville County - Simpsonville, Fountain Inn, Gray Court, Woodruff. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
-      keywords: 'handyman Simpsonville SC, handyman near me, same day handyman, handyman Fountain Inn, handyman Gray Court, handyman Woodruff, licensed handyman Simpsonville, door repair Simpsonville, fixture installation, drywall repair, home repair Simpsonville, local handyman, affordable handyman services'
+      description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Simpsonville, Fountain Inn, Woodruff, Laurens. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
+      keywords: 'handyman Simpsonville SC, handyman near me, same day handyman, handyman Fountain Inn, handyman Woodruff, handyman Laurens, licensed handyman Simpsonville, door repair Simpsonville, fixture installation, drywall repair, home repair Simpsonville, local handyman, affordable handyman services'
     },
     remodeling: {
       title: 'Kitchen & Bathroom Remodeling Simpsonville, SC | Free Design | (864) 724-4600',
-      description: '#1 rated kitchen & bathroom remodeling contractor in Simpsonville, SC. Custom cabinets, granite countertops, tile work. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens. 30+ years experience. Free estimates & design consultation. Call today!',
-      keywords: 'kitchen remodeling Simpsonville SC, bathroom remodeling Simpsonville, kitchen renovation Fountain Inn, bathroom renovation Gray Court, custom kitchen cabinets, granite countertops Simpsonville, quartz countertops, tile installation, kitchen contractor Simpsonville, bathroom contractor Woodruff, home remodeling Laurens County'
+      description: '#1 rated kitchen & bathroom remodeling contractor in Simpsonville, SC. Bath to tile shower conversions, custom cabinets, granite countertops, tile work. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens. 30+ years experience. Free estimates & design consultation. Call today!',
+      keywords: 'kitchen remodeling Simpsonville SC, bathroom remodeling Simpsonville, bath to tile shower conversion, tub to shower conversion Simpsonville, kitchen renovation Fountain Inn, bathroom renovation Woodruff, custom kitchen cabinets, granite countertops Simpsonville, quartz countertops, tile shower installation, walk-in shower conversion, kitchen contractor Simpsonville, bathroom contractor Laurens, home remodeling Fountain Inn SC'
     },
     additions: {
       title: 'Deck Builder & Screened Porch Contractor Simpsonville, SC | (864) 724-4600',
-      description: 'Premier deck builder & screened porch contractor in Simpsonville, SC. Custom composite decks, wood decks, screened porches, sunrooms. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens. Permits handled. Free estimates. 30+ years experience.',
-      keywords: 'deck builder Simpsonville SC, screened porch Simpsonville, deck contractor Fountain Inn, porch builder Gray Court, composite deck, wood deck, outdoor living spaces Simpsonville, room addition contractor, sunroom builder Woodruff, pergola construction, custom deck Simpsonville, screened in porch Laurens'
+      description: 'Premier deck builder & screened porch contractor in Simpsonville, SC. Custom composite decks, wood decks, screened porches, sunrooms. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens. Permits handled. Free estimates. 30+ years experience.',
+      keywords: 'deck builder Simpsonville SC, screened porch Simpsonville, deck contractor Fountain Inn, porch builder Woodruff, composite deck, wood deck, outdoor living spaces Simpsonville, room addition contractor, sunroom builder Laurens, pergola construction, custom deck Simpsonville, screened in porch Fountain Inn'
     },
     basement: {
       title: 'Basement Finishing & Renovation Simpsonville, SC | Add Living Space | (864) 724-4600',
-      description: '#1 basement finishing contractor in Simpsonville, SC. Transform unfinished basements into rec rooms, home theaters, offices, in-law suites. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens County. Free estimates & design.',
-      keywords: 'basement finishing Simpsonville SC, basement remodeling Simpsonville, basement contractor Fountain Inn, finish basement Gray Court, basement renovation Woodruff, basement waterproofing, rec room Simpsonville, home theater basement, basement bathroom installation, in-law suite basement, basement egress windows Laurens'
+      description: '#1 basement finishing contractor in Simpsonville, SC. Transform unfinished basements into rec rooms, home theaters, offices, in-law suites. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens County. Free estimates & design.',
+      keywords: 'basement finishing Simpsonville SC, basement remodeling Simpsonville, basement contractor Fountain Inn, finish basement Woodruff, basement renovation Laurens, basement waterproofing, rec room Simpsonville, home theater basement, basement bathroom installation, in-law suite basement, basement egress windows'
     }
   };
 

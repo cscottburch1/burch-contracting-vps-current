@@ -22,9 +22,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "#1 Contractor in Simpsonville, SC | Kitchen, Bath, Decks, Handyman | Burch Contracting",
-  description: "Simpsonville's #1 rated contractor for 30+ years! Licensed, insured, BBB A+ rated. Kitchen & bathroom remodeling, handyman, decks, porches, basement finishing. Serving the Upstate SC: Greenville County & Laurens County. Same-day handyman available. Free estimates! Call (864) 724-4600",
-  keywords: ["contractor Simpsonville SC", "kitchen remodeling Simpsonville", "bathroom remodeling Simpsonville", "handyman Simpsonville SC", "deck builder Simpsonville", "basement finishing Simpsonville", "home remodeling Upstate SC", "licensed contractor Greenville County", "BBB A+ contractor", "Fountain Inn contractor", "Gray Court contractor", "Woodruff contractor", "Five Forks contractor", "screened porch builder", "room additions Simpsonville", "home repair Laurens County SC"],
+  title: "#1 Contractor Simpsonville, Fountain Inn, Woodruff, Laurens SC | Basement Finishing, Kitchen Remodeling",
+  description: "Simpsonville's #1 rated contractor for 30+ years! Licensed, insured, BBB A+ rated. Basement finishing, kitchen & bathroom remodeling, bath to shower conversions, decks, screened porches, room additions. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC. Same-day handyman available. Free estimates! Call (864) 724-4600",
+  keywords: ["contractor Simpsonville SC", "basement finishing Simpsonville", "kitchen remodeling Simpsonville", "bathroom remodeling Simpsonville", "bath to shower conversion Simpsonville", "deck builder Simpsonville", "basement contractor Fountain Inn", "kitchen remodeling Fountain Inn", "bathroom renovation Woodruff", "basement finishing Woodruff", "kitchen remodeling Laurens SC", "screened porch builder", "room additions", "home remodeling Upstate SC", "licensed contractor", "BBB A+ contractor"],
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://burchcontracting.com",
     siteName: "Burch Contracting - Simpsonville's #1 Rated Contractor",
-    title: "#1 Contractor in Simpsonville, SC | Kitchen, Bath, Decks, Handyman | (864) 724-4600",
-    description: "Simpsonville's most trusted contractor for 30+ years. Licensed, insured, BBB A+ rated. Kitchen & bathroom remodeling, handyman services, decks, porches, basement finishing. Serving the Upstate SC: Greenville County & Laurens County. Free estimates!",
+    title: "#1 Contractor Simpsonville, Fountain Inn, Woodruff, Laurens SC | Basement Finishing, Kitchen Remodeling",
+    description: "Simpsonville's most trusted contractor for 30+ years. Licensed, insured, BBB A+ rated. Basement finishing, kitchen & bathroom remodeling, bath to shower conversions, decks, screened porches, room additions. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC. Free estimates!",
     images: [
       {
         url: "https://burchcontracting.com/og-image.jpg",

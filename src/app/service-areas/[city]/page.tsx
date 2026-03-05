@@ -33,49 +33,25 @@ const cityContent: Record<string, {
   simpsonville: {
     name: "Simpsonville",
     displayName: "Simpsonville, SC",
-    tagline: "Quality Home Services for Simpsonville's Growing Community",
-    history: "Founded in 1839, Simpsonville has evolved from a small railroad town into one of South Carolina's most desirable suburban communities. Named after Peter Simpson, an early settler and innkeeper, the city has maintained its small-town charm while embracing modern growth. Historic downtown Simpsonville preserves the character of its past with charming local shops and restaurants.",
+    tagline: "Professional Basement Finishing, Kitchen Remodeling & Home Services in Simpsonville, SC",
+    history: "",
     modernDay: {
-      population: "Over 25,000 residents",
-      growth: "One of the fastest-growing cities in South Carolina, with 30%+ growth in the last decade",
-      characteristics: [
-        "Mix of historic homes from the early 1900s and modern subdivisions",
-        "Strong focus on maintaining historic downtown character",
-        "Popular with families seeking top-rated schools and safe neighborhoods",
-        "Growing commercial district along Fairview Road"
-      ]
+      population: "",
+      growth: "",
+      characteristics: []
     },
-    neighborhoods: [
-      {
-        name: "Historic Downtown",
-        description: "Charming historic homes built in the early-to-mid 1900s featuring traditional Southern architecture",
-        homeTypes: "Craftsman bungalows, Victorian-era homes, traditional ranch homes from the 1950s-70s"
-      },
-      {
-        name: "Five Forks Plantation & Heritage",
-        description: "Upscale planned communities with modern amenities and family-friendly features",
-        homeTypes: "Contemporary single-family homes, townhomes (2000s-present)"
-      },
-      {
-        name: "Fairview Road Corridor",
-        description: "Established neighborhoods with mature landscaping near shopping and dining",
-        homeTypes: "Traditional suburban homes, ranch and split-level designs (1980s-2000s)"
-      }
-    ],
+    neighborhoods: [],
     whyChooseUs: [
-      "Historic homes require specialized care and maintenance to preserve their character",
-      "Growing families need reliable contractors for home updates and repairs",
-      "Established neighborhoods benefit from kitchen and bathroom modernizations",
-      "New construction communities require trusted contractors for warranty work and customization",
-      "Active real estate market means homeowners invest in pre-sale improvements"
+      "Basement finishing contractor Simpsonville SC - Transform unfinished basements into beautiful living spaces with rec rooms, home theaters, and in-law suites",
+      "Kitchen remodeling Simpsonville - Custom cabinets, granite countertops, tile backsplashes, and modern appliances for stunning kitchen renovations",
+      "Bathroom remodeling Simpsonville SC - Complete bath renovations including tub to tile shower conversions, walk-in showers, vanity installations",
+      "Room additions Simpsonville - Add valuable square footage with professionally built room additions, bump-outs, and second-story expansions",
+      "Screened porch builder Simpsonville - Custom screened porches and three-season rooms for comfortable outdoor living year-round",
+      "Deck contractor Simpsonville SC - Composite and wood deck construction, repairs, and rebuilds with expert craftsmanship",
+      "Licensed, insured, BBB A+ rated contractor serving Simpsonville for 30+ years with professional home improvement services"
     ],
-    localInsights: [
-      "Heritage Festival draws thousands annually to celebrate local history",
-      "Award-winning parks system with 13+ parks and recreation facilities",
-      "Simpsonville City Center hosts year-round community events",
-      "Close-knit community values relationships and word-of-mouth recommendations"
-    ],
-    servicesIntro: "Whether you're restoring a historic downtown home, updating an established property, or customizing a new build in one of Simpsonville's growing subdivisions, we understand the unique needs of this community."
+    localInsights: [],
+    servicesIntro: "Burch Contracting delivers expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, room additions, screened porches, and custom decks throughout Simpsonville, SC. Our professional contractors specialize in transforming homes with quality craftsmanship, premium materials, and reliable service."
   },
   greenville: {
     name: "Greenville",
@@ -192,53 +168,25 @@ const cityContent: Record<string, {
   woodruff: {
     name: "Woodruff",
     displayName: "Woodruff, SC",
-    tagline: "Dependable Home Services for Woodruff's Historic Community",
-    history: "Incorporated in 1874, Woodruff's history is deeply rooted in the textile industry and agriculture. The town served as an important junction on the Southern Railway, bringing prosperity to the region. While the textile mills that once defined Woodruff have closed, the town has maintained its identity and close-knit community spirit. Historic Main Street preserves the character of this small Southern town.",
+    tagline: "Basement Finishing, Kitchen & Bath Remodeling Services in Woodruff, SC",
+    history: "",
     modernDay: {
-      population: "Approximately 4,000 residents",
-      growth: "Stable community with some new residential development on the outskirts",
-      characteristics: [
-        "Mix of historic homes and affordable newer construction",
-        "Strong sense of community and Southern hospitality",
-        "Lower cost of living attracts families and retirees",
-        "Close proximity to Spartanburg and Greenville for employment",
-        "Quiet, small-town atmosphere with convenient access to larger cities"
-      ]
+      population: "",
+      growth: "",
+      characteristics: []
     },
-    neighborhoods: [
-      {
-        name: "Historic Downtown",
-        description: "Original residential areas with homes dating back to early 1900s",
-        homeTypes: "Historic mill houses, Victorian-era homes, bungalows (1900s-1940s)"
-      },
-      {
-        name: "East Woodruff",
-        description: "Established neighborhoods with affordable family homes",
-        homeTypes: "Ranch homes, modest single-family residences (1950s-1980s)"
-      },
-      {
-        name: "Newer Subdivisions",
-        description: "Recent residential development offering modern amenities",
-        homeTypes: "Contemporary single-family homes, affordable new construction (2000s-present)"
-      }
-    ],
+    neighborhoods: [],
     whyChooseUs: [
-      "Historic homes require experienced contractors who understand older construction methods",
-      "Affordable housing market means homeowners invest in maintenance and improvements",
-      "Many original mill houses need updating while preserving their historic character",
-      "Growing number of first-time homebuyers need reliable contractors for renovations",
-      "Retirees downsizing to Woodruff want to customize homes to their needs",
-      "Small-town community values personal relationships and trustworthy service"
+      "Basement finishing Woodruff SC - Professional basement remodeling creating additional living space with family rooms, game rooms, home gyms, and guest bedrooms",
+      "Kitchen remodeling Woodruff - Transform outdated kitchens with modern designs, custom cabinets, stone countertops, tile backsplashes, and new flooring",
+      "Bathroom renovation Woodruff SC - Complete bathroom remodels featuring contemporary fixtures, tiled showers, soaking tubs, and stylish vanities",
+      "Tub to shower conversion Woodruff - Replace old bathtubs with accessible walk-in tile showers perfect for aging-in-place and modern living",
+      "Room additions Woodruff SC - Expand your home's footprint with expertly constructed room additions and home expansions",
+      "Deck and porch builder Woodruff - Custom decks and screened porches built with quality materials for durable outdoor living spaces",
+      "Trusted local contractor serving Woodruff with honest pricing, quality materials, and dependable home improvement services"
     ],
-    localInsights: [
-      "Woodruff's motto 'City of Hospitality' reflects the welcoming community",
-      "Annual Heritage Festival celebrates local history and culture",
-      "Close-knit community where word-of-mouth recommendations are trusted",
-      "Affordable real estate market attracts young families and retirees",
-      "Growing interest in downtown revitalization and historic preservation",
-      "Convenient location between Spartanburg and Greenville"
-    ],
-    servicesIntro: "Woodruff homeowners appreciate honest, straightforward service at fair prices. We're proud to serve this historic community with the respect and quality workmanship it deserves."
+    localInsights: [],
+    servicesIntro: "Burch Contracting provides comprehensive home remodeling services to Woodruff homeowners including basement finishing, kitchen and bathroom renovations, bath to shower conversions, room additions, decks, and screened porches. We deliver quality workmanship with fair, honest pricing and reliable service."
   },
   "gray-court": {
     name: "Gray Court",
@@ -294,53 +242,25 @@ const cityContent: Record<string, {
   "fountain-inn": {
     name: "Fountain Inn",
     displayName: "Fountain Inn, SC",
-    tagline: "Quality Home Services for Fountain Inn's Growing Community",
-    history: "Fountain Inn's history dates to 1832 when it was named after a well-known watering hole for travelers between Charleston and the mountains. The arrival of the railroad transformed the town into a thriving textile center by the late 1800s. Like many Upstate towns, Fountain Inn's textile heritage shaped its character, with mill villages and worker housing defining much of the historic residential areas. The town has successfully transitioned from its industrial past to become a desirable bedroom community.",
+    tagline: "Expert Kitchen & Bath Remodeling, Basement Finishing in Fountain Inn, SC",
+    history: "",
     modernDay: {
-      population: "Over 10,000 residents",
-      growth: "Steady 20%+ growth over the past decade",
-      characteristics: [
-        "Mix of historic mill homes and modern subdivisions",
-        "Revitalized downtown with local shops and restaurants",
-        "Strong community identity and hometown feel",
-        "Excellent location between Greenville and Simpsonville",
-        "Growing retail and commercial development"
-      ]
+      population: "",
+      growth: "",
+      characteristics: []
     },
-    neighborhoods: [
-      {
-        name: "Historic Downtown",
-        description: "Original mill village homes and early 20th century residential areas",
-        homeTypes: "Mill houses, bungalows, modest historic homes (1900s-1940s)"
-      },
-      {
-        name: "Golden Strip Area",
-        description: "Established neighborhoods with convenient access to shopping and I-385",
-        homeTypes: "Ranch and traditional homes (1970s-1990s)"
-      },
-      {
-        name: "Eastside Developments",
-        description: "Growing area with newer residential communities",
-        homeTypes: "Contemporary single-family homes, townhomes (2000s-present)"
-      }
-    ],
+    neighborhoods: [],
     whyChooseUs: [
-      "Historic mill homes require specialized maintenance and updates",
-      "Growing families need reliable contractors for home improvements",
-      "Strong real estate market means homeowners invest in renovations",
-      "Many homes reaching 20-40 years need modernization",
-      "Active community values quality workmanship and local service",
-      "Mix of first-time buyers and long-time residents both need trusted contractors"
+      "Kitchen remodeling Fountain Inn SC - Complete kitchen renovations with custom cabinetry, quartz and granite countertops, professional tile work, and energy-efficient appliances",
+      "Bathroom remodeling Fountain Inn - Full bath transformations featuring luxurious tile showers, modern vanities, and spa-like upgrades",
+      "Bath to shower conversion Fountain Inn SC - Replace outdated tubs with beautiful walk-in tile showers, zero-threshold entries, and custom glass enclosures",
+      "Basement finishing contractor Fountain Inn - Add living space with finished basements perfect for family rooms, home offices, guest suites, and entertainment areas",
+      "Deck builder Fountain Inn SC - Custom composite and wood decks designed for outdoor entertaining and relaxation with professional installation",
+      "Screened porch contractor Fountain Inn - Build screened-in porches and outdoor living spaces for bug-free enjoyment of your backyard",
+      "Professional contractors serving Fountain Inn with licensed, insured, BBB A+ rated home improvement services and quality workmanship"
     ],
-    localInsights: [
-      "Fountain Inn Farmers Market is a popular Saturday tradition",
-      "Annual Lazy Daze Arts & Crafts Festival draws thousands",
-      "Historic downtown revitalization creating vibrant community center",
-      "Strong school system attracts families",
-      "Growing business community along Golden Strip",
-      "Close-knit neighborhoods with active community involvement"
-    ],
-    servicesIntro: "Fountain Inn residents value quality work, fair pricing, and personal service. We understand this community's mix of historic charm and modern growth."
+    localInsights: [],
+    servicesIntro: "Transform your Fountain Inn home with Burch Contracting's professional remodeling services. We specialize in kitchen and bathroom renovations, bath to tile shower conversions, basement finishing, custom decks, screened porches, and room additions with expert craftsmanship and attention to detail."
   },
   mauldin: {
     name: "Mauldin",
@@ -396,58 +316,25 @@ const cityContent: Record<string, {
   laurens: {
     name: "Laurens",
     displayName: "Laurens, SC",
-    tagline: "Dependable Home Services for Laurens' Historic County Seat",
-    history: "Founded in 1785, Laurens is one of South Carolina's oldest inland cities and serves as the county seat. The city's historic downtown square is anchored by the 1838 courthouse and features well-preserved 19th and early 20th century architecture. Laurens thrived as a textile center for over a century, with several large mills defining the local economy. The city has maintained its historic character while adapting to modern economic realities, with a focus on preserving its architectural heritage.",
+    tagline: "Professional Home Remodeling & Basement Finishing Services in Laurens, SC",
+    history: "",
     modernDay: {
-      population: "Approximately 9,000 residents in city, 67,000+ in county",
-      growth: "Stable population with focus on downtown revitalization",
-      characteristics: [
-        "Rich historic architecture from multiple eras",
-        "Affordable housing market attracting families and retirees",
-        "Strong sense of community and Southern hospitality",
-        "Mix of historic homes, mid-century neighborhoods, and newer development",
-        "Growing arts and culture scene in downtown"
-      ]
+      population: "",
+      growth: "",
+      characteristics: []
     },
-    neighborhoods: [
-      {
-        name: "Historic Downtown",
-        description: "Beautifully preserved Victorian and early 20th century homes",
-        homeTypes: "Victorian, Queen Anne, Colonial Revival, historic mansions (1880s-1930s)"
-      },
-      {
-        name: "Mill Villages",
-        description: "Original textile worker housing with historic character",
-        homeTypes: "Mill houses, bungalows, modest historic homes (1900s-1950s)"
-      },
-      {
-        name: "Midtown & Bypass Areas",
-        description: "Mid-century development with affordable family homes",
-        homeTypes: "Ranch, traditional suburban homes (1950s-1980s)"
-      },
-      {
-        name: "New Developments",
-        description: "Growing residential areas on city outskirts",
-        homeTypes: "Contemporary single-family homes, affordable new construction (1990s-present)"
-      }
-    ],
+    neighborhoods: [],
     whyChooseUs: [
-      "Historic homes require specialized knowledge and careful restoration",
-      "Many properties are on historic registers requiring proper maintenance approaches",
-      "Affordable housing market attracts renovators and first-time buyers needing updates",
-      "Mill houses have unique construction that requires experienced contractors",
-      "Growing interest in downtown living means more renovation projects",
-      "Small-town community values honest, reliable, and fairly-priced service"
+      "Basement finishing contractor Laurens SC - Create beautiful finished basements with rec rooms, home theaters, additional bedrooms, and functional living spaces",
+      "Kitchen remodeling Laurens - Complete kitchen transformations featuring custom cabinetry, granite or quartz countertops, designer tile work, and modern lighting",
+      "Bathroom remodeling Laurens SC - Full bathroom renovations with luxury tile showers, modern fixtures, heated floors, and spa-inspired designs",
+      "Bath to tile shower conversion Laurens - Convert outdated tub/shower combos to beautiful walk-in tile showers with frameless glass doors and custom tile patterns",
+      "Screened porch builder Laurens SC - Add screened porches and outdoor living areas for comfortable entertaining and relaxation",
+      "Deck contractor Laurens - Build custom wood and composite decks designed for your lifestyle with professional installation and quality materials",
+      "Experienced contractor serving Laurens with 30+ years expertise, licensed and insured, delivering professional home improvement solutions"
     ],
-    localInsights: [
-      "Laurens County Museum preserves rich local history",
-      "Historic downtown district features beautiful architecture",
-      "Active arts community with galleries and cultural events",
-      "Affordable cost of living attracts young families and retirees",
-      "Strong emphasis on historic preservation",
-      "Lake Greenwood and Lake Rabon offer nearby recreation"
-    ],
-    servicesIntro: "Laurens homeowners, from historic downtown estates to affordable starter homes, need contractors who respect the city's heritage while delivering modern quality and service."
+    localInsights: [],
+    servicesIntro: "Serving Laurens homeowners with expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, room additions, screened porches, and custom deck construction. Burch Contracting combines quality craftsmanship with reliable service and competitive pricing for all your home improvement needs."
   }
 };
 
@@ -478,13 +365,43 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
     };
   }
 
-  return {
+  // City-specific metadata optimized for target markets
+  const cityMetadata: Record<string, { title: string; description: string; keywords: string }> = {
+    simpsonville: {
+      title: 'Basement Finishing, Kitchen & Bath Remodeling Simpsonville SC | Burch Contracting',
+      description: 'Expert basement finishing, kitchen remodeling, bathroom renovation, bath to shower conversions, room additions, screened porches, and deck building in Simpsonville SC. Licensed, insured, BBB A+ rated contractor serving Simpsonville with 30+ years experience. Free estimates!',
+      keywords: 'basement finishing Simpsonville SC, kitchen remodeling Simpsonville, bathroom remodeling Simpsonville SC, bath to shower conversion Simpsonville, room additions Simpsonville, screened porch Simpsonville, deck builder Simpsonville, home remodeling Simpsonville, contractor Simpsonville SC'
+    },
+    'fountain-inn': {
+      title: 'Kitchen & Bath Remodeling, Basement Finishing Fountain Inn SC | Burch Contracting',
+      description: 'Professional kitchen and bathroom remodeling, basement finishing, bath to tile shower conversions, deck building, and screened porches in Fountain Inn SC. Licensed contractor with 30+ years serving Fountain Inn. Quality craftsmanship, free estimates. Call today!',
+      keywords: 'kitchen remodeling Fountain Inn SC, bathroom remodeling Fountain Inn, basement finishing Fountain Inn SC, bath to shower conversion Fountain Inn, deck builder Fountain Inn, screened porch Fountain Inn, contractor Fountain Inn SC, home renovation Fountain Inn'
+    },
+    woodruff: {
+      title: 'Basement Finishing, Kitchen & Bath Remodeling Woodruff SC | Burch Contracting',
+      description: 'Trusted basement finishing, kitchen remodeling, bathroom renovation, tub to shower conversions, room additions, and deck building in Woodruff SC. Licensed, insured contractor serving Woodruff with honest pricing and quality work. Free consultations!',
+      keywords: 'basement finishing Woodruff SC, kitchen remodeling Woodruff, bathroom remodeling Woodruff SC, tub to shower conversion Woodruff, room additions Woodruff, deck contractor Woodruff, screened porch Woodruff, contractor Woodruff SC'
+    },
+    laurens: {
+      title: 'Basement Finishing, Kitchen & Bath Remodeling Laurens SC | Burch Contracting',
+      description: 'Expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, screened porches, decks, and room additions in Laurens SC. Professional contractor serving Laurens with 30+ years experience. Licensed, insured, BBB A+ rated. Free estimates!',
+      keywords: 'basement finishing Laurens SC, kitchen remodeling Laurens, bathroom remodeling Laurens SC, bath to shower conversion Laurens, deck builder Laurens, screened porch Laurens, room additions Laurens, contractor Laurens SC'
+    }
+  };
+
+  const meta = cityMetadata[city] || {
     title: `${content.name} Contracting Services | Handyman, Remodeling & Home Repair | Burch Contracting`,
-    description: `Professional home repair, remodeling, and handyman services in ${content.displayName}. Local contractors serving ${content.name}'s historic homes and modern neighborhoods. Licensed, insured, and trusted.`,
-    keywords: `${content.name} contractor, ${content.name} handyman, ${content.name} remodeling, home repair ${content.name}, kitchen remodeling ${content.name}, bathroom renovation ${content.name}, deck builder ${content.name}`,
+    description: `Professional home repair, remodeling, and handyman services in ${content.displayName}. Local contractors serving ${content.name}. Licensed, insured, and trusted.`,
+    keywords: `${content.name} contractor, ${content.name} handyman, ${content.name} remodeling, home repair ${content.name}, kitchen remodeling ${content.name}, bathroom renovation ${content.name}, deck builder ${content.name}`
+  };
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
     openGraph: {
-      title: `${content.name} Home Services | Burch Contracting`,
-      description: `Trusted contractor serving ${content.displayName} - from historic home restoration to modern remodeling.`,
+      title: meta.title,
+      description: meta.description,
       url: `https://burchcontracting.com/service-areas/${city}`,
       siteName: 'Burch Contracting',
       locale: 'en_US',
@@ -567,7 +484,8 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         </div>
       </section>
 
-      {/* History Section */}
+      {/* History Section - Only show if content exists */}
+      {content.history && (
       <Section background="white" padding="lg">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -576,6 +494,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
             {content.history}
           </p>
+          {content.modernDay.population && (
           <div className="bg-blue-50 rounded-xl p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4">
               {content.name} Today
@@ -590,6 +509,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
                 <p className="text-gray-800">{content.modernDay.growth}</p>
               </div>
             </div>
+            {content.modernDay.characteristics.length > 0 && (
             <div>
               <p className="text-sm font-semibold text-blue-600 mb-2">Community Characteristics</p>
               <ul className="space-y-2">
@@ -601,11 +521,15 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
                 ))}
               </ul>
             </div>
+            )}
           </div>
+          )}
         </div>
       </Section>
+      )}
 
-      {/* Neighborhoods Section */}
+      {/* Neighborhoods Section - Only show if content exists */}
+      {content.neighborhoods.length > 0 && (
       <Section background="gray" padding="lg">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
@@ -629,12 +553,13 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           </div>
         </div>
       </Section>
+      )}
 
       {/* Why Choose Us for This City */}
       <Section background="white" padding="lg">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">
-            Why {content.name} Homeowners Choose Us
+            {content.history ? `Why ${content.name} Homeowners Choose Us` : `Professional Home Remodeling Services in ${content.name}`}
           </h2>
           <div className="grid gap-4">
             {content.whyChooseUs.map((reason, index) => (
@@ -647,7 +572,8 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         </div>
       </Section>
 
-      {/* Local Insights */}
+      {/* Local Insights - Only show if content exists */}
+      {content.localInsights.length > 0 && (
       <Section background="gray" padding="lg">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">
@@ -665,6 +591,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           </div>
         </div>
       </Section>
+      )}
 
       {/* Services */}
       <Section background="white" padding="lg">

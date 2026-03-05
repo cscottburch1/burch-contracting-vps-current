@@ -7,12 +7,12 @@ import { Metadata } from 'next';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 
 export const metadata: Metadata = {
-  title: 'Home Services in Simpsonville, SC | Kitchen, Bath, Deck, Basement, Handyman | (864) 724-4600',
-  description: '#1 rated home services in Simpsonville, SC. Professional kitchen & bathroom remodeling, basement finishing, custom decks, screened porches, handyman services. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Gray Court, Woodruff, Laurens County. 30+ years experience. Free estimates.',
-  keywords: ['home services Simpsonville SC', 'contractor Simpsonville', 'kitchen remodeling Simpsonville SC', 'bathroom remodeling Simpsonville', 'basement finishing Simpsonville', 'handyman Simpsonville', 'deck builder Simpsonville', 'screened porch Simpsonville', 'home repair Fountain Inn', 'remodeling contractor Gray Court', 'basement contractor Woodruff', 'licensed contractor Laurens County'],
+  title: 'Basement Finishing, Kitchen & Bath Remodeling Simpsonville, Fountain Inn, Woodruff, Laurens SC',
+  description: '#1 rated home services in Simpsonville, SC. Professional basement finishing, kitchen & bathroom remodeling, bath to shower conversions, custom decks, screened porches, room additions. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC. 30+ years experience. Free estimates.',
+  keywords: ['basement finishing Simpsonville SC', 'kitchen remodeling Simpsonville', 'bathroom remodeling Simpsonville', 'bath to shower conversion', 'basement contractor Fountain Inn', 'kitchen remodeling Fountain Inn', 'bathroom renovation Woodruff', 'basement finishing Woodruff', 'kitchen remodeling Laurens SC', 'deck builder', 'screened porch', 'room additions', 'licensed contractor'],
   openGraph: {
     title: 'Professional Home Services | Burch Contracting - Simpsonville, SC',
-    description: '#1 rated contractor in Simpsonville, SC. Kitchen & bath remodeling, basement finishing, decks, handyman services. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Greenville & Laurens Counties.',
+    description: '#1 rated contractor in Simpsonville, SC. Basement finishing, kitchen & bath remodeling, bath to shower conversions, decks, screened porches. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC.',
     url: 'https://burchcontracting.com/services',
     type: 'website',
     images: [{
@@ -47,7 +47,7 @@ export default async function ServicesPage() {
             Simpsonville's <span className="gradient-text">#1 Rated</span> Home Services
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed animate-fade-in-up stagger-1 opacity-0 mb-6">
-            Professional kitchen & bathroom remodeling, basement finishing, custom decks, screened porches, and handyman services throughout Simpsonville, Fountain Inn, Gray Court, Woodruff, and Laurens County. Licensed, insured, and BBB A+ rated with 30+ years experience.
+            Professional basement finishing, kitchen & bathroom remodeling, bath to tile shower conversions, custom decks, screened porches, and room additions throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. Licensed, insured, and BBB A+ rated with 30+ years experience.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-2 opacity-0">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
