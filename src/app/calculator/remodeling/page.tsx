@@ -65,7 +65,6 @@ const serviceRates: ServiceRate[] = [
   // Basement Finishing
   { name: 'Basement Finishing (per sq ft)', laborRate: 46.2, materialLow: 26.4, materialHigh: 59.4, timeHours: 0.3, category: 'Basement', unit: 'sq ft' },
   { name: 'Basement Bathroom Addition', laborRate: 7920, materialLow: 5280, materialHigh: 13200, timeHours: 100, category: 'Basement', unit: 'project' },
-  { name: 'Basement Egress Window Installation', laborRate: 1980, materialLow: 1320, materialHigh: 3960, timeHours: 24, category: 'Basement', unit: 'window' },
 ];
 
 export default function RemodelingCalculator() {

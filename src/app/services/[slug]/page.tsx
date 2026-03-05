@@ -255,24 +255,14 @@ const serviceContent: Record<string, {
       },
       {
         title: "Home Offices & Guest Suites",
-        description: "Professional home office spaces with built-in desks and storage, or comfortable guest bedrooms with egress windows and proper ventilation.",
+        description: "Professional home office spaces with built-in desks and storage, or comfortable guest bedrooms with proper ventilation and lighting.",
         icon: "BriefcaseBusiness"
-      },
-      {
-        title: "Basement Waterproofing & Moisture Control",
-        description: "Professional moisture barrier installation, sump pump systems, and vapor barriers to keep your basement dry and healthy.",
-        icon: "ShieldCheck"
-      },
-      {
-        title: "Egress Windows & Safety Compliance",
-        description: "Proper egress window installation for code compliance and safety. Full permits and inspections handled professionally.",
-        icon: "DoorOpen"
       }
     ],
     process: [
       { step: 1, title: "Free Consultation & Inspection", description: "Assess your basement's condition, discuss your vision, and identify any moisture or structural issues" },
       { step: 2, title: "Custom Design & Planning", description: "Create detailed floor plans, select finishes, and plan electrical/plumbing layouts" },
-      { step: 3, title: "Permits & Approvals", description: "Handle all building permits, egress requirements, and code compliance documentation" },
+      { step: 3, title: "Permits & Approvals", description: "Handle all building permits and code compliance documentation" },
       { step: 4, title: "Basement Preparation", description: "Address any moisture issues, install vapor barriers, and prepare the space for construction" },
       { step: 5, title: "Framing & Rough-Ins", description: "Frame walls, install electrical and plumbing rough-ins, add insulation" },
       { step: 6, title: "Finishing & Details", description: "Drywall, flooring, trim, fixtures, and final touches for a beautiful finished space" },
@@ -285,23 +275,15 @@ const serviceContent: Record<string, {
       },
       {
         question: "Do I need permits to finish my basement?",
-        answer: "Yes, finishing a basement requires building permits in Greenville and Laurens Counties. We handle all permit applications, inspections, and ensure your basement meets egress window requirements, electrical codes, and safety standards."
+        answer: "Yes, finishing a basement requires building permits in Greenville and Laurens Counties. We handle all permit applications, inspections, and ensure your basement meets electrical codes, plumbing standards, and all safety requirements."
       },
       {
         question: "What's the cost to finish a basement in Simpsonville, SC?",
         answer: "Basement finishing typically costs $30-$75 per square foot depending on finishes and features. A basic 800 sq ft basement runs $24,000-$60,000, while luxury finishes with bathrooms can be $50,000-$100,000+. We provide detailed estimates based on your specific needs."
       },
       {
-        question: "Will you handle moisture and waterproofing issues?",
-        answer: "Absolutely! We assess all basements for moisture issues before starting. We can install vapor barriers, sump pumps, and proper drainage solutions. If significant waterproofing is needed, we'll address that first to ensure a dry, healthy basement."
-      },
-      {
         question: "Can you add a bathroom to my basement?",
         answer: "Yes! We're experts at basement bathroom installation. We handle all plumbing, including ejector pumps if needed, proper venting, and fixtures. Basement bathrooms are perfect for in-law suites, rental units, or convenience."
-      },
-      {
-        question: "Do basement bedrooms need egress windows?",
-        answer: "Yes, any basement bedroom must have a code-compliant egress window for fire safety. We install proper egress windows with window wells and ensure all work meets building codes and passes inspection."
       }
     ],
     gallery: [
@@ -363,7 +345,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     basement: {
       title: 'Basement Finishing & Renovation Simpsonville, SC | Add Living Space | (864) 724-4600',
       description: '#1 basement finishing contractor in Simpsonville, SC. Transform unfinished basements into rec rooms, home theaters, offices, in-law suites. Licensed, insured, BBB A+ rated. Serving Simpsonville, Fountain Inn, Woodruff, Laurens County. Free estimates & design.',
-      keywords: 'basement finishing Simpsonville SC, basement remodeling Simpsonville, basement contractor Fountain Inn, finish basement Woodruff, basement renovation Laurens, basement waterproofing, rec room Simpsonville, home theater basement, basement bathroom installation, in-law suite basement, basement egress windows'
+      keywords: 'basement finishing Simpsonville SC, basement remodeling Simpsonville, basement contractor Fountain Inn, finish basement Woodruff, basement renovation Laurens, rec room Simpsonville, home theater basement, basement bathroom installation, in-law suite basement, basement living space'
     }
   };
 
