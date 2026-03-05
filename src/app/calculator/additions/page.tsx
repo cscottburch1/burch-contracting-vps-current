@@ -18,51 +18,51 @@ interface ServiceRate {
 
 const serviceRates: ServiceRate[] = [
   // Room Additions
-  { name: 'Basic Room Addition (per sq ft)', laborRate: 180, materialLow: 96, materialHigh: 180, timeHours: 1, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'Master Bedroom Suite Addition (per sq ft)', laborRate: 216, materialLow: 120, materialHigh: 216, timeHours: 1.2, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'Bathroom Addition (per sq ft)', laborRate: 240, materialLow: 144, materialHigh: 240, timeHours: 1.5, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'Home Office Addition (per sq ft)', laborRate: 168, materialLow: 90, materialHigh: 168, timeHours: 0.9, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'In-Law Suite Addition (per sq ft)', laborRate: 204, materialLow: 114, materialHigh: 204, timeHours: 1.1, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'Second Story Addition (per sq ft)', laborRate: 240, materialLow: 144, materialHigh: 240, timeHours: 1.5, category: 'Room Additions', unit: 'sq ft' },
-  { name: 'Bump-Out Addition (per sq ft)', laborRate: 216, materialLow: 120, materialHigh: 216, timeHours: 1.3, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Basic Room Addition (per sq ft)', laborRate: 198, materialLow: 105.6, materialHigh: 198, timeHours: 1, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Master Bedroom Suite Addition (per sq ft)', laborRate: 237.6, materialLow: 132, materialHigh: 237.6, timeHours: 1.2, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Bathroom Addition (per sq ft)', laborRate: 264, materialLow: 158.4, materialHigh: 264, timeHours: 1.5, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Home Office Addition (per sq ft)', laborRate: 184.8, materialLow: 99, materialHigh: 184.8, timeHours: 0.9, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'In-Law Suite Addition (per sq ft)', laborRate: 224.4, materialLow: 125.4, materialHigh: 224.4, timeHours: 1.1, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Second Story Addition (per sq ft)', laborRate: 264, materialLow: 158.4, materialHigh: 264, timeHours: 1.5, category: 'Room Additions', unit: 'sq ft' },
+  { name: 'Bump-Out Addition (per sq ft)', laborRate: 237.6, materialLow: 132, materialHigh: 237.6, timeHours: 1.3, category: 'Room Additions', unit: 'sq ft' },
   
   // Screened Porches
-  { name: 'Basic Screened Porch (per sq ft)', laborRate: 60, materialLow: 30, materialHigh: 60, timeHours: 0.4, category: 'Screened Porches', unit: 'sq ft' },
-  { name: 'Premium Screened Porch with Ceiling Fan (per sq ft)', laborRate: 78, materialLow: 42, materialHigh: 78, timeHours: 0.5, category: 'Screened Porches', unit: 'sq ft' },
-  { name: 'Three-Season Porch (per sq ft)', laborRate: 102, materialLow: 60, materialHigh: 102, timeHours: 0.7, category: 'Screened Porches', unit: 'sq ft' },
-  { name: 'Four-Season Sunroom (per sq ft)', laborRate: 180, materialLow: 120, materialHigh: 180, timeHours: 1, category: 'Screened Porches', unit: 'sq ft' },
-  { name: 'Screened Porch Enclosure (existing deck)', laborRate: 48, materialLow: 24, materialHigh: 48, timeHours: 0.3, category: 'Screened Porches', unit: 'sq ft' },
+  { name: 'Basic Screened Porch (per sq ft)', laborRate: 66, materialLow: 33, materialHigh: 66, timeHours: 0.4, category: 'Screened Porches', unit: 'sq ft' },
+  { name: 'Premium Screened Porch with Ceiling Fan (per sq ft)', laborRate: 85.8, materialLow: 46.2, materialHigh: 85.8, timeHours: 0.5, category: 'Screened Porches', unit: 'sq ft' },
+  { name: 'Three-Season Porch (per sq ft)', laborRate: 112.2, materialLow: 66, materialHigh: 112.2, timeHours: 0.7, category: 'Screened Porches', unit: 'sq ft' },
+  { name: 'Four-Season Sunroom (per sq ft)', laborRate: 198, materialLow: 132, materialHigh: 198, timeHours: 1, category: 'Screened Porches', unit: 'sq ft' },
+  { name: 'Screened Porch Enclosure (existing deck)', laborRate: 52.8, materialLow: 26.4, materialHigh: 52.8, timeHours: 0.3, category: 'Screened Porches', unit: 'sq ft' },
   
   // Decks
-  { name: 'Pressure-Treated Wood Deck (per sq ft)', laborRate: 30, materialLow: 18, materialHigh: 30, timeHours: 0.2, category: 'Decks', unit: 'sq ft' },
-  { name: 'Cedar Deck (per sq ft)', laborRate: 36, materialLow: 30, materialHigh: 48, timeHours: 0.25, category: 'Decks', unit: 'sq ft' },
-  { name: 'Composite Deck (per sq ft)', laborRate: 42, materialLow: 42, materialHigh: 66, timeHours: 0.3, category: 'Decks', unit: 'sq ft' },
-  { name: 'PVC/Vinyl Deck (per sq ft)', laborRate: 48, materialLow: 54, materialHigh: 78, timeHours: 0.35, category: 'Decks', unit: 'sq ft' },
-  { name: 'Multi-Level Deck (per sq ft)', laborRate: 54, materialLow: 30, materialHigh: 60, timeHours: 0.4, category: 'Decks', unit: 'sq ft' },
-  { name: 'Deck Stairs (per step)', laborRate: 144, materialLow: 60, materialHigh: 120, timeHours: 2, category: 'Decks', unit: 'step' },
-  { name: 'Deck Railing (per linear foot)', laborRate: 42, materialLow: 18, materialHigh: 72, timeHours: 0.5, category: 'Decks', unit: 'linear ft' },
-  { name: 'Built-in Deck Seating (per linear foot)', laborRate: 96, materialLow: 48, materialHigh: 96, timeHours: 1.5, category: 'Decks', unit: 'linear ft' },
+  { name: 'Pressure-Treated Wood Deck (per sq ft)', laborRate: 33, materialLow: 19.8, materialHigh: 33, timeHours: 0.2, category: 'Decks', unit: 'sq ft' },
+  { name: 'Cedar Deck (per sq ft)', laborRate: 39.6, materialLow: 33, materialHigh: 52.8, timeHours: 0.25, category: 'Decks', unit: 'sq ft' },
+  { name: 'Composite Deck (per sq ft)', laborRate: 46.2, materialLow: 46.2, materialHigh: 72.6, timeHours: 0.3, category: 'Decks', unit: 'sq ft' },
+  { name: 'PVC/Vinyl Deck (per sq ft)', laborRate: 52.8, materialLow: 59.4, materialHigh: 85.8, timeHours: 0.35, category: 'Decks', unit: 'sq ft' },
+  { name: 'Multi-Level Deck (per sq ft)', laborRate: 59.4, materialLow: 33, materialHigh: 66, timeHours: 0.4, category: 'Decks', unit: 'sq ft' },
+  { name: 'Deck Stairs (per step)', laborRate: 158.4, materialLow: 66, materialHigh: 132, timeHours: 2, category: 'Decks', unit: 'step' },
+  { name: 'Deck Railing (per linear foot)', laborRate: 46.2, materialLow: 19.8, materialHigh: 79.2, timeHours: 0.5, category: 'Decks', unit: 'linear ft' },
+  { name: 'Built-in Deck Seating (per linear foot)', laborRate: 105.6, materialLow: 52.8, materialHigh: 105.6, timeHours: 1.5, category: 'Decks', unit: 'linear ft' },
   
   // Garage Additions
-  { name: 'One-Car Garage Addition (12x22)', laborRate: 14400, materialLow: 9600, materialHigh: 18000, timeHours: 200, category: 'Garages', unit: 'project' },
-  { name: 'Two-Car Garage Addition (20x22)', laborRate: 24000, materialLow: 18000, materialHigh: 30000, timeHours: 320, category: 'Garages', unit: 'project' },
-  { name: 'Three-Car Garage Addition (30x22)', laborRate: 36000, materialLow: 26400, materialHigh: 42000, timeHours: 480, category: 'Garages', unit: 'project' },
-  { name: 'Detached Garage (per sq ft)', laborRate: 72, materialLow: 48, materialHigh: 84, timeHours: 0.5, category: 'Garages', unit: 'sq ft' },
-  { name: 'Garage Conversion to Living Space', laborRate: 18000, materialLow: 12000, materialHigh: 24000, timeHours: 240, category: 'Garages', unit: 'project' },
+  { name: 'One-Car Garage Addition (12x22)', laborRate: 15840, materialLow: 10560, materialHigh: 19800, timeHours: 200, category: 'Garages', unit: 'project' },
+  { name: 'Two-Car Garage Addition (20x22)', laborRate: 26400, materialLow: 19800, materialHigh: 33000, timeHours: 320, category: 'Garages', unit: 'project' },
+  { name: 'Three-Car Garage Addition (30x22)', laborRate: 39600, materialLow: 29040, materialHigh: 46200, timeHours: 480, category: 'Garages', unit: 'project' },
+  { name: 'Detached Garage (per sq ft)', laborRate: 79.2, materialLow: 52.8, materialHigh: 92.4, timeHours: 0.5, category: 'Garages', unit: 'sq ft' },
+  { name: 'Garage Conversion to Living Space', laborRate: 19800, materialLow: 13200, materialHigh: 26400, timeHours: 240, category: 'Garages', unit: 'project' },
   
   // Outdoor Living
-  { name: 'Covered Patio (per sq ft)', laborRate: 54, materialLow: 30, materialHigh: 60, timeHours: 0.4, category: 'Outdoor Living', unit: 'sq ft' },
-  { name: 'Pergola Installation (per sq ft)', laborRate: 48, materialLow: 24, materialHigh: 54, timeHours: 0.35, category: 'Outdoor Living', unit: 'sq ft' },
-  { name: 'Gazebo Installation (8x8)', laborRate: 3600, materialLow: 3000, materialHigh: 7200, timeHours: 40, category: 'Outdoor Living', unit: 'project' },
-  { name: 'Outdoor Kitchen (Basic)', laborRate: 9600, materialLow: 6000, materialHigh: 14400, timeHours: 80, category: 'Outdoor Living', unit: 'project' },
-  { name: 'Outdoor Kitchen (Premium)', laborRate: 18000, materialLow: 14400, materialHigh: 36000, timeHours: 150, category: 'Outdoor Living', unit: 'project' },
-  { name: 'Built-in Fire Pit', laborRate: 1800, materialLow: 960, materialHigh: 3000, timeHours: 24, category: 'Outdoor Living', unit: 'project' },
-  { name: 'Outdoor Fireplace', laborRate: 4800, materialLow: 3600, materialHigh: 9600, timeHours: 60, category: 'Outdoor Living', unit: 'project' },
+  { name: 'Covered Patio (per sq ft)', laborRate: 59.4, materialLow: 33, materialHigh: 66, timeHours: 0.4, category: 'Outdoor Living', unit: 'sq ft' },
+  { name: 'Pergola Installation (per sq ft)', laborRate: 52.8, materialLow: 26.4, materialHigh: 59.4, timeHours: 0.35, category: 'Outdoor Living', unit: 'sq ft' },
+  { name: 'Gazebo Installation (8x8)', laborRate: 3960, materialLow: 3300, materialHigh: 7920, timeHours: 40, category: 'Outdoor Living', unit: 'project' },
+  { name: 'Outdoor Kitchen (Basic)', laborRate: 10560, materialLow: 6600, materialHigh: 15840, timeHours: 80, category: 'Outdoor Living', unit: 'project' },
+  { name: 'Outdoor Kitchen (Premium)', laborRate: 19800, materialLow: 15840, materialHigh: 39600, timeHours: 150, category: 'Outdoor Living', unit: 'project' },
+  { name: 'Built-in Fire Pit', laborRate: 1980, materialLow: 1056, materialHigh: 3300, timeHours: 24, category: 'Outdoor Living', unit: 'project' },
+  { name: 'Outdoor Fireplace', laborRate: 5280, materialLow: 3960, materialHigh: 10560, timeHours: 60, category: 'Outdoor Living', unit: 'project' },
   
   // Attic & Basement Conversions
-  { name: 'Attic Conversion (per sq ft)', laborRate: 144, materialLow: 84, materialHigh: 144, timeHours: 0.8, category: 'Conversions', unit: 'sq ft' },
-  { name: 'Dormer Addition for Attic', laborRate: 9600, materialLow: 6000, materialHigh: 14400, timeHours: 120, category: 'Conversions', unit: 'project' },
-  { name: 'Crawl Space Encapsulation (per sq ft)', laborRate: 9.6, materialLow: 4.8, materialHigh: 9.6, timeHours: 0.1, category: 'Conversions', unit: 'sq ft' },
+  { name: 'Attic Conversion (per sq ft)', laborRate: 158.4, materialLow: 92.4, materialHigh: 158.4, timeHours: 0.8, category: 'Conversions', unit: 'sq ft' },
+  { name: 'Dormer Addition for Attic', laborRate: 10560, materialLow: 6600, materialHigh: 15840, timeHours: 120, category: 'Conversions', unit: 'project' },
+  { name: 'Crawl Space Encapsulation (per sq ft)', laborRate: 10.56, materialLow: 5.28, materialHigh: 10.56, timeHours: 0.1, category: 'Conversions', unit: 'sq ft' },
 ];
 
 export default function AdditionsCalculator() {
