@@ -8,6 +8,38 @@ import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
+async function getLeadTableConfig(): Promise<{ tableName: 'contact_leads' | 'leads'; columns: Set<string> }> {
+  const tables = await query<{ TABLE_NAME: string }>(
+    `SELECT TABLE_NAME
+     FROM INFORMATION_SCHEMA.TABLES
+     WHERE TABLE_SCHEMA = DATABASE()
+       AND TABLE_NAME IN ('contact_leads', 'leads')`
+  );
+
+  const tableName = tables.find(t => t.TABLE_NAME === 'contact_leads')
+    ? 'contact_leads'
+    : tables.find(t => t.TABLE_NAME === 'leads')
+      ? 'leads'
+      : null;
+
+  if (!tableName) {
+    throw new Error('No leads table found (expected contact_leads or leads)');
+  }
+
+  const columnRows = await query<{ COLUMN_NAME: string }>(
+    `SELECT COLUMN_NAME
+     FROM INFORMATION_SCHEMA.COLUMNS
+     WHERE TABLE_SCHEMA = DATABASE()
+       AND TABLE_NAME = ?`,
+    [tableName]
+  );
+
+  return {
+    tableName,
+    columns: new Set(columnRows.map(c => c.COLUMN_NAME)),
+  };
+}
+
 export async function POST(request: Request) {
   try {
     // Rate limiting - max 5 submissions per 15 minutes per IP
@@ -82,26 +114,46 @@ export async function POST(request: Request) {
       description,
     });
 
+    // Support both legacy and current schemas to avoid submission failures.
+    const { tableName, columns } = await getLeadTableConfig();
+
+    const insertColumns: string[] = [];
+    const insertValues: any[] = [];
+
+    const addField = (column: string, value: any) => {
+      if (columns.has(column)) {
+        insertColumns.push(column);
+        insertValues.push(value);
+      }
+    };
+
+    addField('name', name);
+    addField('phone', phone);
+    addField('email', email);
+    addField('address', address || null);
+    addField('service_type', serviceType || null);
+    addField('budget_range', budgetRange || null);
+    addField('timeframe', timeframe || null);
+    addField('referral_source', referralSource || null);
+    addField('description', description);
+    addField('message', description); // Legacy compatibility.
+    addField('preferred_date', preferredDate || null);
+    addField('preferred_time', preferredTime || null);
+    addField('status', 'new');
+    addField('priority', leadScore.priority);
+    addField('estimated_value', null);
+    addField('lead_score', leadScore.totalScore);
+    addField('source', 'contact_form');
+
+    if (insertColumns.length === 0) {
+      throw new Error(`No compatible columns found on ${tableName}`);
+    }
+
     // Save lead to database
+    const placeholders = insertColumns.map(() => '?').join(', ');
     const result = await query<any>(
-      `INSERT INTO contact_leads (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, preferred_date, preferred_time, status, priority, estimated_value, lead_score)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)`,
-      [
-        name, 
-        phone, 
-        email, 
-        address || null, 
-        serviceType || null, 
-        budgetRange || null, 
-        timeframe || null, 
-        referralSource || null, 
-        description,
-        preferredDate || null,
-        preferredTime || null,
-        leadScore.priority,
-        null,
-        leadScore.totalScore
-      ]
+      `INSERT INTO ${tableName} (${insertColumns.join(', ')}) VALUES (${placeholders})`,
+      insertValues
     );
 
     const leadId = (result as any).insertId;
@@ -144,9 +196,9 @@ export async function POST(request: Request) {
         }
 
         // Store file references in database
-        if (uploadedFileNames.length > 0) {
+        if (uploadedFileNames.length > 0 && leadId && columns.has('attachments')) {
           await query(
-            `UPDATE contact_leads SET attachments = ? WHERE id = ?`,
+            `UPDATE ${tableName} SET attachments = ? WHERE id = ?`,
             [JSON.stringify(uploadedFileNames), leadId]
           );
         }
