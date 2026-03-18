@@ -37,6 +37,7 @@ export default function LeadDetailPage() {
   // Convert to customer
   const [showConvertModal, setShowConvertModal] = useState(false);
   const [customerPassword, setCustomerPassword] = useState('');
+  const [updatingStatus, setUpdatingStatus] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -152,6 +153,37 @@ export default function LeadDetailPage() {
     }
   };
 
+  const handleQuickStatusUpdate = async (status: Lead['status']) => {
+    if (!lead || status === lead.status) return;
+
+    const previousStatus = lead.status;
+    setUpdatingStatus(true);
+    setLead({ ...lead, status });
+
+    try {
+      const response = await fetch(`/api/crm/leads/${leadId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+
+      const data = await response.json();
+      setLead(data.lead);
+      setFormData(data.lead);
+      fetchLeadDetails();
+    } catch (error) {
+      console.error('Error updating status:', error);
+      setLead({ ...lead, status: previousStatus });
+      alert('Failed to update status');
+    } finally {
+      setUpdatingStatus(false);
+    }
+  };
+
   const handleConvertToCustomer = async () => {
     if (!customerPassword.trim()) {
       alert('Please enter a password for the customer portal');
@@ -252,6 +284,25 @@ export default function LeadDetailPage() {
             </Button>
             <h1 className="text-3xl font-bold text-gray-900">{lead.name}</h1>
             <p className="text-gray-600 mt-2">{lead.email} • {lead.phone}</p>
+            <div className="mt-3 flex items-center gap-3">
+              <label className="text-sm font-medium text-gray-700">Lead Status</label>
+              <select
+                value={lead.status}
+                onChange={(e) => handleQuickStatusUpdate(e.target.value as Lead['status'])}
+                disabled={updatingStatus}
+                className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-900 disabled:opacity-60"
+                aria-label="Update lead status"
+              >
+                <option value="new">New</option>
+                <option value="contacted">Contacted</option>
+                <option value="qualified">Qualified</option>
+                <option value="proposal">Proposal</option>
+                <option value="negotiation">Negotiation</option>
+                <option value="won">Won</option>
+                <option value="lost">Lost</option>
+              </select>
+              {updatingStatus && <span className="text-xs text-gray-500">Updating...</span>}
+            </div>
           </div>
           <div className="flex gap-3">
             {!editMode ? (

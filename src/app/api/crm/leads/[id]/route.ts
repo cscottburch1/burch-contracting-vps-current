@@ -2,6 +2,26 @@ import { NextResponse } from 'next/server';
 import { query, queryOne } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
 
+async function ensureLeadActivitiesTable() {
+  await query(`
+    CREATE TABLE IF NOT EXISTS lead_activities (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      lead_id INT NOT NULL,
+      activity_type ENUM('status_change', 'note_added', 'email_sent', 'call_made', 'meeting_scheduled', 'proposal_sent') NOT NULL,
+      description TEXT NOT NULL,
+      metadata JSON,
+      created_by VARCHAR(255),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      INDEX idx_lead_id (lead_id),
+      INDEX idx_activity_type (activity_type)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  `);
+}
+
+function getAdminIdentifier(adminUser: any): string {
+  return adminUser?.email || adminUser?.name || `admin:${adminUser?.userId || 'unknown'}`;
+}
+
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -123,10 +143,15 @@ export async function PUT(
 
     // Log activity if status changed
     if (status && status !== oldLead.status) {
-      await query(
-        'INSERT INTO lead_activities (lead_id, activity_type, description, created_by) VALUES (?, ?, ?, ?)',
-        [id, 'status_change', `Status changed from ${oldLead.status} to ${status}`, adminUser.email]
-      );
+      try {
+        await ensureLeadActivitiesTable();
+        await query(
+          'INSERT INTO lead_activities (lead_id, activity_type, description, created_by) VALUES (?, ?, ?, ?)',
+          [id, 'status_change', `Status changed from ${oldLead.status} to ${status}`, getAdminIdentifier(adminUser)]
+        );
+      } catch (activityError) {
+        console.error('Lead updated, but failed to log status activity:', activityError);
+      }
     }
 
     const updatedLead = await queryOne('SELECT * FROM contact_leads WHERE id = ?', [id]);

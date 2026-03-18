@@ -21,6 +21,7 @@ export default function AdminCRMPage() {
 
   // Stats state
   const [stats, setStats] = useState<any>(null);
+  const [updatingLeadId, setUpdatingLeadId] = useState<string | null>(null);
 
   useEffect(() => {
     checkAuth();
@@ -74,6 +75,33 @@ export default function AdminCRMPage() {
       setStats(data.statistics);
     } catch (error) {
       console.error('Error fetching statistics:', error);
+    }
+  };
+
+  const handleInlineStatusUpdate = async (leadId: string, status: Lead['status']) => {
+    setUpdatingLeadId(leadId);
+
+    // Optimistic UI update
+    setLeads((prev) =>
+      prev.map((lead) => (lead.id === leadId ? { ...lead, status } : lead))
+    );
+
+    try {
+      const response = await fetch(`/api/crm/leads/${leadId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update lead status');
+      }
+    } catch (error) {
+      console.error('Error updating lead status:', error);
+      alert('Failed to update lead status');
+      await fetchLeads();
+    } finally {
+      setUpdatingLeadId(null);
     }
   };
 
@@ -335,9 +363,26 @@ export default function AdminCRMPage() {
                           )}
                         </td>
                         <td className="py-4 px-4">
-                          <Badge className={getStatusColor(lead.status)}>
-                            {lead.status}
-                          </Badge>
+                          <select
+                            value={lead.status}
+                            disabled={updatingLeadId === lead.id}
+                            onChange={(e) => handleInlineStatusUpdate(lead.id, e.target.value as Lead['status'])}
+                            className="px-2 py-1 border border-gray-300 rounded-md text-sm text-gray-900 disabled:opacity-60"
+                            aria-label={`Update status for ${lead.name}`}
+                          >
+                            <option value="new">New</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="qualified">Qualified</option>
+                            <option value="proposal">Proposal</option>
+                            <option value="negotiation">Negotiation</option>
+                            <option value="won">Won</option>
+                            <option value="lost">Lost</option>
+                          </select>
+                          <div className="mt-2">
+                            <Badge className={getStatusColor(lead.status)}>
+                              {lead.status}
+                            </Badge>
+                          </div>
                           {agingStatus.severity !== 'normal' && (
                             <div className={`text-xs mt-1 ${
                               agingStatus.severity === 'critical' ? 'text-red-600' :
