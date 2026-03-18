@@ -24,6 +24,7 @@ export interface Lead {
   preferred_time?: string;
   source_url?: string;
   tags?: string[];
+  attachments?: string[];
   created_at: string;
   updated_at: string;
 }

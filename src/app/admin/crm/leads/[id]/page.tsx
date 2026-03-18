@@ -608,6 +608,45 @@ export default function LeadDetailPage() {
               </div>
             </Card>
 
+            {/* Attachments Section */}
+            {lead.attachments && lead.attachments.length > 0 && (
+              <Card>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Attachments ({lead.attachments.length})
+                </h3>
+                <div className="space-y-2">
+                  {lead.attachments.map((filename, index) => {
+                    const fileUrl = `/uploads/leads/${lead.id}/${filename}`;
+                    const ext = filename.split('.').pop()?.toLowerCase() || '';
+                    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+                    const displayName = filename.replace(/^\d+_/, ''); // strip leading timestamp
+                    return (
+                      <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <div className="flex-shrink-0 text-2xl">
+                          {isImage ? '🖼️' : ext === 'pdf' ? '📄' : '📎'}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
+                          {isImage && (
+                            <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                              View image
+                            </a>
+                          )}
+                        </div>
+                        <a
+                          href={fileUrl}
+                          download={displayName}
+                          className="flex-shrink-0 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                          Download
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            )}
+
             {/* Notes Section */}
             <Card>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Notes</h3>

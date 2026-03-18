@@ -33,10 +33,19 @@ export async function GET(
     }
 
     const { id } = await context.params;
-    const lead = await queryOne('SELECT * FROM contact_leads WHERE id = ?', [id]);
+    const lead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
 
     if (!lead) {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+    }
+
+    // Parse attachments JSON string into array
+    if (lead.attachments && typeof lead.attachments === 'string') {
+      try {
+        lead.attachments = JSON.parse(lead.attachments);
+      } catch {
+        lead.attachments = [];
+      }
     }
 
     return NextResponse.json({ lead });
