@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import Script from 'next/script';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
@@ -10,6 +11,7 @@ import {
   buildServiceContent,
   getServicePageBySlug,
   serviceLandingPages,
+  type FaqItem,
 } from '@/lib/seo/localSeoData';
 import {
   buildBreadcrumbSchema,
@@ -21,6 +23,21 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
 interface LocalServicePageProps {
   params: Promise<{ slug: string }>;
+}
+
+interface LocalTestimonial {
+  quote: string;
+  homeowner: string;
+  neighborhood: string;
+  projectType: string;
+}
+
+interface LocalProjectSnapshot {
+  title: string;
+  scope: string;
+  timeline: string;
+  image: string;
+  imageAlt: string;
 }
 
 const cityLinks: Record<string, string> = {
@@ -63,6 +80,245 @@ function getTrustSignals(serviceName: string) {
     `Clear scope planning for ${serviceName.toLowerCase()} projects`,
     'Written estimates with realistic allowances and sequencing',
   ];
+}
+
+function getServiceFaqs(serviceName: string, city: string): FaqItem[] {
+  const key = `${serviceName}|${city}`;
+
+  const faqMap: Record<string, FaqItem[]> = {
+    'Bathroom Remodeling|Simpsonville SC': [
+      { question: 'What is the most common bathroom upgrade in Simpsonville homes?', answer: 'Most homeowners start with shower modernization, better lighting, and a vanity layout that improves storage. We usually phase these upgrades so families keep at least one usable bath during construction.' },
+      { question: 'How long does a full primary bath remodel usually take?', answer: 'Most full primary bath remodels in Simpsonville run 3 to 6 weeks depending on tile complexity, fixture lead times, and whether plumbing locations change.' },
+      { question: 'Can you plan around aging-in-place needs?', answer: 'Yes. We routinely plan curbless showers, grab-bar backing, safer flooring, and improved clearances while still keeping the space design-forward.' },
+    ],
+    'Kitchen Remodeling|Simpsonville SC': [
+      { question: 'Do most Simpsonville kitchen projects require layout changes?', answer: 'Not always. Many successful projects keep core plumbing in place while improving workflow with better cabinet configuration, island planning, and storage upgrades.' },
+      { question: 'What drives kitchen budget swings the most?', answer: 'Cabinet construction, countertop material, appliance package, and whether walls or utilities move are the largest cost drivers in most kitchen scopes.' },
+      { question: 'Can we live in the home during construction?', answer: 'Usually yes. We set up a temporary kitchen zone, protect adjacent floors, and sequence disruptive tasks to keep daily life manageable.' },
+    ],
+    'Room Additions|Simpsonville SC': [
+      { question: 'Do room additions require structural engineering?', answer: 'Some do, especially for larger spans, roofline changes, or complex tie-ins. We identify that early and include it in the planning phase.' },
+      { question: 'How do you match an addition to the existing home?', answer: 'We plan roof transitions, exterior materials, trim proportions, and interior floor transitions so the addition feels original to the home.' },
+      { question: 'Can additions be phased to spread budget?', answer: 'Yes. In many cases we phase interior finish upgrades after the core shell and utility work are complete to control budget timing.' },
+    ],
+    'Screened Porch Builder|Simpsonville SC': [
+      { question: 'What makes screened porches comfortable in summer humidity?', answer: 'Cross-ventilation planning, correct fan placement, durable screen systems, and shade orientation all matter for comfort in Upstate humidity.' },
+      { question: 'Can a screened porch be converted to a 3-season room later?', answer: 'Yes. We can frame with future upgrades in mind so enclosure options are easier if your needs change later.' },
+      { question: 'How long does a typical screened porch build take?', answer: 'Most projects run 3 to 6 weeks depending on foundation work, roofing tie-ins, and finish complexity.' },
+    ],
+    'Deck Builder|Simpsonville SC': [
+      { question: 'Should we choose pressure-treated or composite decking?', answer: 'Pressure-treated is budget-friendly upfront, while composite reduces long-term maintenance. We compare total ownership cost during planning.' },
+      { question: 'Do you handle permits and inspections for deck work?', answer: 'Yes. We coordinate local permitting and inspections so framing, guards, and stair geometry are code-compliant.' },
+      { question: 'Can you include lighting and privacy features?', answer: 'Absolutely. Many Simpsonville projects include post lighting, stair lights, privacy screens, and built-in seating.' },
+    ],
+    'Basement Finishing|Simpsonville SC': [
+      { question: 'How do you handle moisture risk before finishing?', answer: 'We evaluate drainage, wall condition, humidity control, and insulation strategy before finalizing finish scope to protect long-term performance.' },
+      { question: 'Can a basement include an office and media zone together?', answer: 'Yes. We commonly design multi-use layouts with acoustic planning, lighting zones, and flexible storage.' },
+      { question: 'What inspections are typical for basement projects?', answer: 'Framing, electrical, plumbing (if included), and final inspections are common. We coordinate these with the local jurisdiction.' },
+    ],
+    'Bathroom Remodeling|Fountain Inn SC': [
+      { question: 'What upgrades provide the strongest value in Fountain Inn bathrooms?', answer: 'Shower modernization, ventilation improvements, durable tile choices, and better vanity storage usually provide the best day-to-day and resale impact.' },
+      { question: 'Can you complete a guest bath quickly?', answer: 'Yes. Guest bath refresh scopes are often completed in 2 to 3 weeks when major plumbing relocation is not required.' },
+      { question: 'Do you provide material guidance before demolition?', answer: 'Yes. We lock in fixture and finish selections early to reduce schedule drift and avoid avoidable change orders.' },
+    ],
+    'Kitchen Remodeling|Fountain Inn SC': [
+      { question: 'How do you improve kitchen flow without full structural changes?', answer: 'We often improve prep and storage zones with cabinet reconfiguration, appliance strategy, and better traffic paths while keeping major structure intact.' },
+      { question: 'Are appliance lead times included in planning?', answer: 'Yes. We account for appliance and cabinet lead times upfront so the construction schedule is realistic.' },
+      { question: 'Can you help compare finish tiers?', answer: 'Absolutely. We provide value, standard, and premium path comparisons so budget choices are easier before construction starts.' },
+    ],
+    'Room Additions|Fountain Inn SC': [
+      { question: 'What are the first steps for planning a Fountain Inn room addition?', answer: 'We begin with site constraints, utility tie-in review, and layout goals so scope decisions are grounded in real conditions and budget targets.' },
+      { question: 'Do additions require HVAC and electrical upgrades?', answer: 'In many projects, yes. We include HVAC and electrical integration planning early to avoid late-stage pricing surprises.' },
+      { question: 'Can you keep disruption manageable while we stay in the home?', answer: 'Yes. We stage work, protect interior routes, and sequence tie-ins to reduce day-to-day disruption as much as possible.' },
+    ],
+    'Decks and Screened Porches|Fountain Inn SC': [
+      { question: 'Can one project include both a deck and screened porch?', answer: 'Yes. Many Fountain Inn homeowners choose a combined layout for grilling, dining, and weather-protected seating in one coordinated build.' },
+      { question: 'What details improve long-term durability?', answer: 'Proper flashing, moisture control at attachment points, code-correct guard details, and material-specific fasteners all improve long-term performance.' },
+      { question: 'Do you offer low-maintenance finish options?', answer: 'Yes. We frequently specify composite decking, durable screen systems, and finish packages designed for lower upkeep.' },
+    ],
+    'Basement Finishing|Fountain Inn SC': [
+      { question: 'What basement projects are most common in Fountain Inn?', answer: 'Rec rooms, guest suites, and office-flex layouts are most common, often paired with storage and utility-area upgrades.' },
+      { question: 'How is basement budgeting handled for unknown conditions?', answer: 'We use layered estimates with contingency guidance so homeowners understand base scope, upgrades, and risk allowances before work begins.' },
+      { question: 'Can basement work be staged over phases?', answer: 'Yes. We can phase finishes or specialty spaces to align with budget while preserving overall layout strategy.' },
+    ],
+  };
+
+  return faqMap[key] ?? [
+    { question: `How soon can ${serviceName.toLowerCase()} work begin in ${city}?`, answer: 'Most projects begin 2 to 6 weeks after design approval and material selections are finalized.' },
+    { question: 'Do you provide written estimates and scope documentation?', answer: 'Yes. Proposals include scope, allowances, milestone timing, and payment structure for clear comparison.' },
+    { question: 'Can Burch Contracting handle permitting and inspections?', answer: 'Yes. We support permitting and inspection coordination so work stays code-compliant and documented.' },
+  ];
+}
+
+function getLocalTestimonials(serviceName: string, city: string): LocalTestimonial[] {
+  const suffix = city === 'Simpsonville SC' ? 'Simpsonville' : 'Fountain Inn';
+
+  const byService: Record<string, Array<Omit<LocalTestimonial, 'neighborhood'>>> = {
+    'Kitchen Remodeling': [
+      { homeowner: 'Harrison Family', projectType: 'Kitchen Remodel', quote: 'We finally have a kitchen that flows for weeknights and entertaining. The planning process helped us avoid expensive last-minute decisions.' },
+      { homeowner: 'Miller Home', projectType: 'Kitchen Update', quote: 'Communication was clear every week, and the final finish quality feels like a much higher price point.' },
+    ],
+    'Bathroom Remodeling': [
+      { homeowner: 'Roberts Family', projectType: 'Primary Bath Remodel', quote: 'The new layout and storage solved issues we had lived with for years, and the project stayed organized from start to finish.' },
+      { homeowner: 'Taylor Home', projectType: 'Guest Bath Refresh', quote: 'The team moved quickly, protected the rest of the house, and delivered exactly what we scoped.' },
+    ],
+    'Room Additions': [
+      { homeowner: 'Nelson Family', projectType: 'Bedroom Addition', quote: 'Our addition looks original to the home, not tacked on. The schedule and milestone updates were easy to follow.' },
+      { homeowner: 'Adams Home', projectType: 'Family Room Expansion', quote: 'We gained usable space without moving, and the scope guidance helped us prioritize the right upgrades.' },
+    ],
+    'Deck Builder': [
+      { homeowner: 'Bryant Home', projectType: 'Composite Deck', quote: 'The layout feels custom to our yard, and the build quality gave us confidence from day one.' },
+      { homeowner: 'Walker Family', projectType: 'Backyard Deck Build', quote: 'The team handled permitting and details professionally, and the result is our favorite part of the house.' },
+    ],
+    'Screened Porch Builder': [
+      { homeowner: 'Evans Family', projectType: 'Screened Porch Build', quote: 'We use the porch almost every day now. Ventilation and fan placement made a big comfort difference.' },
+      { homeowner: 'Carter Home', projectType: 'Outdoor Living Upgrade', quote: 'Great communication and clean execution. The porch feels like a true extension of our home.' },
+    ],
+    'Decks and Screened Porches': [
+      { homeowner: 'Gibson Family', projectType: 'Deck and Porch Combo', quote: 'Combining both spaces was the right call. We got flexibility for weather and much better hosting space.' },
+      { homeowner: 'Parker Home', projectType: 'Outdoor Room Project', quote: 'Durability details were explained clearly and the final result matches the plan exactly.' },
+    ],
+    'Basement Finishing': [
+      { homeowner: 'Reed Family', projectType: 'Basement Finish', quote: 'Our basement now works as a media room and office zone with better lighting and storage than we expected.' },
+      { homeowner: 'Morgan Home', projectType: 'Guest Suite Basement', quote: 'The phased planning made budgeting easier, and the workmanship has held up exceptionally well.' },
+    ],
+  };
+
+  const neighborhood = city === 'Simpsonville SC' ? 'Five Forks area' : 'Downtown Fountain Inn area';
+  const templates = byService[serviceName] ?? byService['Kitchen Remodeling'];
+
+  return templates.map((item) => ({ ...item, neighborhood: `${neighborhood}, ${suffix}` }));
+}
+
+function getProjectSnapshots(serviceName: string, city: string): LocalProjectSnapshot[] {
+  const cityToken = city === 'Simpsonville SC' ? 'simpsonville' : 'fountain-inn';
+
+  const fallback: LocalProjectSnapshot[] = [
+    {
+      title: `${serviceName} Planning Package`,
+      scope: 'Scope, allowances, and sequence review before production start.',
+      timeline: '2 to 4 week preconstruction planning',
+      image: '/images/projects/placeholder.jpg',
+      imageAlt: `${serviceName} planning in ${city}`,
+    },
+  ];
+
+  const byService: Record<string, LocalProjectSnapshot[]> = {
+    'Kitchen Remodeling': [
+      {
+        title: 'Family Kitchen Workflow Upgrade',
+        scope: 'Cabinet reconfiguration, island optimization, and lighting plan updates.',
+        timeline: '6 to 9 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Kitchen remodeling project in ${city}`,
+      },
+      {
+        title: 'Cabinet + Countertop Modernization',
+        scope: 'New storage layout, countertop replacement, and fixture package.',
+        timeline: '4 to 7 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} kitchen renovation planning snapshot`,
+      },
+    ],
+    'Bathroom Remodeling': [
+      {
+        title: 'Primary Bath Comfort Upgrade',
+        scope: 'Shower conversion, vanity improvements, and ventilation correction.',
+        timeline: '3 to 6 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Bathroom remodeling project in ${city}`,
+      },
+      {
+        title: 'Guest Bath Refresh Scope',
+        scope: 'Targeted layout, fixture, and finish updates for higher daily usability.',
+        timeline: '2 to 4 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} bathroom renovation scope`,
+      },
+    ],
+    'Room Additions': [
+      {
+        title: 'Bedroom + Flex Space Addition',
+        scope: 'Foundation, framing, utility tie-ins, and complete interior finish package.',
+        timeline: '10 to 16 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Room addition project in ${city}`,
+      },
+      {
+        title: 'Family Room Expansion',
+        scope: 'Roof integration, HVAC extension, and finished living area expansion.',
+        timeline: '9 to 14 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} home expansion planning`,
+      },
+    ],
+    'Screened Porch Builder': [
+      {
+        title: 'Screened Porch Comfort Build',
+        scope: 'Roofed porch enclosure, fan and lighting prep, and trim detailing.',
+        timeline: '4 to 7 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Screened porch project in ${city}`,
+      },
+      {
+        title: 'Outdoor Seating Extension',
+        scope: 'Traffic flow, screen durability upgrades, and weather-protected layout planning.',
+        timeline: '3 to 6 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} screened porch layout`,
+      },
+    ],
+    'Deck Builder': [
+      {
+        title: 'Composite Deck Entertaining Plan',
+        scope: 'Deck framing, railing package, and integrated stair transitions.',
+        timeline: '3 to 5 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Deck project in ${city}`,
+      },
+      {
+        title: 'Backyard Access Deck Upgrade',
+        scope: 'Safer circulation, material durability, and low-maintenance detailing.',
+        timeline: '2 to 4 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} deck build scope`,
+      },
+    ],
+    'Decks and Screened Porches': [
+      {
+        title: 'Combined Deck + Screened Porch Plan',
+        scope: 'Dual-zone outdoor living for cooking, dining, and weather-protected seating.',
+        timeline: '5 to 9 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Deck and screened porch project in ${city}`,
+      },
+      {
+        title: 'Outdoor Room Durability Upgrade',
+        scope: 'Moisture management details, improved circulation, and low-maintenance materials.',
+        timeline: '4 to 8 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} outdoor living scope`,
+      },
+    ],
+    'Basement Finishing': [
+      {
+        title: 'Multi-Use Basement Conversion',
+        scope: 'Office + rec-room zoning with storage and code-compliant finish systems.',
+        timeline: '7 to 12 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `Basement finishing project in ${city}`,
+      },
+      {
+        title: 'Guest Suite Basement Planning',
+        scope: 'Comfort upgrades, lighting strategy, and flexible living layout priorities.',
+        timeline: '8 to 14 week construction window',
+        image: '/og-image.jpg',
+        imageAlt: `${cityToken} basement remodel planning`,
+      },
+    ],
+  };
+
+  return byService[serviceName] ?? fallback;
 }
 
 export async function generateStaticParams() {
@@ -111,6 +367,9 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
   const areaLink = cityLinks[page.city] ?? '/services';
   const geoReferences = getGeoReferences(page.city);
   const trustSignals = getTrustSignals(page.serviceName);
+  const uniqueFaqs = getServiceFaqs(page.serviceName, page.city);
+  const localTestimonials = getLocalTestimonials(page.serviceName, page.city);
+  const projectSnapshots = getProjectSnapshots(page.serviceName, page.city);
   const relatedPages = serviceLandingPages.filter((item) => item.city === page.city && item.slug !== page.slug).slice(0, 3);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
@@ -120,7 +379,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
   ]);
 
   const serviceSchema = buildServiceSchema(page);
-  const faqSchema = buildFaqSchema(page.faqs);
+  const faqSchema = buildFaqSchema(uniqueFaqs);
   const localBusinessSchema = buildLocalBusinessSchema();
 
   return (
@@ -188,6 +447,28 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 ))}
               </div>
             </Card>
+
+            <Card>
+              <h2 className="mb-4 text-2xl font-bold text-gray-900">Local Project Snapshots</h2>
+              <div className="grid gap-5 md:grid-cols-2">
+                {projectSnapshots.map((snapshot) => (
+                  <div key={snapshot.title} className="rounded-2xl border border-gray-200 overflow-hidden">
+                    <Image
+                      src={snapshot.image}
+                      alt={snapshot.imageAlt}
+                      width={960}
+                      height={540}
+                      className="h-40 w-full object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-lg font-bold text-gray-900">{snapshot.title}</h3>
+                      <p className="mt-2 text-sm text-gray-700">{snapshot.scope}</p>
+                      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-blue-700">Typical timeline: {snapshot.timeline}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
 
           <div className="space-y-6">
@@ -217,6 +498,19 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 </a>
               </div>
             </Card>
+
+            <Card>
+              <h2 className="mb-4 text-2xl font-bold text-gray-900">Recent Homeowner Feedback</h2>
+              <div className="space-y-4">
+                {localTestimonials.map((item) => (
+                  <div key={`${item.homeowner}-${item.projectType}`} className="rounded-xl border border-gray-200 p-4">
+                    <p className="text-gray-700">&ldquo;{item.quote}&rdquo;</p>
+                    <div className="mt-3 text-sm font-semibold text-gray-900">{item.homeowner} - {item.projectType}</div>
+                    <div className="text-xs uppercase tracking-wide text-blue-700">{item.neighborhood}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </div>
       </Section>
@@ -225,7 +519,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
         <div className="mx-auto max-w-5xl">
           <h2 className="mb-6 text-center text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
           <div className="space-y-4">
-            {page.faqs.map((faq) => (
+            {uniqueFaqs.map((faq) => (
               <Card key={faq.question}>
                 <h3 className="mb-2 text-xl font-bold text-gray-900">{faq.question}</h3>
                 <p className="leading-relaxed text-gray-700">{faq.answer}</p>

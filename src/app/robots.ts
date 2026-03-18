@@ -16,6 +16,10 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     host: 'https://burchcontracting.com',
-    sitemap: 'https://burchcontracting.com/sitemap.xml',
+    sitemap: [
+      'https://burchcontracting.com/sitemap.xml',
+      'https://burchcontracting.com/sitemaps/local-pages.xml',
+      'https://burchcontracting.com/sitemaps/calculators.xml',
+    ],
   };
 }

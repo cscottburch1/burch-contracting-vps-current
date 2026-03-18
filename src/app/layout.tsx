@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import Script from "next/script";
 import AIChat from "@/components/AIChat";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
 import MobileStickyCta from "@/components/MobileStickyCta";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
@@ -101,6 +102,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <GoogleAnalytics />
+        <AnalyticsEvents />
         <Header />
         <main>{children}</main>
         <Footer />
