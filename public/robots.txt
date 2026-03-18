@@ -10,6 +10,8 @@ Disallow: /crm/
 
 # Sitemaps
 Sitemap: https://burchcontracting.com/sitemap.xml
+Sitemap: https://burchcontracting.com/sitemaps/local-pages.xml
+Sitemap: https://burchcontracting.com/sitemaps/calculators.xml
 
 # Crawl-delay for common bots
 User-agent: Googlebot
