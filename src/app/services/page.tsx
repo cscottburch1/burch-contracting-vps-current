@@ -1,10 +1,11 @@
 import { Section } from '@/components/ui/Section';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import { Button } from '@/components/ui/Button';
-import Icon from '@/components/ui/Icon';
+import Icon, { type IconName } from '@/components/ui/Icon';
 import { businessConfig } from '@/config/business';
 import { Metadata } from 'next';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
+import { serviceLandingPages } from '@/lib/seo/localSeoData';
 
 export const metadata: Metadata = {
   title: 'Basement Finishing, Kitchen & Bath Remodeling Simpsonville, Fountain Inn, Woodruff, Laurens SC',
@@ -44,7 +45,7 @@ export default async function ServicesPage() {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-            Simpsonville's <span className="gradient-text">#1 Rated</span> Home Services
+            Simpsonville&apos;s <span className="gradient-text">#1 Rated</span> Home Services
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed animate-fade-in-up stagger-1 opacity-0 mb-6">
             Professional basement finishing, kitchen & bathroom remodeling, bath to tile shower conversions, custom decks, screened porches, and room additions throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. Licensed, insured, and BBB A+ rated with 30+ years experience.
@@ -73,9 +74,33 @@ export default async function ServicesPage() {
               <ServiceCard
                 title={service.title}
                 description={service.description}
-                icon={<Icon name={service.icon as any} size={48} className="text-blue-600" />}
+                icon={<Icon name={service.icon as IconName} size={48} className="text-blue-600" />}
                 href={`/services/${service.id}`}
               />
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section background="gray" padding="lg">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Localized Service Pages</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Start with the service-city page closest to your project so you can compare pricing ranges, FAQs, and local planning notes.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
+          {serviceLandingPages.map((page) => (
+            <div key={page.slug} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city}</div>
+              <h3 className="mt-2 text-2xl font-bold text-gray-900">{page.h1}</h3>
+              <p className="mt-3 text-gray-600">{page.shortDescription}</p>
+              <div className="mt-5">
+                <Button variant="outline" href={`/locations/${page.slug}`}>
+                  View Local Page
+                </Button>
+              </div>
             </div>
           ))}
         </div>
@@ -87,7 +112,7 @@ export default async function ServicesPage() {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-gray-300 mb-8 animate-fade-in-up stagger-1 opacity-0">
-            Contact us today for a free consultation and estimate. We'll discuss your project needs and provide a detailed quote.
+            Contact us today for a free consultation and estimate. We&apos;ll discuss your project needs and provide a detailed quote.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-2 opacity-0">
             <Button variant="primary" size="lg" href="/contact" className="shadow-2xl">

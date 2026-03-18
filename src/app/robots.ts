@@ -15,6 +15,7 @@ export default function robots(): MetadataRoute.Robots {
         crawlDelay: 0,
       },
     ],
+    host: 'https://burchcontracting.com',
     sitemap: 'https://burchcontracting.com/sitemap.xml',
   };
 }

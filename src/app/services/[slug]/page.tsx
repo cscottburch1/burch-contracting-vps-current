@@ -3,12 +3,15 @@ import { notFound } from 'next/navigation';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import Icon from '@/components/ui/Icon';
+import Icon, { type IconName } from '@/components/ui/Icon';
 import { Badge } from '@/components/ui/Badge';
 import { businessConfig } from '@/config/business';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import Script from 'next/script';
-import { getServiceBySlug, getActiveServices, mapToBusinessConfigFormat } from '@/lib/services';
+import { getServiceBySlug, getActiveServices } from '@/lib/services';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { absoluteUrl } from '@/lib/seo/site';
+import { serviceLandingPages } from '@/lib/seo/localSeoData';
 
 // Service content database
 const serviceContent: Record<string, {
@@ -110,7 +113,7 @@ const serviceContent: Record<string, {
       {
         title: "Bath to Tile Shower Conversions",
         description: "Replace outdated tub/shower combos with beautiful walk-in tile showers featuring custom tile, frameless glass doors, and modern fixtures.",
-        icon: "Shower"
+        icon: "Bath"
       },
       {
         title: "Countertop Installation",
@@ -300,6 +303,12 @@ interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
 
+interface ServiceMetadata {
+  title: string;
+  description: string;
+  keywords: string;
+}
+
 export async function generateStaticParams() {
   // Fetch active services from database
   const dbServices = await getActiveServices();
@@ -326,7 +335,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     };
   }
 
-  const metadataMap: Record<string, any> = {
+  const metadataMap: Record<string, ServiceMetadata> = {
     handyman: {
       title: '#1 Handyman Services in Simpsonville, SC | Same-Day Service | (864) 724-4600',
       description: 'Top-rated handyman in Simpsonville, SC. Same-day service available. Licensed, insured, BBB A+ rated. Serving the Upstate SC: Simpsonville, Fountain Inn, Woodruff, Laurens. Door repair, fixture installation, drywall, plumbing fixes & more. Call now!',
@@ -403,6 +412,27 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   const serviceConfig = businessConfig.services.find(s => s.id === slug);
   const relevantTestimonials = businessConfig.testimonials;
+  const relatedLocalPages = serviceLandingPages.filter((page) => {
+    if (slug === 'remodeling') {
+      return page.serviceName === 'Kitchen Remodeling' || page.serviceName === 'Bathroom Remodeling';
+    }
+
+    if (slug === 'additions') {
+      return page.serviceName === 'Room Additions' || page.serviceName === 'Deck Builder' || page.serviceName === 'Screened Porch Builder' || page.serviceName === 'Decks and Screened Porches';
+    }
+
+    if (slug === 'basement') {
+      return page.serviceName === 'Basement Finishing';
+    }
+
+    return false;
+  });
+
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Services', url: absoluteUrl('/services') },
+    { name: serviceConfig?.title || service.title, url: absoluteUrl(`/services/${slug}`) },
+  ]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -436,6 +466,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
         id="service-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="service-breadcrumb-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {/* Hero Section */}
@@ -511,6 +546,30 @@ export default async function ServicePage({ params }: ServicePageProps) {
         </div>
       </Section>
 
+      {relatedLocalPages.length > 0 && (
+        <Section background="gray" padding="lg">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Localized Planning Guides</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Compare service-specific pages for Simpsonville and Fountain Inn before you request a written quote.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {relatedLocalPages.map((page) => (
+              <Card key={page.slug} className="hover-lift">
+                <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city}</div>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">{page.h1}</h3>
+                <p className="mt-3 text-gray-600">{page.shortDescription}</p>
+                <div className="mt-5">
+                  <Button variant="outline" href={`/locations/${page.slug}`}>Read Local Guide</Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </Section>
+      )}
+
       {/* Features Section */}
       <Section background="gray" padding="lg">
         <div className="text-center mb-16">
@@ -528,7 +587,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               <div className="flex gap-4">
                 <div className="flex-shrink-0">
                   <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Icon name={feature.icon as any} size={28} className="text-blue-600" />
+                    <Icon name={feature.icon as IconName} size={28} className="text-blue-600" />
                   </div>
                 </div>
                 <div>
@@ -619,7 +678,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             {service.cta}
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-            Contact us today for a free consultation and detailed estimate. We'll discuss your project and provide expert recommendations.
+            Contact us today for a free consultation and detailed estimate. We&apos;ll discuss your project and provide expert recommendations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="primary" size="lg" href="/contact" className="shadow-2xl">

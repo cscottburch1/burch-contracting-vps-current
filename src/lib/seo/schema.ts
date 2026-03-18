@@ -1,24 +1,29 @@
 import type { ServiceLandingPage, LocationPage } from "@/lib/seo/localSeoData";
-
-const SITE_URL = "https://burchcontracting.com";
+import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
 export function buildLocalBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Burch Contracting",
-    url: SITE_URL,
-    telephone: "(864) 724-4600",
+    "@id": absoluteUrl('/#localbusiness'),
+    name: siteConfig.siteName,
+    url: siteConfig.siteUrl,
+    image: absoluteUrl(siteConfig.defaultOgImage),
+    telephone: siteConfig.phoneDisplay,
     email: "estimates@burchcontracting.com",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Gray Court",
+      addressLocality: "Simpsonville",
       addressRegion: "SC",
       addressCountry: "US",
     },
     areaServed: [
       { "@type": "City", name: "Simpsonville SC" },
       { "@type": "City", name: "Fountain Inn SC" },
+    ],
+    sameAs: [
+      "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875",
+      "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
     ],
     priceRange: "$$-$$$",
     openingHours: "Mo-Fr 08:00-17:00",
@@ -32,17 +37,18 @@ export function buildServiceSchema(page: ServiceLandingPage) {
     serviceType: page.serviceName,
     provider: {
       "@type": "LocalBusiness",
-      name: "Burch Contracting",
+      "@id": absoluteUrl('/#localbusiness'),
+      name: siteConfig.siteName,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Gray Court",
+        addressLocality: "Simpsonville",
         addressRegion: "SC",
       },
     },
     areaServed: page.city,
     name: page.h1,
     description: page.shortDescription,
-    url: `${SITE_URL}/services/${page.slug}`,
+    url: absoluteUrl(`/locations/${page.slug}`),
   };
 }
 
@@ -57,9 +63,10 @@ export function buildAreaServedSchema(page: LocationPage) {
     },
     provider: {
       "@type": "LocalBusiness",
-      name: "Burch Contracting",
+      "@id": absoluteUrl('/#localbusiness'),
+      name: siteConfig.siteName,
     },
-    url: `${SITE_URL}/locations/${page.slug}`,
+    url: absoluteUrl(`/locations/${page.slug}`),
   };
 }
 
@@ -97,5 +104,18 @@ export function buildReviewSchema() {
     },
     reviewBody:
       "Burch Contracting communicated clearly, delivered high-quality craftsmanship, and kept our remodeling project organized from start to finish.",
+  };
+}
+
+export function buildBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 }

@@ -3,12 +3,15 @@ import { notFound } from 'next/navigation';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import Icon from '@/components/ui/Icon';
+import Icon, { type IconName } from '@/components/ui/Icon';
 import { Badge } from '@/components/ui/Badge';
 import { businessConfig } from '@/config/business';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import Script from 'next/script';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
+import { serviceLandingPages } from '@/lib/seo/localSeoData';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { absoluteUrl } from '@/lib/seo/site';
 
 // City-specific content with rich history and modern context
 const cityContent: Record<string, {
@@ -399,10 +402,13 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
     title: meta.title,
     description: meta.description,
     keywords: meta.keywords,
+    alternates: {
+      canonical: absoluteUrl(`/service-areas/${city}`),
+    },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `https://burchcontracting.com/service-areas/${city}`,
+      url: absoluteUrl(`/service-areas/${city}`),
       siteName: 'Burch Contracting',
       locale: 'en_US',
       type: 'website',
@@ -423,6 +429,12 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
   const services = dbServices.length > 0 
     ? dbServices.map(mapToBusinessConfigFormat)
     : businessConfig.services;
+  const relatedLocationPages = serviceLandingPages.filter((page) => page.city.toLowerCase().startsWith(content.name.toLowerCase())).slice(0, 6);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Service Areas', url: absoluteUrl('/services') },
+    { name: content.displayName, url: absoluteUrl(`/service-areas/${city}`) },
+  ]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -453,6 +465,11 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         id="service-area-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <Script
+        id="service-area-breadcrumbs"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {/* Hero Section */}
@@ -536,7 +553,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
             Neighborhoods We Serve in {content.name}
           </h2>
           <p className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-            Understanding the unique character of {content.name}'s diverse neighborhoods
+            Understanding the unique character of {content.name}&apos;s diverse neighborhoods
           </p>
           
           <div className="grid md:grid-cols-2 gap-6">
@@ -610,12 +627,34 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
               key={service.id}
               title={service.title}
               description={service.description}
-              icon={<Icon name={service.icon as any} size={40} className="text-blue-600" />}
+              icon={<Icon name={service.icon as IconName} size={40} className="text-blue-600" />}
               href={`/services/${service.id}`}
             />
           ))}
         </div>
       </Section>
+
+      {relatedLocationPages.length > 0 && (
+        <Section background="gray" padding="lg">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Popular {content.name} Service Pages</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Start with a focused service page if you already know the type of project you want to build.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {relatedLocationPages.map((page) => (
+                <Card key={page.slug} className="hover-lift">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{page.h1}</h3>
+                  <p className="text-gray-600 mb-5">{page.shortDescription}</p>
+                  <Button variant="outline" href={`/locations/${page.slug}`}>Read Local Page</Button>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
 
       {/* CTA */}
       <Section background="dark" padding="lg">
@@ -624,7 +663,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
             Ready to Start Your {content.name} Home Project?
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-            Contact us today for a free consultation. We're proud to serve {content.displayName} with quality craftsmanship and reliable service.
+            Contact us today for a free consultation. We&apos;re proud to serve {content.displayName} with quality craftsmanship and reliable service.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="primary" size="lg" href="/contact" className="shadow-2xl">

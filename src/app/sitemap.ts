@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { serviceLandingPages } from '@/lib/seo/localSeoData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://burchcontracting.com';
@@ -24,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/locations`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
   ];
 
   // Service pages - all your service offerings
@@ -45,7 +52,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const calculators = [
     'handyman',
     'remodeling',
-    'additions'
+    'additions',
+    'kitchen-remodeling',
+    'bathroom-remodeling',
+    'room-additions',
+    'decks-screened-porches',
+    'basement-finishing',
   ];
 
   const calculatorRoutes = calculators.map(calc => ({
@@ -74,5 +86,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes];
+  const localServiceRoutes = serviceLandingPages.map((page) => ({
+    url: `${baseUrl}/locations/${page.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes, ...localServiceRoutes];
 }

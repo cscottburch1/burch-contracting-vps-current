@@ -1,16 +1,32 @@
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
-import Icon from '@/components/ui/Icon';
+import Icon, { type IconName } from '@/components/ui/Icon';
+import { Card } from '@/components/ui/Card';
 import { FeatureCard } from '@/components/ui/FeatureCard';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
-import { ProjectCard } from '@/components/ui/ProjectCard';
-import { Badge } from '@/components/ui/Badge';
 import { businessConfig } from '@/config/business';
 import Script from 'next/script';
+import Link from 'next/link';
 import DynamicBanners from '@/components/EmergencyBanner';
 import RecentProjects from '@/components/RecentProjects';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
+import type { Metadata } from 'next';
+import { serviceLandingPages } from '@/lib/seo/localSeoData';
+import { absoluteUrl } from '@/lib/seo/site';
+
+export const metadata: Metadata = {
+  title: 'Remodeling Contractor Simpsonville and Fountain Inn, SC',
+  description:
+    'Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for Simpsonville and Fountain Inn homeowners.',
+  alternates: { canonical: absoluteUrl('/') },
+  openGraph: {
+    title: 'Burch Contracting | Remodeling Contractor Simpsonville and Fountain Inn, SC',
+    description:
+      'Request a free estimate for kitchen remodeling, bathroom remodeling, basement finishing, decks, screened porches, and room additions.',
+    url: absoluteUrl('/'),
+  },
+};
 
 export default async function HomePage() {
   // Fetch active services from database
@@ -213,6 +229,15 @@ export default async function HomePage() {
     ]
   };
 
+  const featuredLocalPages = serviceLandingPages.slice(0, 10);
+  const calculatorCards = [
+    { title: 'Kitchen Remodel Budget', href: '/calculator/kitchen-remodeling', icon: 'ChefHat' as const, text: 'Compare refresh, full remodel, and custom kitchen pricing.' },
+    { title: 'Bathroom Remodel Budget', href: '/calculator/bathroom-remodeling', icon: 'Bath' as const, text: 'Estimate guest bath, primary bath, and premium shower ranges.' },
+    { title: 'Room Addition Budget', href: '/calculator/room-additions', icon: 'Construction' as const, text: 'Plan square-foot expansion costs before design and permitting.' },
+    { title: 'Deck and Porch Budget', href: '/calculator/decks-screened-porches', icon: 'Trees' as const, text: 'Model deck, composite, and screened porch investment ranges.' },
+    { title: 'Basement Finish Budget', href: '/calculator/basement-finishing', icon: 'Sofa' as const, text: 'Estimate basement square-foot finishing and suite-level upgrades.' },
+  ];
+
   return (
     <>
       <Script
@@ -239,11 +264,11 @@ export default async function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
-              <span className="block">{businessConfig.tagline.split(' ').slice(0, 3).join(' ')}</span>
-              <span className="block gradient-text">{businessConfig.tagline.split(' ').slice(3).join(' ')}</span>
+              <span className="block">Kitchen, Bath, Addition</span>
+              <span className="block gradient-text">and Basement Remodeling Built Right</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed animate-fade-in-up stagger-1 opacity-0">
-              Professional residential and light commercial contracting services. Quality craftsmanship, clear communication, and dependable service for all your home improvement needs.
+              Serving Simpsonville, Fountain Inn, Greenville County, and Laurens County with stronger planning, cleaner communication, and dependable craftsmanship from estimate through final walkthrough.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-16 animate-fade-in-up stagger-2 opacity-0">
@@ -254,6 +279,10 @@ export default async function HomePage() {
               <Button variant="outline" size="lg" href={`tel:${businessConfig.contact.phone}`} className="glass border-white/30 text-white hover:bg-white hover:text-gray-900">
                 <Icon name="Phone" size={20} />
                 {businessConfig.contact.phone}
+              </Button>
+              <Button variant="outline" size="lg" href="/locations" className="glass border-cyan-300/60 text-cyan-100 hover:bg-white hover:text-gray-900">
+                <Icon name="MapPinned" size={20} />
+                Browse Local Pages
               </Button>
             </div>
 
@@ -278,12 +307,33 @@ export default async function HomePage() {
       </section>
 
       <Section background="white" padding="lg">
+        <div className="mb-16 grid gap-6 rounded-3xl bg-slate-950 p-8 text-white lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <h2 className="mb-4 text-4xl font-bold">Free estimate planning for the projects homeowners ask about most</h2>
+            <p className="max-w-2xl text-lg text-slate-300">
+              Start with the service-location page that matches your project, then use a calculator to set expectations before you schedule a walkthrough.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {featuredLocalPages.slice(0, 4).map((page) => (
+              <a
+                key={page.slug}
+                href={`/locations/${page.slug}`}
+                className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition hover:border-cyan-300 hover:bg-white/10"
+              >
+                <div className="text-sm uppercase tracking-wide text-cyan-200">{page.city}</div>
+                <div className="mt-1 font-semibold text-white">{page.h1}</div>
+              </a>
+            ))}
+          </div>
+        </div>
+
         <div className="text-center mb-16 animate-fade-in-up">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Why Choose <span className="gradient-text">{businessConfig.name}</span>?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're committed to delivering exceptional service and quality workmanship on every project
+            We&apos;re committed to delivering exceptional service and quality workmanship on every project
           </p>
         </div>
 
@@ -293,7 +343,7 @@ export default async function HomePage() {
               <FeatureCard
                 title={feature.title}
                 description={feature.description}
-                icon={feature.icon as any}
+                icon={feature.icon as IconName}
               />
             </div>
           ))}
@@ -306,7 +356,7 @@ export default async function HomePage() {
             Our Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive home improvement solutions tailored to your needs
+            High-value remodeling and outdoor living services tailored to how Upstate families actually live
           </p>
         </div>
 
@@ -316,7 +366,7 @@ export default async function HomePage() {
               <ServiceCard
                 title={service.title}
                 description={service.description}
-                icon={<Icon name={service.icon as any} size={40} className="text-blue-600" />}
+                icon={<Icon name={service.icon as IconName} size={40} className="text-blue-600" />}
                 href={`/services/${service.id}`}
                 compact
               />
@@ -326,9 +376,27 @@ export default async function HomePage() {
       </Section>
 
       <Section background="white" padding="lg">
+        <div className="mb-14 text-center">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900">Popular Remodeling Pages by City</h2>
+          <p className="mx-auto max-w-3xl text-xl text-gray-600">
+            These localized pages target the exact service and city combinations homeowners search before they call.
+          </p>
+        </div>
+
+        <div className="mb-16 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {featuredLocalPages.map((page) => (
+            <Card key={page.slug} className="h-full">
+              <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city}</div>
+              <h3 className="mb-3 text-2xl font-bold text-gray-900">{page.h1}</h3>
+              <p className="mb-5 text-gray-600">{page.shortDescription}</p>
+              <Button href={`/locations/${page.slug}`}>View Local Guide</Button>
+            </Card>
+          ))}
+        </div>
+
         <div className="text-center mb-12 animate-fade-in-up">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            <span className="gradient-text">Service Areas</span> We're Proud to Serve
+            <span className="gradient-text">Service Areas</span> We&apos;re Proud to Serve
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Delivering quality home services throughout the Upstate. Click on your city to learn more about our local expertise.
@@ -336,7 +404,7 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-          <a href="/service-areas/simpsonville" className="group" aria-label="Simpsonville service area - Our home base">
+          <Link href="/service-areas/simpsonville" className="group" aria-label="Simpsonville service area - Our home base">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-blue-600">
               <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Simpsonville</h3>
@@ -346,21 +414,21 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/greenville" className="group" aria-label="Greenville service area - Upstate's hub">
+          <Link href="/service-areas/greenville" className="group" aria-label="Greenville service area - Upstate&apos;s hub">
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-green-600">
               <Icon name="MapPin" size={32} className="text-green-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Greenville</h3>
-              <p className="text-sm text-gray-600 mb-3">Upstate's Hub</p>
+              <p className="text-sm text-gray-600 mb-3">Upstate&apos;s Hub</p>
               <div className="flex items-center justify-center text-green-600 text-sm font-semibold">
                 Learn More
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/five-forks" className="group" aria-label="Five Forks service area - Family friendly">
+          <Link href="/service-areas/five-forks" className="group" aria-label="Five Forks service area - Family friendly">
             <div className="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-sky-600">
               <Icon name="MapPin" size={32} className="text-sky-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Five Forks</h3>
@@ -370,9 +438,9 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/woodruff" className="group" aria-label="Woodruff service area - Historic charm">
+          <Link href="/service-areas/woodruff" className="group" aria-label="Woodruff service area - Historic charm">
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-orange-600">
               <Icon name="MapPin" size={32} className="text-orange-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Woodruff</h3>
@@ -382,9 +450,9 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/gray-court" className="group" aria-label="Gray Court service area - Rural living">
+          <Link href="/service-areas/gray-court" className="group" aria-label="Gray Court service area - Rural living">
             <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-teal-600">
               <Icon name="MapPin" size={32} className="text-teal-600 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Gray Court</h3>
@@ -394,9 +462,9 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/fountain-inn" className="group">
+          <Link href="/service-areas/fountain-inn" className="group">
             <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-red-600">
               <Icon name="MapPin" size={32} className="text-red-600 mx-auto mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Fountain Inn</h3>
@@ -406,9 +474,9 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/mauldin" className="group">
+          <Link href="/service-areas/mauldin" className="group">
             <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-cyan-600">
               <Icon name="MapPin" size={32} className="text-cyan-600 mx-auto mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Mauldin</h3>
@@ -418,9 +486,9 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/service-areas/laurens" className="group">
+          <Link href="/service-areas/laurens" className="group">
             <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-6 text-center hover-lift transition-all duration-200 border-2 border-transparent group-hover:border-amber-600">
               <Icon name="MapPin" size={32} className="text-amber-600 mx-auto mb-3" />
               <h3 className="text-xl font-bold text-gray-900 mb-1">Laurens</h3>
@@ -430,7 +498,7 @@ export default async function HomePage() {
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          </a>
+          </Link>
         </div>
 
         <div className="text-center mt-12">
@@ -444,6 +512,28 @@ export default async function HomePage() {
         </div>
       </Section>
 
+      <Section background="gray" padding="lg">
+        <div className="text-center mb-12">
+          <h2 className="mb-4 text-4xl font-bold text-gray-900">Project Cost Calculators</h2>
+          <p className="mx-auto max-w-3xl text-xl text-gray-600">
+            Use local market pricing as a starting point, then request a site-specific estimate for accurate scope and scheduling.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
+          {calculatorCards.map((card) => (
+            <Card key={card.href} className="h-full text-left">
+              <div className="mb-4 inline-flex rounded-2xl bg-blue-50 p-3">
+                <Icon name={card.icon} size={24} className="text-blue-600" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-gray-900">{card.title}</h3>
+              <p className="mb-5 text-gray-600">{card.text}</p>
+              <Button href={card.href}>Open Calculator</Button>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
       {/* Recent Projects - Dynamic from Database */}
       <RecentProjects />
 
@@ -453,7 +543,7 @@ export default async function HomePage() {
             What Our Customers Say
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Don't just take our word for it - hear from homeowners we've helped
+            Don&apos;t just take our word for it - hear from homeowners we&apos;ve helped
           </p>
           
           {/* Trust Badges */}
@@ -568,7 +658,7 @@ export default async function HomePage() {
               Ready to Start Your Project?
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-              Get a free, no-obligation estimate for your home improvement project. We'll work with you to bring your vision to life.
+              Get a free, no-obligation estimate for your home improvement project. We&apos;ll help you compare scope options, pricing tiers, and realistic timelines before work begins.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-1 opacity-0">

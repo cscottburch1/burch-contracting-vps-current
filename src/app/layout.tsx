@@ -6,6 +6,8 @@ import Footer from "@/components/layout/Footer";
 import Script from "next/script";
 import AIChat from "@/components/AIChat";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import MobileStickyCta from "@/components/MobileStickyCta";
+import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,12 +24,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "#1 Contractor Simpsonville, Fountain Inn, Woodruff, Laurens SC | Basement Finishing, Kitchen Remodeling",
-  description: "Simpsonville's #1 rated contractor for 30+ years! Licensed, insured, BBB A+ rated. Basement finishing, kitchen & bathroom remodeling, bath to shower conversions, decks, screened porches, room additions. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC. Same-day handyman available. Free estimates! Call (864) 724-4600",
+  metadataBase: new URL(siteConfig.siteUrl),
+  title: {
+    default: 'Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC',
+    template: '%s | Burch Contracting',
+  },
+  description: "Burch Contracting helps homeowners in Simpsonville and Fountain Inn, SC plan kitchens, bathrooms, room additions, decks, screened porches, and basement finishing with clear estimates, quality craftsmanship, and strong local communication.",
   keywords: ["contractor Simpsonville SC", "basement finishing Simpsonville", "kitchen remodeling Simpsonville", "bathroom remodeling Simpsonville", "bath to shower conversion Simpsonville", "deck builder Simpsonville", "basement contractor Fountain Inn", "kitchen remodeling Fountain Inn", "bathroom renovation Woodruff", "basement finishing Woodruff", "kitchen remodeling Laurens SC", "screened porch builder", "room additions", "home remodeling Upstate SC", "licensed contractor", "BBB A+ contractor"],
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
+  alternates: {
+    canonical: absoluteUrl('/'),
+  },
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -44,24 +53,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://burchcontracting.com",
-    siteName: "Burch Contracting - Simpsonville's #1 Rated Contractor",
-    title: "#1 Contractor Simpsonville, Fountain Inn, Woodruff, Laurens SC | Basement Finishing, Kitchen Remodeling",
-    description: "Simpsonville's most trusted contractor for 30+ years. Licensed, insured, BBB A+ rated. Basement finishing, kitchen & bathroom remodeling, bath to shower conversions, decks, screened porches, room additions. Serving Simpsonville, Fountain Inn, Woodruff, Laurens SC. Free estimates!",
+    url: absoluteUrl('/'),
+    siteName: "Burch Contracting",
+    title: "Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC",
+    description: "Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for homeowners in Simpsonville, Fountain Inn, Greenville County, and Laurens County.",
     images: [
       {
-        url: "https://burchcontracting.com/og-image.jpg",
+        url: absoluteUrl(siteConfig.defaultOgImage),
         width: 1200,
         height: 630,
-        alt: "Burch Contracting - Professional Home Services",
+        alt: "Burch Contracting remodeling and home improvement services",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Burch Contracting | Reliable Home Repair & Remodeling",
-    description: "Professional residential and light commercial contracting services in Simpsonville, SC.",
-    images: ["https://burchcontracting.com/og-image.jpg"],
+    title: "Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC",
+    description: "Plan kitchens, baths, additions, decks, porches, and basement finishes with a local Upstate South Carolina contractor.",
+    images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
   robots: {
     index: true,
@@ -95,6 +104,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <MobileStickyCta />
         <AIChat />
         <Script id="register-sw" strategy="afterInteractive">
           {`

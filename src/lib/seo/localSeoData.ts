@@ -215,20 +215,38 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     faqs: baseFaqs,
   },
   {
-    slug: "deck-builder-fountain-inn-sc",
-    serviceName: "Deck Builder",
+    slug: "room-additions-fountain-inn-sc",
+    serviceName: "Room Additions",
     city: "Fountain Inn SC",
-    h1: "Deck Builder Fountain Inn SC",
-    metaTitle: "Deck Builder Fountain Inn SC | Burch Contracting",
+    h1: "Room Additions Fountain Inn SC",
+    metaTitle: "Room Additions Fountain Inn SC | Burch Contracting",
     metaDescription:
-      "Find the right deck builder in Fountain Inn SC. Understand budget ranges, materials, and build sequencing for a durable finished deck.",
+      "Plan a room addition in Fountain Inn SC with realistic pricing, design-build guidance, and code-compliant project planning from Burch Contracting.",
     shortDescription:
-      "We design decks around your lot, home style, and outdoor goals so the finished space feels intentional and long lasting.",
-    keywords: ["deck builder Fountain Inn SC", "screened porch builder Fountain Inn SC"],
+      "We help Fountain Inn homeowners add bedrooms, family rooms, and flex spaces without losing sight of budget, daily function, or resale value.",
+    keywords: ["room additions Fountain Inn SC", "home remodeling Fountain Inn SC"],
     priceRanges: [
-      { label: "Entry Deck", range: "$13,000-$24,000", details: "Straightforward layout for grilling, seating, and yard access." },
-      { label: "Composite Family Deck", range: "$25,000-$52,000", details: "Low-maintenance boards, railing upgrades, and integrated step design." },
-      { label: "Premium Outdoor Build", range: "$53,000-$105,000+", details: "Large entertaining layout with lighting, privacy features, and custom accents." },
+      { label: "Compact Addition", range: "$58,000-$98,000", details: "Smaller bedroom, office, or den addition with standard finishes and utility tie-ins." },
+      { label: "Mid-Size Family Addition", range: "$99,000-$185,000", details: "Larger footprint with roofing integration, HVAC extension, and more detailed finish work." },
+      { label: "Complex Expansion", range: "$186,000-$325,000+", details: "Multi-room additions, structural engineering, or utility relocation for more complex homesites." },
+    ],
+    faqs: baseFaqs,
+  },
+  {
+    slug: "decks-screened-porches-fountain-inn-sc",
+    serviceName: "Decks and Screened Porches",
+    city: "Fountain Inn SC",
+    h1: "Decks and Screened Porches Fountain Inn SC",
+    metaTitle: "Decks and Screened Porches Fountain Inn SC | Burch Contracting",
+    metaDescription:
+      "Plan decks and screened porches in Fountain Inn SC with realistic installed costs, material comparisons, and local outdoor living design guidance.",
+    shortDescription:
+      "We help Fountain Inn homeowners create comfortable outdoor living spaces with durable deck framing, screened porch protection, and practical layouts.",
+    keywords: ["decks and screened porches Fountain Inn SC", "screened porch builder Fountain Inn SC"],
+    priceRanges: [
+      { label: "Entry Outdoor Build", range: "$16,000-$29,000", details: "Simple deck layout or starter covered porch for grilling and seating." },
+      { label: "Family Outdoor Living Space", range: "$30,000-$64,000", details: "Composite decking, stronger railing package, or a screened porch with lighting and fans." },
+      { label: "Custom Outdoor Room", range: "$65,000-$125,000+", details: "Large entertaining layouts with premium details, privacy features, and custom finishes." },
     ],
     faqs: baseFaqs,
   },

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
 import { Logo } from '../ui/Logo';
@@ -16,19 +16,11 @@ interface Service {
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [services, setServices] = useState<Service[]>([]);
-
-  useEffect(() => {
-    // Fetch active services for navigation
-    fetch('/api/services/active')
-      .then(res => res.json())
-      .then(data => {
-        const servicesList = data.services || [];
-        const navServices = servicesList.filter((s: any) => s.show_in_navigation);
-        setServices(navServices);
-      })
-      .catch(err => console.error('Failed to load services:', err));
-  }, []);
+  const services: Service[] = businessConfig.services.map((service) => ({
+    service_slug: service.id,
+    service_name: service.title,
+    menu_label: service.title,
+  }));
 
   const navLinks = [
     { label: 'Home', href: '/' },
