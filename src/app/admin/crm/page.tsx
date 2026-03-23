@@ -361,6 +361,11 @@ export default function AdminCRMPage() {
                           {lead.budget_range && (
                             <p className="text-xs text-gray-500 mt-1">{lead.budget_range}</p>
                           )}
+                          {Array.isArray(lead.attachments) && lead.attachments.length > 0 && (
+                            <p className="text-xs text-blue-600 mt-1 font-medium">
+                              📎 {lead.attachments.length} attachment{lead.attachments.length === 1 ? '' : 's'}
+                            </p>
+                          )}
                         </td>
                         <td className="py-4 px-4">
                           <select

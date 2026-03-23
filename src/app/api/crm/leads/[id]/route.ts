@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { query, queryOne } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
+import { existsSync } from 'fs';
+import { readdir } from 'fs/promises';
+import { join } from 'path';
 
 async function ensureLeadActivitiesTable() {
   await query(`
@@ -22,6 +25,38 @@ function getAdminIdentifier(adminUser: any): string {
   return adminUser?.email || adminUser?.name || `admin:${adminUser?.userId || 'unknown'}`;
 }
 
+async function resolveLeadAttachments(leadId: string, rawAttachments: unknown): Promise<string[]> {
+  let attachments: string[] = [];
+
+  if (Array.isArray(rawAttachments)) {
+    attachments = rawAttachments.filter((item): item is string => typeof item === 'string' && item.length > 0);
+  } else if (typeof rawAttachments === 'string' && rawAttachments.trim().length > 0) {
+    try {
+      const parsed = JSON.parse(rawAttachments);
+      if (Array.isArray(parsed)) {
+        attachments = parsed.filter((item): item is string => typeof item === 'string' && item.length > 0);
+      }
+    } catch {
+      attachments = [];
+    }
+  }
+
+  // Fallback: recover from files on disk when DB metadata is missing.
+  if (attachments.length === 0) {
+    try {
+      const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+      if (existsSync(leadDir)) {
+        const files = await readdir(leadDir);
+        attachments = files.filter((file) => !file.startsWith('.'));
+      }
+    } catch {
+      // Ignore fallback errors.
+    }
+  }
+
+  return attachments;
+}
+
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -39,12 +74,17 @@ export async function GET(
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
 
-    // Parse attachments JSON string into array
-    if (lead.attachments && typeof lead.attachments === 'string') {
+    lead.attachments = await resolveLeadAttachments(String(id), lead.attachments);
+
+    // Backfill missing attachment metadata for future list/detail reliability.
+    if ((!lead.attachments || lead.attachments.length === 0) === false) {
       try {
-        lead.attachments = JSON.parse(lead.attachments);
+        await query('UPDATE contact_leads SET attachments = ? WHERE id = ? AND (attachments IS NULL OR attachments = "" OR attachments = "[]")', [
+          JSON.stringify(lead.attachments),
+          id,
+        ]);
       } catch {
-        lead.attachments = [];
+        // Non-blocking metadata sync.
       }
     }
 

@@ -35,9 +35,32 @@ export async function GET(request: Request) {
 
     sql += ' ORDER BY created_at DESC';
 
-    const leads = await query(sql, params);
+    const leads: any[] = await query(sql, params);
 
-    return NextResponse.json({ leads });
+    const normalizedLeads = leads.map((lead) => {
+      let attachments: string[] = [];
+
+      if (Array.isArray(lead.attachments)) {
+        attachments = lead.attachments.filter((item: unknown): item is string => typeof item === 'string' && item.length > 0);
+      } else if (typeof lead.attachments === 'string' && lead.attachments.trim().length > 0) {
+        try {
+          const parsed = JSON.parse(lead.attachments);
+          if (Array.isArray(parsed)) {
+            attachments = parsed.filter((item: unknown): item is string => typeof item === 'string' && item.length > 0);
+          }
+        } catch {
+          attachments = [];
+        }
+      }
+
+      return {
+        ...lead,
+        attachments,
+        attachment_count: attachments.length,
+      };
+    });
+
+    return NextResponse.json({ leads: normalizedLeads });
   } catch (error) {
     console.error('Error fetching leads:', error);
     return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });
