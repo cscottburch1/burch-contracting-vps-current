@@ -25,10 +25,16 @@ export const Header: React.FC = () => {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services', hasDropdown: services.length > 0 },
-    { label: 'Subcontractors', href: '/subcontractors/join' },
+    { label: 'Employment', href: '/employment', hasDropdown: true },
     { label: 'Customer Portal', href: '/portal' },
     { label: 'Contact', href: '/contact' },
     { label: 'Admin', href: '/admin' }
+  ];
+
+  const [employmentOpen, setEmploymentOpen] = useState(false);
+  const employmentLinks = [
+    { label: 'Subcontractors', href: '/subcontractors/join' },
+    { label: 'Direct Hire Employees', href: '/employment/direct-hire' }
   ];
 
   return (
@@ -54,42 +60,77 @@ export const Header: React.FC = () => {
           <Logo variant="header" />
 
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              link.hasDropdown ? (
-                <div key={link.href} className="relative group">
-                  <a 
-                    href={link.href} 
-                    className="text-gray-800 hover:text-blue-600 font-semibold flex items-center gap-1"
-                    onMouseEnter={() => setServicesOpen(true)}
-                    onMouseLeave={() => setServicesOpen(false)}
-                  >
-                    {link.label}
-                    <Icon name="ChevronDown" size={16} />
-                  </a>
-                  {servicesOpen && services.length > 0 && (
-                    <div 
-                      className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50"
+            {navLinks.map((link) => {
+              if (link.label === 'Services') {
+                return (
+                  <div key={link.href} className="relative group">
+                    <a 
+                      href={link.href} 
+                      className="text-gray-800 hover:text-blue-600 font-semibold flex items-center gap-1"
                       onMouseEnter={() => setServicesOpen(true)}
                       onMouseLeave={() => setServicesOpen(false)}
                     >
-                      {services.map((service) => (
-                        <a
-                          key={service.service_slug}
-                          href={`/services/${service.service_slug}`}
-                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                        >
-                          {service.menu_label || service.service_name}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <a key={link.href} href={link.href} className="text-gray-800 hover:text-blue-600 font-semibold">
-                  {link.label}
-                </a>
-              )
-            ))}
+                      {link.label}
+                      <Icon name="ChevronDown" size={16} />
+                    </a>
+                    {servicesOpen && services.length > 0 && (
+                      <div 
+                        className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50"
+                        onMouseEnter={() => setServicesOpen(true)}
+                        onMouseLeave={() => setServicesOpen(false)}
+                      >
+                        {services.map((service) => (
+                          <a
+                            key={service.service_slug}
+                            href={`/services/${service.service_slug}`}
+                            className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          >
+                            {service.menu_label || service.service_name}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              } else if (link.label === 'Employment') {
+                return (
+                  <div key={link.href} className="relative group">
+                    <a 
+                      href={link.href} 
+                      className="text-gray-800 hover:text-blue-600 font-semibold flex items-center gap-1"
+                      onMouseEnter={() => setEmploymentOpen(true)}
+                      onMouseLeave={() => setEmploymentOpen(false)}
+                    >
+                      {link.label}
+                      <Icon name="ChevronDown" size={16} />
+                    </a>
+                    {employmentOpen && (
+                      <div 
+                        className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50"
+                        onMouseEnter={() => setEmploymentOpen(true)}
+                        onMouseLeave={() => setEmploymentOpen(false)}
+                      >
+                        {employmentLinks.map((empLink) => (
+                          <a
+                            key={empLink.href}
+                            href={empLink.href}
+                            className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                          >
+                            {empLink.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              } else {
+                return (
+                  <a key={link.href} href={link.href} className="text-gray-800 hover:text-blue-600 font-semibold">
+                    {link.label}
+                  </a>
+                );
+              }
+            })}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -111,31 +152,71 @@ export const Header: React.FC = () => {
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t">
             <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <div key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-black font-semibold py-2 text-lg block"
-                  >
-                    {link.label}
-                  </a>
-                  {link.hasDropdown && services.length > 0 && (
-                    <div className="ml-4 mt-2 space-y-2">
-                      {services.map((service) => (
-                        <a
-                          key={service.service_slug}
-                          href={`/services/${service.service_slug}`}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="text-gray-600 py-1 text-base block"
-                        >
-                          {service.menu_label || service.service_name}
-                        </a>
-                      ))}
+              {navLinks.map((link) => {
+                if (link.label === 'Services') {
+                  return (
+                    <div key={link.href}>
+                      <a
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-black font-semibold py-2 text-lg block"
+                      >
+                        {link.label}
+                      </a>
+                      {services.length > 0 && (
+                        <div className="ml-4 mt-2 space-y-2">
+                          {services.map((service) => (
+                            <a
+                              key={service.service_slug}
+                              href={`/services/${service.service_slug}`}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="text-gray-600 py-1 text-base block"
+                            >
+                              {service.menu_label || service.service_name}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                  );
+                } else if (link.label === 'Employment') {
+                  return (
+                    <div key={link.href}>
+                      <a
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-black font-semibold py-2 text-lg block"
+                      >
+                        {link.label}
+                      </a>
+                      <div className="ml-4 mt-2 space-y-2">
+                        {employmentLinks.map((empLink) => (
+                          <a
+                            key={empLink.href}
+                            href={empLink.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="text-gray-600 py-1 text-base block"
+                          >
+                            {empLink.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={link.href}>
+                      <a
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-black font-semibold py-2 text-lg block"
+                      >
+                        {link.label}
+                      </a>
+                    </div>
+                  );
+                }
+              })}
               <Button variant="primary" size="md" href="/contact" fullWidth onClick={() => setMobileMenuOpen(false)}>
                 Free Estimate
               </Button>
