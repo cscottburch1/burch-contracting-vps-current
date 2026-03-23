@@ -28,4 +28,5 @@ jobs:
             npm ci || npm install
             npm run build
             pm2 restart burch-contracting --update-env
+            npm run indexnow:ping || true
             pm2 status burch-contracting
