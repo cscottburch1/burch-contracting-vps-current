@@ -4,27 +4,156 @@ import { query } from '@/lib/mysql';
 import { validateRecaptcha } from '@/lib/recaptcha';
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import { calculateLeadScore } from '@/lib/leadScoring';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
-async function getLeadTableConfig(): Promise<{ tableName: 'contact_leads' | 'leads'; columns: Set<string> }> {
-  const tables = await query<{ TABLE_NAME: string }>(
-    `SELECT TABLE_NAME
-     FROM INFORMATION_SCHEMA.TABLES
-     WHERE TABLE_SCHEMA = DATABASE()
-       AND TABLE_NAME IN ('contact_leads', 'leads')`
-  );
+type LeadInsertPayload = {
+  name: string;
+  phone: string;
+  email: string;
+  address?: string | null;
+  serviceType?: string | null;
+  budgetRange?: string | null;
+  timeframe?: string | null;
+  referralSource?: string | null;
+  description: string;
+  preferredDate?: string | null;
+  preferredTime?: string | null;
+  priority: string;
+  leadScore: number;
+};
 
-  const tableName = tables.find(t => t.TABLE_NAME === 'contact_leads')
-    ? 'contact_leads'
-    : tables.find(t => t.TABLE_NAME === 'leads')
-      ? 'leads'
-      : null;
+const LEAD_QUEUE_FILE = join(process.cwd(), 'tmp', 'emergency_leads_queue.json');
 
-  if (!tableName) {
-    throw new Error('No leads table found (expected contact_leads or leads)');
+async function ensureContactLeadsTable() {
+  await query(`
+    CREATE TABLE IF NOT EXISTS contact_leads (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      phone VARCHAR(50) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      address TEXT,
+      service_type VARCHAR(100),
+      budget_range VARCHAR(100),
+      timeframe VARCHAR(100),
+      referral_source VARCHAR(100),
+      description TEXT,
+      message TEXT,
+      attachments TEXT,
+      preferred_date DATE,
+      preferred_time VARCHAR(50),
+      status ENUM('new', 'contacted', 'qualified', 'proposal', 'negotiation', 'won', 'lost') DEFAULT 'new',
+      priority ENUM('low', 'medium', 'high', 'urgent') DEFAULT 'medium',
+      estimated_value DECIMAL(10, 2),
+      lead_score INT DEFAULT 0,
+      source VARCHAR(100),
+      source_url VARCHAR(500),
+      tags JSON,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      INDEX idx_status (status),
+      INDEX idx_priority (priority),
+      INDEX idx_email (email),
+      INDEX idx_created_at (created_at),
+      INDEX idx_lead_score (lead_score)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  `);
+
+  // Defensive column sync for older/stale schemas.
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS message TEXT`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS attachments TEXT`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS preferred_date DATE`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS preferred_time VARCHAR(50)`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS lead_score INT DEFAULT 0`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS source VARCHAR(100)`);
+  await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
+}
+
+async function queueLeadForRecovery(payload: LeadInsertPayload, reason: string) {
+  const queueDir = join(process.cwd(), 'tmp');
+  if (!existsSync(queueDir)) {
+    await mkdir(queueDir, { recursive: true });
   }
+
+  let queue: any[] = [];
+  if (existsSync(LEAD_QUEUE_FILE)) {
+    try {
+      queue = JSON.parse(await readFile(LEAD_QUEUE_FILE, 'utf8'));
+      if (!Array.isArray(queue)) queue = [];
+    } catch {
+      queue = [];
+    }
+  }
+
+  queue.push({
+    ...payload,
+    queued_at: new Date().toISOString(),
+    reason,
+  });
+
+  await writeFile(LEAD_QUEUE_FILE, JSON.stringify(queue, null, 2), 'utf8');
+}
+
+async function tryFlushLeadQueue() {
+  if (!existsSync(LEAD_QUEUE_FILE)) {
+    return;
+  }
+
+  let queue: LeadInsertPayload[] = [];
+  try {
+    const raw = await readFile(LEAD_QUEUE_FILE, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      queue = parsed;
+    }
+  } catch {
+    return;
+  }
+
+  if (queue.length === 0) {
+    return;
+  }
+
+  const remaining: any[] = [];
+  for (const item of queue) {
+    try {
+      await query(
+        `INSERT INTO contact_leads
+         (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, message, preferred_date, preferred_time, status, priority, estimated_value, lead_score, source)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          item.name,
+          item.phone,
+          item.email,
+          item.address || null,
+          item.serviceType || null,
+          item.budgetRange || null,
+          item.timeframe || null,
+          item.referralSource || null,
+          item.description,
+          item.description,
+          item.preferredDate || null,
+          item.preferredTime || null,
+          'new',
+          item.priority,
+          null,
+          item.leadScore,
+          'contact_form',
+        ]
+      );
+    } catch {
+      remaining.push(item);
+    }
+  }
+
+  await writeFile(LEAD_QUEUE_FILE, JSON.stringify(remaining, null, 2), 'utf8');
+}
+
+async function getLeadTableConfig(): Promise<{ tableName: 'contact_leads' | 'leads'; columns: Set<string> }> {
+  await ensureContactLeadsTable();
+
+  const tableName = 'contact_leads' as const;
 
   const columnRows = await query<{ COLUMN_NAME: string }>(
     `SELECT COLUMN_NAME
@@ -114,8 +243,27 @@ export async function POST(request: Request) {
       description,
     });
 
+    const leadPayload: LeadInsertPayload = {
+      name,
+      phone,
+      email,
+      address: address || null,
+      serviceType: serviceType || null,
+      budgetRange: budgetRange || null,
+      timeframe: timeframe || null,
+      referralSource: referralSource || null,
+      description,
+      preferredDate: preferredDate || null,
+      preferredTime: preferredTime || null,
+      priority: leadScore.priority,
+      leadScore: leadScore.totalScore,
+    };
+
     // Support both legacy and current schemas to avoid submission failures.
     const { tableName, columns } = await getLeadTableConfig();
+
+    // Opportunistically replay any previously queued leads when DB is healthy.
+    await tryFlushLeadQueue();
 
     const insertColumns: string[] = [];
     const insertValues: any[] = [];
@@ -151,10 +299,23 @@ export async function POST(request: Request) {
 
     // Save lead to database
     const placeholders = insertColumns.map(() => '?').join(', ');
-    const result = await query<any>(
-      `INSERT INTO ${tableName} (${insertColumns.join(', ')}) VALUES (${placeholders})`,
-      insertValues
-    );
+    let result: any;
+    try {
+      result = await query<any>(
+        `INSERT INTO ${tableName} (${insertColumns.join(', ')}) VALUES (${placeholders})`,
+        insertValues
+      );
+    } catch (dbError) {
+      // Emergency fallback to avoid losing leads when DB/schema is temporarily unhealthy.
+      await queueLeadForRecovery(leadPayload, dbError instanceof Error ? dbError.message : 'Unknown DB error');
+      console.error('Lead queued for recovery due to DB error:', dbError);
+
+      return NextResponse.json({
+        success: true,
+        queued: true,
+        message: 'Request received and queued for processing',
+      });
+    }
 
     const leadId = (result as any).insertId;
 
