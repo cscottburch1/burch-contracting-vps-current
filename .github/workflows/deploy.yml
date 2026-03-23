@@ -26,6 +26,7 @@ jobs:
             cd /root/burch-contracting
             git pull origin main
             npm ci || npm install
+            npm run indexnow:sync-key || true
             npm run build
             pm2 restart burch-contracting --update-env
             npm run indexnow:ping || true

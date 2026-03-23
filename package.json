@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "import-queued": "node ./scripts/import_queued_subcontractors.js",
+    "indexnow:sync-key": "node ./scripts/seo/write-indexnow-key.mjs",
     "indexnow:ping": "node ./scripts/seo/indexnow-ping.mjs"
   },
   "dependencies": {
