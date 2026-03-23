@@ -1,6 +1,40 @@
 import { NextResponse } from 'next/server';
 import { getCurrentAdminUser } from '@/lib/adminAuth';
 import { query } from '@/lib/mysql';
+import fs from 'fs';
+import path from 'path';
+
+function getQueueFilePath() {
+  return path.join(process.cwd(), 'tmp', 'subcontractor_applications.json');
+}
+
+function removeQueuedApplicationById(queueId: string) {
+  const queueFile = getQueueFilePath();
+
+  if (!fs.existsSync(queueFile)) {
+    return { removed: false, reason: 'Queue file not found' };
+  }
+
+  const queueRaw = fs.readFileSync(queueFile, 'utf8') || '[]';
+  const queue = JSON.parse(queueRaw);
+
+  if (!Array.isArray(queue)) {
+    return { removed: false, reason: 'Queue file is invalid' };
+  }
+
+  const idx = queue.findIndex((item: any, i: number) => {
+    const itemId = item?.id ? String(item.id) : `queued-${i}`;
+    return itemId === queueId;
+  });
+
+  if (idx < 0) {
+    return { removed: false, reason: 'Queued application not found' };
+  }
+
+  queue.splice(idx, 1);
+  fs.writeFileSync(queueFile, JSON.stringify(queue, null, 2), 'utf8');
+  return { removed: true };
+}
 
 // PATCH /api/admin/subcontractors/[id] - Update subcontractor
 export async function PATCH(
@@ -229,7 +263,25 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    const subId = parseInt(id);
+    const idStr = String(id);
+
+    // Queued applications are stored in tmp/subcontractor_applications.json
+    // and use non-numeric ids (for example, "queued-0").
+    if (!/^\d+$/.test(idStr)) {
+      const queueDelete = removeQueuedApplicationById(idStr);
+
+      if (!queueDelete.removed) {
+        return NextResponse.json({ error: queueDelete.reason }, { status: 404 });
+      }
+
+      return NextResponse.json({ success: true, message: 'Queued application deleted successfully' });
+    }
+
+    const subId = Number(idStr);
+
+    if (!Number.isInteger(subId) || subId <= 0) {
+      return NextResponse.json({ error: 'Invalid subcontractor id' }, { status: 400 });
+    }
 
     // Check for existing project assignments (if table exists)
     try {
@@ -274,7 +326,11 @@ export async function DELETE(
     }
     
     // Now delete the subcontractor
-    const result = await query('DELETE FROM subcontractors WHERE id = ?', [subId]);
+    const result: any = await query('DELETE FROM subcontractors WHERE id = ?', [subId]);
+
+    if (!result?.affectedRows) {
+      return NextResponse.json({ error: 'Subcontractor not found' }, { status: 404 });
+    }
 
     return NextResponse.json({ success: true, message: 'Subcontractor deleted successfully' });
   } catch (error) {
