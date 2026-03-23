@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminToolsPage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showMaintenance, setShowMaintenance] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function AdminToolsPage() {
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">Admin Tools</h1>
-              <p className="text-xl text-gray-600">System utilities and management tools</p>
+              <p className="text-xl text-gray-600">Essential management and business tools</p>
             </div>
             <a
               href="/admin/dashboard"
@@ -51,141 +52,102 @@ export default function AdminToolsPage() {
           </div>
         </div>
 
-        {/* Database & System Tools */}
+        {/* Business Operations - Most Essential */}
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">🗄️</span>
-            Database & System
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {isOwner && (
-              <a
-                href="/admin/migrate"
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-              >
-                <div className="flex items-center mb-3">
-                  <span className="text-4xl mr-3">⚡</span>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                    Database Migrations
-                  </h3>
-                </div>
-                <p className="text-gray-600">
-                  Run database migrations to create or update tables
-                </p>
-                <div className="mt-4 text-sm font-semibold text-blue-600">
-                  Owner Only →
-                </div>
-              </a>
-            )}
-            
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📊</span>
-                <h3 className="text-xl font-bold text-gray-700">Database Backup</h3>
-              </div>
-              <p className="text-gray-500">
-                Backup and restore database (Coming Soon)
-              </p>
-            </div>
-
-            {isOwner && (
-              <a
-                href="/api/admin/diagnose-projects"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-yellow-400"
-              >
-                <div className="flex items-center mb-3">
-                  <span className="text-4xl mr-3">🔍</span>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                    Diagnose Projects
-                  </h3>
-                </div>
-                <p className="text-gray-600">
-                  Check projects table structure and find orphaned projects
-                </p>
-                <div className="mt-4 text-sm font-semibold text-yellow-600">
-                  Owner Only - Opens in new tab →
-                </div>
-              </a>
-            )}
-
-            {isOwner && (
-              <a
-                href="/admin/tools/fix-projects"
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-red-400"
-              >
-                <div className="flex items-center mb-3">
-                  <span className="text-4xl mr-3">🔧</span>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                    Fix Projects Schema
-                  </h3>
-                </div>
-                <p className="text-gray-600">
-                  Backup old table and create new projects table with correct schema
-                </p>
-                <div className="mt-4 text-sm font-semibold text-red-600">
-                  Owner Only - Click to fix →
-                </div>
-              </a>
-            )}
-
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🔧</span>
-                <h3 className="text-xl font-bold text-gray-700">System Health</h3>
-              </div>
-              <p className="text-gray-500">
-                Monitor system performance and errors (Coming Soon)
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* User Management */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">👥</span>
-            User Management
+            <span className="text-3xl mr-3">💼</span>
+            Business Operations
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <a
-              href="/admin/tradesmen"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-2 border-purple-400"
+              href="/crm"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-blue-600"
             >
               <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">👷</span>
+                <span className="text-4xl mr-3">📋</span>
                 <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Crew & Subcontractors
+                  CRM / Leads
                 </h3>
               </div>
               <p className="text-gray-600">
-                Manage field workers, photo uploads, time tracking, and project assignments
+                Manage leads, track follow-ups, and convert to customers
               </p>
-              <div className="mt-4 text-sm font-semibold text-purple-600">
+              <div className="mt-4 text-sm font-semibold text-blue-600">
                 Manage →
               </div>
             </a>
 
-            {isOwner && (
-              <a
-                href="/admin/settings"
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-              >
-                <div className="flex items-center mb-3">
-                  <span className="text-4xl mr-3">⚙️</span>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                    Team Settings
-                  </h3>
-                </div>
-                <p className="text-gray-600">
-                  Manage admin users, roles, and permissions
-                </p>
-                <div className="mt-4 text-sm font-semibold text-blue-600">
-                  Owner Only →
-                </div>
-              </a>
-            )}
+            <a
+              href="/admin/projects"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-green-600"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">🏗️</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Projects
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                View and manage all active and completed projects
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
+
+            <a
+              href="/admin/subcontractors/manage"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-orange-600"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">🔨</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Subcontractors
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Add, edit, delete, and manage contractor information and projects
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
+
+            <a
+              href="/admin/invoices"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-purple-600"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">🧾</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Invoices
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                View, create, and manage customer invoices and payment tracking
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
+
+            <a
+              href="/admin/proposals"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-indigo-600"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">📝</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Proposals
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Create and manage professional project proposals for clients
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
 
             <a
               href="/admin/customers"
@@ -204,160 +166,14 @@ export default function AdminToolsPage() {
                 View →
               </div>
             </a>
-
-            <a
-              href="/admin/tools/notifications"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📧</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Email & SMS Templates
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Create and manage email and SMS notification templates
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/tools/projects"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🏠</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Recent Projects Gallery
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Showcase completed projects on homepage with photos
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
           </div>
         </section>
 
-        {/* Business Management */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">💼</span>
-            Business Management
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a
-              href="/crm"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📋</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  CRM / Leads
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Manage leads, track follow-ups, and convert to customers
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Open →
-              </div>
-            </a>
-
-            <a
-              href="/admin/subcontractors/manage"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🔨</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Subcontractors
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Add, edit, delete, and manage contractor information
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📈</span>
-                <h3 className="text-xl font-bold text-gray-700">Analytics Dashboard</h3>
-              </div>
-              <p className="text-gray-500">
-                Business metrics and reporting (Coming Soon)
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Document Generation */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">📄</span>
-            Document Generation
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a
-              href="/admin/proposals/create"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📝</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Create Proposal
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Generate professional project proposals for clients
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Create →
-              </div>
-            </a>
-
-            <a
-              href="/admin/invoices/create"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🧾</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Create Invoice
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Generate and send invoices to customers
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Create →
-              </div>
-            </a>
-
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📋</span>
-                <h3 className="text-xl font-bold text-gray-700">Contract Templates</h3>
-              </div>
-              <p className="text-gray-500">
-                Manage contract templates (Coming Soon)
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Website Content */}
+        {/* Website & Content Management */}
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
             <span className="text-3xl mr-3">🌐</span>
-            Website Content
+            Website & Content
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <a
@@ -367,7 +183,7 @@ export default function AdminToolsPage() {
               <div className="flex items-center mb-3">
                 <span className="text-4xl mr-3">📢</span>
                 <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Banner Management
+                  Homepage Banners
                 </h3>
               </div>
               <p className="text-gray-600">
@@ -385,38 +201,176 @@ export default function AdminToolsPage() {
               <div className="flex items-center mb-3">
                 <span className="text-4xl mr-3">🎨</span>
                 <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Service Management
+                  Services
                 </h3>
               </div>
               <p className="text-gray-600">
-                Enable/disable services and control where they appear
+                Enable/disable services and control where they appear on the website
               </p>
               <div className="mt-4 text-sm font-semibold text-blue-600">
                 Manage →
               </div>
             </a>
 
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
+            <a
+              href="/admin/tools/projects"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
               <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📸</span>
-                <h3 className="text-xl font-bold text-gray-700">Portfolio Manager</h3>
+                <span className="text-4xl mr-3">🏠</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Featured Projects
+                </h3>
               </div>
-              <p className="text-gray-500">
-                Manage project photos and portfolio (Coming Soon)
+              <p className="text-gray-600">
+                Showcase completed projects on homepage with photos
               </p>
-            </div>
-
-            <div className="bg-gray-100 rounded-xl shadow p-6 opacity-60">
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">⭐</span>
-                <h3 className="text-xl font-bold text-gray-700">Testimonials</h3>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
               </div>
-              <p className="text-gray-500">
-                Manage customer reviews (Coming Soon)
-              </p>
-            </div>
+            </a>
           </div>
         </section>
+
+        {/* Team & Communication */}
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+            <span className="text-3xl mr-3">👥</span>
+            Team & Communication
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a
+              href="/admin/tradesmen"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">👷</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Field Crew
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Manage field workers, photo uploads, time tracking, and assignments
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
+
+            <a
+              href="/admin/tools/notifications"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">📧</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Email & SMS
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Create and manage notification templates
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                Manage →
+              </div>
+            </a>
+
+            <a
+              href="/admin/messages"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
+              <div className="flex items-center mb-3">
+                <span className="text-4xl mr-3">💬</span>
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                  Messages
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                View and manage customer communications
+              </p>
+              <div className="mt-4 text-sm font-semibold text-blue-600">
+                View →
+              </div>
+            </a>
+          </div>
+        </section>
+
+        {/* System & Maintenance - Owner Only (Collapsible) */}
+        {isOwner && (
+          <section className="mb-10">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                <span className="text-3xl mr-3">⚙️</span>
+                System & Maintenance
+              </h2>
+              <button
+                onClick={() => setShowMaintenance(!showMaintenance)}
+                className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition font-semibold"
+              >
+                {showMaintenance ? '▼ Hide' : '▶ Show'}
+              </button>
+            </div>
+            <p className="text-gray-600 mb-4 text-sm">Owner-only utilities for system maintenance and setup</p>
+            
+            {showMaintenance && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a
+                  href="/admin/migrate"
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+                >
+                  <div className="flex items-center mb-3">
+                    <span className="text-4xl mr-3">⚡</span>
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                      Database Setup
+                    </h3>
+                  </div>
+                  <p className="text-gray-600">
+                    Run initial database setup and migrations
+                  </p>
+                  <div className="mt-4 text-sm font-semibold text-blue-600">
+                    Run →
+                  </div>
+                </a>
+
+                <a
+                  href="/admin/settings"
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+                >
+                  <div className="flex items-center mb-3">
+                    <span className="text-4xl mr-3">👨‍💼</span>
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                      Team Settings
+                    </h3>
+                  </div>
+                  <p className="text-gray-600">
+                    Manage admin users, roles, and permissions
+                  </p>
+                  <div className="mt-4 text-sm font-semibold text-blue-600">
+                    Configure →
+                  </div>
+                </a>
+
+                <a
+                  href="/admin/employees"
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+                >
+                  <div className="flex items-center mb-3">
+                    <span className="text-4xl mr-3">💼</span>
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
+                      Direct Hire Employees
+                    </h3>
+                  </div>
+                  <p className="text-gray-600">
+                    Manage direct hire employee records and assignments
+                  </p>
+                  <div className="mt-4 text-sm font-semibold text-blue-600">
+                    Manage →
+                  </div>
+                </a>
+              </div>
+            )}
+          </section>
+        )}
 
         {/* Back Button */}
         <div className="mt-12">
