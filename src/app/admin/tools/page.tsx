@@ -7,6 +7,15 @@ export default function AdminToolsPage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showMaintenance, setShowMaintenance] = useState(false);
+  const [queueLoading, setQueueLoading] = useState(false);
+  const [queueReplaying, setQueueReplaying] = useState(false);
+  const [queueError, setQueueError] = useState('');
+  const [queueSuccess, setQueueSuccess] = useState('');
+  const [leadQueueStatus, setLeadQueueStatus] = useState<{
+    queuedCount: number;
+    latestQueuedAt: string | null;
+    sampleReasons: string[];
+  } | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,7 +30,55 @@ export default function AdminToolsPage() {
     }
     const data = await res.json();
     setCurrentUser(data.user);
+    if (data?.user?.role === 'owner') {
+      loadLeadQueueStatus();
+    }
     setLoading(false);
+  };
+
+  const loadLeadQueueStatus = async () => {
+    setQueueLoading(true);
+    setQueueError('');
+    try {
+      const res = await fetch('/api/admin/leads/queue');
+      const data = await res.json();
+      if (!res.ok) {
+        setQueueError(data.error || 'Failed to load queue status');
+        return;
+      }
+      setLeadQueueStatus(data);
+    } catch {
+      setQueueError('Failed to load queue status');
+    } finally {
+      setQueueLoading(false);
+    }
+  };
+
+  const replayLeadQueue = async () => {
+    if (!confirm('Replay queued leads into CRM now?')) {
+      return;
+    }
+
+    setQueueReplaying(true);
+    setQueueError('');
+    setQueueSuccess('');
+
+    try {
+      const res = await fetch('/api/admin/leads/queue', { method: 'POST' });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setQueueError(data.error || 'Failed to replay queued leads');
+        return;
+      }
+
+      setQueueSuccess(`Replayed ${data.replayed} lead(s). Remaining: ${data.remaining}`);
+      await loadLeadQueueStatus();
+    } catch {
+      setQueueError('Failed to replay queued leads');
+    } finally {
+      setQueueReplaying(false);
+    }
   };
 
   if (loading) {
@@ -311,9 +368,60 @@ export default function AdminToolsPage() {
               </button>
             </div>
             <p className="text-gray-600 mb-4 text-sm">Owner-only utilities for system maintenance and setup</p>
+            {queueError && (
+              <div className="mb-4 bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {queueError}
+              </div>
+            )}
+            {queueSuccess && (
+              <div className="mb-4 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg text-sm">
+                {queueSuccess}
+              </div>
+            )}
             
             {showMaintenance && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+                  <div className="flex items-center mb-3">
+                    <span className="text-4xl mr-3">📥</span>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      Lead Queue Monitor
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 mb-2 text-sm">
+                    Emergency backup queue for contact form submissions
+                  </p>
+                  <div className="text-sm text-gray-700 mb-3">
+                    <div><strong>Queued:</strong> {queueLoading ? 'Checking...' : (leadQueueStatus?.queuedCount ?? 0)}</div>
+                    <div><strong>Last queued:</strong> {leadQueueStatus?.latestQueuedAt ? new Date(leadQueueStatus.latestQueuedAt).toLocaleString() : 'N/A'}</div>
+                  </div>
+                  {leadQueueStatus?.sampleReasons?.length ? (
+                    <div className="text-xs text-gray-600 mb-3">
+                      <strong>Recent reasons:</strong>
+                      <ul className="list-disc list-inside mt-1">
+                        {leadQueueStatus.sampleReasons.map((reason, idx) => (
+                          <li key={`${reason}-${idx}`}>{reason}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={loadLeadQueueStatus}
+                      className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg transition font-semibold"
+                    >
+                      Refresh
+                    </button>
+                    <button
+                      onClick={replayLeadQueue}
+                      disabled={queueReplaying || (leadQueueStatus?.queuedCount ?? 0) === 0}
+                      className="text-sm bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white px-3 py-2 rounded-lg transition font-semibold"
+                    >
+                      {queueReplaying ? 'Replaying...' : 'Replay Queue'}
+                    </button>
+                  </div>
+                </div>
+
                 <a
                   href="/admin/migrate"
                   className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
