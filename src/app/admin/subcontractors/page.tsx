@@ -52,7 +52,6 @@ export default function SubcontractorsManagementPage() {
   useEffect(() => {
     checkAuth();
     loadSubcontractors();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +59,6 @@ export default function SubcontractorsManagementPage() {
     if (!loading && subcontractors.length >= 0) {
       filterSubcontractors();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subcontractors, statusFilter, searchQuery, specialtyFilter, loading]);
 
   const checkAuth = async () => {
@@ -1148,7 +1146,6 @@ function DocumentUploadSection({ subcontractorId }: { subcontractorId: number })
 
   useEffect(() => {
     loadDocuments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subcontractorId]);
 
   const loadDocuments = async () => {

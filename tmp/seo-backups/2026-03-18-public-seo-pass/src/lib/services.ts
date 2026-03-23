@@ -1,42 +1,5 @@
 import { query } from './mysql';
 
-type CachedServiceValue = {
-  expiresAt: number;
-  items: ActiveService[];
-};
-
-declare global {
-  var __burchServicesCache: Map<string, CachedServiceValue> | undefined;
-}
-
-const CACHE_TTL_MS = 5 * 60 * 1000;
-const servicesCache = globalThis.__burchServicesCache ?? new Map<string, CachedServiceValue>();
-const shouldLogServiceLoadErrors = process.env.NODE_ENV !== 'production';
-
-if (!globalThis.__burchServicesCache) {
-  globalThis.__burchServicesCache = servicesCache;
-}
-
-async function readCachedServices(key: string, loader: () => Promise<ActiveService[]>): Promise<ActiveService[]> {
-  const now = Date.now();
-  const cached = servicesCache.get(key);
-
-  if (cached && cached.expiresAt > now) {
-    return cached.items;
-  }
-
-  try {
-    const items = await loader();
-    servicesCache.set(key, { items, expiresAt: now + CACHE_TTL_MS });
-    return items;
-  } catch (error) {
-    if (shouldLogServiceLoadErrors) {
-      console.error(`Error loading services for cache key "${key}":`, error);
-    }
-    return cached?.items ?? [];
-  }
-}
-
 export interface ActiveService {
   id: number;
   service_name: string;
@@ -62,72 +25,87 @@ export interface ActiveService {
  * Get all enabled services from the database
  */
 export async function getActiveServices(): Promise<ActiveService[]> {
-  return readCachedServices('active-services', async () => {
+  try {
     const services = await query<ActiveService>(
       `SELECT * FROM service_settings 
        WHERE enabled = TRUE 
        ORDER BY menu_order ASC, service_name ASC`
     );
     return services || [];
-  });
+  } catch (error) {
+    console.error('Error fetching active services:', error);
+    // Return empty array to prevent site breaking
+    return [];
+  }
 }
 
 /**
  * Get services that should appear on the services page
  */
 export async function getServicesForPage(): Promise<ActiveService[]> {
-  return readCachedServices('services-for-page', async () => {
+  try {
     const services = await query<ActiveService>(
       `SELECT * FROM service_settings 
        WHERE enabled = TRUE AND show_in_services_page = TRUE 
        ORDER BY menu_order ASC, service_name ASC`
     );
     return services || [];
-  });
+  } catch (error) {
+    console.error('Error fetching services for page:', error);
+    return [];
+  }
 }
 
 /**
  * Get services that should appear in navigation
  */
 export async function getServicesForNavigation(): Promise<ActiveService[]> {
-  return readCachedServices('services-for-navigation', async () => {
+  try {
     const services = await query<ActiveService>(
       `SELECT * FROM service_settings 
        WHERE enabled = TRUE AND show_in_navigation = TRUE 
        ORDER BY menu_order ASC, service_name ASC`
     );
     return services || [];
-  });
+  } catch (error) {
+    console.error('Error fetching services for navigation:', error);
+    return [];
+  }
 }
 
 /**
  * Get services that should appear in calculators
  */
 export async function getServicesForCalculator(): Promise<ActiveService[]> {
-  return readCachedServices('services-for-calculator', async () => {
+  try {
     const services = await query<ActiveService>(
       `SELECT * FROM service_settings 
        WHERE enabled = TRUE AND show_in_calculator = TRUE 
        ORDER BY menu_order ASC, service_name ASC`
     );
     return services || [];
-  });
+  } catch (error) {
+    console.error('Error fetching services for calculator:', error);
+    return [];
+  }
 }
 
 /**
  * Get a single service by slug
  */
 export async function getServiceBySlug(slug: string): Promise<ActiveService | null> {
-  const services = await readCachedServices(`service-by-slug:${slug}`, async () => {
-    return query<ActiveService>(
+  try {
+    const services = await query<ActiveService>(
       `SELECT * FROM service_settings 
        WHERE enabled = TRUE AND service_slug = ? 
        LIMIT 1`,
       [slug]
     );
-  });
-
-  return services[0] || null;
+    return services[0] || null;
+  } catch (error) {
+    console.error('Error fetching service by slug:', error);
+    return null;
+  }
 }
 
 /**

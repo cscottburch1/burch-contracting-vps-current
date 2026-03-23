@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  // Keep tracing rooted to this project when parent folders contain lockfiles.
+  outputFileTracingRoot: process.cwd(),
   
   // Basic image optimization
   images: {

@@ -9,19 +9,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: true
     
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT || '22' }}
+          command_timeout: 30m
           script: |
-            cd /var/www/burchcontracting-fresh || cd ~/burchcontracting-fresh
+            cd /root/burch-contracting
             git pull origin main
-            npm install --production
+            npm ci || npm install
             npm run build
-            pm2 restart all || pm2 restart burchcontracting || systemctl restart burchcontracting
-            pm2 list || systemctl status burchcontracting
+            pm2 restart burch-contracting --update-env
+            pm2 status burch-contracting

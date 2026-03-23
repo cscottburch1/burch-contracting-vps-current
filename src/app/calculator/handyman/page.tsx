@@ -247,7 +247,7 @@ export default function HandymanCalculator() {
                               name="quality"
                               value={quality}
                               checked={materialQuality === quality}
-                              onChange={(e) => setMaterialQuality(e.target.value as any)}
+                              onChange={(e) => setMaterialQuality(e.target.value as 'low' | 'mid' | 'high')}
                               className="mr-3"
                             />
                             <span className="font-medium capitalize">{quality === 'mid' ? 'Standard' : quality === 'low' ? 'Budget' : 'Premium'}</span>

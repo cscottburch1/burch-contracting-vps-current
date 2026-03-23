@@ -7,7 +7,10 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
-import { ServiceSelector } from '@/components/ServiceSelector';
+
+type GrecaptchaApi = {
+  execute: (siteKey: string, options: { action: string }) => Promise<string>;
+};
 
 interface FormData {
   name: string;
@@ -145,10 +148,13 @@ export default function ContactPage() {
       // Get reCAPTCHA token
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
       let recaptchaToken = '';
+      const grecaptcha = typeof window !== 'undefined'
+        ? (window as Window & { grecaptcha?: GrecaptchaApi }).grecaptcha
+        : undefined;
 
-      if (siteKey && typeof window !== 'undefined' && (window as any).grecaptcha) {
+      if (siteKey && grecaptcha) {
         try {
-          recaptchaToken = await (window as any).grecaptcha.execute(siteKey, { action: 'contact_form' });
+          recaptchaToken = await grecaptcha.execute(siteKey, { action: 'contact_form' });
         } catch (recaptchaError) {
           console.error('reCAPTCHA error:', recaptchaError);
         }
@@ -204,7 +210,7 @@ export default function ContactPage() {
         const errorData = await response.json();
         setErrors({ submit: errorData.error || 'Something went wrong. Please try again or call us directly.' });
       }
-    } catch (error) {
+    } catch {
       setErrors({ submit: 'Something went wrong. Please try again or call us directly.' });
     } finally {
       setIsSubmitting(false);

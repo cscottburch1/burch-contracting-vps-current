@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -123,7 +124,7 @@ export default function AdditionsCalculator() {
               <div>
                 <h3 className="font-bold text-yellow-900 mb-2">Estimate Disclaimer</h3>
                 <p className="text-yellow-800 text-sm leading-relaxed">
-                  These calculations are for <strong>estimating purposes only</strong>. Actual costs for additions and outdoor structures vary significantly based on foundation requirements, structural engineering, zoning regulations, permits, site preparation, utilities, material selections, and architectural features. A detailed site assessment and architectural plans are required for accurate pricing. Contact us for a free consultation and detailed quote.
+                  These calculations are for <strong>estimating purposes only</strong>. Actual costs for additions and outdoor structures vary significantly based on foundation requirements, structural engineering, zoning regulations, permits, site preparation, utilities, material selections, and architectural features. A detailed site assessment and architectural plans are required for accurate pricing. <Link href="/contact" className="underline font-semibold hover:text-yellow-900 transition-colors">Contact us for a free consultation and detailed quote.</Link>
                 </p>
               </div>
             </div>
@@ -245,7 +246,7 @@ export default function AdditionsCalculator() {
                               name="quality"
                               value={quality}
                               checked={materialQuality === quality}
-                              onChange={(e) => setMaterialQuality(e.target.value as any)}
+                              onChange={(e) => setMaterialQuality(e.target.value as 'low' | 'mid' | 'high')}
                               className="mr-3"
                             />
                             <span className="font-medium capitalize">{quality === 'mid' ? 'Standard' : quality === 'low' ? 'Budget' : 'Premium'}</span>
