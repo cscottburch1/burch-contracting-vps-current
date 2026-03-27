@@ -103,6 +103,10 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
           <div className="space-y-6">
             <Card>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">Typical Investment Ranges</h2>
+              <p className="mb-4 text-sm text-gray-500">
+                Based on current Simpsonville / Greenville County market rates, installed pricing, and contractor overhead.
+                Each project may vary due to existing conditions, finish selections, and permit requirements.
+              </p>
               <div className="grid gap-4 md:grid-cols-3">
                 {page.ranges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">

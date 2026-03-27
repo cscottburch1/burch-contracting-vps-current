@@ -92,28 +92,6 @@ export function buildFaqSchema(items: Array<{ question: string; answer: string }
   };
 }
 
-export function buildReviewSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    itemReviewed: {
-      "@type": "LocalBusiness",
-      name: "Burch Contracting",
-    },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: "5",
-      bestRating: "5",
-    },
-    author: {
-      "@type": "Person",
-      name: "Verified Homeowner",
-    },
-    reviewBody:
-      "Burch Contracting communicated clearly, delivered high-quality craftsmanship, and kept our remodeling project organized from start to finish.",
-  };
-}
-
 export function buildBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",

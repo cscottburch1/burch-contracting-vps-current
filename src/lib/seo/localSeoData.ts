@@ -9,6 +9,17 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface CityContext {
+  /** A 2-3 sentence intro unique to this city+service combination. */
+  intro: string;
+  /** Permitting or regulatory nuance specific to this city. */
+  permittingNote: string;
+  /** Local pricing nuance explaining why costs vary in this specific city. */
+  pricingNuance: string;
+  /** Timeline expectation note based on local conditions. */
+  timelineNote: string;
+}
+
 export interface ServiceLandingPage {
   slug: string;
   serviceName: string;
@@ -20,6 +31,8 @@ export interface ServiceLandingPage {
   keywords: string[];
   priceRanges: PriceRange[];
   faqs: FaqItem[];
+  /** Optional city-specific context for richer, non-doorway content. */
+  cityContext?: CityContext;
 }
 
 export interface LocationPage {
@@ -79,7 +92,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Plan a high-value bathroom remodel with Burch Contracting in Simpsonville SC. Pricing, process, timelines, and design guidance for local homeowners.",
     shortDescription:
-      "From guest bath refreshes to primary suite transformations, we build bathrooms that improve comfort, storage, and resale appeal.",
+      "From guest bath refreshes to primary suite transformations, we build bathrooms that improve comfort, storage, and resale appeal in Simpsonville's established and rapidly growing neighborhoods.",
     keywords: ["bathroom remodeling Simpsonville SC", "remodeling contractor Simpsonville SC"],
     priceRanges: [
       { label: "Cosmetic Refresh", range: "$9,000-$16,000", details: "New vanity, fixtures, paint, lighting, and flooring updates without moving plumbing." },
@@ -87,6 +100,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Luxury Bathroom", range: "$33,000-$65,000+", details: "Custom tile shower, frameless glass, premium cabinetry, smart controls, and high-end finishes." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Simpsonville has grown significantly over the last decade — the Five Forks corridor and Harrison Bridge Road area now include homes ranging from 1990s builds to new construction. Bathroom remodeling needs vary by era: older homes often require ventilation corrections and tile-to-tile subfloor prep that newer homes do not.",
+      permittingNote: "Simpsonville permits for plumbing relocation and structural work are handled through the City of Simpsonville Inspections Division. Most cosmetic bath scopes do not require permits, but any work involving moving drain lines or load-bearing walls does. We manage the permit coordination so nothing stalls mid-project.",
+      pricingNuance: "Labor costs in Simpsonville are moderate compared to Greenville proper, but rising demand for tile setters and licensed plumbers has pushed trade schedules. Shorter lead times can reduce project cost by keeping the construction window tight.",
+      timelineNote: "Most Simpsonville bathroom remodels run 3 to 5 weeks from demo to finish. HOA review in communities like Five Forks Plantation adds 5 to 10 business days to the pre-permit stage, so we recommend starting that process before material selections are finalized.",
+    },
   },
   {
     slug: "kitchen-remodeling-simpsonville-sc",
@@ -97,7 +116,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Kitchen remodeling in Simpsonville SC with clear pricing, staged construction planning, and design-build support from Burch Contracting.",
     shortDescription:
-      "We design kitchens that function better for busy families while elevating style, storage, and long-term home value.",
+      "We help Simpsonville families reclaim prep space, improve appliance flow, and update finishes — whether you're refreshing a 2000s builder kitchen or gut-remodeling a dated layout in an older Fairview Road home.",
     keywords: ["kitchen remodeling Simpsonville SC", "home remodeling Simpsonville SC"],
     priceRanges: [
       { label: "Kitchen Update", range: "$20,000-$38,000", details: "Cabinet refinishing or replacement, counters, backsplash, and fixture upgrades." },
@@ -105,6 +124,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Custom Designer Kitchen", range: "$76,000-$140,000+", details: "Layout changes, structural updates, premium appliances, and custom millwork." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Many Simpsonville homes built between 1995 and 2010 share a similar builder-grade kitchen layout: a peninsula counter, standard 30-inch upper cabinets, and laminate countertops. These kitchens respond well to targeted upgrades — island conversions, upper cabinet extensions to the ceiling, and quartz replacements transform the space without full gut demolition.",
+      permittingNote: "Kitchen remodels in Simpsonville only require permits when electrical panels, circuit additions, gas lines, or load-bearing walls are involved. We pull permits through the City of Simpsonville when required and coordinate inspections around the construction schedule.",
+      pricingNuance: "Simpsonville's proximity to Greenville means comparable labor costs to the metro, but slightly shorter lead times on cabinets from regional suppliers. Custom cabinetry still runs 8 to 12 weeks — the most common schedule risk on larger scopes.",
+      timelineNote: "A full kitchen remodel in Simpsonville typically runs 6 to 9 weeks. We set up a temporary kitchen area before demo begins to keep daily life functional, and we schedule tile and countertop work to minimize the days the home is without a working sink.",
+    },
   },
   {
     slug: "room-additions-simpsonville-sc",
@@ -115,7 +140,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Build a code-compliant room addition in Simpsonville SC with Burch Contracting. Learn costs, permitting, design strategy, and project phases.",
     shortDescription:
-      "Need more square footage without moving? We build family room, bedroom, and office additions with seamless integration.",
+      "Simpsonville's strong resale market makes room additions a smart investment. We plan additions that tie into your existing footprint cleanly — from foundational work to roofline matching — so the addition looks original to the home.",
     keywords: ["room additions Simpsonville SC", "remodeling contractor Simpsonville SC"],
     priceRanges: [
       { label: "Small Addition", range: "$55,000-$95,000", details: "Single-room bump-out with foundation, framing, electrical, and finish work." },
@@ -123,6 +148,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Complex Addition", range: "$181,000-$320,000+", details: "Multi-room additions with structural engineering and utility relocation." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Simpsonville's growth means lot size and zoning setback rules matter before planning a footprint expansion. Most residential lots in Five Forks and Heritage subdivisions require a minimum 10-foot side setback and 20-foot rear setback — constraints we verify at the start of every addition project to avoid design rework later.",
+      permittingNote: "Room additions in Simpsonville require a building permit, mechanical/electrical permits, and typically a structural engineering submittal. Permit review through Greenville County or the City of Simpsonville (depending on jurisdiction) averages 2 to 4 weeks and must be factored into the project timeline.",
+      pricingNuance: "Addition costs in Simpsonville vary more by lot conditions than in denser urban markets. Sloped lots, tree roots near the foundation zone, and existing crawl-space systems all affect excavation and foundation pricing. We evaluate lot conditions before providing any budget guidance.",
+      timelineNote: "A mid-size Simpsonville room addition typically runs 12 to 18 weeks total, including permitting. We begin preconstruction work — engineering, material sourcing, permit submittals — during the permit review window to compress the overall schedule.",
+    },
   },
   {
     slug: "screened-porch-builder-simpsonville-sc",
@@ -133,7 +164,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Work with a screened porch builder in Simpsonville SC for durable outdoor living spaces designed for humidity, rain, and family use.",
     shortDescription:
-      "We build screened porches that extend your lifestyle outdoors while keeping comfort, airflow, and low maintenance in focus.",
+      "Upstate SC summers demand smart screened porch design. We build structures that manage humidity, cross-ventilation, and afternoon sun so Simpsonville families actually use their outdoor space from April through October.",
     keywords: ["screened porch builder Simpsonville SC", "home remodeling Simpsonville SC"],
     priceRanges: [
       { label: "Basic Screened Porch", range: "$24,000-$38,000", details: "Covered structure, screen walls, and standard finishes for practical outdoor use." },
@@ -141,6 +172,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Luxury Outdoor Room", range: "$65,000-$120,000+", details: "Insulated roof, fireplace, custom details, and four-season upgrades." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Simpsonville's backyard lots in communities like Neely Farm and Five Forks Plantation tend to be rectangular with afternoon western sun exposure. We orient covered porch designs to block direct afternoon sun while preserving natural light in the morning — a detail that meaningfully improves summer usability.",
+      permittingNote: "Screened porches attached to the home require a building permit in Simpsonville. HOA approval is also required in most planned communities before permit submittal. We coordinate both steps and have worked through the approval process in several Simpsonville neighborhoods.",
+      pricingNuance: "Porch costs in Simpsonville are driven mainly by the roofing specification and the screen system selected. A simple shed-roof porch costs significantly less than a hip-roof design that requires matching the existing architectural profile. Many HOAs in the area specify roofline requirements.",
+      timelineNote: "Most Simpsonville screened porch projects run 4 to 7 weeks from permit approval. HOA review — if required — typically adds 2 to 4 weeks before we can submit permits, so early planning matters for spring or summer completion goals.",
+    },
   },
   {
     slug: "deck-builder-simpsonville-sc",
@@ -151,7 +188,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Hire a local deck builder in Simpsonville SC. Compare wood vs composite options, costs, permitting, and installation process.",
     shortDescription:
-      "From entertaining decks to safe family spaces, we design and build structures that match your home and daily routines.",
+      "We build decks in Simpsonville designed around how your family actually uses the backyard — whether that's a compact grilling platform, a multi-level entertaining deck, or a ground-level pathway to a future screened porch.",
     keywords: ["deck builder Simpsonville SC", "remodeling contractor Simpsonville SC"],
     priceRanges: [
       { label: "Pressure-Treated Deck", range: "$14,000-$28,000", details: "Strong value for homeowners wanting function-first outdoor space." },
@@ -159,6 +196,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Custom Multi-Level Deck", range: "$59,000-$110,000+", details: "Complex design with stairs, lighting, and premium trim details." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Many Simpsonville backyards have grades that drop 2 to 4 feet from the back door — which means a simple flat deck isn't always the right solution. We evaluate grade changes early and design stairs, landing zones, and post lengths accordingly so the finished deck is both safe and visually proportional to the home.",
+      permittingNote: "Decks in Simpsonville require a permit when attached to the home or when elevated above 30 inches. Permit review typically runs 1 to 2 weeks. We pull the permit and coordinate the required framing and final inspections before project closeout.",
+      pricingNuance: "Composite decking costs have stabilized in recent years, but labor rates for licensed carpenters remain high in the Simpsonville market due to strong residential demand. We provide clear side-by-side comparisons so homeowners can evaluate total cost of ownership — not just install price.",
+      timelineNote: "A standard Simpsonville deck build runs 2 to 4 weeks from permit approval. Adding a pergola, integrated lighting, or connection to a screened porch extends the schedule by 1 to 3 weeks depending on scope commitment.",
+    },
   },
   {
     slug: "basement-finishing-simpsonville-sc",
@@ -169,7 +212,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Basement finishing in Simpsonville SC for media rooms, guest suites, offices, and flexible family space. See process, costs, and scope.",
     shortDescription:
-      "We convert unfinished basements into dry, comfortable, and code-compliant living areas built for long-term value.",
+      "Many Simpsonville homes built after 2000 have unfinished walkout basements with 9-foot ceilings — ideal for media rooms, home offices, and guest suites. We finish them safely, with proper moisture management and code-compliant framing.",
     keywords: ["basement finishing Simpsonville SC", "home remodeling Simpsonville SC"],
     priceRanges: [
       { label: "Basic Finish", range: "$35-$55 per sq ft", details: "Framing, insulation, drywall, flooring, and standard electrical package." },
@@ -177,6 +220,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Premium Basement", range: "$86-$130+ per sq ft", details: "Theater room, wet bar, full bath, and luxury finish package." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Simpsonville's newer subdivisions — particularly those built on sloping terrain near Fairview Road and the I-385 corridor — frequently include walkout basements with daylight windows already in place. This makes finishing more straightforward than fully below-grade basements, but moisture evaluation of the perimeter walls is still essential before framing begins.",
+      permittingNote: "Basement finishing requires permits in Simpsonville when adding electrical circuits, plumbing, or HVAC — which almost every livable finish scope includes. Egress window sizing is also inspected for any bedroom-use rooms. We handle permit submittals and inspection scheduling throughout the project.",
+      pricingNuance: "Per-square-foot basement costs in Simpsonville rise significantly if the mechanical room needs to be relocated or if the HVAC system doesn't have capacity for the added zone. We assess HVAC baseline capacity before scope finalization to avoid mid-project surprises.",
+      timelineNote: "A Simpsonville basement finish typically runs 8 to 12 weeks from permit approval. Adding a full bathroom can extend the schedule by 2 to 3 weeks due to plumbing rough-in and inspection sequencing.",
+    },
   },
   {
     slug: "bathroom-remodeling-fountain-inn-sc",
@@ -187,7 +236,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Bathroom remodeling for Fountain Inn SC homeowners. Build a practical budget, understand material choices, and avoid common renovation mistakes.",
     shortDescription:
-      "We help Fountain Inn homeowners create bathrooms that feel cleaner, brighter, and easier to maintain.",
+      "Fountain Inn's mix of historic downtown homes and newer residential neighborhoods near I-385 means bathroom remodeling needs vary widely. We plan each scope around the home's era, plumbing layout, and the homeowner's daily routine.",
     keywords: ["home remodeling Fountain Inn SC", "bathroom remodeling Fountain Inn SC"],
     priceRanges: [
       { label: "Refresh", range: "$8,500-$15,500", details: "Paint, vanity, fixtures, and targeted cosmetic updates." },
@@ -195,6 +244,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Luxury Primary Bath", range: "$31,000-$62,000+", details: "Custom tile, soaking tub, premium storage, and upgraded lighting plan." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Fountain Inn has absorbed significant residential growth since 2018, with new subdivisions along SC-418 and the Jones Mill Road corridor. These newer homes often have builder bathrooms with standard fixtures that are good candidates for early upgrades. Older Fountain Inn homes near downtown can require cast-iron pipe evaluation before any plumbing-involved remodel.",
+      permittingNote: "Bathroom permits in Fountain Inn are managed through Greenville County or the City of Fountain Inn depending on the property location. Plumbing and electrical work requires licensed trade permits separate from the general building permit. We coordinate all submittals and inspections.",
+      pricingNuance: "Labor in Fountain Inn runs slightly below the Greenville metro rate, though tile setters and plumbers are still in high demand. Choosing stock tile over custom ordered tile can reduce both cost and schedule risk for most bath scopes.",
+      timelineNote: "Guest bath refreshes in Fountain Inn typically complete in 2 to 3 weeks. Full primary bath remodels run 4 to 6 weeks depending on tile complexity and whether plumbing locations change.",
+    },
   },
   {
     slug: "kitchen-remodeling-fountain-inn-sc",
@@ -205,7 +260,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Kitchen remodeling in Fountain Inn SC with practical design guidance and transparent budgeting from local contractor Burch Contracting.",
     shortDescription:
-      "Our kitchen remodels improve flow, storage, and finishes so your home works better for everyday living and entertaining.",
+      "Fountain Inn homeowners are investing in kitchens that match the quality of the surrounding area's growth. We deliver remodels that improve workflow, maximize storage, and hold up to busy family use for years.",
     keywords: ["kitchen remodeling Fountain Inn SC", "home remodeling Fountain Inn SC"],
     priceRanges: [
       { label: "Kitchen Refresh", range: "$18,000-$35,000", details: "Countertops, fixtures, partial cabinetry updates, and new finishes." },
@@ -213,6 +268,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Premium Remodel", range: "$73,000-$135,000+", details: "Structural layout changes and high-end custom interior details." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Fountain Inn's kitchen remodeling market is driven by two distinct home types: older craftsman-style homes near historic downtown where layout constraints are tighter, and newer tract homes in subdivisions like Heritage Estates where flexible open layouts are already in place but finishes need upgrading. We approach both very differently.",
+      permittingNote: "Kitchen remodels in Fountain Inn require permits for electrical panel upgrades, new circuits, gas line work, and structural wall changes. The City of Fountain Inn and Greenville County permitting processes have similar timelines — typically 1 to 2 weeks for kitchen scope submittals.",
+      pricingNuance: "Cabinet delivery timing is the biggest schedule variable for Fountain Inn kitchen remodels. We source from regional distributors that can deliver semi-custom cabinets in 4 to 6 weeks, versus national brands at 10 to 14 weeks — a meaningful difference for homeowners with seasonal deadlines.",
+      timelineNote: "A full Fountain Inn kitchen remodel runs 6 to 9 weeks from demo. We alert homeowners to cabinet and appliance lead times during the planning phase so construction windows aren't delayed waiting on deliveries.",
+    },
   },
   {
     slug: "room-additions-fountain-inn-sc",
@@ -223,7 +284,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Plan a room addition in Fountain Inn SC with realistic pricing, design-build guidance, and code-compliant project planning from Burch Contracting.",
     shortDescription:
-      "We help Fountain Inn homeowners add bedrooms, family rooms, and flex spaces without losing sight of budget, daily function, or resale value.",
+      "Fountain Inn's growing residential market means adding square footage now builds equity into a market on an upward trajectory. We help homeowners plan additions that match the home's character and clear local permitting requirements.",
     keywords: ["room additions Fountain Inn SC", "home remodeling Fountain Inn SC"],
     priceRanges: [
       { label: "Compact Addition", range: "$58,000-$98,000", details: "Smaller bedroom, office, or den addition with standard finishes and utility tie-ins." },
@@ -231,6 +292,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Complex Expansion", range: "$186,000-$325,000+", details: "Multi-room additions, structural engineering, or utility relocation for more complex homesites." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Room additions in Fountain Inn are especially common in neighborhoods near downtown where lots are larger but the original home footprint is modest. Families are adding primary bedroom wings, sunrooms, and family room expansions rather than relocating — particularly as Fountain Inn's school district reputation improves and resale values climb.",
+      permittingNote: "Greenville County manages building permits for most of Fountain Inn's newer residential zones. Permits for additions require site plan review, engineered drawings for larger scopes, and inspections at framing, rough-in, insulation, and final stages.",
+      pricingNuance: "Foundation costs vary significantly in Fountain Inn depending on soil conditions near older creek drainages and whether pier-and-beam or slab construction is more practical for the site. We evaluate foundation options with a soil assessment before including foundation pricing in any estimate.",
+      timelineNote: "A mid-size Fountain Inn room addition typically runs 14 to 20 weeks from permit approval. Larger additions with structural engineering requirements may add 4 to 6 weeks to the pre-construction planning phase.",
+    },
   },
   {
     slug: "decks-screened-porches-fountain-inn-sc",
@@ -241,7 +308,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Plan decks and screened porches in Fountain Inn SC with realistic installed costs, material comparisons, and local outdoor living design guidance.",
     shortDescription:
-      "We help Fountain Inn homeowners create comfortable outdoor living spaces with durable deck framing, screened porch protection, and practical layouts.",
+      "Fountain Inn's older neighborhoods have flat, rear-yard lots well-suited for ground-level decks and screened porches. We help homeowners design outdoor rooms that add genuine livable square footage without overbuilding the property.",
     keywords: ["decks and screened porches Fountain Inn SC", "screened porch builder Fountain Inn SC"],
     priceRanges: [
       { label: "Entry Outdoor Build", range: "$16,000-$29,000", details: "Simple deck layout or starter covered porch for grilling and seating." },
@@ -249,6 +316,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Custom Outdoor Room", range: "$65,000-$125,000+", details: "Large entertaining layouts with premium details, privacy features, and custom finishes." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Fountain Inn lots built in the 1980s and 1990s tend to have flat rear yards with modest setbacks — conditions that work well for deck and screened porch additions. We typically assess the slab or crawlspace proximity before framing any structure to ensure footings are set properly in the local soil profile.",
+      permittingNote: "Deck and porch permits in Fountain Inn are issued by the Fountain Inn Building Department. Projects within 10 feet of property lines require setback confirmation. We pull the permit, coordinate inspections, and handle all paperwork for you.",
+      pricingNuance: "Fountain Inn outdoor living budgets typically run 10 to 15 percent below Greenville proper due to lower labor demand, but composite decking and screened porch materials are priced regionally, so material costs are comparable across the Upstate.",
+      timelineNote: "A standard deck build in Fountain Inn takes 2 to 4 weeks from permit approval. Screened porch additions with framing changes run 4 to 6 weeks. Permit review typically takes 5 to 10 business days.",
+    },
   },
   {
     slug: "basement-finishing-fountain-inn-sc",
@@ -259,7 +332,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Basement finishing services in Fountain Inn SC for extra bedrooms, rec rooms, and home offices with efficient planning and predictable outcomes.",
     shortDescription:
-      "Turn underused square footage into a true extension of your home with efficient construction and practical design support.",
+      "Many Fountain Inn homes built in the 1990s have unfinished basements used for storage. We convert those spaces into bedrooms, rec rooms, or home offices — turning square footage you already own into living space you'll actually use.",
     keywords: ["home remodeling Fountain Inn SC", "basement finishing Fountain Inn SC"],
     priceRanges: [
       { label: "Utility to Livable", range: "$32-$52 per sq ft", details: "Essential finish scope for family use and visual consistency." },
@@ -267,6 +340,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "High-End Basement Suite", range: "$83-$125+ per sq ft", details: "Ideal for multi-use living with custom finishes and premium features." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Fountain Inn basements common in 1990s construction are often 8-foot crawl-to-basement hybrids with accessible mechanicals but unfinished walls and exposed floor joists. We assess moisture intrusion, HVAC extension capacity, and egress window placement before finalizing any finish plan.",
+      permittingNote: "Basement finishing in Fountain Inn requires a building permit through the city. Egress windows — typically required when adding bedrooms — must meet IRC size minimums and require separate inspection. We handle all code compliance documentation.",
+      pricingNuance: "Fountain Inn basement finishing costs track closely with Simpsonville — typically $35 to $80 per finished square foot depending on scope. Adding a bedroom pushes costs higher due to egress window and closet requirements.",
+      timelineNote: "A straightforward Fountain Inn basement finish runs 5 to 9 weeks. Projects adding bedrooms, bathrooms, or a wet bar extend the timeline to 10 to 14 weeks due to additional mechanical, plumbing, and inspection phases.",
+    },
   },
 
   // Tier 1: Kitchen Remodeling - Additional Cities
@@ -279,7 +358,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Professional kitchen remodeling in Greenville SC. Custom designs for historic and modern homes in Greenville's finest neighborhoods.",
     shortDescription:
-      "From historic homes to modern condos, we design kitchens that enhance Greenville properties with quality craftsmanship and timeless style.",
+      "Greenville kitchens span Augusta Road craftsman bungalows with galley layouts to Verdae corridor newer construction with open floor plans. We remodel both thoughtfully, with designs that respect the home's character while delivering modern function.",
     keywords: ["kitchen remodeling Greenville SC", "kitchen design Greenville", "home remodeling Greenville SC"],
     priceRanges: [
       { label: "Kitchen Refresh", range: "$19,000-$38,000", details: "Updates to finishes, fixtures, counters without major layout changes." },
@@ -287,6 +366,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Custom Designer Kitchen", range: "$79,000-$165,000+", details: "High-end custom cabinetry, premium appliances, and specialized finishes for luxury homes." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "North Main and Augusta Road homes in Greenville often have kitchens that weren't designed for modern cooking habits: narrow galleys, poor sightlines to adjacent rooms, and limited electrical capacity. Our approach for these homes prioritizes structural investigation first to determine whether wall removal is feasible before finalizing any layout change.",
+      permittingNote: "Greenville City property permits run through the City of Greenville's Development Services office. Historic overlay properties near downtown require additional review that can add 1 to 3 weeks to the pre-permit timeline. We identify overlay status at project intake so there's no schedule surprise.",
+      pricingNuance: "Greenville's higher median home prices support larger kitchen investments than surrounding markets. Custom cabinetry and premium appliances are standard requests in the Augusta Road and North Main areas, which pushes average scopes above the Upstate median.",
+      timelineNote: "Greenville kitchen remodels typically run 7 to 10 weeks for full scopes. Historic district homes may require a longer pre-construction window due to permit review requirements for structural changes.",
+    },
   },
   {
     slug: "kitchen-remodeling-greer-sc",
@@ -297,7 +382,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Transform your Greer kitchen with expert remodeling combining quality craftsmanship, fair pricing, and professional service.",
     shortDescription:
-      "We bring experience with both historic mill-area homes and modern Greer properties to create kitchens that work and last.",
+      "Greer kitchens range from mill-village homes with tight galley layouts to newer East Greer subdivisions with open floor plans. We work with both — respecting the home's structure while delivering modern function and finishes.",
     keywords: ["kitchen remodeling Greer SC", "kitchen contractor Greer", "home improvement Greer SC"],
     priceRanges: [
       { label: "Kitchen Update", range: "$18,000-$36,000", details: "Cosmetic and functional improvements without structural changes." },
@@ -305,6 +390,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Premium Kitchen", range: "$75,000-$155,000+", details: "Custom design with layout optimization and high-end selections." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Greer's housing stock spans pre-war mill homes with plaster walls and minimal cabinet space to 2000s and 2010s neighborhoods with open layouts near Highway 14 and Suber Road. Older homes require extra investigation before removing walls, as knob-and-tube wiring and plaster construction affect both cost and scheduling.",
+      permittingNote: "Kitchen permits in Greer are issued by Greer City Building Inspections. Structural wall removal requiring permits typically adds 7 to 14 days to the pre-construction window. No permit is required for cosmetic kitchen work. We handle all permits on structural and electrical scopes.",
+      pricingNuance: "Greer kitchen remodeling costs are generally 5 to 10 percent below Greenville City due to lower overhead, but mid-range to high-end cabinetry and appliance pricing is consistent across the Upstate market. Labor is the primary savings area.",
+      timelineNote: "Greer kitchen remodels run 6 to 9 weeks for full scopes. Older homes with plaster walls and outdated electrical may add 1 to 2 weeks for discovery-phase work before demolition begins.",
+    },
   },
 
   // Tier 1: Bathroom Remodeling - Additional Cities
@@ -317,7 +408,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Expert bathroom remodeling in Greenville SC for luxury finishes, spa-like features, and modern design in historic and contemporary homes.",
     shortDescription:
-      "Create your dream bathroom in Greenville with expert design, quality materials, and meticulous craftsmanship.",
+      "Greenville bathrooms in historic homes often have original cast iron tubs, pedestal sinks, and single-entry layouts with limited storage. We remodel these spaces using designs that respect the home's character while adding modern convenience, storage, and waterproofing.",
     keywords: ["bathroom remodeling Greenville SC", "bath renovation Greenville", "tile shower Greenville"],
     priceRanges: [
       { label: "Bathroom Refresh", range: "$9,000-$18,000", details: "Cosmetic updates to finishes, fixtures, and lighting." },
@@ -325,6 +416,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Luxury Bathroom Suite", range: "$43,000-$95,000+", details: "High-end custom tile, premium fixtures, and spa-inspired features." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Greenville homes near North Main, Augusta Road, and the West End frequently have original 1920s to 1950s bathrooms: 5x7 floor plans, cast iron plumbing, and original tile. These remodels require probe-before-demo to assess pipe condition and subflooring integrity before any design is finalized.",
+      permittingNote: "Greenville City bathroom permits are required when moving plumbing fixtures or adding electrical circuits. Historic overlay districts near downtown add an architectural review step. We identify overlay requirements at the estimate phase and build review time into the schedule.",
+      pricingNuance: "Greenville's premium real estate market supports larger bathroom investments than surrounding towns. Augusta Road and North Main homeowners typically invest at the full remodel to luxury tier to protect home value. Older copper or galvanized supply lines often require replacement, adding $800 to $2,500 to base scope.",
+      timelineNote: "Full bathroom remodels in Greenville typically take 4 to 7 weeks. Historic homes may require additional time for tile custom ordering and permit review. We schedule material selection before demolition begins to avoid delays.",
+    },
   },
   {
     slug: "bathroom-remodeling-greer-sc",
@@ -335,7 +432,7 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     metaDescription:
       "Professional bathroom remodeling in Greer SC with modern design, quality fixtures, and expert craftsmanship from local contractors.",
     shortDescription:
-      "Transform your Greer bathroom into a modern, functional space that enhances your daily life and home value.",
+      "Greer bathrooms span compact layouts in older mill-era homes to larger master baths in East Greer subdivisions. We work with both — bringing each remodel up to modern waterproofing standards, code compliance, and the finish quality the homeowner expects.",
     keywords: ["bathroom remodeling Greer SC", "bathroom renovation Greer", "bath remodel Greer"],
     priceRanges: [
       { label: "Cosmetic Refresh", range: "$8,000-$15,000", details: "Updates to finishes, fixtures, and lighting without plumbing changes." },
@@ -343,6 +440,12 @@ export const serviceLandingPages: ServiceLandingPage[] = [
       { label: "Premium Bathroom", range: "$39,000-$85,000+", details: "Custom design with luxury fixtures and high-end finishes." },
     ],
     faqs: baseFaqs,
+    cityContext: {
+      intro: "Greer's older neighborhoods have bathrooms with dated PVC or galvanized supply lines and original fiberglass surrounds. East Greer's newer construction often has larger footprints but builder-grade finishes ready for an upgrade. We assess which approach is needed — repair-and-refresh versus demo-and-rebuild — before pricing any scope.",
+      permittingNote: "Greer bathroom permits cover plumbing fixture relocation and new electrical circuits. Inspections cover rough-in plumbing, waterproofing membrane, and final fixtures. We coordinate all inspection scheduling so the project moves without delays.",
+      pricingNuance: "Greer bathroom remodeling prices are competitive with Simpsonville — typically $8,000 to $38,000 for most family bathrooms. Tile and fixture pricing is regionally consistent. The primary cost driver in older Greer homes is pipe condition and subfloor moisture damage discovered at demo.",
+      timelineNote: "Standard Greer bathroom remodels run 3 to 6 weeks. Older homes where plumbing discovery reveals surprises may add 3 to 7 days. We communicate any scope changes within 24 hours of discovery.",
+    },
   },
 
   // Tier 1: Bath to Tile Shower Conversion - High Intent

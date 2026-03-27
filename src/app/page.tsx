@@ -9,7 +9,7 @@ import { businessConfig } from '@/config/business';
 import Script from 'next/script';
 import Link from 'next/link';
 import DynamicBanners from '@/components/EmergencyBanner';
-import RecentProjects from '@/components/RecentProjects';
+import RecentProjectsSSR from '@/components/RecentProjectsSSR';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import type { Metadata } from 'next';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
@@ -47,7 +47,6 @@ export default async function HomePage() {
     "priceRange": "$$-$$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "",
       "addressLocality": "Simpsonville",
       "addressRegion": "SC",
       "postalCode": "29681",
@@ -168,13 +167,6 @@ export default async function HomePage() {
           }
         }
       ]
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "47",
-      "bestRating": "5",
-      "worstRating": "1"
     }
   };
 
@@ -544,8 +536,8 @@ export default async function HomePage() {
         </div>
       </Section>
 
-      {/* Recent Projects - Dynamic from Database */}
-      <RecentProjects />
+      {/* Recent Projects - Server-Side Rendered for full crawlability */}
+      <RecentProjectsSSR />
 
       <Section background="white" padding="lg">
         <div className="text-center mb-16 animate-fade-in-up">

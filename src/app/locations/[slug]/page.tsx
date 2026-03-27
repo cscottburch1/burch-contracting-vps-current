@@ -401,6 +401,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
   const projectSnapshots = getProjectSnapshots(page.serviceName, page.city);
   const relatedPages = serviceLandingPages.filter((item) => item.city === page.city && item.slug !== page.slug).slice(0, 3);
   const relatedCostGuide = costLandingPages.find((item) => item.city === page.city && item.serviceName === page.serviceName);
+  const relatedCityPages = serviceLandingPages.filter((item) => item.serviceName === page.serviceName && item.slug !== page.slug).slice(0, 3);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -467,8 +468,43 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
               </div>
             </div>
 
+            {page.cityContext && (
+              <div className="rounded-2xl border-l-4 border-blue-600 bg-blue-50 p-6 space-y-5">
+                <h2 className="text-2xl font-bold text-gray-900">Local Context for {page.city}</h2>
+                <div>
+                  <p className="text-gray-800 leading-relaxed">{page.cityContext.intro}</p>
+                </div>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="rounded-xl bg-white p-4 border border-blue-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Icon name="ClipboardList" size={16} className="text-blue-600" />
+                      <span className="text-xs font-bold uppercase tracking-wide text-blue-700">Permitting</span>
+                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed">{page.cityContext.permittingNote}</p>
+                  </div>
+                  <div className="rounded-xl bg-white p-4 border border-blue-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Icon name="DollarSign" size={16} className="text-blue-600" />
+                      <span className="text-xs font-bold uppercase tracking-wide text-blue-700">Pricing Nuance</span>
+                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed">{page.cityContext.pricingNuance}</p>
+                  </div>
+                  <div className="rounded-xl bg-white p-4 border border-blue-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Icon name="Clock" size={16} className="text-blue-600" />
+                      <span className="text-xs font-bold uppercase tracking-wide text-blue-700">Timeline</span>
+                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed">{page.cityContext.timelineNote}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <Card>
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">Typical Investment Ranges</h2>
+              <h2 className="mb-2 text-2xl font-bold text-gray-900">Typical Investment Ranges</h2>
+              <p className="mb-4 text-sm text-gray-500">
+                Based on current Simpsonville / Greenville County market rates. Each project may vary due to existing conditions, finish selections, and scope changes.
+              </p>
               <div className="grid gap-4 md:grid-cols-3">
                 {page.priceRanges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">
@@ -533,6 +569,16 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                     Read the {page.city} {page.serviceName.toLowerCase()} cost guide
                   </a>
                 ) : null}
+                {relatedCityPages.length > 0 && (
+                  <>
+                    <p className="pt-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Same Service, Other Cities</p>
+                    {relatedCityPages.map((item) => (
+                      <a key={item.slug} href={`/locations/${item.slug}`} className="block rounded-lg border border-gray-200 px-4 py-3 font-semibold text-blue-700 hover:bg-blue-50">
+                        {item.serviceName} in {item.city}
+                      </a>
+                    ))}
+                  </>
+                )}
               </div>
             </Card>
 
@@ -548,6 +594,27 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 ))}
               </div>
             </Card>
+          </div>
+        </div>
+      </Section>
+
+      <Section background="blue" padding="md">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="mb-3 text-2xl font-bold text-white md:text-3xl">
+            Ready to plan your {page.serviceName.toLowerCase()} in {page.city}?
+          </h2>
+          <p className="mb-6 text-blue-100">
+            Get a written estimate with scope, allowances, and a realistic timeline — no pressure, no obligation.
+          </p>
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Button variant="primary" href="/contact" className="bg-white text-blue-900 hover:bg-blue-50">
+              <Icon name="ClipboardEdit" size={18} />
+              Request Free Estimate
+            </Button>
+            <Button variant="outline" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-blue-900">
+              <Icon name="Phone" size={18} />
+              {siteConfig.phoneDisplay}
+            </Button>
           </div>
         </div>
       </Section>

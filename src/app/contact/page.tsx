@@ -291,24 +291,24 @@ export default function ContactPage() {
               {/* Right side - What Happens Next */}
               <Card padding="lg" className="bg-blue-50">
                 <h3 className="text-lg font-bold text-gray-900 mb-4">What Happens Next?</h3>
-                <ol className="space-y-3 text-sm text-gray-700">
-                  <li className="flex gap-2">
-                    <span className="font-bold text-blue-600">1.</span>
-                    <span>We'll review your request within 24 hours</span>
+                <ul className="list-none space-y-4 text-sm text-gray-700">
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                    <span className="pt-0.5">We review your request and reach out within one business day to confirm details.</span>
                   </li>
-                  <li className="flex gap-2">
-                    <span className="font-bold text-blue-600">2.</span>
-                    <span>We'll contact you to schedule a consultation</span>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                    <span className="pt-0.5">We schedule a convenient time to visit your property and walk through the scope.</span>
                   </li>
-                  <li className="flex gap-2">
-                    <span className="font-bold text-blue-600">3.</span>
-                    <span>We'll visit your property to assess the project</span>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+                    <span className="pt-0.5">You receive a written estimate with scope, allowances, timeline, and payment milestones.</span>
                   </li>
-                  <li className="flex gap-2">
-                    <span className="font-bold text-blue-600">4.</span>
-                    <span>You'll receive a detailed written estimate</span>
+                  <li className="flex gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
+                    <span className="pt-0.5">Once approved, we schedule your project start date and assign a dedicated project lead.</span>
                   </li>
-                </ol>
+                </ul>
               </Card>
             </div>
           </div>
@@ -841,24 +841,24 @@ export default function ContactPage() {
 
             <Card padding="lg" className="bg-blue-50">
               <h3 className="text-lg font-bold text-gray-900 mb-3">What Happens Next?</h3>
-              <ol className="space-y-3 text-sm text-gray-700">
-                <li className="flex gap-2">
-                  <span className="font-bold text-blue-600">1.</span>
-                  <span>We'll review your request within 24 hours</span>
+              <ul className="list-none space-y-4 text-sm text-gray-700">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                  <span className="pt-0.5">We review your request and reach out within one business day to confirm details.</span>
                 </li>
-                <li className="flex gap-2">
-                  <span className="font-bold text-blue-600">2.</span>
-                  <span>We'll contact you to schedule a consultation</span>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                  <span className="pt-0.5">We schedule a convenient time to visit your property and walk through the scope.</span>
                 </li>
-                <li className="flex gap-2">
-                  <span className="font-bold text-blue-600">3.</span>
-                  <span>We'll visit your property to assess the project</span>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+                  <span className="pt-0.5">You receive a written estimate with scope, allowances, timeline, and payment milestones.</span>
                 </li>
-                <li className="flex gap-2">
-                  <span className="font-bold text-blue-600">4.</span>
-                  <span>You'll receive a detailed written estimate</span>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
+                  <span className="pt-0.5">Once approved, we schedule your project start date and assign a dedicated project lead.</span>
                 </li>
-              </ol>
+              </ul>
             </Card>
           </div>
         </div>
