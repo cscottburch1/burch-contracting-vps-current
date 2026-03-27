@@ -4,7 +4,7 @@ import { query } from '@/lib/mysql';
 import { validateRecaptcha } from '@/lib/recaptcha';
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import { calculateLeadScore } from '@/lib/leadScoring';
-import { writeFile, mkdir, readFile } from 'fs/promises';
+import { writeFile, mkdir, readFile, rename, copyFile, unlink } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
@@ -24,7 +24,115 @@ type LeadInsertPayload = {
   leadScore: number;
 };
 
+type QueuedLeadFile = {
+  storedName: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+  tempDirId: string;
+};
+
+type QueuedLeadPayload = LeadInsertPayload & {
+  queuedFiles?: QueuedLeadFile[];
+};
+
 const LEAD_QUEUE_FILE = join(process.cwd(), 'tmp', 'emergency_leads_queue.json');
+const LEAD_UPLOAD_QUEUE_DIR = join(process.cwd(), 'tmp', 'emergency_lead_uploads');
+
+function sanitizeFileName(name: string): string {
+  return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+}
+
+function createUniqueName(originalName: string): string {
+  const sanitized = sanitizeFileName(originalName);
+  const stamp = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  return `${stamp}_${sanitized}`;
+}
+
+async function ensureDir(path: string) {
+  if (!existsSync(path)) {
+    await mkdir(path, { recursive: true });
+  }
+}
+
+function getAllowedUploadType(fileType: string): boolean {
+  const allowed = new Set([
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/heic',
+    'image/heif',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ]);
+  return allowed.has((fileType || '').toLowerCase());
+}
+
+async function moveFileWithFallback(fromPath: string, toPath: string) {
+  try {
+    await rename(fromPath, toPath);
+  } catch {
+    await copyFile(fromPath, toPath);
+    await unlink(fromPath).catch(() => undefined);
+  }
+}
+
+async function persistQueuedFiles(files: File[]): Promise<QueuedLeadFile[]> {
+  if (files.length === 0) {
+    return [];
+  }
+
+  await ensureDir(LEAD_UPLOAD_QUEUE_DIR);
+  const tempDirId = `${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+  const tempDir = join(LEAD_UPLOAD_QUEUE_DIR, tempDirId);
+  await ensureDir(tempDir);
+
+  const queuedFiles: QueuedLeadFile[] = [];
+  for (const file of files) {
+    const storedName = createUniqueName(file.name || 'upload.bin');
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    await writeFile(join(tempDir, storedName), buffer);
+
+    queuedFiles.push({
+      storedName,
+      originalName: file.name || storedName,
+      mimeType: file.type || 'application/octet-stream',
+      size: file.size || buffer.length,
+      tempDirId,
+    });
+  }
+
+  return queuedFiles;
+}
+
+async function attachQueuedFilesToLead(leadId: number, queuedFiles: QueuedLeadFile[]) {
+  if (!queuedFiles || queuedFiles.length === 0) {
+    return [] as string[];
+  }
+
+  const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+  await ensureDir(leadDir);
+
+  const attachmentNames: string[] = [];
+  for (const file of queuedFiles) {
+    const sourcePath = join(LEAD_UPLOAD_QUEUE_DIR, file.tempDirId, file.storedName);
+    const destinationName = file.storedName;
+    const destinationPath = join(leadDir, destinationName);
+
+    if (!existsSync(sourcePath)) {
+      continue;
+    }
+
+    await moveFileWithFallback(sourcePath, destinationPath);
+    attachmentNames.push(destinationName);
+  }
+
+  return attachmentNames;
+}
 
 async function ensureContactLeadsTable() {
   await query(`
@@ -70,7 +178,7 @@ async function ensureContactLeadsTable() {
   await query(`ALTER TABLE contact_leads ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
 }
 
-async function queueLeadForRecovery(payload: LeadInsertPayload, reason: string) {
+async function queueLeadForRecovery(payload: LeadInsertPayload, reason: string, files: File[] = []) {
   const queueDir = join(process.cwd(), 'tmp');
   if (!existsSync(queueDir)) {
     await mkdir(queueDir, { recursive: true });
@@ -86,8 +194,11 @@ async function queueLeadForRecovery(payload: LeadInsertPayload, reason: string) 
     }
   }
 
+  const queuedFiles = await persistQueuedFiles(files);
+
   queue.push({
     ...payload,
+    queuedFiles,
     queued_at: new Date().toISOString(),
     reason,
   });
@@ -100,7 +211,7 @@ async function tryFlushLeadQueue() {
     return;
   }
 
-  let queue: LeadInsertPayload[] = [];
+  let queue: QueuedLeadPayload[] = [];
   try {
     const raw = await readFile(LEAD_QUEUE_FILE, 'utf8');
     const parsed = JSON.parse(raw);
@@ -118,7 +229,7 @@ async function tryFlushLeadQueue() {
   const remaining: any[] = [];
   for (const item of queue) {
     try {
-      await query(
+      const insertResult = await query<any>(
         `INSERT INTO contact_leads
          (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, message, preferred_date, preferred_time, status, priority, estimated_value, lead_score, source)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -142,6 +253,14 @@ async function tryFlushLeadQueue() {
           'contact_form',
         ]
       );
+
+      const leadId = (insertResult as any)?.insertId;
+      if (leadId && item.queuedFiles && item.queuedFiles.length > 0) {
+        const attachmentNames = await attachQueuedFilesToLead(Number(leadId), item.queuedFiles);
+        if (attachmentNames.length > 0) {
+          await query('UPDATE contact_leads SET attachments = ? WHERE id = ?', [JSON.stringify(attachmentNames), leadId]);
+        }
+      }
     } catch {
       remaining.push(item);
     }
@@ -219,6 +338,30 @@ export async function POST(request: Request) {
         { error: 'Missing required fields' },
         { status: 400 }
       );
+    }
+
+    // Collect files early so they can be queued safely if DB is unavailable.
+    const files: File[] = [];
+    for (let i = 0; i < 10; i++) {
+      const file = formData.get(`file${i}`) as File | null;
+      if (file && file.size > 0) {
+        files.push(file);
+      }
+    }
+
+    if (files.length > 5) {
+      return NextResponse.json({ error: 'Maximum 5 files allowed' }, { status: 400 });
+    }
+
+    const maxFileSize = 10 * 1024 * 1024;
+    for (const file of files) {
+      if (file.size > maxFileSize) {
+        return NextResponse.json({ error: 'Each file must be 10MB or smaller' }, { status: 400 });
+      }
+
+      if (!getAllowedUploadType(file.type || '')) {
+        return NextResponse.json({ error: `Unsupported file type: ${file.type || 'unknown'}` }, { status: 400 });
+      }
     }
 
     // Verify reCAPTCHA if token provided
@@ -307,7 +450,7 @@ export async function POST(request: Request) {
       );
     } catch (dbError) {
       // Emergency fallback to avoid losing leads when DB/schema is temporarily unhealthy.
-      await queueLeadForRecovery(leadPayload, dbError instanceof Error ? dbError.message : 'Unknown DB error');
+      await queueLeadForRecovery(leadPayload, dbError instanceof Error ? dbError.message : 'Unknown DB error', files);
       console.error('Lead queued for recovery due to DB error:', dbError);
 
       return NextResponse.json({
@@ -322,32 +465,18 @@ export async function POST(request: Request) {
     // Handle file uploads
     const uploadedFileNames: string[] = [];
     const uploadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
-    
-    // Collect files from formData
-    const files: File[] = [];
-    for (let i = 0; i < 10; i++) { // Check up to 10 files
-      const file = formData.get(`file${i}`) as File;
-      if (file && file.size > 0) {
-        files.push(file);
-      }
-    }
 
     if (files.length > 0) {
       try {
         // Create upload directory if it doesn't exist
-        if (!existsSync(uploadDir)) {
-          await mkdir(uploadDir, { recursive: true });
-        }
+        await ensureDir(uploadDir);
 
         // Save each file
         for (const file of files) {
           const bytes = await file.arrayBuffer();
           const buffer = Buffer.from(bytes);
           
-          // Sanitize filename
-          const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-          const timestamp = Date.now();
-          const fileName = `${timestamp}_${sanitizedName}`;
+          const fileName = createUniqueName(file.name || 'upload.bin');
           const filePath = join(uploadDir, fileName);
           
           await writeFile(filePath, buffer);

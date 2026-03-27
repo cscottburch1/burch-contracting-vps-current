@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { verifyAdminAuth } from '@/lib/adminAuth';
 import { query } from '@/lib/mysql';
 import { existsSync } from 'fs';
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile, rename, copyFile, unlink } from 'fs/promises';
 import { join } from 'path';
 
 type QueuedLead = {
@@ -21,9 +21,56 @@ type QueuedLead = {
   leadScore: number;
   queued_at?: string;
   reason?: string;
+  queuedFiles?: Array<{
+    storedName: string;
+    originalName: string;
+    mimeType: string;
+    size: number;
+    tempDirId: string;
+  }>;
 };
 
 const LEAD_QUEUE_FILE = join(process.cwd(), 'tmp', 'emergency_leads_queue.json');
+const LEAD_UPLOAD_QUEUE_DIR = join(process.cwd(), 'tmp', 'emergency_lead_uploads');
+
+async function ensureDir(path: string) {
+  if (!existsSync(path)) {
+    await mkdir(path, { recursive: true });
+  }
+}
+
+async function moveFileWithFallback(fromPath: string, toPath: string) {
+  try {
+    await rename(fromPath, toPath);
+  } catch {
+    await copyFile(fromPath, toPath);
+    await unlink(fromPath).catch(() => undefined);
+  }
+}
+
+async function attachQueuedFilesToLead(leadId: number, queuedFiles: QueuedLead['queuedFiles']) {
+  if (!queuedFiles || queuedFiles.length === 0) {
+    return [] as string[];
+  }
+
+  const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+  await ensureDir(leadDir);
+
+  const attachmentNames: string[] = [];
+  for (const file of queuedFiles) {
+    const sourcePath = join(LEAD_UPLOAD_QUEUE_DIR, file.tempDirId, file.storedName);
+    const destinationPath = join(leadDir, file.storedName);
+
+    if (!existsSync(sourcePath)) {
+      continue;
+    }
+
+    await moveFileWithFallback(sourcePath, destinationPath);
+    attachmentNames.push(file.storedName);
+  }
+
+  return attachmentNames;
+}
 
 async function ensureContactLeadsTable() {
   await query(`
@@ -96,7 +143,7 @@ async function flushQueue() {
 
   for (const item of queue) {
     try {
-      await query(
+      const result = await query<any>(
         `INSERT INTO contact_leads
          (name, phone, email, address, service_type, budget_range, timeframe, referral_source, description, message, preferred_date, preferred_time, status, priority, estimated_value, lead_score, source)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -120,6 +167,15 @@ async function flushQueue() {
           'contact_form',
         ]
       );
+
+      const leadId = (result as any)?.insertId;
+      if (leadId && item.queuedFiles && item.queuedFiles.length > 0) {
+        const attachmentNames = await attachQueuedFilesToLead(Number(leadId), item.queuedFiles);
+        if (attachmentNames.length > 0) {
+          await query('UPDATE contact_leads SET attachments = ? WHERE id = ?', [JSON.stringify(attachmentNames), leadId]);
+        }
+      }
+
       replayed += 1;
     } catch {
       remaining.push(item);

@@ -616,10 +616,16 @@ export default function LeadDetailPage() {
                 </h3>
                 <div className="space-y-2">
                   {lead.attachments.map((filename, index) => {
-                    const fileUrl = `/uploads/leads/${lead.id}/${filename}`;
-                    const ext = filename.split('.').pop()?.toLowerCase() || '';
+                    const isExternal = /^https?:\/\//i.test(filename);
+                    const normalizedFilename = filename.split('/').pop() || filename;
+                    const fileUrl = isExternal
+                      ? filename
+                      : `/api/crm/leads/${lead.id}/attachments/${encodeURIComponent(normalizedFilename)}`;
+                    const downloadUrl = isExternal ? fileUrl : `${fileUrl}?download=1`;
+                    const urlPath = normalizedFilename;
+                    const ext = urlPath.split('.').pop()?.toLowerCase() || '';
                     const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
-                    const displayName = filename.replace(/^\d+_/, ''); // strip leading timestamp
+                    const displayName = normalizedFilename.replace(/^\d+_/, ''); // strip leading timestamp
                     return (
                       <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
                         <div className="flex-shrink-0 text-2xl">
@@ -634,8 +640,8 @@ export default function LeadDetailPage() {
                           )}
                         </div>
                         <a
-                          href={fileUrl}
-                          download={displayName}
+                          href={downloadUrl}
+                          download={!isExternal ? displayName : undefined}
                           className="flex-shrink-0 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                         >
                           Download

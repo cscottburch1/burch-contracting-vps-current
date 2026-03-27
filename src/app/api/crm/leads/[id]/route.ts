@@ -25,21 +25,63 @@ function getAdminIdentifier(adminUser: any): string {
   return adminUser?.email || adminUser?.name || `admin:${adminUser?.userId || 'unknown'}`;
 }
 
+function normalizeAttachmentName(value: unknown): string | null {
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+
+    if (/^https?:\/\//i.test(trimmed)) {
+      return trimmed;
+    }
+
+    const withForwardSlashes = trimmed.replace(/\\/g, '/');
+    const uploadsSegmentIndex = withForwardSlashes.indexOf('/uploads/');
+    if (uploadsSegmentIndex >= 0) {
+      return withForwardSlashes.slice(uploadsSegmentIndex);
+    }
+
+    if (withForwardSlashes.startsWith('uploads/')) {
+      return `/${withForwardSlashes}`;
+    }
+
+    const normalized = trimmed.replace(/\\/g, '/');
+    const last = normalized.split('/').pop() || '';
+    return last || null;
+  }
+
+  if (value && typeof value === 'object') {
+    const candidate = (value as any).filename || (value as any).name || (value as any).fileName || (value as any).storedName;
+    return normalizeAttachmentName(candidate);
+  }
+
+  return null;
+}
+
 async function resolveLeadAttachments(leadId: string, rawAttachments: unknown): Promise<string[]> {
   let attachments: string[] = [];
 
   if (Array.isArray(rawAttachments)) {
-    attachments = rawAttachments.filter((item): item is string => typeof item === 'string' && item.length > 0);
+    attachments = rawAttachments
+      .map((item) => normalizeAttachmentName(item))
+      .filter((item): item is string => Boolean(item));
   } else if (typeof rawAttachments === 'string' && rawAttachments.trim().length > 0) {
     try {
       const parsed = JSON.parse(rawAttachments);
       if (Array.isArray(parsed)) {
-        attachments = parsed.filter((item): item is string => typeof item === 'string' && item.length > 0);
+        attachments = parsed
+          .map((item) => normalizeAttachmentName(item))
+          .filter((item): item is string => Boolean(item));
+      } else {
+        const normalized = normalizeAttachmentName(parsed);
+        attachments = normalized ? [normalized] : [];
       }
     } catch {
-      attachments = [];
+      const normalized = normalizeAttachmentName(rawAttachments);
+      attachments = normalized ? [normalized] : [];
     }
   }
+
+  attachments = Array.from(new Set(attachments));
 
   // Fallback: recover from files on disk when DB metadata is missing.
   if (attachments.length === 0) {
