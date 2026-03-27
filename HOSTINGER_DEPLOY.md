@@ -11,15 +11,11 @@ ssh username@your-vps-ip
 ## Step 2: Navigate to Your App Directory
 
 ```bash
-# Usually something like:
-cd /var/www/burchcontracting
-# OR
-cd ~/burchcontracting
-# OR
-cd /home/username/burchcontracting-fresh
+# Canonical app path for this project:
+cd /root/burch-contracting
 
 # If you're not sure where it is:
-find / -name "burch-contracting-fresh" 2>/dev/null
+find / -name "burch-contracting" 2>/dev/null
 # OR
 ls -la /var/www/
 ```
@@ -41,7 +37,7 @@ git pull origin main
 
 ```bash
 # Install any new packages
-npm install
+npm ci
 
 # Build the production version
 npm run build
@@ -51,13 +47,11 @@ npm run build
 
 ### If using PM2 (most common):
 ```bash
-pm2 restart all
-# OR restart specific app
-pm2 restart burchcontracting
+pm2 restart burch-contracting --update-env
 
 # Check if it's running
-pm2 list
-pm2 logs
+pm2 status burch-contracting
+pm2 logs burch-contracting --lines 50
 ```
 
 ### If using systemd:
@@ -106,11 +100,17 @@ Open these URLs:
 1. **Health Check**: https://burchcontracting.com/api/health
    - Should return JSON with "status": "healthy"
 
-2. **Homepage**: https://burchcontracting.com
-   - Should load without errors
+2. **Robots**: https://burchcontracting.com/robots.txt
+   - Should include `/sitemaps/content.xml`
 
-3. **Projects Page**: https://burchcontracting.com/admin/projects/5
-   - Should work without crashes
+3. **Content Sitemap**: https://burchcontracting.com/sitemaps/content.xml
+   - Should return HTTP 200
+
+4. **SEO Sections**:
+   - https://burchcontracting.com/blog
+   - https://burchcontracting.com/cost
+   - https://burchcontracting.com/projects
+   - Each should return HTTP 200
 
 ## Quick All-in-One Command
 
@@ -118,17 +118,21 @@ Copy and paste this entire block (adjust the path):
 
 ```bash
 # Navigate to app
-cd /var/www/burchcontracting && \
+cd /root/burch-contracting && \
 # Pull changes
+git fetch origin main && \
+git checkout main && \
 git pull origin main && \
 # Install dependencies
-npm install && \
+npm ci && \
 # Build
 npm run build && \
 # Restart
-pm2 restart all && \
+pm2 restart burch-contracting --update-env && \
+# Smoke test
+npm run verify:production -- --base-url=https://burchcontracting.com && \
 # Show status
-pm2 list && \
+pm2 status burch-contracting && \
 echo "✅ Deployment complete! Visit https://burchcontracting.com/api/health to verify"
 ```
 
@@ -145,12 +149,13 @@ sudo chown -R $USER:$USER .
 
 ### Issue: Git pull fails
 ```bash
-# Reset any local changes
-git reset --hard origin/main
+# Inspect local changes first
+git status
 
-# Force pull
+# Update from remote main safely
 git fetch origin
-git reset --hard origin/main
+git checkout main
+git pull origin main
 ```
 
 ### Issue: Port already in use
@@ -173,7 +178,7 @@ npm run build
 ### Issue: Can't find app directory
 ```bash
 # Search for it
-find /home -name "burch-contracting-fresh" 2>/dev/null
+find /home -name "burch-contracting" 2>/dev/null
 find /var/www -name "burch*" 2>/dev/null
 
 # Or check running processes
@@ -214,7 +219,7 @@ After deployment, you should see:
 
 ```
 ✅ Git pull: Already up-to-date OR files updated
-✅ npm install: added 0 packages (or some packages)
+✅ npm ci: dependencies installed from lockfile
 ✅ npm run build: Compiled successfully
 ✅ pm2 restart: [PM2] Process successfully restarted
 ```

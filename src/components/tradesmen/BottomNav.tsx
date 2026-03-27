@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const currentPath = pathname || '';
 
   const navItems = [
     {
@@ -58,7 +59,7 @@ export default function BottomNav() {
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 md:hidden">
       <div className="flex justify-around items-center px-2 py-2 safe-bottom">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+          const isActive = currentPath === item.href || currentPath.startsWith(item.href + '/');
           return (
             <Link
               key={item.href}

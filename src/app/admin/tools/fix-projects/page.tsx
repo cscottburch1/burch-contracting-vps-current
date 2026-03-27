@@ -1,11 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
 
 export default function FixProjectsPage() {
+  const router = useRouter();
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
+
+  useEffect(() => {
+    let mounted = true;
+
+    const checkAuth = async () => {
+      setAuthLoading(true);
+      setAuthError('');
+
+      try {
+        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!authRes.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+          }
+          router.push('/admin');
+          return;
+        }
+      } catch (err) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(err)
+              ? 'Session check timed out. Please refresh and try again.'
+              : 'Unable to verify admin session. Please refresh and try again.'
+          );
+        }
+      } finally {
+        if (mounted) {
+          setAuthLoading(false);
+        }
+      }
+    };
+
+    checkAuth();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const handleBackupAndRecreate = async () => {
     if (!confirm('This will:\n1. Rename "projects" table to "projects_old_backup"\n2. Create new "projects" table with correct schema\n3. You can then delete test customers and start fresh\n\nContinue?')) {
@@ -17,7 +61,7 @@ export default function FixProjectsPage() {
     setResult(null);
 
     try {
-      const response = await fetch('/api/admin/fix-projects', {
+      const response = await fetchWithTimeout('/api/admin/fix-projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'backup_and_recreate' })
@@ -30,24 +74,59 @@ export default function FixProjectsPage() {
       } else {
         setError(data.error || 'Failed to fix projects table');
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err) {
+      setError(isAbortLikeError(err) ? 'Request timed out. Please retry.' : 'An error occurred');
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+        <div className="bg-white border border-gray-200 rounded-xl px-6 py-4 text-gray-700 shadow-sm">
+          Verifying admin session...
+        </div>
+      </div>
+    );
+  }
+
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+        <div className="max-w-xl bg-white border border-red-200 rounded-xl p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Unable to load Fix Projects tool</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <Link
+              href="/admin"
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="mb-6">
-            <a
+            <Link
               href="/admin/tools"
               className="text-blue-600 hover:text-blue-700 font-semibold"
             >
               ← Back to Admin Tools
-            </a>
+            </Link>
           </div>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Fix Projects Table Schema</h1>
