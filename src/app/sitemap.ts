@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
-import { serviceLandingPages } from '@/lib/seo/localSeoData';
+import { blogPosts, serviceLandingPages } from '@/lib/seo/localSeoData';
+import { costLandingPages } from '@/lib/seo/costSeoData';
+import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://burchcontracting.com';
@@ -30,6 +32,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/cost`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.83,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/projects`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/employment`,
@@ -83,6 +103,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const serviceAreas = [
     'simpsonville',
     'greenville',
+    'greer',
     'mauldin',
     'fountain-inn',
     'five-forks',
@@ -105,5 +126,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes, ...localServiceRoutes];
+  const costRoutes = costLandingPages.map((page) => ({
+    url: `${baseUrl}/cost/${page.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.82,
+  }));
+
+  const blogRoutes = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.74,
+  }));
+
+  const projectRoutes = projectSpotlights.map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly' as const,
+    priority: 0.76,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes, ...localServiceRoutes, ...costRoutes, ...blogRoutes, ...projectRoutes];
 }

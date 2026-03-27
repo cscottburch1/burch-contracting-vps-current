@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 
 export default function PaymentSuccessPage() {
   const params = useParams();
+  const invoiceId = Array.isArray(params?.id) ? params.id[0] : (params?.id || '');
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [paymentStatus, setPaymentStatus] = useState<any>(null);
@@ -16,9 +17,9 @@ export default function PaymentSuccessPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const paymentIntentId = urlParams.get('payment_intent');
 
-        if (paymentIntentId) {
+        if (paymentIntentId && invoiceId) {
           // Verify payment status
-          const res = await fetch(`/api/customer/invoices/${params.id}`);
+          const res = await fetch(`/api/customer/invoices/${invoiceId}`);
           const data = await res.json();
           setPaymentStatus(data.invoice);
         }
@@ -30,7 +31,7 @@ export default function PaymentSuccessPage() {
     };
 
     checkPaymentStatus();
-  }, [params.id]);
+  }, [invoiceId]);
 
   if (loading) {
     return (

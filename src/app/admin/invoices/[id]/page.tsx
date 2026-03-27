@@ -47,7 +47,7 @@ interface Payment {
 export default function InvoiceDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const invoiceId = params.id as string;
+  const invoiceId = (params?.id as string) || '';
 
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [items, setItems] = useState<InvoiceItem[]>([]);

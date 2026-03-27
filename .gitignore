@@ -47,3 +47,8 @@ next-env.d.ts
 *.dat
 *.uca
 AggregateCache.uca
+
+# Temporary / generated artifacts
+/tmp/
+build-latest.txt
+build_output_latest.txt

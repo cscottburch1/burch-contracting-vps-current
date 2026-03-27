@@ -66,7 +66,7 @@ type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontracto
 export default function AdminProjectDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const projectId = params.id as string;
+  const projectId = (params?.id as string) || '';
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [project, setProject] = useState<Project | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);

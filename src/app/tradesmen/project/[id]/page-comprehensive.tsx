@@ -9,7 +9,7 @@ type TabType = 'overview' | 'time' | 'photos' | 'tasks' | 'materials' | 'issues'
 export default function TradesmanProjectPage() {
   const router = useRouter();
   const params = useParams();
-  const projectId = params.id as string;
+  const projectId = (params?.id as string) || '';
   
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [project, setProject] = useState<any>(null);

@@ -9,9 +9,10 @@ import { businessConfig } from '@/config/business';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import Script from 'next/script';
 import { getServiceBySlug, getActiveServices } from '@/lib/services';
-import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo/schema';
 import { absoluteUrl } from '@/lib/seo/site';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
+import { costLandingPages } from '@/lib/seo/costSeoData';
 
 // Service content database
 const serviceContent: Record<string, {
@@ -428,11 +429,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
     return false;
   });
 
+  const relatedCostPages = costLandingPages.filter((page) => {
+    if (slug === 'remodeling') {
+      return page.serviceName === 'Kitchen Remodeling' || page.serviceName === 'Bathroom Remodeling';
+    }
+
+    if (slug === 'additions') {
+      return page.serviceName === 'Room Additions' || page.serviceName === 'Deck Builder';
+    }
+
+    if (slug === 'basement') {
+      return page.serviceName === 'Basement Finishing';
+    }
+
+    return false;
+  });
+
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
     { name: 'Services', url: absoluteUrl('/services') },
     { name: serviceConfig?.title || service.title, url: absoluteUrl(`/services/${slug}`) },
   ]);
+
+  const faqSchema = buildFaqSchema(service.faq);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -450,10 +469,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
         "postalCode": "29681"
       }
     },
-    "areaServed": {
+    "areaServed": businessConfig.serviceArea.locations.map((location) => ({
       "@type": "City",
-      "name": "Simpsonville"
-    },
+      "name": `${location}, SC`
+    })),
     "offers": {
       "@type": "Offer",
       "availability": "https://schema.org/InStock"
@@ -471,6 +490,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
         id="service-breadcrumb-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <Script
+        id="service-faq-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero Section */}
@@ -551,7 +575,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Localized Planning Guides</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Compare service-specific pages for Simpsonville and Fountain Inn before you request a written quote.
+              Compare service-specific pages across Upstate markets before you request a written quote.
             </p>
           </div>
 
@@ -563,6 +587,30 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 <p className="mt-3 text-gray-600">{page.shortDescription}</p>
                 <div className="mt-5">
                   <Button variant="outline" href={`/locations/${page.slug}`}>Read Local Guide</Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {relatedCostPages.length > 0 && (
+        <Section background="white" padding="lg">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Cost Planning Guides</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Review realistic budget ranges for this service before your consultation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {relatedCostPages.map((page) => (
+              <Card key={page.slug} className="hover-lift">
+                <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city}</div>
+                <h3 className="mt-2 text-2xl font-bold text-gray-900">{page.h1}</h3>
+                <p className="mt-3 text-gray-600">{page.metaDescription}</p>
+                <div className="mt-5">
+                  <Button variant="outline" href={`/cost/${page.slug}`}>Read Cost Guide</Button>
                 </div>
               </Card>
             ))}

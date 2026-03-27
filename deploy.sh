@@ -1,26 +1,37 @@
 #!/bin/bash
+set -euo pipefail
+
 # Deployment script for Hostinger VPS
 
 echo "🚀 Starting deployment to Hostinger VPS..."
 
-# Navigate to the application directory
-cd ~/domains/burchcontracting.com/public_html || cd ~/burch-contracting-fresh || cd /home/u239178742/burch-contracting-fresh || exit 1
+APP_DIR="${APP_DIR:-/root/burch-contracting}"
+APP_NAME="${APP_NAME:-burch-contracting}"
+BASE_URL="${BASE_URL:-https://burchcontracting.com}"
+
+cd "$APP_DIR"
 
 echo "📦 Pulling latest changes from GitHub..."
+git fetch origin main
+git checkout main
 git pull origin main
 
 echo "📦 Installing dependencies..."
-npm install
+npm ci
 
 echo "🔨 Building the application..."
 npm run build
 
 echo "🔄 Restarting the application..."
-# Find and kill existing Node.js process
-pkill -f "next start" || true
+if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
+	pm2 restart "$APP_NAME" --update-env
+else
+	pm2 start npm --name "$APP_NAME" -- start
+fi
+pm2 save
 
-# Start the application in the background
-nohup npm start > ~/app.log 2>&1 &
+echo "🧪 Running post-deploy smoke checks..."
+npm run verify:production -- --base-url="$BASE_URL"
 
 echo "✅ Deployment complete!"
-echo "Check logs at: ~/app.log"
+pm2 status "$APP_NAME"

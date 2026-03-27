@@ -9,13 +9,25 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 export const metadata: Metadata = {
   title: 'Remodeling Service Areas and Local Landing Pages',
   description:
-    'Browse Burch Contracting local remodeling and outdoor living pages for Simpsonville and Fountain Inn, SC.',
+    'Browse Burch Contracting local remodeling and outdoor living pages for Simpsonville, Greenville, Greer, Five Forks, Mauldin, Fountain Inn, Woodruff, Gray Court, and Laurens, SC.',
   alternates: { canonical: absoluteUrl('/locations') },
   openGraph: {
     title: 'Local Remodeling Service Pages | Burch Contracting',
-    description: 'Explore localized remodeling pages for Simpsonville and Fountain Inn homeowners.',
+    description: 'Explore localized remodeling pages for homeowners across the Upstate of South Carolina.',
     url: absoluteUrl('/locations'),
   },
+};
+
+const cityAreaLinks: Record<string, string> = {
+  'Simpsonville SC': '/service-areas/simpsonville',
+  'Fountain Inn SC': '/service-areas/fountain-inn',
+  'Greenville SC': '/service-areas/greenville',
+  'Greer SC': '/service-areas/greer',
+  'Five Forks SC': '/service-areas/five-forks',
+  'Mauldin SC': '/service-areas/mauldin',
+  'Gray Court SC': '/service-areas/gray-court',
+  'Woodruff SC': '/service-areas/woodruff',
+  'Laurens SC': '/service-areas/laurens',
 };
 
 const groupedPages = serviceLandingPages.reduce<Record<string, typeof serviceLandingPages>>((groups, page) => {
@@ -29,9 +41,9 @@ export default function LocationsIndexPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="mb-6 text-4xl font-bold md:text-6xl">Localized Remodeling Pages for Simpsonville and Fountain Inn</h1>
+            <h1 className="mb-6 text-4xl font-bold md:text-6xl">Localized Remodeling Pages Across the Upstate</h1>
             <p className="text-lg text-blue-100 md:text-xl">
-              Compare service-specific planning pages for kitchens, bathrooms, room additions, decks, porches, and basement finishing.
+              Compare service-specific planning pages for kitchens, bathrooms, shower conversions, room additions, decks, porches, and basement finishing in your city.
             </p>
           </div>
         </div>
@@ -46,7 +58,7 @@ export default function LocationsIndexPage() {
                   <h2 className="text-3xl font-bold text-gray-900">{city}</h2>
                   <p className="text-gray-600">Local planning pages built around common project types in {city}.</p>
                 </div>
-                <Button variant="outline" href={city.includes('Simpsonville') ? '/service-areas/simpsonville' : '/service-areas/fountain-inn'}>
+                <Button variant="outline" href={cityAreaLinks[city] ?? '/services'}>
                   <Icon name="MapPin" size={18} />
                   View Area Page
                 </Button>

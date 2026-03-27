@@ -5,6 +5,43 @@ import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
+type DocumentRow = {
+  id: number;
+  project_id: number;
+  filename?: string;
+  original_name?: string;
+  filepath?: string;
+  filetype?: string;
+  file_type?: string;
+  filesize?: number;
+  file_size?: number;
+  category?: string;
+  description?: string;
+  uploaded_by?: string;
+  created_at?: string;
+};
+
+const normalizeDocument = (doc: DocumentRow) => {
+  const storedFilename = doc.filename || '';
+  const displayName = doc.original_name || doc.filename || 'document';
+  const path = doc.filepath || (storedFilename ? `/uploads/${storedFilename}` : '');
+
+  return {
+    ...doc,
+    filename: displayName,
+    filepath: path,
+    filetype: doc.filetype || doc.file_type || 'application/octet-stream',
+    filesize: doc.filesize ?? doc.file_size ?? 0,
+    category: doc.category || 'general',
+    description: doc.description || '',
+  };
+};
+
+const getDocumentColumns = async () => {
+  const columns = await query<{ Field: string }>('SHOW COLUMNS FROM documents');
+  return new Set(columns.map((col) => col.Field));
+};
+
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -17,12 +54,13 @@ export async function GET(
 
     const { id } = await context.params;
 
-    const documents = await query(
+    const documents = await query<DocumentRow>(
       'SELECT * FROM documents WHERE project_id = ? ORDER BY created_at DESC',
       [id]
     );
 
-    return NextResponse.json({ documents: documents || [] });
+    const normalized = (documents || []).map(normalizeDocument);
+    return NextResponse.json({ documents: normalized });
   } catch (error) {
     console.error('Error fetching documents:', error);
     return NextResponse.json({ error: 'Failed to fetch documents' }, { status: 500 });
@@ -68,16 +106,41 @@ export async function POST(
     const buffer = Buffer.from(bytes);
     await writeFile(filepath, buffer);
 
-    // Save to database
-    const result = await query(
-      'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)',
-      [id, file.name, `/uploads/${filename}`, file.type || 'unknown', file.size, 'admin']
-    );
+    // Save to database using whatever schema exists in this environment.
+    const columns = await getDocumentColumns();
+    const documentPath = `/uploads/${filename}`;
+
+    let result: any;
+    if (columns.has('filepath') && columns.has('filetype') && columns.has('filesize')) {
+      result = await query(
+        'INSERT INTO documents (project_id, filename, filepath, filetype, filesize, uploaded_by, category, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [id, file.name, documentPath, file.type || 'unknown', file.size, 'admin', formData.get('category') || 'general', formData.get('description') || '']
+      );
+    } else {
+      result = await query(
+        'INSERT INTO documents (project_id, filename, original_name, file_type, file_size, category, description, uploaded_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [id, filename, file.name, file.type || 'unknown', file.size, formData.get('category') || 'general', formData.get('description') || '', 'admin']
+      );
+    }
 
     const docId = (result as any).insertId;
-    const document = await query('SELECT * FROM documents WHERE id = ?', [docId]);
 
-    return NextResponse.json({ document: document[0] });
+    return NextResponse.json({
+      document: normalizeDocument({
+        id: docId,
+        project_id: Number(id),
+        filename: columns.has('original_name') ? filename : file.name,
+        original_name: columns.has('original_name') ? file.name : undefined,
+        filepath: columns.has('filepath') ? documentPath : undefined,
+        filetype: columns.has('filetype') ? file.type || 'unknown' : undefined,
+        file_type: columns.has('file_type') ? file.type || 'unknown' : undefined,
+        filesize: columns.has('filesize') ? file.size : undefined,
+        file_size: columns.has('file_size') ? file.size : undefined,
+        category: String(formData.get('category') || 'general'),
+        description: String(formData.get('description') || ''),
+        uploaded_by: 'admin',
+      })
+    });
   } catch (error) {
     console.error('Error adding document:', error);
     return NextResponse.json({ error: 'Failed to add document' }, { status: 500 });

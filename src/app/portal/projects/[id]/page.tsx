@@ -46,6 +46,7 @@ const statusConfig = {
 export default function ProjectDetailsPage() {
   const router = useRouter();
   const params = useParams();
+  const projectId = Array.isArray(params?.id) ? params.id[0] : (params?.id || '');
   const [project, setProject] = useState<Project | null>(null);
   const [updates, setUpdates] = useState<ProjectUpdate[]>([]);
   const [documents, setDocuments] = useState<Document[]>([]);
@@ -59,11 +60,16 @@ export default function ProjectDetailsPage() {
 
   useEffect(() => {
     fetchProjectDetails();
-  }, [params.id]);
+  }, [projectId]);
 
   const fetchProjectDetails = async () => {
+    if (!projectId) {
+      router.push('/portal/dashboard');
+      return;
+    }
+
     try {
-      const response = await fetch(`/api/portal/projects/${params.id}`);
+      const response = await fetch(`/api/portal/projects/${projectId}`);
       
       if (!response.ok) {
         if (response.status === 401) {
@@ -128,7 +134,7 @@ export default function ProjectDetailsPage() {
       reader.onloadend = async () => {
         const base64String = reader.result as string;
         
-        const response = await fetch(`/api/portal/projects/${params.id}/documents`, {
+        const response = await fetch(`/api/portal/projects/${projectId}/documents`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -166,7 +172,7 @@ export default function ProjectDetailsPage() {
     if (!confirm('Are you sure you want to delete this document?')) return;
 
     try {
-      const response = await fetch(`/api/portal/projects/${params.id}/documents?documentId=${docId}`, {
+      const response = await fetch(`/api/portal/projects/${projectId}/documents?documentId=${docId}`, {
         method: 'DELETE'
       });
 

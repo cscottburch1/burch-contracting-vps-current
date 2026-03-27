@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
 
 interface Service {
   id: number;
@@ -43,30 +44,60 @@ export default function ServiceManagementPage() {
     menu_label: '',
   });
   const [deleting, setDeleting] = useState<number | null>(null);
+  const [authError, setAuthError] = useState('');
 
   useEffect(() => {
-    checkAuth();
-    loadServices();
-  }, []);
+    let mounted = true;
 
-  const checkAuth = async () => {
-    const res = await fetch('/api/admin/me');
-    if (!res.ok) {
-      router.push('/admin');
-    }
-  };
+    const initialize = async () => {
+      setAuthError('');
+      setLoading(true);
+      try {
+        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!authRes.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+            setLoading(false);
+          }
+          router.push('/admin');
+          return;
+        }
+
+        if (!mounted) {
+          return;
+        }
+
+        await loadServices();
+      } catch (error) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(error)
+              ? 'Session check timed out. Please refresh and try again.'
+              : 'Unable to verify admin session. Please refresh and try again.'
+          );
+          setLoading(false);
+        }
+      }
+    };
+
+    initialize();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const loadServices = async () => {
     try {
-      const res = await fetch('/api/admin/services');
+      const res = await fetchWithTimeout('/api/admin/services', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setServices(data.services || []);
       } else {
         setError('Failed to load services');
       }
-    } catch (err) {
-      setError('Failed to load services');
+    } catch (error) {
+      setError(isAbortLikeError(error) ? 'Loading services timed out' : 'Failed to load services');
     } finally {
       setLoading(false);
     }
@@ -230,6 +261,14 @@ export default function ServiceManagementPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {authError && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+            {authError}
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">

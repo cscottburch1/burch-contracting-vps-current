@@ -12,6 +12,7 @@ import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl } from '@/lib/seo/site';
+import TrustBar from '@/components/TrustBar';
 
 // City-specific content with rich history and modern context
 const cityContent: Record<string, {
@@ -338,6 +339,57 @@ const cityContent: Record<string, {
     ],
     localInsights: [],
     servicesIntro: "Serving Laurens homeowners with expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, room additions, screened porches, and custom deck construction. Burch Contracting combines quality craftsmanship with reliable service and competitive pricing for all your home improvement needs."
+  },
+  greer: {
+    name: "Greer",
+    displayName: "Greer, SC",
+    tagline: "Kitchen & Bath Remodeling, Basement Finishing in Greer, SC",
+    history: "Greer began as a textile mill town in the late 1800s, founded by William and James Greer. The town developed as one of South Carolina's most successful mill communities, with multiple textile operations providing employment and community identity. Though the traditional textile industry has diminished, Greer has successfully transformed into a diverse industrial and residential hub. The city retains pride in its manufacturing heritage while embracing modern growth and development.",
+    modernDay: {
+      population: "Over 30,000 residents",
+      growth: "Consistent steady growth with commercial and residential development",
+      characteristics: [
+        "Mix of historic mill-era homes and modern residential areas",
+        "Strong industrial base with diverse manufacturing and distribution",
+        "Well-maintained neighborhoods with community pride",
+        "Convenient access to Greenville and I-85",
+        "Growing retail and dining options along Wade Hampton Boulevard"
+      ]
+    },
+    neighborhoods: [
+      {
+        name: "Historic Downtown",
+        description: "Original textile mill area with converted historic homes and commercial buildings",
+        homeTypes: "Historic millworker cottages, Victorian homes, renovated historic residences (1890s-1940s)"
+      },
+      {
+        name: "Residential Districts",
+        description: "Established neighborhoods developed from 1950s onward",
+        homeTypes: "Ranch homes, colonial revival, mid-century designs (1950s-1990s)"
+      },
+      {
+        name: "Wade Hampton Corridor",
+        description: "Commercial and residential growth along major thoroughfare",
+        homeTypes: "Contemporary homes, newer family neighborhoods (1990s-present)"
+      }
+    ],
+    whyChooseUs: [
+      "Greer homeowners often inherit historic properties requiring expert restoration knowledge",
+      "Many homes 40-70 years old need kitchen and bathroom updates for modern living",
+      "Growing families invest in additions and basement finishing for extra space",
+      "Home improvement projects add value in Greer's competitive real estate market",
+      "Properties need regular maintenance due to South Carolina's humid climate",
+      "Community values local contractors who provide quality work and fair pricing"
+    ],
+    localInsights: [
+      "Greer has a strong sense of community pride rooted in its mill heritage",
+      "Growing shopping and dining options make Greer increasingly self-sufficient",
+      "Good access to both Greenville's amenities and rural Upstate character",
+      "Excellent schools draw families to the area",
+      "Manufacturing still provides strong local employment",
+      "City invests in community improvements and parks"
+    ],
+    servicesIntro: "Greer homeowners deserve quality craftsmanship from contractors who understand both historic properties and modern family needs. Burch Contracting brings expertise in all aspects of home remodeling to this growing community."
   }
 };
 
@@ -354,7 +406,8 @@ export async function generateStaticParams() {
     { city: 'mauldin' },
     { city: 'laurens' },
     { city: 'woodruff' },
-    { city: 'gray-court' }
+    { city: 'gray-court' },
+    { city: 'greer' }
   ];
 }
 
@@ -389,6 +442,11 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
       title: 'Basement Finishing, Kitchen & Bath Remodeling Laurens SC | Burch Contracting',
       description: 'Expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, screened porches, decks, and room additions in Laurens SC. Professional contractor serving Laurens with 30+ years experience. Licensed, insured, BBB A+ rated. Free estimates!',
       keywords: 'basement finishing Laurens SC, kitchen remodeling Laurens, bathroom remodeling Laurens SC, bath to shower conversion Laurens, deck builder Laurens, screened porch Laurens, room additions Laurens, contractor Laurens SC'
+    },
+    greer: {
+      title: 'Kitchen & Bath Remodeling, Basement Finishing Greer SC | Burch Contracting',
+      description: 'Professional kitchen and bathroom remodeling, basement finishing, bath to tile shower conversions, deck building, and room additions in Greer SC. Licensed contractor with 30+ years experience serving Greer homeowners. Quality craftsmanship, free estimates. Call today!',
+      keywords: 'kitchen remodeling Greer SC, bathroom remodeling Greer, basement finishing Greer SC, bath to shower conversion Greer, deck builder Greer, screened porch Greer, room additions Greer, contractor Greer SC'
     }
   };
 
@@ -500,6 +558,8 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       {/* History Section - Only show if content exists */}
       {content.history && (

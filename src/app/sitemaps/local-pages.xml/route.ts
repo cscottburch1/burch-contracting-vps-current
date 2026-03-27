@@ -1,4 +1,4 @@
-import { trackedLocalLandingPaths } from '@/lib/seo/searchConsoleTargets';
+import { trackedCostPaths, trackedLocalLandingPaths } from '@/lib/seo/searchConsoleTargets';
 import { absoluteUrl } from '@/lib/seo/site';
 
 function escapeXml(value: string) {
@@ -7,7 +7,7 @@ function escapeXml(value: string) {
 
 export async function GET() {
   const lastmod = new Date().toISOString();
-  const urls = trackedLocalLandingPaths
+  const urls = [...trackedLocalLandingPaths, ...trackedCostPaths]
     .map((path) => {
       const loc = escapeXml(absoluteUrl(path));
       return `<url><loc>${loc}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>`;

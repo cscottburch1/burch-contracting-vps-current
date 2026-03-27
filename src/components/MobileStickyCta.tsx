@@ -15,8 +15,9 @@ export default function MobileStickyCta() {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 p-3 shadow-2xl backdrop-blur md:hidden">
-      <div className="mx-auto flex max-w-lg gap-3">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 pb-3 pt-2 shadow-2xl backdrop-blur md:hidden">
+      <p className="mb-2 text-center text-xs text-gray-400">Free estimates · Licensed &amp; insured · BBB A+</p>
+      <div className="mx-auto flex max-w-lg gap-3 px-3">
         <Button variant="outline" size="md" href={siteConfig.phoneHref} fullWidth>
           <Icon name="Phone" size={18} />
           Call

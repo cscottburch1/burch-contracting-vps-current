@@ -31,7 +31,7 @@ interface Project {
 export default function CustomerDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const customerId = params.id as string;
+  const customerId = (params?.id as string) || '';
 
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -210,6 +210,9 @@ export default function CustomerDetailPage() {
     setUploading(true);
     
     try {
+      const failedUploads: string[] = [];
+      let successfulUploads = 0;
+
       // Upload each file
       for (let i = 0; i < uploadFile.length; i++) {
         const file = uploadFile[i];
@@ -225,22 +228,36 @@ export default function CustomerDetailPage() {
         });
 
         if (!response.ok) {
-          const data = await response.json();
-          alert(`Failed to upload ${file.name}: ${data.error || 'Unknown error'}`);
+          const data = await response.json().catch(() => null);
+          failedUploads.push(`${file.name}: ${data?.error || 'Unknown error'}`);
+          continue;
         }
+
+        successfulUploads += 1;
       }
-      
-      alert(`Successfully uploaded ${uploadFile.length} document(s)!`);
-      setShowUploadModal(false);
-      setUploadFile(null);
-      setUploadCategory('general');
-      setUploadDescription('');
-      setSelectedProjectId(null);
-      fetchDocuments();
-      setUploading(false);
+
+      if (successfulUploads > 0) {
+        await fetchDocuments();
+        setShowUploadModal(false);
+        setUploadFile(null);
+        setUploadCategory('general');
+        setUploadDescription('');
+        setSelectedProjectId(null);
+      }
+
+      if (successfulUploads > 0 && failedUploads.length === 0) {
+        alert(`Successfully uploaded ${successfulUploads} document(s).`);
+      } else if (successfulUploads > 0 && failedUploads.length > 0) {
+        alert(
+          `Uploaded ${successfulUploads} document(s), but ${failedUploads.length} failed:\n${failedUploads.join('\n')}`
+        );
+      } else if (failedUploads.length > 0) {
+        alert(`Failed to upload documents:\n${failedUploads.join('\n')}`);
+      }
     } catch (error) {
       console.error('Error uploading documents:', error);
       alert('Failed to upload documents');
+    } finally {
       setUploading(false);
     }
   };

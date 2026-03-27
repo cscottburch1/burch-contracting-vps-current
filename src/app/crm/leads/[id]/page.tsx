@@ -12,7 +12,7 @@ import { Lead, LeadNote, LeadActivity } from '@/types/crm';
 export default function LeadDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const leadId = params.id as string;
+  const leadId = (params?.id as string) || '';
 
   const [lead, setLead] = useState<Lead | null>(null);
   const [notes, setNotes] = useState<LeadNote[]>([]);

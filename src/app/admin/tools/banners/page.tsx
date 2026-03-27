@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
 
 interface Banner {
   id: number;
@@ -27,6 +28,7 @@ export default function BannersManagement() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [authError, setAuthError] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -55,26 +57,57 @@ export default function BannersManagement() {
   const iconOptions = ['AlertCircle', 'Info', 'Bell', 'Star', 'Gift', 'Zap', 'TrendingUp', 'Calendar'];
 
   useEffect(() => {
-    checkAuth();
-    loadBanners();
-  }, []);
+    let mounted = true;
 
-  const checkAuth = async () => {
-    const res = await fetch('/api/admin/me');
-    if (!res.ok) {
-      router.push('/admin');
-    }
-  };
+    const initialize = async () => {
+      setAuthError('');
+      setLoading(true);
+      try {
+        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!authRes.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+            setLoading(false);
+          }
+          router.push('/admin');
+          return;
+        }
+
+        if (!mounted) {
+          return;
+        }
+
+        await loadBanners();
+      } catch (error) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(error)
+              ? 'Session check timed out. Please refresh and try again.'
+              : 'Unable to verify admin session. Please refresh and try again.'
+          );
+          setLoading(false);
+        }
+      }
+    };
+
+    initialize();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const loadBanners = async () => {
     try {
-      const res = await fetch('/api/admin/banners');
+      const res = await fetchWithTimeout('/api/admin/banners', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setBanners(data.banners);
+      } else {
+        setError('Failed to load banners');
       }
-    } catch (err) {
-      setError('Failed to load banners');
+    } catch (error) {
+      setError(isAbortLikeError(error) ? 'Loading banners timed out' : 'Failed to load banners');
     } finally {
       setLoading(false);
     }
@@ -187,6 +220,12 @@ export default function BannersManagement() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
+        {authError && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            {authError}
+          </div>
+        )}
+
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="flex justify-between items-center mb-8">
             <div>

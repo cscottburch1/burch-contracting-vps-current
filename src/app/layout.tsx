@@ -27,10 +27,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: 'Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC',
+    default: 'Burch Contracting | Remodeling Contractor Across Upstate South Carolina',
     template: '%s | Burch Contracting',
   },
-  description: "Burch Contracting helps homeowners in Simpsonville and Fountain Inn, SC plan kitchens, bathrooms, room additions, decks, screened porches, and basement finishing with clear estimates, quality craftsmanship, and strong local communication.",
+  description: "Burch Contracting helps homeowners across Upstate South Carolina plan kitchens, bathrooms, room additions, decks, screened porches, and basement finishing with clear estimates and quality craftsmanship.",
   keywords: ["contractor Simpsonville SC", "basement finishing Simpsonville", "kitchen remodeling Simpsonville", "bathroom remodeling Simpsonville", "bath to shower conversion Simpsonville", "deck builder Simpsonville", "basement contractor Fountain Inn", "kitchen remodeling Fountain Inn", "bathroom renovation Woodruff", "basement finishing Woodruff", "kitchen remodeling Laurens SC", "screened porch builder", "room additions", "home remodeling Upstate SC", "licensed contractor", "BBB A+ contractor"],
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: absoluteUrl('/'),
     siteName: "Burch Contracting",
-    title: "Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC",
-    description: "Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for homeowners in Simpsonville, Fountain Inn, Greenville County, and Laurens County.",
+    title: "Burch Contracting | Remodeling Contractor Across Upstate South Carolina",
+    description: "Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for homeowners across Upstate South Carolina.",
     images: [
       {
         url: absoluteUrl(siteConfig.defaultOgImage),
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Burch Contracting | Remodeling Contractor in Simpsonville and Fountain Inn, SC",
+    title: "Burch Contracting | Remodeling Contractor Across Upstate South Carolina",
     description: "Plan kitchens, baths, additions, decks, porches, and basement finishes with a local Upstate South Carolina contractor.",
     images: [absoluteUrl(siteConfig.defaultOgImage)],
   },

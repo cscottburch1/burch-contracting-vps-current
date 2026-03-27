@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
 
 interface EmailTemplate {
   id: number;
@@ -34,8 +35,8 @@ export default function NotificationsManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authError, setAuthError] = useState('');
 
   // Email form state
   const [emailForm, setEmailForm] = useState({
@@ -60,44 +61,73 @@ export default function NotificationsManagement() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    let mounted = true;
+
+    const checkAuth = async () => {
+      setAuthError('');
+      setIsLoading(true);
+      try {
+        const res = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!res.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+            setIsLoading(false);
+          }
+          router.push('/admin');
+          return;
+        }
+
+        if (mounted) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(error)
+              ? 'Session check timed out. Please refresh and try again.'
+              : 'Unable to verify admin session. Please refresh and try again.'
+          );
+          setIsLoading(false);
+        }
+      }
+    };
+
     checkAuth();
-  }, []);
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   useEffect(() => {
-    if (currentUser) {
+    if (isAuthenticated) {
       loadTemplates();
     }
-  }, [activeTab, currentUser]);
-
-  const checkAuth = async () => {
-    const res = await fetch('/api/admin/me');
-    if (!res.ok) {
-      router.push('/admin');
-      return;
-    }
-    const data = await res.json();
-    setCurrentUser(data.user);
-    setAuthLoading(false);
-  };
+  }, [activeTab, isAuthenticated]);
 
   const loadTemplates = async () => {
     setIsLoading(true);
     try {
       if (activeTab === 'email') {
-        const res = await fetch('/api/admin/email-templates');
+        const res = await fetchWithTimeout('/api/admin/email-templates', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           setEmailTemplates(data);
+        } else {
+          setMessage('Failed to load email templates');
         }
       } else {
-        const res = await fetch('/api/admin/sms-templates');
+        const res = await fetchWithTimeout('/api/admin/sms-templates', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           setSMSTemplates(data);
+        } else {
+          setMessage('Failed to load SMS templates');
         }
       }
     } catch (error) {
       console.error('Error loading templates:', error);
+      setMessage(isAbortLikeError(error) ? 'Loading templates timed out' : 'Error loading templates');
     } finally {
       setIsLoading(false);
     }
@@ -297,6 +327,12 @@ export default function NotificationsManagement() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
+        {authError && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+            {authError}
+          </div>
+        )}
+
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Notification Templates</h1>

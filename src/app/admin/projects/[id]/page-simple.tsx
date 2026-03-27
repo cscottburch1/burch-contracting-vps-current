@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 export default function AdminProjectDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const projectId = params.id as string;
+  const projectId = (params?.id as string) || '';
 
   return (
     <div className="p-6">

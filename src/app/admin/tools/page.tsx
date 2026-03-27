@@ -1,54 +1,293 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+
+type AdminUser = {
+  id: number;
+  email: string;
+  name: string;
+  role: 'owner' | 'admin' | string;
+};
+
+type LeadQueueStatus = {
+  queuedCount: number;
+  latestQueuedAt: string | null;
+  sampleReasons: string[];
+};
+
+type ToolCategory =
+  | 'Lead & CRM Tools'
+  | 'Proposal & Estimate Tools'
+  | 'Project Management Tools'
+  | 'Customer Communication Tools'
+  | 'Financial/Admin Tools'
+  | 'Website/SEO Tools'
+  | 'System Utilities';
+
+type ToolItem = {
+  id: string;
+  name: string;
+  description: string;
+  href: string;
+  cta: string;
+  category: ToolCategory;
+  priority: 'high' | 'medium';
+  ownerOnly?: boolean;
+  note?: string;
+};
+
+const TOOL_ITEMS: ToolItem[] = [
+  {
+    id: 'crm',
+    name: 'CRM / Leads',
+    description: 'Track incoming leads, follow-up stages, and conversion pipeline activity.',
+    href: '/crm',
+    cta: 'Open CRM',
+    category: 'Lead & CRM Tools',
+    priority: 'high',
+  },
+  {
+    id: 'customers',
+    name: 'Customer Portal Users',
+    description: 'Manage portal access, account states, and customer profile details.',
+    href: '/admin/customers',
+    cta: 'Manage Users',
+    category: 'Lead & CRM Tools',
+    priority: 'medium',
+  },
+  {
+    id: 'proposals',
+    name: 'Proposals',
+    description: 'Create, track, and update proposal records for active opportunities.',
+    href: '/admin/proposals',
+    cta: 'Manage Proposals',
+    category: 'Proposal & Estimate Tools',
+    priority: 'high',
+  },
+  {
+    id: 'invoices',
+    name: 'Invoices',
+    description: 'Create and manage invoice lifecycle from issue to payment status.',
+    href: '/admin/invoices',
+    cta: 'Manage Invoices',
+    category: 'Financial/Admin Tools',
+    priority: 'high',
+  },
+  {
+    id: 'projects',
+    name: 'Projects',
+    description: 'Monitor job progress, delivery stages, and project records.',
+    href: '/admin/projects',
+    cta: 'View Projects',
+    category: 'Project Management Tools',
+    priority: 'high',
+  },
+  {
+    id: 'subcontractors',
+    name: 'Subcontractors',
+    description: 'Assign work, manage subcontractor profiles, and operational details.',
+    href: '/admin/subcontractors/manage',
+    cta: 'Manage Subcontractors',
+    category: 'Project Management Tools',
+    priority: 'high',
+  },
+  {
+    id: 'field-crew',
+    name: 'Field Crew',
+    description: 'Manage field team assignments, uploads, and accountability workflows.',
+    href: '/admin/tradesmen',
+    cta: 'Open Field Crew',
+    category: 'Project Management Tools',
+    priority: 'medium',
+  },
+  {
+    id: 'messages',
+    name: 'Messages',
+    description: 'Review and respond to customer communications from one location.',
+    href: '/admin/messages',
+    cta: 'Open Messages',
+    category: 'Customer Communication Tools',
+    priority: 'medium',
+  },
+  {
+    id: 'notifications',
+    name: 'Email & SMS Templates',
+    description: 'Configure automated messaging templates for customer and internal updates.',
+    href: '/admin/tools/notifications',
+    cta: 'Manage Templates',
+    category: 'Customer Communication Tools',
+    priority: 'high',
+  },
+  {
+    id: 'services',
+    name: 'Services Manager',
+    description: 'Control service visibility, content, and website display behavior.',
+    href: '/admin/tools/services',
+    cta: 'Manage Services',
+    category: 'Website/SEO Tools',
+    priority: 'high',
+  },
+  {
+    id: 'banners',
+    name: 'Homepage Banners',
+    description: 'Manage homepage promotions and operational announcements.',
+    href: '/admin/tools/banners',
+    cta: 'Manage Banners',
+    category: 'Website/SEO Tools',
+    priority: 'medium',
+  },
+  {
+    id: 'featured-projects',
+    name: 'Featured Projects',
+    description: 'Curate portfolio projects displayed publicly on the website.',
+    href: '/admin/tools/projects',
+    cta: 'Manage Showcase',
+    category: 'Website/SEO Tools',
+    priority: 'medium',
+  },
+  {
+    id: 'calendar',
+    name: 'Calendar',
+    description: 'Coordinate schedules, milestones, and team availability.',
+    href: '/admin/calendar',
+    cta: 'Open Calendar',
+    category: 'System Utilities',
+    priority: 'medium',
+  },
+  {
+    id: 'employees',
+    name: 'Direct Hire Employees',
+    description: 'Maintain internal employee records and assignment context.',
+    href: '/admin/employees',
+    cta: 'Manage Employees',
+    category: 'Financial/Admin Tools',
+    priority: 'medium',
+    ownerOnly: true,
+    note: 'Owner only',
+  },
+  {
+    id: 'settings',
+    name: 'Team Settings',
+    description: 'Manage admin roles, access permissions, and account security settings.',
+    href: '/admin/settings',
+    cta: 'Configure Access',
+    category: 'System Utilities',
+    priority: 'high',
+    ownerOnly: true,
+    note: 'Owner only',
+  },
+  {
+    id: 'migrate',
+    name: 'Database Setup',
+    description: 'Run database setup and migration maintenance utilities safely.',
+    href: '/admin/migrate',
+    cta: 'Open Migrations',
+    category: 'System Utilities',
+    priority: 'medium',
+    ownerOnly: true,
+    note: 'Owner only',
+  },
+];
+
+const CATEGORY_ORDER: ToolCategory[] = [
+  'Lead & CRM Tools',
+  'Proposal & Estimate Tools',
+  'Project Management Tools',
+  'Customer Communication Tools',
+  'Financial/Admin Tools',
+  'Website/SEO Tools',
+  'System Utilities',
+];
 
 export default function AdminToolsPage() {
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
   const [showMaintenance, setShowMaintenance] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | ToolCategory>('all');
+
   const [queueLoading, setQueueLoading] = useState(false);
   const [queueReplaying, setQueueReplaying] = useState(false);
   const [queueError, setQueueError] = useState('');
   const [queueSuccess, setQueueSuccess] = useState('');
-  const [leadQueueStatus, setLeadQueueStatus] = useState<{
-    queuedCount: number;
-    latestQueuedAt: string | null;
-    sampleReasons: string[];
-  } | null>(null);
-  const router = useRouter();
+  const [leadQueueStatus, setLeadQueueStatus] = useState<LeadQueueStatus | null>(null);
+
+  const isOwner = currentUser?.role === 'owner';
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    let mounted = true;
 
-  const checkAuth = async () => {
-    const res = await fetch('/api/admin/me');
-    if (!res.ok) {
-      router.push('/admin');
-      return;
-    }
-    const data = await res.json();
-    setCurrentUser(data.user);
-    if (data?.user?.role === 'owner') {
-      loadLeadQueueStatus();
-    }
-    setLoading(false);
-  };
+    const initialize = async () => {
+      setAuthLoading(true);
+      setAuthError('');
+      try {
+        const res = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!res.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+          }
+          router.push('/admin');
+          return;
+        }
+
+        const data = (await res.json()) as { user?: AdminUser };
+        if (!mounted) {
+          return;
+        }
+
+        if (!data?.user) {
+          setAuthError('Admin session is valid, but user details could not be loaded.');
+          return;
+        }
+
+        setCurrentUser(data.user);
+
+        if (data.user.role === 'owner') {
+          await loadLeadQueueStatus();
+        }
+      } catch (error) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(error)
+              ? 'Session check timed out. Please retry.'
+              : 'Unable to verify admin session. Please try again.'
+          );
+        }
+      } finally {
+        if (mounted) {
+          setAuthLoading(false);
+        }
+      }
+    };
+
+    initialize();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const loadLeadQueueStatus = async () => {
     setQueueLoading(true);
     setQueueError('');
+
     try {
-      const res = await fetch('/api/admin/leads/queue');
+      const res = await fetchWithTimeout('/api/admin/leads/queue', { cache: 'no-store' });
       const data = await res.json();
+
       if (!res.ok) {
-        setQueueError(data.error || 'Failed to load queue status');
+        setQueueError(data.error || 'Failed to load queue status.');
         return;
       }
-      setLeadQueueStatus(data);
-    } catch {
-      setQueueError('Failed to load queue status');
+
+      setLeadQueueStatus(data as LeadQueueStatus);
+    } catch (error) {
+      setQueueError(isAbortLikeError(error) ? 'Queue request timed out.' : 'Failed to load queue status.');
     } finally {
       setQueueLoading(false);
     }
@@ -64,431 +303,242 @@ export default function AdminToolsPage() {
     setQueueSuccess('');
 
     try {
-      const res = await fetch('/api/admin/leads/queue', { method: 'POST' });
+      const res = await fetchWithTimeout('/api/admin/leads/queue', { method: 'POST' });
       const data = await res.json();
 
       if (!res.ok) {
-        setQueueError(data.error || 'Failed to replay queued leads');
+        setQueueError(data.error || 'Failed to replay queued leads.');
         return;
       }
 
       setQueueSuccess(`Replayed ${data.replayed} lead(s). Remaining: ${data.remaining}`);
       await loadLeadQueueStatus();
-    } catch {
-      setQueueError('Failed to replay queued leads');
+    } catch (error) {
+      setQueueError(isAbortLikeError(error) ? 'Queue replay timed out.' : 'Failed to replay queued leads.');
     } finally {
       setQueueReplaying(false);
     }
   };
 
-  if (loading) {
+  const visibleTools = useMemo(() => {
+    const needle = searchTerm.trim().toLowerCase();
+
+    return TOOL_ITEMS.filter((tool) => {
+      if (tool.ownerOnly && !isOwner) {
+        return false;
+      }
+
+      if (selectedCategory !== 'all' && tool.category !== selectedCategory) {
+        return false;
+      }
+
+      if (!needle) {
+        return true;
+      }
+
+      return [tool.name, tool.description, tool.category, tool.cta]
+        .join(' ')
+        .toLowerCase()
+        .includes(needle);
+    });
+  }, [isOwner, searchTerm, selectedCategory]);
+
+  const groupedTools = useMemo(() => {
+    return CATEGORY_ORDER.map((category) => ({
+      category,
+      tools: visibleTools
+        .filter((tool) => tool.category === category)
+        .sort((a, b) => (a.priority === b.priority ? 0 : a.priority === 'high' ? -1 : 1)),
+    })).filter((group) => group.tools.length > 0);
+  }, [visibleTools]);
+
+  if (authLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="rounded-xl border border-gray-200 bg-white px-6 py-5 text-gray-700 shadow-sm">
+          Loading admin tools...
+        </div>
       </div>
     );
   }
 
-  const isOwner = currentUser?.role === 'owner';
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="max-w-xl rounded-xl border border-red-200 bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Tools failed to load</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <Link
+              href="/admin"
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <div className="flex justify-between items-start mb-4">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Admin Tools</h1>
-              <p className="text-xl text-gray-600">Essential management and business tools</p>
+              <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">Admin Tools</h1>
+              <p className="mt-2 text-gray-600">Internal operations workspace for day-to-day management.</p>
+              <p className="mt-2 text-sm text-gray-500">Signed in as {currentUser?.name || currentUser?.email}</p>
             </div>
-            <a
-              href="/admin/dashboard"
-              className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition font-bold"
-            >
-              ← Back to Dashboard
-            </a>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/admin/dashboard" className="rounded-lg bg-gray-700 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800">
+                Back to Dashboard
+              </Link>
+              <Link href="/admin/crm" className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
+                Open Admin CRM
+              </Link>
+              <Link href="/admin/projects/new" className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
+                New Project
+              </Link>
+              <Link href="/admin/proposals/create" className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100">
+                New Proposal
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Business Operations - Most Essential */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">💼</span>
-            Business Operations
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a
-              href="/crm"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-blue-600"
+        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm md:p-5">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search tools by name, purpose, or category"
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none"
+            />
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value as 'all' | ToolCategory)}
+              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none"
             >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📋</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  CRM / Leads
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Manage leads, track follow-ups, and convert to customers
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/projects"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-green-600"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🏗️</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Projects
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                View and manage all active and completed projects
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/subcontractors/manage"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-orange-600"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🔨</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Subcontractors
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Add, edit, delete, and manage contractor information and projects
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/invoices"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-purple-600"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🧾</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Invoices
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                View, create, and manage customer invoices and payment tracking
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/proposals"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group border-l-4 border-indigo-600"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📝</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Proposals
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Create and manage professional project proposals for clients
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/customers"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">👤</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Customer Portal Users
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Manage customer accounts and portal access
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                View →
-              </div>
-            </a>
+              <option value="all">All categories</option>
+              {CATEGORY_ORDER.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <div className="flex items-center rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-700">
+              Showing {visibleTools.length} tool{visibleTools.length === 1 ? '' : 's'}
+            </div>
           </div>
-        </section>
+        </div>
 
-        {/* Website & Content Management */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">🌐</span>
-            Website & Content
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a
-              href="/admin/tools/banners"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📢</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Homepage Banners
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Create and manage promotional banners on homepage
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/tools/services"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🎨</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Services
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Enable/disable services and control where they appear on the website
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/tools/projects"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">🏠</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Featured Projects
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Showcase completed projects on homepage with photos
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
+        {groupedTools.length === 0 ? (
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+            <h2 className="text-lg font-semibold text-gray-900">No tools match your filters</h2>
+            <p className="mt-2 text-gray-600">Adjust search or category filters to see available tools.</p>
           </div>
-        </section>
+        ) : (
+          groupedTools.map((group) => (
+            <section key={group.category} className="mb-8">
+              <h2 className="mb-3 text-xl font-bold text-gray-900">{group.category}</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {group.tools.map((tool) => (
+                  <article key={tool.id} className="flex min-h-48 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                    <div className="mb-2 flex items-center justify-between gap-2">
+                      <h3 className="text-lg font-semibold text-gray-900">{tool.name}</h3>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                          tool.priority === 'high' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'
+                        }`}
+                      >
+                        {tool.priority === 'high' ? 'High Use' : 'Standard'}
+                      </span>
+                    </div>
+                    <p className="mb-4 flex-1 text-sm text-gray-600">{tool.description}</p>
+                    <div className="mt-auto flex items-center justify-between gap-3">
+                      <Link
+                        href={tool.href}
+                        className="rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+                      >
+                        {tool.cta}
+                      </Link>
+                      {tool.note ? <span className="text-xs font-semibold text-gray-500">{tool.note}</span> : null}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))
+        )}
 
-        {/* Team & Communication */}
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-            <span className="text-3xl mr-3">👥</span>
-            Team & Communication
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a
-              href="/admin/tradesmen"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">👷</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Field Crew
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Manage field workers, photo uploads, time tracking, and assignments
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/tools/notifications"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">📧</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Email & SMS
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                Create and manage notification templates
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                Manage →
-              </div>
-            </a>
-
-            <a
-              href="/admin/messages"
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-            >
-              <div className="flex items-center mb-3">
-                <span className="text-4xl mr-3">💬</span>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                  Messages
-                </h3>
-              </div>
-              <p className="text-gray-600">
-                View and manage customer communications
-              </p>
-              <div className="mt-4 text-sm font-semibold text-blue-600">
-                View →
-              </div>
-            </a>
-          </div>
-        </section>
-
-        {/* System & Maintenance - Owner Only (Collapsible) */}
         {isOwner && (
-          <section className="mb-10">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-                <span className="text-3xl mr-3">⚙️</span>
-                System & Maintenance
-              </h2>
+          <section className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-xl font-bold text-gray-900">System Utilities</h2>
               <button
-                onClick={() => setShowMaintenance(!showMaintenance)}
-                className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition font-semibold"
+                onClick={() => setShowMaintenance((prev) => !prev)}
+                className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-100"
               >
-                {showMaintenance ? '▼ Hide' : '▶ Show'}
+                {showMaintenance ? 'Hide Queue Monitor' : 'Show Queue Monitor'}
               </button>
             </div>
-            <p className="text-gray-600 mb-4 text-sm">Owner-only utilities for system maintenance and setup</p>
-            {queueError && (
-              <div className="mb-4 bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm">
-                {queueError}
-              </div>
-            )}
-            {queueSuccess && (
-              <div className="mb-4 bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-lg text-sm">
-                {queueSuccess}
-              </div>
-            )}
-            
-            {showMaintenance && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
-                  <div className="flex items-center mb-3">
-                    <span className="text-4xl mr-3">📥</span>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      Lead Queue Monitor
-                    </h3>
+            <p className="mb-4 text-sm text-gray-600">Owner-only queue recovery utilities for contact form resiliency.</p>
+
+            {queueError ? <p className="mb-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">{queueError}</p> : null}
+            {queueSuccess ? <p className="mb-3 rounded-lg bg-green-50 p-3 text-sm text-green-700">{queueSuccess}</p> : null}
+
+            {showMaintenance ? (
+              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                <div className="grid grid-cols-1 gap-2 text-sm text-gray-700 md:grid-cols-2">
+                  <div>
+                    <span className="font-semibold">Queued leads:</span> {queueLoading ? 'Checking...' : leadQueueStatus?.queuedCount ?? 0}
                   </div>
-                  <p className="text-gray-600 mb-2 text-sm">
-                    Emergency backup queue for contact form submissions
-                  </p>
-                  <div className="text-sm text-gray-700 mb-3">
-                    <div><strong>Queued:</strong> {queueLoading ? 'Checking...' : (leadQueueStatus?.queuedCount ?? 0)}</div>
-                    <div><strong>Last queued:</strong> {leadQueueStatus?.latestQueuedAt ? new Date(leadQueueStatus.latestQueuedAt).toLocaleString() : 'N/A'}</div>
-                  </div>
-                  {leadQueueStatus?.sampleReasons?.length ? (
-                    <div className="text-xs text-gray-600 mb-3">
-                      <strong>Recent reasons:</strong>
-                      <ul className="list-disc list-inside mt-1">
-                        {leadQueueStatus.sampleReasons.map((reason, idx) => (
-                          <li key={`${reason}-${idx}`}>{reason}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={loadLeadQueueStatus}
-                      className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg transition font-semibold"
-                    >
-                      Refresh
-                    </button>
-                    <button
-                      onClick={replayLeadQueue}
-                      disabled={queueReplaying || (leadQueueStatus?.queuedCount ?? 0) === 0}
-                      className="text-sm bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white px-3 py-2 rounded-lg transition font-semibold"
-                    >
-                      {queueReplaying ? 'Replaying...' : 'Replay Queue'}
-                    </button>
+                  <div>
+                    <span className="font-semibold">Last queued:</span>{' '}
+                    {leadQueueStatus?.latestQueuedAt
+                      ? new Date(leadQueueStatus.latestQueuedAt).toLocaleString()
+                      : 'N/A'}
                   </div>
                 </div>
 
-                <a
-                  href="/admin/migrate"
-                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-                >
-                  <div className="flex items-center mb-3">
-                    <span className="text-4xl mr-3">⚡</span>
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                      Database Setup
-                    </h3>
+                {leadQueueStatus?.sampleReasons?.length ? (
+                  <div className="mt-3 text-sm text-gray-700">
+                    <p className="font-semibold">Recent queue reasons:</p>
+                    <ul className="mt-1 list-disc pl-5">
+                      {leadQueueStatus.sampleReasons.map((reason, idx) => (
+                        <li key={`${reason}-${idx}`}>{reason}</li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-gray-600">
-                    Run initial database setup and migrations
-                  </p>
-                  <div className="mt-4 text-sm font-semibold text-blue-600">
-                    Run →
-                  </div>
-                </a>
+                ) : null}
 
-                <a
-                  href="/admin/settings"
-                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-                >
-                  <div className="flex items-center mb-3">
-                    <span className="text-4xl mr-3">👨‍💼</span>
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                      Team Settings
-                    </h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Manage admin users, roles, and permissions
-                  </p>
-                  <div className="mt-4 text-sm font-semibold text-blue-600">
-                    Configure →
-                  </div>
-                </a>
-
-                <a
-                  href="/admin/employees"
-                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
-                >
-                  <div className="flex items-center mb-3">
-                    <span className="text-4xl mr-3">💼</span>
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600">
-                      Direct Hire Employees
-                    </h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Manage direct hire employee records and assignments
-                  </p>
-                  <div className="mt-4 text-sm font-semibold text-blue-600">
-                    Manage →
-                  </div>
-                </a>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    onClick={loadLeadQueueStatus}
+                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+                  >
+                    Refresh
+                  </button>
+                  <button
+                    onClick={replayLeadQueue}
+                    disabled={queueReplaying || (leadQueueStatus?.queuedCount ?? 0) === 0}
+                    className="rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-300"
+                  >
+                    {queueReplaying ? 'Replaying...' : 'Replay Queue'}
+                  </button>
+                </div>
               </div>
-            )}
+            ) : null}
           </section>
         )}
-
-        {/* Back Button */}
-        <div className="mt-12">
-          <a
-            href="/admin/dashboard"
-            className="inline-block bg-gray-600 text-white px-8 py-3 rounded-lg hover:bg-gray-700 transition font-bold"
-          >
-            ← Back to Dashboard
-          </a>
-        </div>
       </div>
     </div>
   );

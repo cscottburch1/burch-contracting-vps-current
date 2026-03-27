@@ -25,6 +25,10 @@ export const Header: React.FC = () => {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services', hasDropdown: services.length > 0 },
+    { label: 'Locations', href: '/locations' },
+    { label: 'Cost Guides', href: '/cost' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Employment', href: '/employment', hasDropdown: true },
     { label: 'Customer Portal', href: '/portal' },
     { label: 'Contact', href: '/contact' },

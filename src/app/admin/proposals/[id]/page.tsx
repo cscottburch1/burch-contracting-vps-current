@@ -42,7 +42,7 @@ interface Proposal {
 export default function ProposalDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const proposalId = params.id as string;
+  const proposalId = (params?.id as string) || '';
 
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const [items, setItems] = useState<ProposalItem[]>([]);

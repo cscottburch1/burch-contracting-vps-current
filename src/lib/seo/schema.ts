@@ -20,6 +20,13 @@ export function buildLocalBusinessSchema() {
     areaServed: [
       { "@type": "City", name: "Simpsonville SC" },
       { "@type": "City", name: "Fountain Inn SC" },
+      { "@type": "City", name: "Greenville SC" },
+      { "@type": "City", name: "Greer SC" },
+      { "@type": "City", name: "Five Forks SC" },
+      { "@type": "City", name: "Mauldin SC" },
+      { "@type": "City", name: "Gray Court SC" },
+      { "@type": "City", name: "Woodruff SC" },
+      { "@type": "City", name: "Laurens SC" },
     ],
     sameAs: [
       "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875",
@@ -117,5 +124,30 @@ export function buildBreadcrumbSchema(items: Array<{ name: string; url: string }
       name: item.name,
       item: item.url,
     })),
+  };
+}
+
+export function buildArticleSchema(opts: { title: string; description: string; url: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: opts.title,
+    description: opts.description,
+    image: [absoluteUrl(siteConfig.defaultOgImage)],
+    author: {
+      "@type": "Organization",
+      name: siteConfig.siteName,
+      url: siteConfig.siteUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.siteName,
+      url: siteConfig.siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/logo-transparent.png"),
+      },
+    },
+    mainEntityOfPage: opts.url,
   };
 }

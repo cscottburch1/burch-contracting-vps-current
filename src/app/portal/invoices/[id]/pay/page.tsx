@@ -63,6 +63,7 @@ function CheckoutForm({ invoice, clientSecret }: any) {
 
 export default function PayInvoicePage() {
   const params = useParams();
+  const invoiceId = Array.isArray(params?.id) ? params.id[0] : (params?.id || '');
   const router = useRouter();
   const [invoice, setInvoice] = useState<any>(null);
   const [clientSecret, setClientSecret] = useState('');
@@ -71,9 +72,15 @@ export default function PayInvoicePage() {
 
   useEffect(() => {
     const fetchInvoiceAndCreateIntent = async () => {
+      if (!invoiceId) {
+        setError('Invalid invoice ID');
+        setLoading(false);
+        return;
+      }
+
       try {
         // Fetch invoice details
-        const invoiceRes = await fetch(`/api/customer/invoices/${params.id}`);
+        const invoiceRes = await fetch(`/api/customer/invoices/${invoiceId}`);
         if (!invoiceRes.ok) {
           throw new Error('Invoice not found');
         }
@@ -106,7 +113,7 @@ export default function PayInvoicePage() {
     };
 
     fetchInvoiceAndCreateIntent();
-  }, [params.id]);
+  }, [invoiceId]);
 
   if (loading) {
     return (

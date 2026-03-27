@@ -19,7 +19,7 @@ import {
 export default function LeadDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const leadId = params.id as string;
+  const leadId = (params?.id as string) || '';
 
   const [lead, setLead] = useState<Lead | null>(null);
   const [notes, setNotes] = useState<LeadNote[]>([]);

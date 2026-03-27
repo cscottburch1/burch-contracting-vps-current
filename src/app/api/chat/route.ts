@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import pool from '@/lib/mysql';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 const openai = process.env.OPENAI_API_KEY 
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -76,6 +77,20 @@ Keep responses concise (2-4 sentences max) and conversational. Use a warm, helpf
 
 export async function POST(request: Request) {
   try {
+    const clientIp = getClientIp(request);
+    const rateLimit = checkRateLimit({
+      identifier: `chat:${clientIp}`,
+      maxRequests: 20,
+      windowMs: 15 * 60 * 1000,
+    });
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many chat requests. Please try again shortly.' },
+        { status: 429 }
+      );
+    }
+
     if (!openai) {
       return NextResponse.json(
         { error: 'AI chat not configured. Please add OPENAI_API_KEY to environment variables.' },
@@ -84,9 +99,16 @@ export async function POST(request: Request) {
     }
 
     const { messages, sessionId } = await request.json();
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ error: 'Invalid chat payload' }, { status: 400 });
+    }
+
+    if (messages.length > 24) {
+      return NextResponse.json({ error: 'Conversation too long. Please start a new chat.' }, { status: 400 });
+    }
 
     // Check if user is trying to provide contact information
-    const lastUserMessage = messages[messages.length - 1]?.content || '';
+    const lastUserMessage = String(messages[messages.length - 1]?.content || '').slice(0, 4000);
     const hasPhone = /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/.test(lastUserMessage);
     const hasEmail = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/.test(lastUserMessage);
     
@@ -95,7 +117,10 @@ export async function POST(request: Request) {
       model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        ...messages,
+        ...messages.map((m: any) => ({
+          role: m?.role,
+          content: String(m?.content || '').slice(0, 4000),
+        })),
       ],
       temperature: 0.7,
       max_tokens: 300,

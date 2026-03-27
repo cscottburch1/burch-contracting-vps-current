@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "verify:production": "node ./scripts/deploy/production-smoke.mjs",
     "import-queued": "node ./scripts/import_queued_subcontractors.js",
     "indexnow:sync-key": "node ./scripts/seo/write-indexnow-key.mjs",
     "indexnow:ping": "node ./scripts/seo/indexnow-ping.mjs"

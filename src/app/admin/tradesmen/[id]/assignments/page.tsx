@@ -29,7 +29,7 @@ interface Tradesman {
 export default function TradesmanAssignments() {
   const router = useRouter();
   const params = useParams();
-  const tradesmanId = params.id as string;
+  const tradesmanId = (params?.id as string) || '';
 
   const [tradesman, setTradesman] = useState<Tradesman | null>(null);
   const [assignments, setAssignments] = useState<Assignment[]>([]);

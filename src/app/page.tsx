@@ -16,12 +16,12 @@ import { serviceLandingPages } from '@/lib/seo/localSeoData';
 import { absoluteUrl } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Remodeling Contractor Simpsonville and Fountain Inn, SC',
+  title: 'Remodeling Contractor Across Upstate South Carolina',
   description:
-    'Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for Simpsonville and Fountain Inn homeowners.',
+    'Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for Upstate South Carolina homeowners.',
   alternates: { canonical: absoluteUrl('/') },
   openGraph: {
-    title: 'Burch Contracting | Remodeling Contractor Simpsonville and Fountain Inn, SC',
+    title: 'Burch Contracting | Remodeling Contractor Across Upstate South Carolina',
     description:
       'Request a free estimate for kitchen remodeling, bathroom remodeling, basement finishing, decks, screened porches, and room additions.',
     url: absoluteUrl('/'),
@@ -109,6 +109,10 @@ export default async function HomePage() {
       {
         "@type": "City",
         "name": "Laurens"
+      },
+      {
+        "@type": "City",
+        "name": "Greer"
       }
     ],
     "hasOfferCatalog": {
@@ -518,6 +522,12 @@ export default async function HomePage() {
           <p className="mx-auto max-w-3xl text-xl text-gray-600">
             Use local market pricing as a starting point, then request a site-specific estimate for accurate scope and scheduling.
           </p>
+        </div>
+
+        <div className="mb-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button variant="outline" href="/cost">Browse Cost Guides</Button>
+          <Button variant="outline" href="/projects">Browse Project Spotlights</Button>
+          <Button variant="outline" href="/blog">Read Planning Articles</Button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">

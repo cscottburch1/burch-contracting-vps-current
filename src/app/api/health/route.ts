@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import { initializeDatabaseTables, checkDatabaseHealth } from '@/lib/dbInit';
 
 /**
- * Health check and database initialization endpoint
+ * Health check endpoint (read-only by default)
  * GET /api/health
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
     // Check database health
     const health = await checkDatabaseHealth();
@@ -18,18 +18,32 @@ export async function GET() {
       }, { status: 503 });
     }
 
-    // Initialize missing tables
-    const initResults = await initializeDatabaseTables();
-    const failedTables = initResults.filter(r => r.status === 'failed');
-    
-    if (failedTables.length > 0) {
+    const url = new URL(request.url);
+    const runInit = url.searchParams.get('init') === '1' && process.env.ALLOW_HEALTH_INIT === 'true';
+
+    if (!runInit) {
       return NextResponse.json({
-        status: 'degraded',
+        status: 'healthy',
         database: 'connected',
-        tables: health.tables,
-        initialization: initResults,
-        warnings: failedTables.map(t => `Failed to create ${t.table}: ${t.error}`)
-      }, { status: 200 });
+        tables: health.tables.length,
+      });
+    }
+
+    // Optional maintenance mode: initialize missing tables only when explicitly requested.
+    const initResults = await initializeDatabaseTables();
+    const failedTables = initResults.filter((r) => r.status === 'failed');
+
+    if (failedTables.length > 0) {
+      return NextResponse.json(
+        {
+          status: 'degraded',
+          database: 'connected',
+          tables: health.tables.length,
+          initialization: initResults,
+          warnings: failedTables.map((t) => `Failed to create ${t.table}: ${t.error}`),
+        },
+        { status: 200 }
+      );
     }
 
     return NextResponse.json({

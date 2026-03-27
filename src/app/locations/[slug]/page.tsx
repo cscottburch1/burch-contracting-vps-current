@@ -13,6 +13,7 @@ import {
   serviceLandingPages,
   type FaqItem,
 } from '@/lib/seo/localSeoData';
+import { costLandingPages } from '@/lib/seo/costSeoData';
 import {
   buildBreadcrumbSchema,
   buildFaqSchema,
@@ -20,6 +21,7 @@ import {
   buildServiceSchema,
 } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import TrustBar from '@/components/TrustBar';
 
 interface LocalServicePageProps {
   params: Promise<{ slug: string }>;
@@ -43,11 +45,19 @@ interface LocalProjectSnapshot {
 const cityLinks: Record<string, string> = {
   'Simpsonville SC': '/service-areas/simpsonville',
   'Fountain Inn SC': '/service-areas/fountain-inn',
+  'Greenville SC': '/service-areas/greenville',
+  'Greer SC': '/service-areas/greer',
+  'Five Forks SC': '/service-areas/five-forks',
+  'Mauldin SC': '/service-areas/mauldin',
+  'Gray Court SC': '/service-areas/gray-court',
+  'Woodruff SC': '/service-areas/woodruff',
+  'Laurens SC': '/service-areas/laurens',
 };
 
 const serviceSlugs: Record<string, string> = {
   'Kitchen Remodeling': 'remodeling',
   'Bathroom Remodeling': 'remodeling',
+  'Bath to Tile Shower Conversion': 'remodeling',
   'Room Additions': 'additions',
   'Deck Builder': 'additions',
   'Screened Porch Builder': 'additions',
@@ -58,6 +68,7 @@ const serviceSlugs: Record<string, string> = {
 const calculatorLinks: Record<string, string> = {
   'Kitchen Remodeling': '/calculator/kitchen-remodeling',
   'Bathroom Remodeling': '/calculator/bathroom-remodeling',
+  'Bath to Tile Shower Conversion': '/calculator/bathroom-remodeling',
   'Room Additions': '/calculator/room-additions',
   'Deck Builder': '/calculator/decks-screened-porches',
   'Screened Porch Builder': '/calculator/decks-screened-porches',
@@ -66,11 +77,19 @@ const calculatorLinks: Record<string, string> = {
 };
 
 function getGeoReferences(city: string) {
-  if (city === 'Simpsonville SC') {
-    return ['Five Forks', 'Harrison Bridge', 'Downtown Simpsonville', 'Fairview Road corridor'];
-  }
+  const references: Record<string, string[]> = {
+    'Simpsonville SC': ['Five Forks', 'Harrison Bridge', 'Downtown Simpsonville', 'Fairview Road corridor'],
+    'Fountain Inn SC': ['Downtown Fountain Inn', 'Jones Mill Road corridor', 'Fairview area', 'growing residential neighborhoods near I-385'],
+    'Greenville SC': ['North Main', 'Augusta Road', 'Downtown Greenville', 'Verdae corridor'],
+    'Greer SC': ['Downtown Greer', 'Wade Hampton corridor', 'Brushy Creek', 'East Suber Road area'],
+    'Five Forks SC': ['Five Forks Plantation', 'Heritage', 'Neely Farm', 'Woodruff Road corridor'],
+    'Mauldin SC': ['Butler Road', 'East Butler corridor', 'Forrester area', 'Murray Drive neighborhoods'],
+    'Gray Court SC': ['Town Center', 'Highway 14 corridor', 'Durbin Creek area', 'surrounding rural acreage'],
+    'Woodruff SC': ['Downtown Woodruff', 'Cross Anchor Road area', 'Enoree corridor', 'growing residential neighborhoods'],
+    'Laurens SC': ['Downtown Laurens', 'West Main corridor', 'Mill Village area', 'Lake Rabon vicinity'],
+  };
 
-  return ['Downtown Fountain Inn', 'Jones Mill Road corridor', 'Fairview area', 'growing residential neighborhoods near I-385'];
+  return references[city] ?? ['nearby neighborhoods', 'established residential areas', 'main commercial corridors', 'surrounding communities'];
 }
 
 function getTrustSignals(serviceName: string) {
@@ -151,7 +170,17 @@ function getServiceFaqs(serviceName: string, city: string): FaqItem[] {
 }
 
 function getLocalTestimonials(serviceName: string, city: string): LocalTestimonial[] {
-  const suffix = city === 'Simpsonville SC' ? 'Simpsonville' : 'Fountain Inn';
+  const neighborhoodByCity: Record<string, string> = {
+    'Simpsonville SC': 'Five Forks area',
+    'Fountain Inn SC': 'Downtown Fountain Inn area',
+    'Greenville SC': 'Augusta Road area',
+    'Greer SC': 'Downtown Greer area',
+    'Five Forks SC': 'Heritage area',
+    'Mauldin SC': 'Butler Road area',
+    'Gray Court SC': 'Highway 14 area',
+    'Woodruff SC': 'Downtown Woodruff area',
+    'Laurens SC': 'West Main area',
+  };
 
   const byService: Record<string, Array<Omit<LocalTestimonial, 'neighborhood'>>> = {
     'Kitchen Remodeling': [
@@ -184,14 +213,14 @@ function getLocalTestimonials(serviceName: string, city: string): LocalTestimoni
     ],
   };
 
-  const neighborhood = city === 'Simpsonville SC' ? 'Five Forks area' : 'Downtown Fountain Inn area';
+  const neighborhood = neighborhoodByCity[city] ?? 'nearby neighborhood';
   const templates = byService[serviceName] ?? byService['Kitchen Remodeling'];
 
-  return templates.map((item) => ({ ...item, neighborhood: `${neighborhood}, ${suffix}` }));
+  return templates.map((item) => ({ ...item, neighborhood: `${neighborhood}, ${city}` }));
 }
 
 function getProjectSnapshots(serviceName: string, city: string): LocalProjectSnapshot[] {
-  const cityToken = city === 'Simpsonville SC' ? 'simpsonville' : 'fountain-inn';
+  const cityToken = city.toLowerCase().replace(/\s+/g, '-');
 
   const fallback: LocalProjectSnapshot[] = [
     {
@@ -371,6 +400,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
   const localTestimonials = getLocalTestimonials(page.serviceName, page.city);
   const projectSnapshots = getProjectSnapshots(page.serviceName, page.city);
   const relatedPages = serviceLandingPages.filter((item) => item.city === page.city && item.slug !== page.slug).slice(0, 3);
+  const relatedCostGuide = costLandingPages.find((item) => item.city === page.city && item.serviceName === page.serviceName);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -422,6 +452,8 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
           </div>
         </div>
       </section>
+
+      <TrustBar />
 
       <Section background="white" padding="lg">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -496,6 +528,11 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 <a href={calculatorLink} className="block rounded-lg border border-gray-200 px-4 py-3 font-semibold text-blue-700 hover:bg-blue-50">
                   Use the {page.serviceName.toLowerCase()} cost calculator
                 </a>
+                {relatedCostGuide ? (
+                  <a href={`/cost/${relatedCostGuide.slug}`} className="block rounded-lg border border-gray-200 px-4 py-3 font-semibold text-blue-700 hover:bg-blue-50">
+                    Read the {page.city} {page.serviceName.toLowerCase()} cost guide
+                  </a>
+                ) : null}
               </div>
             </Card>
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
 
 interface Project {
   id: number;
@@ -31,8 +32,7 @@ export default function ProjectsManagement() {
   const [showForm, setShowForm] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [message, setMessage] = useState('');
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
 
   const [form, setForm] = useState({
     title: '',
@@ -52,36 +52,59 @@ export default function ProjectsManagement() {
   });
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    let mounted = true;
 
-  useEffect(() => {
-    if (currentUser) {
-      loadProjects();
-    }
-  }, [currentUser]);
+    const initialize = async () => {
+      setAuthError('');
+      setIsLoading(true);
+      try {
+        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
+        if (!authRes.ok) {
+          if (mounted) {
+            setAuthError('Your admin session has expired. Redirecting to login...');
+            setIsLoading(false);
+          }
+          router.push('/admin');
+          return;
+        }
 
-  const checkAuth = async () => {
-    const res = await fetch('/api/admin/me');
-    if (!res.ok) {
-      router.push('/admin');
-      return;
-    }
-    const data = await res.json();
-    setCurrentUser(data.user);
-    setAuthLoading(false);
-  };
+        if (!mounted) {
+          return;
+        }
+
+        await loadProjects();
+      } catch (error) {
+        if (mounted) {
+          setAuthError(
+            isAbortLikeError(error)
+              ? 'Session check timed out. Please refresh and try again.'
+              : 'Unable to verify admin session. Please refresh and try again.'
+          );
+          setIsLoading(false);
+        }
+      }
+    };
+
+    initialize();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const loadProjects = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/admin/recent-projects');
+      const res = await fetchWithTimeout('/api/admin/recent-projects', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setProjects(data);
+      } else {
+        setMessage('Failed to load projects');
       }
     } catch (error) {
       console.error('Error loading projects:', error);
+      setMessage(isAbortLikeError(error) ? 'Loading projects timed out' : 'Error loading projects');
     } finally {
       setIsLoading(false);
     }
@@ -188,6 +211,12 @@ export default function ProjectsManagement() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
+        {authError && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+            {authError}
+          </div>
+        )}
+
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Recent Projects Showcase</h1>

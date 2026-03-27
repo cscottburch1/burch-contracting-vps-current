@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="mb-6">
               <Logo variant="footer" />
@@ -49,6 +49,16 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Hours</h4>
             <p className="text-gray-400 whitespace-pre-line">{businessConfig.contact.hours}</p>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Explore</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><a href="/locations" className="hover:text-white">Service Area Guides</a></li>
+              <li><a href="/cost" className="hover:text-white">Cost Guides</a></li>
+              <li><a href="/projects" className="hover:text-white">Project Spotlights</a></li>
+              <li><a href="/blog" className="hover:text-white">Remodeling Blog</a></li>
+            </ul>
           </div>
         </div>
 
