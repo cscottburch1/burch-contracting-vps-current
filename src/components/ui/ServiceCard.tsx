@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Button } from '@/components/ui/Button'; // Adjust path if needed
 import { Icon } from '@/components/ui/Icon'; // Adjust path if needed

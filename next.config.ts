@@ -6,6 +6,22 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  // Modern compiler optimizations 
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+
+  // Tree-shake lucide-react icons for smaller bundles
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+      skipDefaultConversion: true,
+    },
+  },
+
   experimental: {
     // Keep initial render CSS on a single path to reduce critical request chains.
     cssChunking: false,

@@ -44,5 +44,12 @@
     "playwright": "^1.57.0",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "browserslist": [
+    "defaults and supports es6-module",
+    "maintained node versions",
+    "not dead",
+    "not IE 11",
+    "not op_mini all"
+  ]
 }
