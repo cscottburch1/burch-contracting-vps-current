@@ -25,7 +25,12 @@ const nextConfig: NextConfig = {
     // Keep initial render CSS on a single path to reduce critical request chains.
     cssChunking: false,
     // Inline and optimize above-the-fold CSS where possible.
-    optimizeCss: true,
+    optimizeCss: {
+      critters: {
+        preload: 'swap',
+        pruneSource: false,
+      },
+    },
   },
 
   // Keep tracing rooted to this project when parent folders contain lockfiles.

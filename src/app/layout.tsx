@@ -99,10 +99,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
   return (
     <html lang="en">
+      <head>
+        {/* Resource hints for faster CSS/font loading */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -124,12 +128,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        {recaptchaSiteKey && (
-          <Script
-            src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
-            strategy="lazyOnload"
-          />
-        )}
       </body>
     </html>
   );
