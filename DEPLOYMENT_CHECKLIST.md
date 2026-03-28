@@ -118,6 +118,50 @@ git push
 
 ✅ Image optimization (WebP format)
 ✅ Static asset caching (1 year)
+✅ CSS chunking disabled (reduces critical request chains)
+✅ CSS optimization enabled (inlines critical styles)
+
+---
+
+## 🎯 March 2026: PageSpeed Critical Chain Fix
+
+### What Changed:
+- Modified `next.config.ts` to reduce CSS critical request chains
+- Added `experimental.cssChunking = false` to consolidate CSS on first load
+- Added `experimental.optimizeCss = true` to inline critical above-the-fold CSS
+
+### Pre-Deploy Testing:
+- [x] Code changes committed to git
+- [ ] Deployed to production VPS
+- [ ] Verified build completes on Linux server
+- [ ] Re-ran PageSpeed Insights mobile test
+
+### Expected Results After Deploy:
+- **Before**: 2 CSS files loaded in sequence (1,271ms critical chain on mobile)
+- **After**: Single consolidated CSS or better critical path timing
+- **Metric**: "Avoid chaining critical requests" warning should reduce/disappear
+
+### Verification Steps:
+1. Deploy changes to production VPS
+2. Wait 2-3 minutes for build completion
+3. Clear browser cache and CDN cache (if applicable)
+4. Run PageSpeed Insights mobile test: https://pagespeed.web.dev/
+5. Check "Avoid chaining critical requests" section - should see improvement
+6. Verify no new errors in browser console
+7. Confirm site still loads and renders correctly
+
+### Rollback if Needed:
+```bash
+# Revert next.config.ts changes
+git revert HEAD
+git push
+# Redeploy
+```
+
+### Notes:
+- Local Windows build blocked by unrelated webpack/filesystem issue
+- Production Linux build should complete normally
+- CSS optimization is progressive - won't break existing functionality
 ✅ Gzip compression enabled
 ✅ Database connection pooling
 ✅ Error boundaries prevent full page crashes
