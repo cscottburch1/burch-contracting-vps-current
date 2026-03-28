@@ -10,8 +10,8 @@ import AnalyticsEvents from "@/components/AnalyticsEvents";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
 // Dynamic import for non-critical interactive components
-const AIChat = dynamic(() => import('@/components/AIChat'), { ssr: false });
-const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'), { ssr: false });
+const AIChat = dynamic(() => import('@/components/AIChat'));
+const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'));
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
