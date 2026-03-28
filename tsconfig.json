@@ -41,6 +41,8 @@
     "archive",
     "archive/**",
     "tmp",
-    "tmp/**"
+    "tmp/**",
+    "imported_repo",
+    "imported_repo/**"
   ]
 }
