@@ -53,7 +53,7 @@ export default function RecentProjectsSSR() {
                     <span aria-hidden="true">📍</span>
                     {project.city}
                   </span>
-                  <span className="text-gray-400">{project.timeline}</span>
+                  <span className="text-gray-600">{project.timeline}</span>
                 </div>
 
                 <Link
