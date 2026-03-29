@@ -28,13 +28,15 @@ const nextConfig: NextConfig = {
     optimizeCss: {
       critters: {
         preload: 'swap',
-        pruneSource: false,
+        pruneSource: true,
         // Inline critical CSS up to 50KB
         inlineThreshold: 50000,
         // Minimum external CSS file size
         minimumExternalSize: 1000,
         // Inline font definitions for faster rendering
         inlineFonts: true,
+        // Reduce external CSS by removing inlined styles
+        reduceInlineStyles: true,
       },
     },
   },
