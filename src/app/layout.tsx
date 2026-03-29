@@ -10,7 +10,6 @@ import AnalyticsEvents from "@/components/AnalyticsEvents";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
 // Dynamic import for non-critical interactive components
-const AIChat = dynamic(() => import('@/components/AIChat'));
 const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'));
 
 const geistSans = Geist({
@@ -116,7 +115,6 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <MobileStickyCta />
-        <AIChat />
         <Script id="register-sw" strategy="lazyOnload">
           {`
             if ('serviceWorker' in navigator) {

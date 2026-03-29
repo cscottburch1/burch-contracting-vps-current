@@ -32,7 +32,7 @@ chunk-1255.js:    169 KB  (Secondary chunk)
 - ✅ No core-js or regenerator-runtime dependencies
 - ❌ No browserslist configuration (defaulting to broad targets)
 - ❌ 50+ components using `'use client'` (excessive hydration)
-- ❌ Global imports of interactive components (AIChat, MobileStickyCta)
+- ❌ Global imports of interactive components (chat widget, MobileStickyCta)
 - ❌ No tree-shaking for icon library (lucide-react)
 - ❌ Service worker script using `afterInteractive` strategy
 - ❌ Font loading: All weights imported, mono font preloaded
@@ -140,18 +140,18 @@ const geistMono = Geist_Mono({
 **Changes:**
 ```typescript
 // BEFORE
-import AIChat from "@/components/AIChat";
+import ChatWidget from "@/components/ChatWidget";
 import MobileStickyCta from "@/components/MobileStickyCta";
 
 // AFTER
 import dynamic from 'next/dynamic';
 
-const AIChat = dynamic(() => import('@/components/AIChat'));
+const ChatWidget = dynamic(() => import('@/components/ChatWidget'));
 const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'));
 ```
 
 **Rationale:**
-- AIChat: Only visible when user clicks chat button
+- Chat widget: Only visible when user clicks chat button
 - MobileStickyCta: Only visible on mobile, below-the-fold
 
 **Impact:**
@@ -222,7 +222,7 @@ modularizeImports: {
 ✅ CSS optimization: cssChunking=false, optimizeCss=true
 ✅ Console removal: Production only
 ✅ Icon tree-shaking: lucide-react modularized
-✅ Dynamic imports: AIChat, MobileStickyCta
+✅ Dynamic imports: chat widget, MobileStickyCta
 ✅ Font optimization: Limited weights
 ✅ Server components: ServiceCard converted
 ```
@@ -249,7 +249,7 @@ chunk-1255.js:    169 KB  (secondary chunk)
 ### Dynamic Loading Verification
 
 **Components Now Lazy-Loaded:**
-- AIChat (~15-20 KB estimated)
+- Chat widget (~15-20 KB estimated)
 - MobileStickyCta (~5-8 KB estimated)
 
 **Total Deferred:** ~25 KB of JavaScript not in initial bundle
@@ -294,7 +294,7 @@ f80b0de - fix: remove swcMinify and ssr:false build errors
 - [ ] No hydration warnings (Next.js)
 
 **2. Component-Specific Testing**
-- [ ] AIChat button appears and opens chat interface
+- [ ] Chat widget button appears and opens chat interface
 - [ ] MobileStickyCta visible on mobile devices
 - [ ] ServiceCard components render on homepage
 - [ ] Fonts load correctly (no FOUT/FOIT)
@@ -360,10 +360,10 @@ pm2 restart burch-contracting
 
 **Specific Rollback Scenarios:**
 
-1. **AIChat not appearing:**
+1. **Chat widget not appearing:**
    - Issue: Dynamic import may have failed
    - Fix: Revert `src/app/layout.tsx` dynamic import
-   - Restore: `import AIChat from "@/components/AIChat";`
+  - Restore: `import ChatWidget from "@/components/ChatWidget";`
 
 2. **ServiceCard layout broken:**
    - Issue: Server component missing client-side logic
@@ -384,7 +384,7 @@ pm2 restart burch-contracting
 ### Predicted Improvements (Based on Optimizations)
 
 **JavaScript Metrics:**
-- ✅ Initial JS bundle: -25 KB (deferred AIChat + MobileStickyCta)
+- ✅ Initial JS bundle: -25 KB (deferred chat widget + MobileStickyCta)
 - ✅ Hydration payload: -5-10 KB (ServiceCard server component)
 - ✅ Runtime execution: Faster (tree-shaken icons, removed console.logs)
 
@@ -526,7 +526,7 @@ Latest: f80b0de
 - Better caching (unchanged chunks stay cached)
 
 **Tradeoffs:**
-- Slight delay when component first needed (acceptable for AIChat)
+- Slight delay when component first needed (acceptable for optional widgets)
 - Additional HTTP requests (mitigated by HTTP/2)
 
 ### Server vs Client Components (Next.js 13+)

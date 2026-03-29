@@ -77,11 +77,6 @@ export const analytics = {
     trackEvent('lead_converted', 'Conversions', leadId, value);
   },
 
-  // AI Chat interaction
-  trackChatInteraction: (action: string) => {
-    trackEvent('chat_interaction', 'Engagement', action);
-  },
-
   // Document download
   trackDocumentDownload: (documentName: string) => {
     trackEvent('document_download', 'Engagement', documentName);
