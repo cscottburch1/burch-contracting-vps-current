@@ -8,7 +8,8 @@ interface ServiceCardProps {
   icon?: React.ReactNode;
   href?: string;
   className?: string;
-  compact?: boolean;  // <-- Add this line
+  compact?: boolean;
+  buttonText?: string;  // Optional custom button text
 }
 
 export const ServiceCard = ({
@@ -17,8 +18,12 @@ export const ServiceCard = ({
   icon,
   href = '/contact',
   className = '',
-  compact = false,  // <-- Add default value
+  compact = false,
+  buttonText,  // Optional button text prop
 }: ServiceCardProps) => {
+  // Generate descriptive button text if not provided
+  const linkText = buttonText || `Learn About ${title}`;
+  
   const content = (
     <div className={`flex flex-col h-full ${compact ? 'p-4' : 'p-8'}`}>
       {icon && <div className={`mb-6 ${compact ? '' : ''}`}>{icon}</div>}
@@ -26,7 +31,7 @@ export const ServiceCard = ({
       <p className={`text-gray-600 flex-grow mb-6 ${compact ? 'text-sm' : ''}`}>{description}</p>
       <div className="mt-auto">
         <Button variant="primary" size={compact ? 'sm' : 'lg'} href={href}>
-          Learn More
+          {linkText}
         </Button>
       </div>
     </div>

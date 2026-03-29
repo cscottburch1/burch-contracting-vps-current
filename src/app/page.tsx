@@ -406,7 +406,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Simpsonville</h3>
               <p className="text-sm text-gray-600 mb-3">Our Home Base</p>
               <div className="flex items-center justify-center text-blue-600 text-sm font-semibold">
-                Learn More
+                Simpsonville Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
@@ -418,7 +418,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Greenville</h3>
               <p className="text-sm text-gray-600 mb-3">Upstate&apos;s Hub</p>
               <div className="flex items-center justify-center text-green-600 text-sm font-semibold">
-                Learn More
+                Greenville Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
@@ -430,7 +430,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Five Forks</h3>
               <p className="text-sm text-gray-600 mb-3">Family Friendly</p>
               <div className="flex items-center justify-center text-sky-600 text-sm font-semibold">
-                Learn More
+                Five Forks Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
@@ -442,7 +442,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Woodruff</h3>
               <p className="text-sm text-gray-600 mb-3">Historic Charm</p>
               <div className="flex items-center justify-center text-orange-600 text-sm font-semibold">
-                Learn More
+                Woodruff Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
@@ -454,7 +454,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Gray Court</h3>
               <p className="text-sm text-gray-600 mb-3">Rural Living</p>
               <div className="flex items-center justify-center text-teal-600 text-sm font-semibold">
-                Learn More
+                Gray Court Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </div>
             </div>
@@ -466,7 +466,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Fountain Inn</h3>
               <p className="text-sm text-gray-600 mb-3">Historic Town</p>
               <div className="flex items-center justify-center text-red-600 text-sm font-semibold">
-                Learn More
+                Fountain Inn Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
@@ -478,7 +478,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Mauldin</h3>
               <p className="text-sm text-gray-600 mb-3">Established</p>
               <div className="flex items-center justify-center text-cyan-600 text-sm font-semibold">
-                Learn More
+                Mauldin Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
@@ -490,7 +490,7 @@ export default async function HomePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-1">Laurens</h3>
               <p className="text-sm text-gray-600 mb-3">County Seat</p>
               <div className="flex items-center justify-center text-amber-600 text-sm font-semibold">
-                Learn More
+                Laurens Services
                 <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
