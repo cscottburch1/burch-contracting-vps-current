@@ -24,6 +24,7 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
       height={size.height}
       className={`${className} rounded-lg ${variant === 'footer' ? 'bg-white p-3' : ''}`}
       priority={variant === 'header'}
+      fetchPriority={variant === 'header' ? 'high' : undefined}
     />
   );
 
