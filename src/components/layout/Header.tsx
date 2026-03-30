@@ -68,7 +68,8 @@ export const Header: React.FC = () => {
     setMobilePricingOpen(false);
   }, [pathname]);
 
-  const isActive = (pathPrefix: string) => pathname === pathPrefix || pathname.startsWith(`${pathPrefix}/`);
+  const currentPath = pathname ?? '';
+  const isActive = (pathPrefix: string) => currentPath === pathPrefix || currentPath.startsWith(`${pathPrefix}/`);
 
   const navLinkClass = (active: boolean) =>
     `inline-flex items-center gap-1 font-semibold transition-colors ${active ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}`;
