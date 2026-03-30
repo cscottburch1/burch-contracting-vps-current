@@ -1,144 +1,259 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
 import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
 
-interface Service {
-  service_slug: string;
-  service_name: string;
-  menu_label: string;
+type DropdownKey = 'services' | 'areas' | 'pricing' | null;
+
+interface NavItem {
+  label: string;
+  href: string;
 }
 
+const serviceLinks: NavItem[] = [
+  { label: 'Kitchen Remodeling', href: '/services/remodeling' },
+  { label: 'Bathroom Remodeling', href: '/services/remodeling' },
+  { label: 'Room Additions', href: '/services/additions' },
+  { label: 'Screened Porches & Decks', href: '/services/additions' },
+  { label: 'Basement Finishing', href: '/services/basement' },
+  { label: 'Handyman Services', href: '/services/handyman' },
+];
+
+const areaLinks: NavItem[] = [
+  { label: 'Simpsonville, SC', href: '/service-areas/simpsonville' },
+  { label: 'Fountain Inn, SC', href: '/service-areas/fountain-inn' },
+  { label: 'Greenville, SC', href: '/service-areas/greenville' },
+  { label: 'Greer, SC', href: '/service-areas/greer' },
+  { label: 'Mauldin, SC', href: '/service-areas/mauldin' },
+  { label: 'Five Forks, SC', href: '/service-areas/five-forks' },
+  { label: 'Gray Court, SC', href: '/service-areas/gray-court' },
+  { label: 'Laurens, SC', href: '/service-areas/laurens' },
+];
+
+const pricingLinks: NavItem[] = [
+  { label: 'Kitchen Remodel Cost', href: '/cost/kitchen-remodel-cost-simpsonville-sc' },
+  { label: 'Bathroom Remodel Cost', href: '/cost/bathroom-remodel-cost-greenville-sc' },
+  { label: 'Room Addition Cost', href: '/cost/room-addition-cost-greenville-sc' },
+  { label: 'Deck & Porch Cost', href: '/cost/deck-cost-simpsonville-sc' },
+  { label: 'Basement Finishing Cost', href: '/cost/basement-finishing-cost-greenville-sc' },
+];
+
 export const Header: React.FC = () => {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const services: Service[] = businessConfig.services.map((service) => ({
-    service_slug: service.id,
-    service_name: service.title,
-    menu_label: service.title,
-  }));
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
+  const [mobilePricingOpen, setMobilePricingOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Services', href: '/services', hasDropdown: services.length > 0 },
-    { label: 'Locations', href: '/locations' },
-    { label: 'Cost Guides', href: '/cost' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Employment', href: '/employment', hasDropdown: true },
-    { label: 'Customer Portal', href: '/portal' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Admin', href: '/admin' }
-  ];
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const [employmentOpen, setEmploymentOpen] = useState(false);
-  const employmentLinks = [
-    { label: 'Subcontractors', href: '/subcontractors/join' },
-    { label: 'Direct Hire Employees', href: '/employment/direct-hire' }
-  ];
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setActiveDropdown(null);
+    setMobileServicesOpen(false);
+    setMobileAreasOpen(false);
+    setMobilePricingOpen(false);
+  }, [pathname]);
+
+  const isActive = (pathPrefix: string) => pathname === pathPrefix || pathname.startsWith(`${pathPrefix}/`);
+
+  const navLinkClass = (active: boolean) =>
+    `inline-flex items-center gap-1 font-semibold transition-colors ${active ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}`;
+
+  const dropdownWrapperClass = 'relative';
+  const dropdownPanelClass =
+    'absolute left-0 top-full mt-3 min-w-[260px] rounded-xl border border-gray-200 bg-white py-2 shadow-xl';
+  const dropdownLinkClass = 'block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 focus:bg-blue-50 focus:text-blue-700';
+
+  const closeDropdownOnBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+      setActiveDropdown(null);
+    }
+  };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="bg-gray-900 text-white py-2">
+    <header
+      className={`sticky top-0 z-50 border-b border-gray-100 bg-white transition-shadow duration-200 ${isScrolled ? 'shadow-md' : 'shadow-sm'}`}
+      role="banner"
+    >
+      <div className="bg-gray-900 py-2 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between text-sm">
-            <a 
-              href={`tel:${businessConfig.contact.phone}`} 
-              className="flex items-center gap-2"
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+            <a
+              href={`tel:${businessConfig.contact.phone}`}
+              className="inline-flex items-center gap-2 font-semibold text-white hover:text-blue-200"
               onClick={() => analytics.trackPhoneClick()}
+              aria-label={`Call ${businessConfig.contact.phone}`}
             >
-              <Icon name="Phone" size={16} />
+              <Icon name="Phone" size={15} />
               <span>{businessConfig.contact.phone}</span>
             </a>
-            <span className="hidden sm:inline">{businessConfig.serviceArea.description}</span>
+
+            <span className="hidden lg:inline text-gray-200">
+              Serving Simpsonville, Fountain Inn &amp; Upstate South Carolina
+            </span>
+
+            <div className="flex items-center gap-4">
+              <Link href="/portal" className="font-medium text-gray-200 hover:text-white">
+                Customer Portal
+              </Link>
+              <Link href="/employment" className="font-medium text-gray-200 hover:text-white">
+                Employment / Careers
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Primary">
+        <div className="flex h-20 items-center justify-between">
           <Logo variant="header" />
 
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => {
-              if (link.label === 'Services') {
-                return (
-                  <div key={link.href} className="relative group">
-                    <a 
-                      href={link.href} 
-                      className="text-gray-800 hover:text-blue-600 font-semibold flex items-center gap-1"
-                      onMouseEnter={() => setServicesOpen(true)}
-                      onMouseLeave={() => setServicesOpen(false)}
-                    >
-                      {link.label}
-                      <Icon name="ChevronDown" size={16} />
-                    </a>
-                    {servicesOpen && services.length > 0 && (
-                      <div 
-                        className="absolute top-full left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50"
-                        onMouseEnter={() => setServicesOpen(true)}
-                        onMouseLeave={() => setServicesOpen(false)}
-                      >
-                        {services.map((service) => (
-                          <a
-                            key={service.service_slug}
-                            href={`/services/${service.service_slug}`}
-                            className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                          >
-                            {service.menu_label || service.service_name}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              } else if (link.label === 'Employment') {
-                return (
-                  <div key={link.href} className="relative group">
-                    <a 
-                      href={link.href} 
-                      className="text-gray-800 hover:text-blue-600 font-semibold flex items-center gap-1"
-                      onMouseEnter={() => setEmploymentOpen(true)}
-                      onMouseLeave={() => setEmploymentOpen(false)}
-                    >
-                      {link.label}
-                      <Icon name="ChevronDown" size={16} />
-                    </a>
-                    {employmentOpen && (
-                      <div 
-                        className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-lg py-2 z-50"
-                        onMouseEnter={() => setEmploymentOpen(true)}
-                        onMouseLeave={() => setEmploymentOpen(false)}
-                      >
-                        {employmentLinks.map((empLink) => (
-                          <a
-                            key={empLink.href}
-                            href={empLink.href}
-                            className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                          >
-                            {empLink.label}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              } else {
-                return (
-                  <a key={link.href} href={link.href} className="text-gray-800 hover:text-blue-600 font-semibold">
-                    {link.label}
-                  </a>
-                );
-              }
-            })}
+          <div className="hidden lg:flex items-center gap-7">
+            <div
+              className={dropdownWrapperClass}
+              onMouseEnter={() => setActiveDropdown('services')}
+              onMouseLeave={() => setActiveDropdown(null)}
+              onBlur={closeDropdownOnBlur}
+            >
+              <button
+                type="button"
+                className={navLinkClass(isActive('/services'))}
+                aria-haspopup="true"
+                aria-expanded={activeDropdown === 'services'}
+                aria-controls="desktop-services-menu"
+                onFocus={() => setActiveDropdown('services')}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    setActiveDropdown(null);
+                    (event.currentTarget as HTMLButtonElement).blur();
+                  }
+                }}
+              >
+                Services
+                <Icon name="ChevronDown" size={16} className={activeDropdown === 'services' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+              </button>
+              <div
+                id="desktop-services-menu"
+                className={`${dropdownPanelClass} ${activeDropdown === 'services' ? 'block' : 'hidden'}`}
+                role="menu"
+                aria-label="Services"
+              >
+                {serviceLinks.map((item) => (
+                  <Link key={`${item.label}-${item.href}`} href={item.href} className={dropdownLinkClass} role="menuitem">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div
+              className={dropdownWrapperClass}
+              onMouseEnter={() => setActiveDropdown('areas')}
+              onMouseLeave={() => setActiveDropdown(null)}
+              onBlur={closeDropdownOnBlur}
+            >
+              <button
+                type="button"
+                className={navLinkClass(isActive('/service-areas') || isActive('/locations'))}
+                aria-haspopup="true"
+                aria-expanded={activeDropdown === 'areas'}
+                aria-controls="desktop-areas-menu"
+                onFocus={() => setActiveDropdown('areas')}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    setActiveDropdown(null);
+                    (event.currentTarget as HTMLButtonElement).blur();
+                  }
+                }}
+              >
+                Areas Served
+                <Icon name="ChevronDown" size={16} className={activeDropdown === 'areas' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+              </button>
+              <div
+                id="desktop-areas-menu"
+                className={`${dropdownPanelClass} ${activeDropdown === 'areas' ? 'block' : 'hidden'}`}
+                role="menu"
+                aria-label="Areas Served"
+              >
+                {areaLinks.map((item) => (
+                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Link href="/projects" className={navLinkClass(isActive('/projects'))}>
+              Projects
+            </Link>
+
+            <div
+              className={dropdownWrapperClass}
+              onMouseEnter={() => setActiveDropdown('pricing')}
+              onMouseLeave={() => setActiveDropdown(null)}
+              onBlur={closeDropdownOnBlur}
+            >
+              <button
+                type="button"
+                className={navLinkClass(isActive('/cost'))}
+                aria-haspopup="true"
+                aria-expanded={activeDropdown === 'pricing'}
+                aria-controls="desktop-pricing-menu"
+                onFocus={() => setActiveDropdown('pricing')}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    setActiveDropdown(null);
+                    (event.currentTarget as HTMLButtonElement).blur();
+                  }
+                }}
+              >
+                Pricing Guide
+                <Icon name="ChevronDown" size={16} className={activeDropdown === 'pricing' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+              </button>
+              <div
+                id="desktop-pricing-menu"
+                className={`${dropdownPanelClass} ${activeDropdown === 'pricing' ? 'block' : 'hidden'}`}
+                role="menu"
+                aria-label="Pricing Guide"
+              >
+                {pricingLinks.map((item) => (
+                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Link href="/about" className={navLinkClass(isActive('/about'))}>
+              About
+            </Link>
+
+            <Link href="/contact" className={navLinkClass(isActive('/contact'))}>
+              Contact
+            </Link>
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="primary" size="sm" href="/contact">
+            <Button
+              variant="primary"
+              size="sm"
+              href="/contact"
+              className="bg-orange-600 hover:bg-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+            >
               Free Estimate
             </Button>
           </div>
@@ -147,81 +262,106 @@ export const Header: React.FC = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-gray-900"
             aria-expanded={mobileMenuOpen}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
           >
             <Icon name={mobileMenuOpen ? 'X' : 'Menu'} size={28} />
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t">
+          <div className="border-t py-4 lg:hidden">
             <div className="flex flex-col gap-4">
-              {navLinks.map((link) => {
-                if (link.label === 'Services') {
-                  return (
-                    <div key={link.href}>
-                      <a
-                        href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-black font-semibold py-2 text-lg block"
-                      >
-                        {link.label}
-                      </a>
-                      {services.length > 0 && (
-                        <div className="ml-4 mt-2 space-y-2">
-                          {services.map((service) => (
-                            <a
-                              key={service.service_slug}
-                              href={`/services/${service.service_slug}`}
-                              onClick={() => setMobileMenuOpen(false)}
-                              className="text-gray-600 py-1 text-base block"
-                            >
-                              {service.menu_label || service.service_name}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                } else if (link.label === 'Employment') {
-                  return (
-                    <div key={link.href}>
-                      <a
-                        href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-black font-semibold py-2 text-lg block"
-                      >
-                        {link.label}
-                      </a>
-                      <div className="ml-4 mt-2 space-y-2">
-                        {employmentLinks.map((empLink) => (
-                          <a
-                            key={empLink.href}
-                            href={empLink.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="text-gray-600 py-1 text-base block"
-                          >
-                            {empLink.label}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={link.href}>
-                      <a
-                        href={link.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-black font-semibold py-2 text-lg block"
-                      >
-                        {link.label}
-                      </a>
-                    </div>
-                  );
-                }
-              })}
-              <Button variant="primary" size="md" href="/contact" fullWidth onClick={() => setMobileMenuOpen(false)}>
+              <a
+                href={`tel:${businessConfig.contact.phone}`}
+                className="inline-flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-3 text-base font-semibold text-blue-800"
+                onClick={() => analytics.trackPhoneClick()}
+                aria-label={`Call ${businessConfig.contact.phone}`}
+              >
+                <Icon name="Phone" size={18} />
+                {businessConfig.contact.phone}
+              </a>
+
+              <div>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
+                  onClick={() => setMobileServicesOpen((prev) => !prev)}
+                  aria-expanded={mobileServicesOpen}
+                  aria-controls="mobile-services-menu"
+                >
+                  Services
+                  <Icon name="ChevronDown" size={18} className={mobileServicesOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+                {mobileServicesOpen && (
+                  <div id="mobile-services-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
+                    {serviceLinks.map((item) => (
+                      <Link key={`${item.label}-${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
+                  onClick={() => setMobileAreasOpen((prev) => !prev)}
+                  aria-expanded={mobileAreasOpen}
+                  aria-controls="mobile-areas-menu"
+                >
+                  Areas Served
+                  <Icon name="ChevronDown" size={18} className={mobileAreasOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+                {mobileAreasOpen && (
+                  <div id="mobile-areas-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
+                    {areaLinks.map((item) => (
+                      <Link key={`${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link href="/projects" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                Projects
+              </Link>
+
+              <div>
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
+                  onClick={() => setMobilePricingOpen((prev) => !prev)}
+                  aria-expanded={mobilePricingOpen}
+                  aria-controls="mobile-pricing-menu"
+                >
+                  Pricing Guide
+                  <Icon name="ChevronDown" size={18} className={mobilePricingOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+                {mobilePricingOpen && (
+                  <div id="mobile-pricing-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
+                    {pricingLinks.map((item) => (
+                      <Link key={`${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link href="/contact" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                Contact
+              </Link>
+
+              <Button
+                variant="primary"
+                size="md"
+                href="/contact"
+                fullWidth
+                className="bg-orange-600 hover:bg-orange-700"
+              >
                 Free Estimate
               </Button>
             </div>
