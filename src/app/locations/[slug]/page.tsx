@@ -510,7 +510,9 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 {page.priceRanges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">
                     <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{range.label}</div>
-                    <div className="mt-2 text-2xl font-bold text-gray-900">{range.range}</div>
+                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl [overflow-wrap:anywhere]">
+                      {range.range.replace(/-/g, ' - ')}
+                    </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">{range.details}</p>
                   </div>
                 ))}
