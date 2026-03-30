@@ -208,23 +208,33 @@ export const Header: React.FC = () => {
               onMouseLeave={() => setActiveDropdown(null)}
               onBlur={closeDropdownOnBlur}
             >
-              <button
-                type="button"
-                className={navLinkClass(isActive('/cost'))}
-                aria-haspopup="true"
-                aria-expanded={activeDropdown === 'pricing'}
-                aria-controls="desktop-pricing-menu"
-                onFocus={() => setActiveDropdown('pricing')}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') {
-                    setActiveDropdown(null);
-                    (event.currentTarget as HTMLButtonElement).blur();
-                  }
-                }}
-              >
-                Pricing Guide
-                <Icon name="ChevronDown" size={16} className={activeDropdown === 'pricing' ? 'rotate-180 transition-transform' : 'transition-transform'} />
-              </button>
+              <div className="inline-flex items-center gap-1">
+                <Link
+                  href="/cost"
+                  className={navLinkClass(isActive('/cost'))}
+                  onFocus={() => setActiveDropdown('pricing')}
+                >
+                  Pricing Guide
+                </Link>
+                <button
+                  type="button"
+                  className="text-gray-800 hover:text-blue-600"
+                  aria-haspopup="true"
+                  aria-expanded={activeDropdown === 'pricing'}
+                  aria-controls="desktop-pricing-menu"
+                  aria-label="Toggle Pricing Guide submenu"
+                  onClick={() => setActiveDropdown((prev) => (prev === 'pricing' ? null : 'pricing'))}
+                  onFocus={() => setActiveDropdown('pricing')}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setActiveDropdown(null);
+                      (event.currentTarget as HTMLButtonElement).blur();
+                    }
+                  }}
+                >
+                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'pricing' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+              </div>
               <div
                 id="desktop-pricing-menu"
                 className={`${dropdownPanelClass} ${activeDropdown === 'pricing' ? 'block' : 'hidden'}`}
