@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 
 /**
  * Server-rendered recent projects section.
@@ -25,6 +25,9 @@ export default function RecentProjectsSSR() {
               key={project.slug}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
+              {(() => {
+                const responsiveImage = getResponsiveProjectImageSet(project.image);
+                return (
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
                 {isBrandedProjectImage(project.image) ? (
                   <div className="flex h-full w-full items-center justify-center bg-white p-4">
@@ -39,8 +42,11 @@ export default function RecentProjectsSSR() {
                   </div>
                 ) : (
                 <img
-                  src={project.image}
+                  src={responsiveImage ? responsiveImage.mobile : project.image}
+                  srcSet={responsiveImage ? `${responsiveImage.mobile} 800w, ${responsiveImage.tablet} 1200w, ${responsiveImage.desktop} 1920w` : undefined}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   alt={project.imageAlt}
+                  title={project.imageAlt}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   loading="lazy"
                   width={600}
@@ -53,6 +59,8 @@ export default function RecentProjectsSSR() {
                   </span>
                 </div>
               </div>
+                );
+              })()}
 
               <div className="p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">

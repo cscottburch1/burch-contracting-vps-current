@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
-import { getProjectSpotlightBySlug, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { getProjectSpotlightBySlug, getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
@@ -58,6 +58,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
   const heroImageCaption = isBathroomGreenville
     ? 'Recently completed primary bathroom renovation in Greenville, SC'
     : 'Image shown for visual context. Spotlight content focuses on planning scope and process guidance.';
+  const responsiveHero = getResponsiveProjectImageSet(heroImageSrc);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -132,14 +133,33 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
 
             <div className="rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
               <div className={`overflow-hidden rounded-xl aspect-[16/10] ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
-                <Image
-                  src={heroImageSrc}
-                  alt={heroImageAlt}
-                  width={1200}
-                  height={800}
-                  className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
-                  priority
-                />
+                {responsiveHero ? (
+                  <picture>
+                    <source media="(min-width: 1280px)" srcSet={responsiveHero.desktop} />
+                    <source media="(min-width: 768px)" srcSet={responsiveHero.tablet} />
+                    <img
+                      src={responsiveHero.mobile}
+                      srcSet={`${responsiveHero.mobile} 800w, ${responsiveHero.tablet} 1200w, ${responsiveHero.desktop} 1920w`}
+                      sizes="(min-width: 1280px) 46vw, (min-width: 768px) 50vw, 100vw"
+                      alt={heroImageAlt}
+                      title={heroImageAlt}
+                      width={1200}
+                      height={800}
+                      loading="eager"
+                      fetchPriority="high"
+                      className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
+                    />
+                  </picture>
+                ) : (
+                  <Image
+                    src={heroImageSrc}
+                    alt={heroImageAlt}
+                    width={1200}
+                    height={800}
+                    className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
+                    priority
+                  />
+                )}
               </div>
               <p className="mt-3 px-1 text-xs font-semibold uppercase tracking-wide text-blue-100/90">
                 {heroImageCaption}

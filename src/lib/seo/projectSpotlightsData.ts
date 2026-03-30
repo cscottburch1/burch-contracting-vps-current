@@ -28,8 +28,8 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The remodeled kitchen improved daily usability, reduced clutter, and created more comfortable entertaining space with cleaner circulation.',
     timeline: '6 to 9 weeks typical construction window',
     budgetBand: '$39,000-$75,000 typical investment range',
-    image: '/images/projects/kitchen-workflow-upgrade-simpsonville.jpg',
-    imageAlt: 'Kitchen remodeling planning spotlight in Simpsonville SC',
+    image: '/images/projects/kitchen-workflow-upgrade-simpsonville/kitchen-remodel-simpsonville-sc-1200.webp',
+    imageAlt: 'Modern kitchen remodeling in Simpsonville SC with white cabinets, quartz countertops, and stainless appliances by Burch Contracting',
     relatedLocationPath: '/locations/kitchen-remodeling-simpsonville-sc',
     relatedCostPath: '/cost/kitchen-remodel-cost-simpsonville-sc',
     representative: true,
@@ -45,7 +45,7 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The finished space delivered a cleaner layout, easier maintenance, and stronger day-to-day comfort with better long-term durability.',
     timeline: '3 to 6 weeks typical construction window',
     budgetBand: '$19,000-$42,000 typical investment range',
-    image: '/images/projects/bathroom-renovation-greenville-sc.webp',
+    image: '/images/projects/bathroom-renovation-greenville/bathroom-renovation-greenville-sc-1200.webp',
     imageAlt: 'Bathroom Renovation Greenville SC by Burch Contracting',
     relatedLocationPath: '/locations/bathroom-remodeling-greenville-sc',
     relatedCostPath: '/cost/bathroom-remodel-cost-greenville-sc',
@@ -62,8 +62,8 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The completed expansion added practical living space with strong flow and finish continuity while supporting long-term resale value.',
     timeline: '10 to 16 weeks typical construction window',
     budgetBand: '$99,000-$195,000 typical investment range',
-    image: '/og-image.jpg',
-    imageAlt: 'Room addition planning spotlight in Greenville SC',
+    image: '/images/projects/room-addition-expansion-greenville/room-addition-greenville-sc-1200.webp',
+    imageAlt: 'Room addition construction in Greenville SC with expanded living space and seamless interior transitions by Burch Contracting',
     relatedLocationPath: '/locations/room-additions-greenville-sc',
     relatedCostPath: '/cost/room-addition-cost-greenville-sc',
     representative: true,
@@ -79,8 +79,8 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The new deck improved traffic flow, family use, and backyard function while keeping long-term maintenance expectations clear.',
     timeline: '3 to 5 weeks typical construction window',
     budgetBand: '$33,000-$58,000 typical investment range',
-    image: '/og-image.jpg',
-    imageAlt: 'Deck building planning spotlight in Simpsonville SC',
+    image: '/images/projects/deck-entertaining-space-simpsonville/deck-entertaining-simpsonville-sc-1200.webp',
+    imageAlt: 'Deck and outdoor living project in Simpsonville SC with durable finishes and functional entertaining layout by Burch Contracting',
     relatedLocationPath: '/locations/deck-builder-simpsonville-sc',
     relatedCostPath: '/cost/deck-cost-simpsonville-sc',
     representative: true,
@@ -96,8 +96,8 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The finished basement delivered additional living capacity with better comfort, cleaner organization, and stronger long-term performance.',
     timeline: '7 to 12 weeks typical construction window',
     budgetBand: '$56-$85 per sq ft typical range',
-    image: '/og-image.jpg',
-    imageAlt: 'Basement finishing planning spotlight in Greenville SC',
+    image: '/images/projects/basement-living-suite-greenville/basement-finishing-greenville-sc-1200.webp',
+    imageAlt: 'Finished basement remodeling in Greenville SC with coffered ceiling, recessed lighting, and custom living space by Burch Contracting',
     relatedLocationPath: '/locations/basement-finishing-greenville-sc',
     relatedCostPath: '/cost/basement-finishing-cost-greenville-sc',
     representative: true,
@@ -113,15 +113,59 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The screened porch created a more usable outdoor room that extended daily living space and improved overall backyard function.',
     timeline: '4 to 7 weeks typical construction window',
     budgetBand: '$42,000-$70,000 typical investment range',
-    image: '/og-image.jpg',
-    imageAlt: 'Screened porch planning spotlight in Five Forks SC',
+    image: '/images/projects/screened-porch-family-space-five-forks/screened-porch-five-forks-sc-1200.webp',
+    imageAlt: 'Aluminum screened porch installation in Five Forks SC with covered patio and outdoor living space by Burch Contracting',
     relatedLocationPath: '/locations/screened-porch-builder-five-forks-sc',
     representative: true,
+  },
+  {
+    slug: 'basement-finishing-simpsonville',
+    title: 'Basement Finishing in Simpsonville',
+    city: 'Simpsonville SC',
+    serviceType: 'Basement Finishing',
+    summary: 'A finished-basement planning profile focused on livable comfort, moisture control, and flexible family-use space in Simpsonville.',
+    challenge: 'The existing basement was underused and needed a practical finishing plan that improved comfort, storage, and everyday function.',
+    approach: 'Scope planning focused on layout zoning, insulation and moisture management, lighting, and durable finish selections for long-term use.',
+    outcome: 'The completed basement plan delivered a brighter, more usable living area with better comfort and clear long-term maintenance expectations.',
+    timeline: '7 to 12 weeks typical construction window',
+    budgetBand: '$56-$85 per sq ft typical range',
+    image: '/images/projects/basement-living-suite-greenville/basement-finishing-simpsonville-sc-1200.webp',
+    imageAlt: 'Finished basement remodeling in Simpsonville SC with coffered ceiling, recessed lighting, and custom living space by Burch Contracting',
+    relatedLocationPath: '/locations/basement-finishing-simpsonville-sc',
+    representative: false,
+  },
+  {
+    slug: 'screened-porch-simpsonville',
+    title: 'Screened Porch Installation in Simpsonville',
+    city: 'Simpsonville SC',
+    serviceType: 'Screened Porch Builder',
+    summary: 'A screened-porch project spotlight focused on shade, airflow, and lower-maintenance outdoor living for Simpsonville homeowners.',
+    challenge: 'The outdoor area needed weather protection and insect control while preserving comfort for daily use and entertaining.',
+    approach: 'The plan prioritized enclosure layout, structural tie-ins, durable materials, and circulation for dining and lounge zones.',
+    outcome: 'The finished screened porch created a more usable outdoor room with stronger seasonal comfort and better long-term value.',
+    timeline: '4 to 7 weeks typical construction window',
+    budgetBand: '$42,000-$70,000 typical investment range',
+    image: '/images/projects/screened-porch-family-space-five-forks/screened-porch-simpsonville-sc-1200.webp',
+    imageAlt: 'Aluminum screened porch installation in Simpsonville SC with covered patio and outdoor living space by Burch Contracting',
+    relatedLocationPath: '/locations/screened-porch-builder-simpsonville-sc',
+    representative: false,
   },
 ];
 
 export function isBrandedProjectImage(image: string) {
   return image === '/images/projects/logo-placeholder.jpg';
+}
+
+export function getResponsiveProjectImageSet(image: string) {
+  if (!image.endsWith('-1200.webp')) {
+    return null;
+  }
+
+  return {
+    mobile: image.replace('-1200.webp', '-800.webp'),
+    tablet: image,
+    desktop: image.replace('-1200.webp', '-1920.webp'),
+  };
 }
 
 export function getProjectSpotlightBySlug(slug: string) {
