@@ -50,6 +50,14 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
 
   const related = projectSpotlights.filter((item) => item.slug !== project.slug && item.serviceType === project.serviceType).slice(0, 3);
   const brandedImage = isBrandedProjectImage(project.image);
+  const isBathroomGreenville = project.slug === 'bathroom-renovation-greenville';
+  const heroImageSrc = isBathroomGreenville ? '/images/projects/bathroom-renovation-greenville-sc.webp' : project.image;
+  const heroImageAlt = isBathroomGreenville
+    ? 'Primary Bathroom Renovation in Greenville SC by Burch Contracting'
+    : project.imageAlt;
+  const heroImageCaption = isBathroomGreenville
+    ? 'Recently completed primary bathroom renovation in Greenville, SC'
+    : 'Image shown for visual context. Spotlight content focuses on planning scope and process guidance.';
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -123,18 +131,18 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
             </div>
 
             <div className="rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
-              <div className={`overflow-hidden rounded-xl ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
+              <div className={`overflow-hidden rounded-xl aspect-[16/10] ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
                 <Image
-                  src={project.image}
-                  alt={project.imageAlt}
-                  width={1280}
-                  height={720}
-                  className={`w-full rounded-xl ${brandedImage ? 'h-72 object-contain' : 'h-72 object-cover md:h-[420px]'}`}
+                  src={heroImageSrc}
+                  alt={heroImageAlt}
+                  width={1200}
+                  height={800}
+                  className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
                   priority
                 />
               </div>
               <p className="mt-3 px-1 text-xs font-semibold uppercase tracking-wide text-blue-100/90">
-                Image shown for visual context. Spotlight content focuses on planning scope and process guidance.
+                {heroImageCaption}
               </p>
             </div>
           </div>
