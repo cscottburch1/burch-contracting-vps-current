@@ -28,7 +28,7 @@ export const projectSpotlights: ProjectSpotlight[] = [
     outcome: 'The remodeled kitchen improved daily usability, reduced clutter, and created more comfortable entertaining space with cleaner circulation.',
     timeline: '6 to 9 weeks typical construction window',
     budgetBand: '$39,000-$75,000 typical investment range',
-    image: '/og-image.jpg',
+    image: '/images/projects/kitchen-workflow-upgrade-simpsonville.jpg',
     imageAlt: 'Kitchen remodeling planning spotlight in Simpsonville SC',
     relatedLocationPath: '/locations/kitchen-remodeling-simpsonville-sc',
     relatedCostPath: '/cost/kitchen-remodel-cost-simpsonville-sc',
