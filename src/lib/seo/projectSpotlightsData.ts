@@ -121,7 +121,7 @@ export const projectSpotlights: ProjectSpotlight[] = [
 ];
 
 export function isBrandedProjectImage(image: string) {
-  return image === '/og-image.jpg' || image === '/images/projects/placeholder.jpg';
+  return image === '/images/projects/logo-placeholder.jpg';
 }
 
 export function getProjectSpotlightBySlug(slug: string) {
