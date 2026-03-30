@@ -120,6 +120,10 @@ export const projectSpotlights: ProjectSpotlight[] = [
   },
 ];
 
+export function isBrandedProjectImage(image: string) {
+  return image === '/og-image.jpg' || image === '/images/projects/placeholder.jpg';
+}
+
 export function getProjectSpotlightBySlug(slug: string) {
   return projectSpotlights.find((item) => item.slug === slug);
 }

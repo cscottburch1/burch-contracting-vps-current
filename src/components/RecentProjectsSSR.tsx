@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 
 /**
  * Server-rendered recent projects section.
@@ -26,6 +26,18 @@ export default function RecentProjectsSSR() {
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
+                {isBrandedProjectImage(project.image) ? (
+                  <div className="flex h-full w-full items-center justify-center bg-white p-4">
+                    <img
+                      src={project.image}
+                      alt={project.imageAlt}
+                      className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
+                      loading="lazy"
+                      width={600}
+                      height={336}
+                    />
+                  </div>
+                ) : (
                 <img
                   src={project.image}
                   alt={project.imageAlt}
@@ -34,6 +46,7 @@ export default function RecentProjectsSSR() {
                   width={600}
                   height={336}
                 />
+                )}
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800">
                     {project.serviceType}

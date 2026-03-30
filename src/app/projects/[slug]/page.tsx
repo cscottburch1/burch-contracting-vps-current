@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
-import { getProjectSpotlightBySlug, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { getProjectSpotlightBySlug, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
@@ -49,6 +49,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
   }
 
   const related = projectSpotlights.filter((item) => item.slug !== project.slug && item.serviceType === project.serviceType).slice(0, 3);
+  const brandedImage = isBrandedProjectImage(project.image);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -104,7 +105,15 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
         <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
             <Card>
-              <Image src={project.image} alt={project.imageAlt} width={1280} height={720} className="h-72 w-full rounded-xl object-cover" />
+              <div className={`overflow-hidden rounded-xl ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  width={1280}
+                  height={720}
+                  className={`w-full rounded-xl ${brandedImage ? 'h-72 object-contain' : 'h-72 object-cover'}`}
+                />
+              </div>
               <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
                 Image shown for visual context. Spotlight content focuses on planning scope and process guidance.
               </p>
