@@ -130,23 +130,33 @@ export const Header: React.FC = () => {
               onMouseLeave={() => setActiveDropdown(null)}
               onBlur={closeDropdownOnBlur}
             >
-              <button
-                type="button"
-                className={navLinkClass(isActive('/services'))}
-                aria-haspopup="true"
-                aria-expanded={activeDropdown === 'services'}
-                aria-controls="desktop-services-menu"
-                onFocus={() => setActiveDropdown('services')}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') {
-                    setActiveDropdown(null);
-                    (event.currentTarget as HTMLButtonElement).blur();
-                  }
-                }}
-              >
-                Services
-                <Icon name="ChevronDown" size={16} className={activeDropdown === 'services' ? 'rotate-180 transition-transform' : 'transition-transform'} />
-              </button>
+              <div className="inline-flex items-center gap-1">
+                <Link
+                  href="/services"
+                  className={navLinkClass(isActive('/services'))}
+                  onFocus={() => setActiveDropdown('services')}
+                >
+                  Services
+                </Link>
+                <button
+                  type="button"
+                  className={isActive('/services') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
+                  aria-haspopup="true"
+                  aria-expanded={activeDropdown === 'services'}
+                  aria-controls="desktop-services-menu"
+                  aria-label="Toggle Services submenu"
+                  onClick={() => setActiveDropdown((prev) => (prev === 'services' ? null : 'services'))}
+                  onFocus={() => setActiveDropdown('services')}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setActiveDropdown(null);
+                      (event.currentTarget as HTMLButtonElement).blur();
+                    }
+                  }}
+                >
+                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'services' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+              </div>
               <div
                 id="desktop-services-menu"
                 className={`${dropdownPanelClass} ${activeDropdown === 'services' ? 'block' : 'hidden'}`}
@@ -167,23 +177,33 @@ export const Header: React.FC = () => {
               onMouseLeave={() => setActiveDropdown(null)}
               onBlur={closeDropdownOnBlur}
             >
-              <button
-                type="button"
-                className={navLinkClass(isActive('/service-areas') || isActive('/locations'))}
-                aria-haspopup="true"
-                aria-expanded={activeDropdown === 'areas'}
-                aria-controls="desktop-areas-menu"
-                onFocus={() => setActiveDropdown('areas')}
-                onKeyDown={(event) => {
-                  if (event.key === 'Escape') {
-                    setActiveDropdown(null);
-                    (event.currentTarget as HTMLButtonElement).blur();
-                  }
-                }}
-              >
-                Areas Served
-                <Icon name="ChevronDown" size={16} className={activeDropdown === 'areas' ? 'rotate-180 transition-transform' : 'transition-transform'} />
-              </button>
+              <div className="inline-flex items-center gap-1">
+                <Link
+                  href="/locations"
+                  className={navLinkClass(isActive('/service-areas') || isActive('/locations'))}
+                  onFocus={() => setActiveDropdown('areas')}
+                >
+                  Areas Served
+                </Link>
+                <button
+                  type="button"
+                  className={isActive('/service-areas') || isActive('/locations') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
+                  aria-haspopup="true"
+                  aria-expanded={activeDropdown === 'areas'}
+                  aria-controls="desktop-areas-menu"
+                  aria-label="Toggle Areas Served submenu"
+                  onClick={() => setActiveDropdown((prev) => (prev === 'areas' ? null : 'areas'))}
+                  onFocus={() => setActiveDropdown('areas')}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setActiveDropdown(null);
+                      (event.currentTarget as HTMLButtonElement).blur();
+                    }
+                  }}
+                >
+                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'areas' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+              </div>
               <div
                 id="desktop-areas-menu"
                 className={`${dropdownPanelClass} ${activeDropdown === 'areas' ? 'block' : 'hidden'}`}
@@ -293,16 +313,21 @@ export const Header: React.FC = () => {
               </a>
 
               <div>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
-                  onClick={() => setMobileServicesOpen((prev) => !prev)}
-                  aria-expanded={mobileServicesOpen}
-                  aria-controls="mobile-services-menu"
-                >
-                  Services
-                  <Icon name="ChevronDown" size={18} className={mobileServicesOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
+                <div className="flex w-full items-center justify-between py-2">
+                  <Link href="/services" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                    Services
+                  </Link>
+                  <button
+                    type="button"
+                    className="p-1 text-black"
+                    onClick={() => setMobileServicesOpen((prev) => !prev)}
+                    aria-expanded={mobileServicesOpen}
+                    aria-controls="mobile-services-menu"
+                    aria-label="Toggle Services submenu"
+                  >
+                    <Icon name="ChevronDown" size={18} className={mobileServicesOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                  </button>
+                </div>
                 {mobileServicesOpen && (
                   <div id="mobile-services-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {serviceLinks.map((item) => (
@@ -315,16 +340,21 @@ export const Header: React.FC = () => {
               </div>
 
               <div>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
-                  onClick={() => setMobileAreasOpen((prev) => !prev)}
-                  aria-expanded={mobileAreasOpen}
-                  aria-controls="mobile-areas-menu"
-                >
-                  Areas Served
-                  <Icon name="ChevronDown" size={18} className={mobileAreasOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
+                <div className="flex w-full items-center justify-between py-2">
+                  <Link href="/locations" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                    Areas Served
+                  </Link>
+                  <button
+                    type="button"
+                    className="p-1 text-black"
+                    onClick={() => setMobileAreasOpen((prev) => !prev)}
+                    aria-expanded={mobileAreasOpen}
+                    aria-controls="mobile-areas-menu"
+                    aria-label="Toggle Areas Served submenu"
+                  >
+                    <Icon name="ChevronDown" size={18} className={mobileAreasOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                  </button>
+                </div>
                 {mobileAreasOpen && (
                   <div id="mobile-areas-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {areaLinks.map((item) => (
@@ -341,16 +371,21 @@ export const Header: React.FC = () => {
               </Link>
 
               <div>
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between py-2 text-left text-lg font-semibold text-black"
-                  onClick={() => setMobilePricingOpen((prev) => !prev)}
-                  aria-expanded={mobilePricingOpen}
-                  aria-controls="mobile-pricing-menu"
-                >
-                  Pricing Guide
-                  <Icon name="ChevronDown" size={18} className={mobilePricingOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
+                <div className="flex w-full items-center justify-between py-2">
+                  <Link href="/cost" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                    Pricing Guide
+                  </Link>
+                  <button
+                    type="button"
+                    className="p-1 text-black"
+                    onClick={() => setMobilePricingOpen((prev) => !prev)}
+                    aria-expanded={mobilePricingOpen}
+                    aria-controls="mobile-pricing-menu"
+                    aria-label="Toggle Pricing Guide submenu"
+                  >
+                    <Icon name="ChevronDown" size={18} className={mobilePricingOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                  </button>
+                </div>
                 {mobilePricingOpen && (
                   <div id="mobile-pricing-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {pricingLinks.map((item) => (
