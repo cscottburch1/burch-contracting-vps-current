@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from '../ui/Icon';
@@ -52,6 +52,7 @@ export const Header: React.FC = () => {
   const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
   const [mobilePricingOpen, setMobilePricingOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 4);
@@ -74,16 +75,44 @@ export const Header: React.FC = () => {
   const navLinkClass = (active: boolean) =>
     `inline-flex items-center gap-1 font-semibold transition-colors ${active ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}`;
 
-  const dropdownWrapperClass = 'relative';
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const openDropdown = (key: Exclude<DropdownKey, null>) => {
+    clearCloseTimeout();
+    setActiveDropdown(key);
+  };
+
+  const scheduleDropdownClose = () => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  };
+
+  const closeDropdownImmediately = () => {
+    clearCloseTimeout();
+    setActiveDropdown(null);
+  };
+
+  const dropdownWrapperClass = 'relative pb-4 -mb-4';
   const dropdownPanelClass =
-    'absolute left-0 top-full mt-3 min-w-[260px] rounded-xl border border-gray-200 bg-white py-2 shadow-xl';
+    'absolute left-0 top-full mt-2 min-w-[260px] rounded-xl border border-gray-200 bg-white py-2 shadow-xl z-50';
   const dropdownLinkClass = 'block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 focus:bg-blue-50 focus:text-blue-700';
 
   const closeDropdownOnBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-      setActiveDropdown(null);
+      closeDropdownImmediately();
     }
   };
+
+  useEffect(() => {
+    return () => clearCloseTimeout();
+  }, []);
 
   return (
     <header
@@ -126,15 +155,15 @@ export const Header: React.FC = () => {
           <div className="hidden lg:flex items-center gap-7">
             <div
               className={dropdownWrapperClass}
-              onMouseEnter={() => setActiveDropdown('services')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('services')}
+              onMouseLeave={scheduleDropdownClose}
               onBlur={closeDropdownOnBlur}
             >
               <div className="inline-flex items-center gap-1">
                 <Link
                   href="/services"
                   className={navLinkClass(isActive('/services'))}
-                  onFocus={() => setActiveDropdown('services')}
+                  onFocus={() => openDropdown('services')}
                 >
                   Services
                 </Link>
@@ -145,11 +174,14 @@ export const Header: React.FC = () => {
                   aria-expanded={activeDropdown === 'services'}
                   aria-controls="desktop-services-menu"
                   aria-label="Toggle Services submenu"
-                  onClick={() => setActiveDropdown((prev) => (prev === 'services' ? null : 'services'))}
-                  onFocus={() => setActiveDropdown('services')}
+                  onClick={() => {
+                    clearCloseTimeout();
+                    setActiveDropdown((prev) => (prev === 'services' ? null : 'services'));
+                  }}
+                  onFocus={() => openDropdown('services')}
                   onKeyDown={(event) => {
                     if (event.key === 'Escape') {
-                      setActiveDropdown(null);
+                      closeDropdownImmediately();
                       (event.currentTarget as HTMLButtonElement).blur();
                     }
                   }}
@@ -162,6 +194,8 @@ export const Header: React.FC = () => {
                 className={`${dropdownPanelClass} ${activeDropdown === 'services' ? 'block' : 'hidden'}`}
                 role="menu"
                 aria-label="Services"
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleDropdownClose}
               >
                 {serviceLinks.map((item) => (
                   <Link key={`${item.label}-${item.href}`} href={item.href} className={dropdownLinkClass} role="menuitem">
@@ -173,15 +207,15 @@ export const Header: React.FC = () => {
 
             <div
               className={dropdownWrapperClass}
-              onMouseEnter={() => setActiveDropdown('areas')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('areas')}
+              onMouseLeave={scheduleDropdownClose}
               onBlur={closeDropdownOnBlur}
             >
               <div className="inline-flex items-center gap-1">
                 <Link
                   href="/locations"
                   className={navLinkClass(isActive('/service-areas') || isActive('/locations'))}
-                  onFocus={() => setActiveDropdown('areas')}
+                  onFocus={() => openDropdown('areas')}
                 >
                   Areas Served
                 </Link>
@@ -192,11 +226,14 @@ export const Header: React.FC = () => {
                   aria-expanded={activeDropdown === 'areas'}
                   aria-controls="desktop-areas-menu"
                   aria-label="Toggle Areas Served submenu"
-                  onClick={() => setActiveDropdown((prev) => (prev === 'areas' ? null : 'areas'))}
-                  onFocus={() => setActiveDropdown('areas')}
+                  onClick={() => {
+                    clearCloseTimeout();
+                    setActiveDropdown((prev) => (prev === 'areas' ? null : 'areas'));
+                  }}
+                  onFocus={() => openDropdown('areas')}
                   onKeyDown={(event) => {
                     if (event.key === 'Escape') {
-                      setActiveDropdown(null);
+                      closeDropdownImmediately();
                       (event.currentTarget as HTMLButtonElement).blur();
                     }
                   }}
@@ -209,6 +246,8 @@ export const Header: React.FC = () => {
                 className={`${dropdownPanelClass} ${activeDropdown === 'areas' ? 'block' : 'hidden'}`}
                 role="menu"
                 aria-label="Areas Served"
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleDropdownClose}
               >
                 {areaLinks.map((item) => (
                   <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
@@ -224,15 +263,15 @@ export const Header: React.FC = () => {
 
             <div
               className={dropdownWrapperClass}
-              onMouseEnter={() => setActiveDropdown('pricing')}
-              onMouseLeave={() => setActiveDropdown(null)}
+              onMouseEnter={() => openDropdown('pricing')}
+              onMouseLeave={scheduleDropdownClose}
               onBlur={closeDropdownOnBlur}
             >
               <div className="inline-flex items-center gap-1">
                 <Link
                   href="/cost"
                   className={navLinkClass(isActive('/cost'))}
-                  onFocus={() => setActiveDropdown('pricing')}
+                  onFocus={() => openDropdown('pricing')}
                 >
                   Pricing Guide
                 </Link>
@@ -243,11 +282,14 @@ export const Header: React.FC = () => {
                   aria-expanded={activeDropdown === 'pricing'}
                   aria-controls="desktop-pricing-menu"
                   aria-label="Toggle Pricing Guide submenu"
-                  onClick={() => setActiveDropdown((prev) => (prev === 'pricing' ? null : 'pricing'))}
-                  onFocus={() => setActiveDropdown('pricing')}
+                  onClick={() => {
+                    clearCloseTimeout();
+                    setActiveDropdown((prev) => (prev === 'pricing' ? null : 'pricing'));
+                  }}
+                  onFocus={() => openDropdown('pricing')}
                   onKeyDown={(event) => {
                     if (event.key === 'Escape') {
-                      setActiveDropdown(null);
+                      closeDropdownImmediately();
                       (event.currentTarget as HTMLButtonElement).blur();
                     }
                   }}
@@ -260,6 +302,8 @@ export const Header: React.FC = () => {
                 className={`${dropdownPanelClass} ${activeDropdown === 'pricing' ? 'block' : 'hidden'}`}
                 role="menu"
                 aria-label="Pricing Guide"
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleDropdownClose}
               >
                 {pricingLinks.map((item) => (
                   <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
