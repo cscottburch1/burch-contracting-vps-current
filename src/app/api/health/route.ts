@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { initializeDatabaseTables, checkDatabaseHealth } from '@/lib/dbInit';
+import { getMissingEnv, listRequiredEnv } from '@/lib/envCheck';
 
 /**
  * Health check endpoint (read-only by default)
@@ -7,6 +8,16 @@ import { initializeDatabaseTables, checkDatabaseHealth } from '@/lib/dbInit';
  */
 export async function GET(request: Request) {
   try {
+    const requiredEnv = listRequiredEnv();
+    const missingCriticalEnv = getMissingEnv(requiredEnv.critical);
+
+    if (missingCriticalEnv.length > 0) {
+      return NextResponse.json({
+        status: 'misconfigured',
+        missingEnv: missingCriticalEnv,
+      }, { status: 503 });
+    }
+
     // Check database health
     const health = await checkDatabaseHealth();
     
@@ -26,6 +37,7 @@ export async function GET(request: Request) {
         status: 'healthy',
         database: 'connected',
         tables: health.tables.length,
+        missingEmailEnv: getMissingEnv(requiredEnv.email),
       });
     }
 

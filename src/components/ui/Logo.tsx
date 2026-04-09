@@ -15,6 +15,7 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
   };
 
   const size = sizes[variant];
+  const isHeaderLogo = variant === 'header';
 
   const logoImage = (
     <Image
@@ -23,7 +24,9 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
       width={size.width}
       height={size.height}
       className={`${className} rounded-lg ${variant === 'footer' ? 'bg-white p-3' : ''}`}
-      priority={variant === 'header'}
+      priority={isHeaderLogo}
+      fetchPriority={isHeaderLogo ? 'high' : 'auto'}
+      loading={isHeaderLogo ? 'eager' : 'lazy'}
     />
   );
 

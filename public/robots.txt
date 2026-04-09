@@ -1,6 +1,3 @@
-# Burch Contracting - robots.txt
-# https://burchcontracting.com
-
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -8,15 +5,16 @@ Disallow: /portal/
 Disallow: /api/
 Disallow: /crm/
 
-# Sitemaps
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+Crawl-delay: 0
+
+Host: https://burchcontracting.com
 Sitemap: https://burchcontracting.com/sitemap.xml
 Sitemap: https://burchcontracting.com/sitemaps/local-pages.xml
 Sitemap: https://burchcontracting.com/sitemaps/calculators.xml
 Sitemap: https://burchcontracting.com/sitemaps/content.xml
-
-# Crawl-delay for common bots
-User-agent: Googlebot
-Crawl-delay: 0
-
-User-agent: Bingbot
-Crawl-delay: 1

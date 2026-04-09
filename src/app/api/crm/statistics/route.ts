@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
+import { ensureLeadSchema } from '@/lib/leadService';
 
 export async function GET(request: Request) {
   try {
@@ -8,6 +9,8 @@ export async function GET(request: Request) {
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensureLeadSchema();
 
     // Get lead counts by status
     const statusStats = await query<{ status: string; count: number }>(

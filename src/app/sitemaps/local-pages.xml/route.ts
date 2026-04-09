@@ -1,16 +1,27 @@
 import { trackedCostPaths, trackedLocalLandingPaths } from '@/lib/seo/searchConsoleTargets';
 import { absoluteUrl } from '@/lib/seo/site';
+import { getFileLastModified } from '@/lib/seo/lastModified';
 
 function escapeXml(value: string) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
 export async function GET() {
-  const lastmod = new Date().toISOString();
-  const urls = [...trackedLocalLandingPaths, ...trackedCostPaths]
-    .map((path) => {
-      const loc = escapeXml(absoluteUrl(path));
-      return `<url><loc>${loc}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>`;
+  const [localDominanceLastmod, renovationLastmod, costLastmod] = await Promise.all([
+    getFileLastModified('src/lib/seo/localDominanceData.ts'),
+    getFileLastModified('src/lib/seo/renovationSeoData.ts'),
+    getFileLastModified('src/lib/seo/costSeoData.ts'),
+  ]);
+
+  const localLastmod = renovationLastmod > localDominanceLastmod ? renovationLastmod : localDominanceLastmod;
+
+  const urls = [
+    ...trackedLocalLandingPaths.map((path) => ({ path, lastmod: localLastmod })),
+    ...trackedCostPaths.map((path) => ({ path, lastmod: costLastmod })),
+  ]
+    .map((entry) => {
+      const loc = escapeXml(absoluteUrl(entry.path));
+      return `<url><loc>${loc}</loc><lastmod>${entry.lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>`;
     })
     .join('');
 

@@ -17,25 +17,38 @@ export default function RecentProjects() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     loadProjects();
   }, [activeCategory]);
 
   const loadProjects = async () => {
+    setLoading(true);
+    setUsingFallback(false);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     try {
       const url = activeCategory === 'all' 
         ? '/api/projects/recent'
         : `/api/projects/recent?category=${activeCategory}`;
       
-      const res = await fetch(url);
+      const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
-        setProjects(data.slice(0, 6)); // Show max 6 projects
+        if (Array.isArray(data)) {
+          setProjects(data.slice(0, 6));
+          setUsingFallback(res.headers.get('x-projects-fallback') === '1');
+        } else {
+          setProjects([]);
+        }
       }
     } catch (error) {
       console.error('Error loading projects:', error);
+      setProjects([]);
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
     }
   };
@@ -103,14 +116,19 @@ export default function RecentProjects() {
           </div>
         ) : projects.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600">No projects found in this category yet.</p>
+            <p className="text-gray-600">Project highlights are being updated. Please check back soon.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          <>
+            {usingFallback && (
+              <p className="text-center text-sm text-gray-500 mb-6">Showing stable fallback highlights while live project data refreshes.</p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          </>
         )}
 
         {/* View All Button */}

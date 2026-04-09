@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
+import { ensureLeadSchema } from '@/lib/leadService';
 
 export async function GET(request: Request) {
   try {
@@ -9,58 +10,47 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    await ensureLeadSchema();
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const priority = searchParams.get('priority');
     const search = searchParams.get('search');
 
-    let sql = 'SELECT * FROM contact_leads WHERE 1=1';
+    let sql = `
+      SELECT l.*, COUNT(a.id) AS attachment_count
+      FROM contact_leads l
+      LEFT JOIN lead_attachments a ON a.lead_id = l.id
+      WHERE 1=1
+    `;
     const params: any[] = [];
 
     if (status && status !== 'all') {
-      sql += ' AND status = ?';
+      sql += ' AND l.status = ?';
       params.push(status);
     }
 
     if (priority && priority !== 'all') {
-      sql += ' AND priority = ?';
+      sql += ' AND l.priority = ?';
       params.push(priority);
     }
 
     if (search) {
-      sql += ' AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)';
+      sql += ' AND (l.name LIKE ? OR l.email LIKE ? OR l.phone LIKE ?)';
       const searchTerm = `%${search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
     }
 
-    sql += ' ORDER BY created_at DESC';
+    sql += ' GROUP BY l.id ORDER BY l.created_at DESC';
 
     const leads: any[] = await query(sql, params);
 
-    const normalizedLeads = leads.map((lead) => {
-      let attachments: string[] = [];
+    const normalized = leads.map((lead) => ({
+      ...lead,
+      attachment_count: Number(lead.attachment_count || 0),
+    }));
 
-      if (Array.isArray(lead.attachments)) {
-        attachments = lead.attachments.filter((item: unknown): item is string => typeof item === 'string' && item.length > 0);
-      } else if (typeof lead.attachments === 'string' && lead.attachments.trim().length > 0) {
-        try {
-          const parsed = JSON.parse(lead.attachments);
-          if (Array.isArray(parsed)) {
-            attachments = parsed.filter((item: unknown): item is string => typeof item === 'string' && item.length > 0);
-          }
-        } catch {
-          attachments = [];
-        }
-      }
-
-      return {
-        ...lead,
-        attachments,
-        attachment_count: attachments.length,
-      };
-    });
-
-    return NextResponse.json({ leads: normalizedLeads });
+    return NextResponse.json({ leads: normalized });
   } catch (error) {
     console.error('Error fetching leads:', error);
     return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });

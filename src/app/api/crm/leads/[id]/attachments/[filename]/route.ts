@@ -3,6 +3,7 @@ import { readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { verifyAdminAuth } from '@/lib/adminAuth';
+import { ensureLeadSchema, getLeadAttachmentByStoredName } from '@/lib/leadService';
 
 const CONTENT_TYPES: Record<string, string> = {
   pdf: 'application/pdf',
@@ -35,18 +36,25 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    await ensureLeadSchema();
+
     const { id, filename } = await context.params;
     const safeLeadId = sanitizeSegment(String(id));
     const safeFilename = sanitizeSegment(String(filename));
 
+    const attachment = await getLeadAttachmentByStoredName(Number(safeLeadId), safeFilename);
+    if (!attachment) {
+      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    }
+
     const filePath = join(process.cwd(), 'public', 'uploads', 'leads', safeLeadId, safeFilename);
     if (!existsSync(filePath)) {
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      return NextResponse.json({ error: 'File is missing from storage' }, { status: 404 });
     }
 
     const fileBuffer = await readFile(filePath);
     const ext = safeFilename.split('.').pop()?.toLowerCase() || '';
-    const contentType = CONTENT_TYPES[ext] || 'application/octet-stream';
+    const contentType = CONTENT_TYPES[ext] || attachment.mime_type || 'application/octet-stream';
 
     const url = new URL(request.url);
     const shouldDownload = url.searchParams.get('download') === '1';
@@ -55,7 +63,7 @@ export async function GET(
     return new NextResponse(fileBuffer, {
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `${disposition}; filename="${safeFilename}"`,
+        'Content-Disposition': `${disposition}; filename="${attachment.original_filename || safeFilename}"`,
         'Cache-Control': 'private, max-age=0, no-cache',
       },
     });

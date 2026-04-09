@@ -2,15 +2,8 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
-
-type AdminUser = {
-  id: number;
-  email: string;
-  name: string;
-  role: 'owner' | 'admin' | string;
-};
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 type LeadQueueStatus = {
   queuedCount: number;
@@ -44,7 +37,7 @@ const TOOL_ITEMS: ToolItem[] = [
     id: 'crm',
     name: 'CRM / Leads',
     description: 'Track incoming leads, follow-up stages, and conversion pipeline activity.',
-    href: '/crm',
+    href: '/admin/crm',
     cta: 'Open CRM',
     category: 'Lead & CRM Tools',
     priority: 'high',
@@ -179,17 +172,10 @@ const TOOL_ITEMS: ToolItem[] = [
     ownerOnly: true,
     note: 'Owner only',
   },
-  {
-    id: 'migrate',
-    name: 'Database Setup',
-    description: 'Run database setup and migration maintenance utilities safely.',
-    href: '/admin/migrate',
-    cta: 'Open Migrations',
-    category: 'System Utilities',
-    priority: 'medium',
-    ownerOnly: true,
-    note: 'Owner only',
-  },
+  // Database Setup / Migrations removed from UI (2026-03-27)
+  // Migration utilities are one-time setup tasks. Owner can still access directly at /admin/migrate
+  // Removed from TOOL_ITEMS to reduce noise in tools hub and clarify that migrations are maintenance utilities, not operational tools
+  // API routes remain intact for recovery/debugging purposes
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [
@@ -203,10 +189,7 @@ const CATEGORY_ORDER: ToolCategory[] = [
 ];
 
 export default function AdminToolsPage() {
-  const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [authError, setAuthError] = useState('');
+  const { user: currentUser, authLoading, authError } = useAdminAuth();
   const [showMaintenance, setShowMaintenance] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | ToolCategory>('all');
@@ -218,59 +201,6 @@ export default function AdminToolsPage() {
   const [leadQueueStatus, setLeadQueueStatus] = useState<LeadQueueStatus | null>(null);
 
   const isOwner = currentUser?.role === 'owner';
-
-  useEffect(() => {
-    let mounted = true;
-
-    const initialize = async () => {
-      setAuthLoading(true);
-      setAuthError('');
-      try {
-        const res = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!res.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-          }
-          router.push('/admin');
-          return;
-        }
-
-        const data = (await res.json()) as { user?: AdminUser };
-        if (!mounted) {
-          return;
-        }
-
-        if (!data?.user) {
-          setAuthError('Admin session is valid, but user details could not be loaded.');
-          return;
-        }
-
-        setCurrentUser(data.user);
-
-        if (data.user.role === 'owner') {
-          await loadLeadQueueStatus();
-        }
-      } catch (error) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(error)
-              ? 'Session check timed out. Please retry.'
-              : 'Unable to verify admin session. Please try again.'
-          );
-        }
-      } finally {
-        if (mounted) {
-          setAuthLoading(false);
-        }
-      }
-    };
-
-    initialize();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
 
   const loadLeadQueueStatus = async () => {
     setQueueLoading(true);
@@ -319,6 +249,12 @@ export default function AdminToolsPage() {
       setQueueReplaying(false);
     }
   };
+
+  useEffect(() => {
+    if (isOwner && showMaintenance && !leadQueueStatus && !queueLoading) {
+      void loadLeadQueueStatus();
+    }
+  }, [isOwner, showMaintenance, leadQueueStatus, queueLoading]);
 
   const visibleTools = useMemo(() => {
     const needle = searchTerm.trim().toLowerCase();
@@ -482,15 +418,17 @@ export default function AdminToolsPage() {
         {isOwner && (
           <section className="mb-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-              <h2 className="text-xl font-bold text-gray-900">System Utilities</h2>
+              <h2 className="text-xl font-bold text-gray-900">Legacy Lead Recovery</h2>
               <button
                 onClick={() => setShowMaintenance((prev) => !prev)}
                 className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-100"
               >
-                {showMaintenance ? 'Hide Queue Monitor' : 'Show Queue Monitor'}
+                {showMaintenance ? 'Hide Legacy Panel' : 'Show Legacy Panel'}
               </button>
             </div>
-            <p className="mb-4 text-sm text-gray-600">Owner-only queue recovery utilities for contact form resiliency.</p>
+            <p className="mb-4 text-sm text-gray-600">
+              Contact leads now save directly into CRM. This owner-only panel is kept only to inspect or replay older fallback items already written to the legacy queue file.
+            </p>
 
             {queueError ? <p className="mb-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">{queueError}</p> : null}
             {queueSuccess ? <p className="mb-3 rounded-lg bg-green-50 p-3 text-sm text-green-700">{queueSuccess}</p> : null}

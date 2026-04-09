@@ -1,102 +1,10 @@
 import { NextResponse } from 'next/server';
 import { query, queryOne } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
-import { existsSync } from 'fs';
-import { readdir } from 'fs/promises';
-import { join } from 'path';
-
-async function ensureLeadActivitiesTable() {
-  await query(`
-    CREATE TABLE IF NOT EXISTS lead_activities (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      lead_id INT NOT NULL,
-      activity_type ENUM('status_change', 'note_added', 'email_sent', 'call_made', 'meeting_scheduled', 'proposal_sent') NOT NULL,
-      description TEXT NOT NULL,
-      metadata JSON,
-      created_by VARCHAR(255),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      INDEX idx_lead_id (lead_id),
-      INDEX idx_activity_type (activity_type)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  `);
-}
+import { ensureLeadSchema, getLeadAttachments, logLeadActivity } from '@/lib/leadService';
 
 function getAdminIdentifier(adminUser: any): string {
   return adminUser?.email || adminUser?.name || `admin:${adminUser?.userId || 'unknown'}`;
-}
-
-function normalizeAttachmentName(value: unknown): string | null {
-  if (typeof value === 'string') {
-    const trimmed = value.trim();
-    if (!trimmed) return null;
-
-    if (/^https?:\/\//i.test(trimmed)) {
-      return trimmed;
-    }
-
-    const withForwardSlashes = trimmed.replace(/\\/g, '/');
-    const uploadsSegmentIndex = withForwardSlashes.indexOf('/uploads/');
-    if (uploadsSegmentIndex >= 0) {
-      return withForwardSlashes.slice(uploadsSegmentIndex);
-    }
-
-    if (withForwardSlashes.startsWith('uploads/')) {
-      return `/${withForwardSlashes}`;
-    }
-
-    const normalized = trimmed.replace(/\\/g, '/');
-    const last = normalized.split('/').pop() || '';
-    return last || null;
-  }
-
-  if (value && typeof value === 'object') {
-    const candidate = (value as any).filename || (value as any).name || (value as any).fileName || (value as any).storedName;
-    return normalizeAttachmentName(candidate);
-  }
-
-  return null;
-}
-
-async function resolveLeadAttachments(leadId: string, rawAttachments: unknown): Promise<string[]> {
-  let attachments: string[] = [];
-
-  if (Array.isArray(rawAttachments)) {
-    attachments = rawAttachments
-      .map((item) => normalizeAttachmentName(item))
-      .filter((item): item is string => Boolean(item));
-  } else if (typeof rawAttachments === 'string' && rawAttachments.trim().length > 0) {
-    try {
-      const parsed = JSON.parse(rawAttachments);
-      if (Array.isArray(parsed)) {
-        attachments = parsed
-          .map((item) => normalizeAttachmentName(item))
-          .filter((item): item is string => Boolean(item));
-      } else {
-        const normalized = normalizeAttachmentName(parsed);
-        attachments = normalized ? [normalized] : [];
-      }
-    } catch {
-      const normalized = normalizeAttachmentName(rawAttachments);
-      attachments = normalized ? [normalized] : [];
-    }
-  }
-
-  attachments = Array.from(new Set(attachments));
-
-  // Fallback: recover from files on disk when DB metadata is missing.
-  if (attachments.length === 0) {
-    try {
-      const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
-      if (existsSync(leadDir)) {
-        const files = await readdir(leadDir);
-        attachments = files.filter((file) => !file.startsWith('.'));
-      }
-    } catch {
-      // Ignore fallback errors.
-    }
-  }
-
-  return attachments;
 }
 
 export async function GET(
@@ -109,6 +17,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    await ensureLeadSchema();
+
     const { id } = await context.params;
     const lead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
 
@@ -116,21 +26,15 @@ export async function GET(
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
 
-    lead.attachments = await resolveLeadAttachments(String(id), lead.attachments);
+    const attachments = await getLeadAttachments(Number(id));
 
-    // Backfill missing attachment metadata for future list/detail reliability.
-    if ((!lead.attachments || lead.attachments.length === 0) === false) {
-      try {
-        await query('UPDATE contact_leads SET attachments = ? WHERE id = ? AND (attachments IS NULL OR attachments = "" OR attachments = "[]")', [
-          JSON.stringify(lead.attachments),
-          id,
-        ]);
-      } catch {
-        // Non-blocking metadata sync.
-      }
-    }
-
-    return NextResponse.json({ lead });
+    return NextResponse.json({
+      lead: {
+        ...lead,
+        attachments: attachments.map((a) => a.stored_filename),
+        attachment_details: attachments,
+      },
+    });
   } catch (error) {
     console.error('Error fetching lead:', error);
     return NextResponse.json({ error: 'Failed to fetch lead' }, { status: 500 });
@@ -147,6 +51,8 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    await ensureLeadSchema();
+
     const { id } = await context.params;
     const body = await request.json();
     const {
@@ -161,7 +67,7 @@ export async function PUT(
       budget_range,
       timeframe,
       referral_source,
-      description
+      description,
     } = body;
 
     const oldLead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
@@ -169,7 +75,6 @@ export async function PUT(
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
 
-    // Build update query dynamically
     const updates: string[] = [];
     const params: any[] = [];
 
@@ -220,34 +125,37 @@ export async function PUT(
     if (description !== undefined) {
       updates.push('description = ?');
       params.push(description);
+      updates.push('message = ?');
+      params.push(description);
     }
 
     updates.push('last_contact_date = NOW()');
 
     if (updates.length > 0) {
       params.push(id);
-      await query(
-        `UPDATE contact_leads SET ${updates.join(', ')} WHERE id = ?`,
-        params
+      await query(`UPDATE contact_leads SET ${updates.join(', ')} WHERE id = ?`, params);
+    }
+
+    if (status && status !== oldLead.status) {
+      await logLeadActivity(
+        Number(id),
+        'status_change',
+        `Status changed from ${oldLead.status} to ${status}`,
+        undefined,
+        getAdminIdentifier(adminUser)
       );
     }
 
-    // Log activity if status changed
-    if (status && status !== oldLead.status) {
-      try {
-        await ensureLeadActivitiesTable();
-        await query(
-          'INSERT INTO lead_activities (lead_id, activity_type, description, created_by) VALUES (?, ?, ?, ?)',
-          [id, 'status_change', `Status changed from ${oldLead.status} to ${status}`, getAdminIdentifier(adminUser)]
-        );
-      } catch (activityError) {
-        console.error('Lead updated, but failed to log status activity:', activityError);
-      }
-    }
+    const updatedLead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
+    const attachments = await getLeadAttachments(Number(id));
 
-    const updatedLead = await queryOne('SELECT * FROM contact_leads WHERE id = ?', [id]);
-
-    return NextResponse.json({ lead: updatedLead });
+    return NextResponse.json({
+      lead: {
+        ...updatedLead,
+        attachments: attachments.map((a) => a.stored_filename),
+        attachment_details: attachments,
+      },
+    });
   } catch (error) {
     console.error('Error updating lead:', error);
     return NextResponse.json({ error: 'Failed to update lead' }, { status: 500 });
@@ -263,6 +171,8 @@ export async function DELETE(
     if (!adminUser) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await ensureLeadSchema();
 
     const { id } = await context.params;
     await query('DELETE FROM contact_leads WHERE id = ?', [id]);

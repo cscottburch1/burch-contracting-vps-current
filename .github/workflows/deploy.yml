@@ -28,6 +28,7 @@ jobs:
             git checkout main
             git pull origin main
             npm ci
+            npm run seo:validate-robots
             npm run indexnow:sync-key || true
             npm run build
             pm2 restart burch-contracting --update-env

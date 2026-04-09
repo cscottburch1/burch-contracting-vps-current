@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 interface EmailTemplate {
   id: number;
@@ -35,8 +36,7 @@ export default function NotificationsManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authError, setAuthError] = useState('');
+  const { authLoading, authError } = useAdminAuth();
 
   // Email form state
   const [emailForm, setEmailForm] = useState({
@@ -61,52 +61,22 @@ export default function NotificationsManagement() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    let mounted = true;
-
-    const checkAuth = async () => {
-      setAuthError('');
-      setIsLoading(true);
-      try {
-        const res = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!res.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-            setIsLoading(false);
-          }
-          router.push('/admin');
-          return;
-        }
-
-        if (mounted) {
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(error)
-              ? 'Session check timed out. Please refresh and try again.'
-              : 'Unable to verify admin session. Please refresh and try again.'
-          );
-          setIsLoading(false);
-        }
-      }
-    };
-
-    checkAuth();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadTemplates();
+    if (authLoading) {
+      return;
     }
-  }, [activeTab, isAuthenticated]);
+
+    if (authError) {
+      setIsLoading(false);
+      return;
+    }
+
+    void loadTemplates();
+  }, [activeTab, authLoading, authError]);
 
   const loadTemplates = async () => {
     setIsLoading(true);
+    setMessage('');
+
     try {
       if (activeTab === 'email') {
         const res = await fetchWithTimeout('/api/admin/email-templates', { cache: 'no-store' });
@@ -140,7 +110,7 @@ export default function NotificationsManagement() {
         ? `/api/admin/email-templates/${editingId}`
         : '/api/admin/email-templates';
       
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         method: editingId ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(emailForm)
@@ -155,7 +125,7 @@ export default function NotificationsManagement() {
         setMessage(error.error || 'Failed to save template');
       }
     } catch (error) {
-      setMessage('Error saving template');
+      setMessage(isAbortLikeError(error) ? 'Saving template timed out' : 'Error saving template');
     }
   };
 
@@ -172,7 +142,7 @@ export default function NotificationsManagement() {
         ? `/api/admin/sms-templates/${editingId}`
         : '/api/admin/sms-templates';
       
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         method: editingId ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(smsForm)
@@ -187,7 +157,7 @@ export default function NotificationsManagement() {
         setMessage(error.error || 'Failed to save template');
       }
     } catch (error) {
-      setMessage('Error saving template');
+      setMessage(isAbortLikeError(error) ? 'Saving template timed out' : 'Error saving template');
     }
   };
 
@@ -220,7 +190,7 @@ export default function NotificationsManagement() {
     if (!confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const res = await fetch(`/api/admin/email-templates/${id}`, {
+      const res = await fetchWithTimeout(`/api/admin/email-templates/${id}`, {
         method: 'DELETE'
       });
 
@@ -229,7 +199,7 @@ export default function NotificationsManagement() {
         loadTemplates();
       }
     } catch (error) {
-      setMessage('Error deleting template');
+      setMessage(isAbortLikeError(error) ? 'Deleting template timed out' : 'Error deleting template');
     }
   };
 
@@ -237,7 +207,7 @@ export default function NotificationsManagement() {
     if (!confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const res = await fetch(`/api/admin/sms-templates/${id}`, {
+      const res = await fetchWithTimeout(`/api/admin/sms-templates/${id}`, {
         method: 'DELETE'
       });
 
@@ -246,7 +216,7 @@ export default function NotificationsManagement() {
         loadTemplates();
       }
     } catch (error) {
-      setMessage('Error deleting template');
+      setMessage(isAbortLikeError(error) ? 'Deleting template timed out' : 'Error deleting template');
     }
   };
 
@@ -324,15 +294,34 @@ export default function NotificationsManagement() {
     }
   };
 
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="max-w-xl rounded-xl border border-red-200 bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Notifications tool unavailable</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => router.push('/admin')}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
-        {authError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-            {authError}
-          </div>
-        )}
-
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Notification Templates</h1>

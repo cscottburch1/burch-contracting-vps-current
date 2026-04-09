@@ -1,8 +1,33 @@
-import type { ServiceLandingPage, LocationPage } from "@/lib/seo/localSeoData";
+import type { LocationPage } from "@/lib/seo/localSeoData";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
 
-export function buildLocalBusinessSchema() {
-  return {
+type ServiceSchemaPage = {
+  slug: string;
+  serviceName: string;
+  city: string;
+  h1: string;
+  shortDescription: string;
+  path?: string;
+};
+
+type LocalBusinessSchemaOverrides = {
+  description?: string;
+  hasOfferCatalog?: {
+    "@type": "OfferCatalog";
+    name: string;
+    itemListElement: Array<{
+      "@type": "Offer";
+      itemOffered: {
+        "@type": "Service";
+        name: string;
+        description: string;
+      };
+    }>;
+  };
+};
+
+export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides = {}) {
+  const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": absoluteUrl('/#localbusiness'),
@@ -20,13 +45,13 @@ export function buildLocalBusinessSchema() {
     areaServed: [
       { "@type": "City", name: "Simpsonville SC" },
       { "@type": "City", name: "Fountain Inn SC" },
-      { "@type": "City", name: "Greenville SC" },
-      { "@type": "City", name: "Greer SC" },
-      { "@type": "City", name: "Five Forks SC" },
       { "@type": "City", name: "Mauldin SC" },
       { "@type": "City", name: "Gray Court SC" },
-      { "@type": "City", name: "Woodruff SC" },
       { "@type": "City", name: "Laurens SC" },
+      { "@type": "City", name: "Woodruff SC" },
+      { "@type": "City", name: "Clinton SC" },
+      { "@type": "City", name: "Ora SC" },
+      { "@type": "City", name: "Joanna SC" },
     ],
     sameAs: [
       "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875",
@@ -35,9 +60,26 @@ export function buildLocalBusinessSchema() {
     priceRange: "$$-$$$",
     openingHours: "Mo-Fr 08:00-17:00",
   };
+
+  if (overrides.description) {
+    return {
+      ...schema,
+      description: overrides.description,
+      ...(overrides.hasOfferCatalog ? { hasOfferCatalog: overrides.hasOfferCatalog } : {}),
+    };
+  }
+
+  if (overrides.hasOfferCatalog) {
+    return {
+      ...schema,
+      hasOfferCatalog: overrides.hasOfferCatalog,
+    };
+  }
+
+  return schema;
 }
 
-export function buildServiceSchema(page: ServiceLandingPage) {
+export function buildServiceSchema(page: ServiceSchemaPage) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -55,7 +97,7 @@ export function buildServiceSchema(page: ServiceLandingPage) {
     areaServed: page.city,
     name: page.h1,
     description: page.shortDescription,
-    url: absoluteUrl(`/locations/${page.slug}`),
+    url: absoluteUrl(page.path ?? `/locations/${page.slug}`),
   };
 }
 
@@ -127,5 +169,36 @@ export function buildArticleSchema(opts: { title: string; description: string; u
       },
     },
     mainEntityOfPage: opts.url,
+  };
+}
+
+export function buildContactPointSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    mainEntity: {
+      "@type": "Organization",
+      "@id": absoluteUrl('/#organization'),
+      name: siteConfig.siteName,
+      url: siteConfig.siteUrl,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: siteConfig.phoneDisplay,
+        areaServed: ["US-SC"],
+        availableLanguage: ["English"],
+      },
+      areaServed: [
+        { "@type": "City", name: "Simpsonville SC" },
+        { "@type": "City", name: "Fountain Inn SC" },
+        { "@type": "City", name: "Mauldin SC" },
+        { "@type": "City", name: "Gray Court SC" },
+        { "@type": "City", name: "Laurens SC" },
+        { "@type": "City", name: "Woodruff SC" },
+        { "@type": "City", name: "Clinton SC" },
+        { "@type": "City", name: "Ora SC" },
+        { "@type": "City", name: "Joanna SC" },
+      ],
+    },
   };
 }

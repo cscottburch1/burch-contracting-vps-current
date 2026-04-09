@@ -14,6 +14,7 @@ export default function AdminCRMPage() {
   const router = useRouter();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterPriority, setFilterPriority] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,6 +49,9 @@ export default function AdminCRMPage() {
   };
 
   const fetchLeads = async () => {
+    setLoading(true);
+    setErrorMessage('');
+
     try {
       const params = new URLSearchParams();
       if (filterStatus !== 'all') params.append('status', filterStatus);
@@ -61,6 +65,7 @@ export default function AdminCRMPage() {
       setLeads(data.leads || []);
     } catch (error) {
       console.error('Error fetching leads:', error);
+      setErrorMessage('Failed to load leads. Refresh the page or try again in a moment.');
     } finally {
       setLoading(false);
     }
@@ -75,6 +80,7 @@ export default function AdminCRMPage() {
       setStats(data.statistics);
     } catch (error) {
       console.error('Error fetching statistics:', error);
+      setStats(null);
     }
   };
 
@@ -171,10 +177,12 @@ export default function AdminCRMPage() {
     );
   }
 
-  const totalLeads = leads.length;
-  const totalValue = leads.reduce((sum, lead) => sum + (lead.estimated_value || 0), 0);
-  const newLeads = leads.filter(l => l.status === 'new').length;
-  const wonLeads = leads.filter(l => l.status === 'won').length;
+  const totalLeads = stats?.byStatus
+    ? stats.byStatus.reduce((sum: number, item: { count: number }) => sum + Number(item.count || 0), 0)
+    : leads.length;
+  const totalValue = Number(stats?.totalValue || leads.reduce((sum, lead) => sum + (lead.estimated_value || 0), 0));
+  const newLeads = Number(stats?.byStatus?.find((item: { status: string }) => item.status === 'new')?.count || leads.filter((lead) => lead.status === 'new').length);
+  const wonLeads = Number(stats?.byStatus?.find((item: { status: string }) => item.status === 'won')?.count || leads.filter((lead) => lead.status === 'won').length);
 
   return (
     <>
@@ -196,6 +204,12 @@ export default function AdminCRMPage() {
             Back to Dashboard
           </Button>
         </div>
+
+        {errorMessage ? (
+          <Card className="mb-6 border border-red-200 bg-red-50">
+            <p className="text-sm text-red-700">{errorMessage}</p>
+          </Card>
+        ) : null}
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -361,9 +375,9 @@ export default function AdminCRMPage() {
                           {lead.budget_range && (
                             <p className="text-xs text-gray-500 mt-1">{lead.budget_range}</p>
                           )}
-                          {Array.isArray(lead.attachments) && lead.attachments.length > 0 && (
+                          {Number(lead.attachment_count || 0) > 0 && (
                             <p className="text-xs text-blue-600 mt-1 font-medium">
-                              📎 {lead.attachments.length} attachment{lead.attachments.length === 1 ? '' : 's'}
+                              {lead.attachment_count} attachment{lead.attachment_count === 1 ? '' : 's'}
                             </p>
                           )}
                         </td>

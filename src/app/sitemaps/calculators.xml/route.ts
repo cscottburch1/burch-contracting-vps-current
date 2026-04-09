@@ -1,12 +1,13 @@
 import { trackedCalculatorPaths } from '@/lib/seo/searchConsoleTargets';
 import { absoluteUrl } from '@/lib/seo/site';
+import { getFileLastModified } from '@/lib/seo/lastModified';
 
 function escapeXml(value: string) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
 export async function GET() {
-  const lastmod = new Date().toISOString();
+  const lastmod = await getFileLastModified('src/lib/seo/searchConsoleTargets.ts');
   const urls = trackedCalculatorPaths
     .map((path) => {
       const loc = escapeXml(absoluteUrl(path));

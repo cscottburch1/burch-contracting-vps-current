@@ -27,6 +27,8 @@ interface ProjectCostCalculatorProps {
 
 type FinishLevel = 'value' | 'standard' | 'premium';
 
+const CONTRACTOR_MARKUP_RATE = 0.2;
+
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -47,11 +49,17 @@ export default function ProjectCostCalculator({
   const [finishLevel, setFinishLevel] = useState<FinishLevel>('standard');
 
   const estimate = useMemo(() => {
-    const value = selectedOption.lowRate * quantity;
-    const premium = selectedOption.highRate * quantity;
-    const standard = Math.round((value + premium) / 2);
+    const baseValue = selectedOption.lowRate * quantity;
+    const basePremium = selectedOption.highRate * quantity;
+    const baseStandard = Math.round((baseValue + basePremium) / 2);
+
+    const value = Math.round(baseValue * (1 + CONTRACTOR_MARKUP_RATE));
+    const premium = Math.round(basePremium * (1 + CONTRACTOR_MARKUP_RATE));
+    const standard = Math.round(baseStandard * (1 + CONTRACTOR_MARKUP_RATE));
 
     const total = finishLevel === 'value' ? value : finishLevel === 'premium' ? premium : standard;
+    const directCosts = Math.round(total / (1 + CONTRACTOR_MARKUP_RATE));
+    const contractorMarkup = total - directCosts;
     const labor = Math.round(total * 0.46);
     const materials = total - labor;
     const allowance = Math.round(total * 0.12);
@@ -61,6 +69,7 @@ export default function ProjectCostCalculator({
       standard,
       premium,
       total,
+      contractorMarkup,
       labor,
       materials,
       allowance,
@@ -79,7 +88,7 @@ export default function ProjectCostCalculator({
             <h1 className="mb-5 text-4xl font-bold leading-tight md:text-6xl">{title}</h1>
             <p className="max-w-2xl text-lg text-blue-100 md:text-xl">{intro}</p>
             <div className="mt-6 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-blue-50">
-              Built around {marketLabel} installed pricing, overhead, and contractor markup.
+              Built around {marketLabel} installed pricing, overhead, and a fixed 20% contractor markup.
             </div>
           </div>
         </div>
@@ -93,8 +102,9 @@ export default function ProjectCostCalculator({
               <div>
                 <h2 className="mb-2 text-lg font-bold text-amber-950">Budget Planning Disclaimer</h2>
                 <p className="text-sm leading-relaxed text-amber-900">
-                  This calculator is for planning only. Final pricing varies based on existing conditions, structural work,
-                  framing changes, plumbing or electrical upgrades, finish selections, permit requirements, and actual scope.
+                  This calculator is for planning only and includes a fixed 20% contractor markup in every estimate. Final
+                  pricing varies based on existing conditions, structural work, framing changes, plumbing or electrical
+                  upgrades, finish selections, permit requirements, and actual scope.
                   We recommend using this as a starting range, then scheduling a site visit for a written estimate.
                 </p>
               </div>
@@ -191,6 +201,10 @@ export default function ProjectCostCalculator({
                   <strong>{formatCurrency(estimate.materials)}</strong>
                 </div>
                 <div className="flex items-center justify-between">
+                  <span>Contractor markup (20%)</span>
+                  <strong>{formatCurrency(estimate.contractorMarkup)}</strong>
+                </div>
+                <div className="flex items-center justify-between">
                   <span>Recommended contingency</span>
                   <strong>{formatCurrency(estimate.allowance)}</strong>
                 </div>
@@ -199,8 +213,9 @@ export default function ProjectCostCalculator({
                   <strong>{formatCurrency(estimate.total)}</strong>
                 </div>
                 <p className="rounded-xl bg-gray-50 p-3 text-xs leading-relaxed text-gray-600">
-                  Planning range: {formatCurrency(estimate.value)} to {formatCurrency(estimate.premium)}.
-                  Final pricing will depend on site conditions, selected products, and scope confirmation.
+                  Planning range: {formatCurrency(estimate.value)} to {formatCurrency(estimate.premium)} (includes 20%
+                  contractor markup). Final pricing will depend on site conditions, selected products, and scope
+                  confirmation.
                 </p>
               </div>
 

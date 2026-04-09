@@ -1,55 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function FixProjectsPage() {
-  const router = useRouter();
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [authLoading, setAuthLoading] = useState(true);
-  const [authError, setAuthError] = useState('');
-
-  useEffect(() => {
-    let mounted = true;
-
-    const checkAuth = async () => {
-      setAuthLoading(true);
-      setAuthError('');
-
-      try {
-        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!authRes.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-          }
-          router.push('/admin');
-          return;
-        }
-      } catch (err) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(err)
-              ? 'Session check timed out. Please refresh and try again.'
-              : 'Unable to verify admin session. Please refresh and try again.'
-          );
-        }
-      } finally {
-        if (mounted) {
-          setAuthLoading(false);
-        }
-      }
-    };
-
-    checkAuth();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
+  const { authLoading, authError } = useAdminAuth();
 
   const handleBackupAndRecreate = async () => {
     if (!confirm('This will:\n1. Rename "projects" table to "projects_old_backup"\n2. Create new "projects" table with correct schema\n3. You can then delete test customers and start fresh\n\nContinue?')) {

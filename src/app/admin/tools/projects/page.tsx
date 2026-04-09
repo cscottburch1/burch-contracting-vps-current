@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 interface Project {
   id: number;
@@ -32,7 +33,7 @@ export default function ProjectsManagement() {
   const [showForm, setShowForm] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [message, setMessage] = useState('');
-  const [authError, setAuthError] = useState('');
+  const { authLoading, authError } = useAdminAuth();
 
   const [form, setForm] = useState({
     title: '',
@@ -52,48 +53,22 @@ export default function ProjectsManagement() {
   });
 
   useEffect(() => {
-    let mounted = true;
+    if (authLoading) {
+      return;
+    }
 
-    const initialize = async () => {
-      setAuthError('');
-      setIsLoading(true);
-      try {
-        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!authRes.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-            setIsLoading(false);
-          }
-          router.push('/admin');
-          return;
-        }
+    if (authError) {
+      setIsLoading(false);
+      return;
+    }
 
-        if (!mounted) {
-          return;
-        }
-
-        await loadProjects();
-      } catch (error) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(error)
-              ? 'Session check timed out. Please refresh and try again.'
-              : 'Unable to verify admin session. Please refresh and try again.'
-          );
-          setIsLoading(false);
-        }
-      }
-    };
-
-    initialize();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
+    void loadProjects();
+  }, [authLoading, authError]);
 
   const loadProjects = async () => {
     setIsLoading(true);
+    setMessage('');
+
     try {
       const res = await fetchWithTimeout('/api/admin/recent-projects', { cache: 'no-store' });
       if (res.ok) {
@@ -117,7 +92,7 @@ export default function ProjectsManagement() {
         ? `/api/admin/recent-projects/${editingId}`
         : '/api/admin/recent-projects';
       
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         method: editingId ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -132,7 +107,7 @@ export default function ProjectsManagement() {
         setMessage(error.error || 'Failed to save project');
       }
     } catch (error) {
-      setMessage('Error saving project');
+      setMessage(isAbortLikeError(error) ? 'Saving project timed out' : 'Error saving project');
     }
   };
 
@@ -161,7 +136,7 @@ export default function ProjectsManagement() {
     if (!confirm('Are you sure you want to delete this project?')) return;
 
     try {
-      const res = await fetch(`/api/admin/recent-projects/${id}`, {
+      const res = await fetchWithTimeout(`/api/admin/recent-projects/${id}`, {
         method: 'DELETE'
       });
 
@@ -170,7 +145,7 @@ export default function ProjectsManagement() {
         loadProjects();
       }
     } catch (error) {
-      setMessage('Error deleting project');
+      setMessage(isAbortLikeError(error) ? 'Deleting project timed out' : 'Error deleting project');
     }
   };
 
@@ -208,15 +183,34 @@ export default function ProjectsManagement() {
     }
   };
 
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="max-w-xl rounded-xl border border-red-200 bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Projects tool unavailable</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => router.push('/admin')}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
-        {authError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-            {authError}
-          </div>
-        )}
-
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Recent Projects Showcase</h1>

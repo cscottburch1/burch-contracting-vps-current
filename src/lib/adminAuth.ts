@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { query } from './mysql';
 import { AdminUser, AdminSession, AdminRole } from '@/types/admin';
 
-const COOKIE_NAME = 'admin_session';
+export const ADMIN_COOKIE_NAME = 'admin_session';
 
 function b64url(input: Buffer | string) {
   const buf = Buffer.isBuffer(input) ? input : Buffer.from(input);
@@ -118,7 +118,7 @@ export async function setAdminSessionCookie(user: AdminUser) {
   const cookieValue = createAdminCookie(session);
   const cookieStore = await cookies();
 
-  cookieStore.set(COOKIE_NAME, cookieValue, {
+  cookieStore.set(ADMIN_COOKIE_NAME, cookieValue, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -130,7 +130,7 @@ export async function setAdminSessionCookie(user: AdminUser) {
 // Clear admin session cookie
 export async function clearAdminSessionCookie() {
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, '', {
+  cookieStore.set(ADMIN_COOKIE_NAME, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -155,14 +155,14 @@ export async function verifyAdminAuth(request: Request): Promise<AdminSession | 
     return acc;
   }, {} as Record<string, string>);
 
-  const sessionCookie = cookies[COOKIE_NAME];
+  const sessionCookie = cookies[ADMIN_COOKIE_NAME];
   return verifyAdminCookie(sessionCookie);
 }
 
 // Get current admin user from session
 export async function getCurrentAdminUser(): Promise<AdminUser | null> {
   const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get(COOKIE_NAME)?.value;
+  const sessionCookie = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
   const session = verifyAdminCookie(sessionCookie);
   
   if (!session) return null;

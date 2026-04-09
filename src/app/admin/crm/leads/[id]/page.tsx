@@ -252,6 +252,14 @@ export default function LeadDetailPage() {
     }).format(value);
   };
 
+  const formatFileSize = (bytes?: number) => {
+    if (!bytes || bytes <= 0) return 'Unknown size';
+
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   if (!authenticated || loading || !lead) {
     return (
       <Section padding="lg">
@@ -609,30 +617,34 @@ export default function LeadDetailPage() {
             </Card>
 
             {/* Attachments Section */}
-            {lead.attachments && lead.attachments.length > 0 && (
+            {lead.attachment_details && lead.attachment_details.length > 0 && (
               <Card>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Attachments ({lead.attachments.length})
+                  Attachments ({lead.attachment_details.length})
                 </h3>
                 <div className="space-y-2">
-                  {lead.attachments.map((filename, index) => {
-                    const isExternal = /^https?:\/\//i.test(filename);
+                  {lead.attachment_details.map((attachment) => {
+                    const filename = attachment.stored_filename;
+                    const isExternal = /^https?:\/\//i.test(attachment.file_path);
                     const normalizedFilename = filename.split('/').pop() || filename;
                     const fileUrl = isExternal
-                      ? filename
+                      ? attachment.file_path
                       : `/api/crm/leads/${lead.id}/attachments/${encodeURIComponent(normalizedFilename)}`;
                     const downloadUrl = isExternal ? fileUrl : `${fileUrl}?download=1`;
-                    const urlPath = normalizedFilename;
+                    const urlPath = attachment.original_filename || normalizedFilename;
                     const ext = urlPath.split('.').pop()?.toLowerCase() || '';
                     const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
-                    const displayName = normalizedFilename.replace(/^\d+_/, ''); // strip leading timestamp
+                    const displayName = attachment.original_filename || normalizedFilename;
                     return (
-                      <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                      <div key={attachment.id} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
                         <div className="flex-shrink-0 text-2xl">
                           {isImage ? '🖼️' : ext === 'pdf' ? '📄' : '📎'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
+                          <p className="text-xs text-gray-500">
+                            {attachment.mime_type} • {formatFileSize(attachment.file_size)} • Uploaded {formatDate(attachment.uploaded_at)}
+                          </p>
                           {isImage && (
                             <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
                               View image

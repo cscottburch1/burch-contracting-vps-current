@@ -2,70 +2,91 @@ import { MetadataRoute } from 'next';
 import { blogPosts, serviceLandingPages } from '@/lib/seo/localSeoData';
 import { costLandingPages } from '@/lib/seo/costSeoData';
 import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { localDominancePages, serviceHubPages } from '@/lib/seo/localDominanceData';
+import { homeRenovationsHub, renovationCityPages, renovationServicePages } from '@/lib/seo/renovationSeoData';
+import { getFileLastModified } from '@/lib/seo/lastModified';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://burchcontracting.com';
-  const currentDate = new Date().toISOString();
+  const [
+    appLastModified,
+    localSeoLastModified,
+    renovationSeoLastModified,
+    costSeoLastModified,
+    projectSeoLastModified,
+  ] = await Promise.all([
+    getFileLastModified('src/app/page.tsx'),
+    getFileLastModified('src/lib/seo/localDominanceData.ts'),
+    getFileLastModified('src/lib/seo/renovationSeoData.ts'),
+    getFileLastModified('src/lib/seo/costSeoData.ts'),
+    getFileLastModified('src/lib/seo/projectSpotlightsData.ts'),
+  ]);
   
   // Main pages
   const staticRoutes = [
     {
       url: baseUrl,
-      lastModified: currentDate,
+      lastModified: appLastModified,
       changeFrequency: 'weekly' as const,
       priority: 1.0,
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: currentDate,
+      lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.9,
     },
     {
+      url: `${baseUrl}${homeRenovationsHub.path}`,
+      lastModified: renovationSeoLastModified,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/contact`,
-      lastModified: currentDate,
+      lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/locations`,
-      lastModified: currentDate,
+      lastModified: localSeoLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.85,
     },
     {
       url: `${baseUrl}/cost`,
-      lastModified: currentDate,
+      lastModified: costSeoLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.83,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: currentDate,
+      lastModified: localSeoLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: currentDate,
+      lastModified: projectSeoLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/employment`,
-      lastModified: currentDate,
+      lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.75,
     },
     {
       url: `${baseUrl}/employment/direct-hire`,
-      lastModified: currentDate,
+      lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
   ];
 
-  // Service pages - all your service offerings
+  // Existing service pages and new SEO-first service hubs
   const services = [
     'handyman',
     'remodeling',
@@ -75,9 +96,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const serviceRoutes = services.map(service => ({
     url: `${baseUrl}/services/${service}`,
-    lastModified: currentDate,
+    lastModified: appLastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.9,
+  }));
+
+  const serviceHubRoutes = serviceHubPages.map((page) => ({
+    url: `${baseUrl}${page.path}`,
+    lastModified: localSeoLastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.92,
+  }));
+
+  const renovationServiceRoutes = renovationServicePages.map((page) => ({
+    url: `${baseUrl}${page.path}`,
+    lastModified: renovationSeoLastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.91,
   }));
 
   // Calculators
@@ -94,7 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const calculatorRoutes = calculators.map(calc => ({
     url: `${baseUrl}/calculator/${calc}`,
-    lastModified: currentDate,
+    lastModified: appLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -114,38 +149,67 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const areaRoutes = serviceAreas.map(area => ({
     url: `${baseUrl}/service-areas/${area}`,
-    lastModified: currentDate,
+    lastModified: localSeoLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
 
   const localServiceRoutes = serviceLandingPages.map((page) => ({
     url: `${baseUrl}/locations/${page.slug}`,
-    lastModified: currentDate,
+    lastModified: localSeoLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.85,
   }));
 
+  const localDominanceRoutes = localDominancePages.map((page) => ({
+    url: `${baseUrl}${page.path}`,
+    lastModified: localSeoLastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.88,
+  }));
+
+  const renovationCityRoutes = renovationCityPages.map((page) => ({
+    url: `${baseUrl}${page.path}`,
+    lastModified: renovationSeoLastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.87,
+  }));
+
   const costRoutes = costLandingPages.map((page) => ({
     url: `${baseUrl}/cost/${page.slug}`,
-    lastModified: currentDate,
+    lastModified: costSeoLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.82,
   }));
 
   const blogRoutes = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: currentDate,
+    lastModified: localSeoLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.74,
   }));
 
   const projectRoutes = projectSpotlights.map((project) => ({
     url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: currentDate,
+    lastModified: projectSeoLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.76,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...calculatorRoutes, ...areaRoutes, ...localServiceRoutes, ...costRoutes, ...blogRoutes, ...projectRoutes];
+  const routes = [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...serviceHubRoutes,
+    ...renovationServiceRoutes,
+    ...calculatorRoutes,
+    ...areaRoutes,
+    ...localServiceRoutes,
+    ...localDominanceRoutes,
+    ...renovationCityRoutes,
+    ...costRoutes,
+    ...blogRoutes,
+    ...projectRoutes,
+  ];
+
+  return routes.filter((route, index, self) => self.findIndex((item) => item.url === route.url) === index);
 }

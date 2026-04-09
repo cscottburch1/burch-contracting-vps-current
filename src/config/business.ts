@@ -33,8 +33,8 @@ export const businessConfig = {
   },
 
   serviceArea: {
-    description: "Proudly serving Simpsonville and the Upstate SC community",
-    locations: ["Simpsonville", "Fountain Inn", "Gray Court", "Woodruff", "Laurens", "Greenville", "Mauldin", "Five Forks"]
+    description: "Proudly serving Simpsonville and surrounding Upstate SC communities",
+    locations: ["Simpsonville", "Fountain Inn", "Mauldin", "Gray Court", "Laurens", "Woodruff", "Clinton", "Ora", "Joanna"]
   },
 
   services: [

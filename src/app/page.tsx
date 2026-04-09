@@ -12,18 +12,19 @@ import DynamicBanners from '@/components/EmergencyBanner';
 import RecentProjectsSSR from '@/components/RecentProjectsSSR';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import type { Metadata } from 'next';
-import { serviceLandingPages } from '@/lib/seo/localSeoData';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildLocalBusinessSchema } from '@/lib/seo/schema';
+import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
-  title: 'Remodeling Contractor Across Upstate South Carolina',
+  title: 'Garage Builders, Room Additions, Screened Porches, Decks & ADUs in Upstate South Carolina',
   description:
-    'Kitchen remodeling, bathroom remodeling, room additions, decks, screened porches, basement finishing, and general contracting for Upstate South Carolina homeowners.',
+    'Garage construction, room additions, aluminum screened porches, deck building, and ADU planning for Upstate South Carolina homeowners.',
   alternates: { canonical: absoluteUrl('/') },
   openGraph: {
-    title: 'Burch Contracting | Remodeling Contractor Across Upstate South Carolina',
+    title: 'Burch Contracting | Garage Builders, Room Additions, Screened Porches, Decks & ADUs',
     description:
-      'Request a free estimate for kitchen remodeling, bathroom remodeling, basement finishing, decks, screened porches, and room additions.',
+      'Request a free estimate for garage construction, room additions, screened porches, deck building, and ADU projects across the Upstate.',
     url: absoluteUrl('/'),
   },
 };
@@ -35,140 +36,56 @@ export default async function HomePage() {
     ? dbServices.map(mapToBusinessConfigFormat)
     : businessConfig.services;
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Burch Contracting",
-    "image": "https://burchcontracting.com/og-image.jpg",
-    "@id": "https://burchcontracting.com",
-    "url": "https://burchcontracting.com",
-    "telephone": "(864) 724-4600",
-    "email": "estimates@burchcontracting.com",
-    "priceRange": "$$-$$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Simpsonville",
-      "addressRegion": "SC",
-      "postalCode": "29681",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 34.7371,
-      "longitude": -82.2543
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday"
+  const structuredData = buildLocalBusinessSchema({
+    description:
+      'Trusted Upstate South Carolina contractor for garage construction, room additions, screened porches, deck building, and ADU planning. Licensed, insured, BBB A+ rated, and focused on clear estimates.',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Home Improvement Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Garage Construction',
+            description: 'Custom attached and detached garage construction with clear planning and pricing',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Room Additions',
+            description: 'Bedroom, family room, and flex-space additions built for long-term value',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Screened Porches',
+            description: 'Low-maintenance aluminum screened porch construction for Upstate homes',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Deck Building',
+            description: 'Custom wood and composite deck construction with code-ready details',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'ADU Construction',
+            description: 'Accessory dwelling units, guest houses, and granny pods for multigenerational living',
+          },
+        },
       ],
-      "opens": "08:00",
-      "closes": "17:00"
     },
-    "sameAs": [
-      "https://www.facebook.com/burchcontracting",
-      "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
-      "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875"
-    ],
-    "description": "#1 rated general contractor in Simpsonville, SC specializing in kitchen & bathroom remodeling, handyman services, decks, porches, and basement finishing. Licensed, insured, BBB A+ rated with 30+ years serving the Upstate SC region - Greenville County and Laurens County.",
-    "areaServed": [
-      {
-        "@type": "City",
-        "name": "Simpsonville",
-        "@id": "https://en.wikipedia.org/wiki/Simpsonville,_South_Carolina"
-      },
-      {
-        "@type": "City",
-        "name": "Fountain Inn"
-      },
-      {
-        "@type": "City",
-        "name": "Gray Court"
-      },
-      {
-        "@type": "City",
-        "name": "Woodruff"
-      },
-      {
-        "@type": "City",
-        "name": "Five Forks"
-      },
-      {
-        "@type": "City",
-        "name": "Mauldin"
-      },
-      {
-        "@type": "City",
-        "name": "Greenville"
-      },
-      {
-        "@type": "City",
-        "name": "Laurens"
-      },
-      {
-        "@type": "City",
-        "name": "Greer"
-      }
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Home Improvement Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Kitchen Remodeling",
-            "description": "Complete kitchen renovations with custom cabinets, countertops, tile, and fixtures"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Bathroom Remodeling",
-            "description": "Full bathroom renovations including vanities, tile, showers, and fixtures"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Handyman Services",
-            "description": "Same-day handyman repairs, installations, and home maintenance"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Deck Construction",
-            "description": "Custom deck building with composite or wood materials"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Screened Porches",
-            "description": "Custom screened porch construction and installation"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Basement Finishing",
-            "description": "Complete basement remodeling and finishing services"
-          }
-        }
-      ]
-    }
-  };
+  });
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -179,7 +96,7 @@ export default async function HomePage() {
         "name": "What areas does Burch Contracting serve in South Carolina?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We proudly serve Simpsonville, Fountain Inn, Gray Court, Woodruff, Five Forks, Mauldin, Greenville, and Laurens throughout the Upstate SC region - Greenville County and Laurens County, South Carolina."
+          "text": "We proudly serve Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna throughout the Upstate SC region."
         }
       },
       {
@@ -195,7 +112,7 @@ export default async function HomePage() {
         "name": "What types of home improvement services do you offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We specialize in kitchen and bathroom remodeling, handyman services, deck and porch construction, screened porches, basement finishing, room additions, and general home repairs. We handle both residential and light commercial projects."
+          "text": "We specialize in garage construction, room additions, aluminum screened porches, deck building, and ADU or guest house planning for Upstate South Carolina homeowners."
         }
       },
       {
@@ -225,7 +142,7 @@ export default async function HomePage() {
     ]
   };
 
-  const featuredLocalPages = serviceLandingPages.slice(0, 10);
+  const featuredLocalPages = localDominancePages.slice(0, 10);
   const calculatorCards = [
     { title: 'Kitchen Remodel Budget', href: '/calculator/kitchen-remodeling', icon: 'ChefHat' as const, text: 'Compare refresh, full remodel, and custom kitchen pricing.' },
     { title: 'Bathroom Remodel Budget', href: '/calculator/bathroom-remodeling', icon: 'Bath' as const, text: 'Estimate guest bath, primary bath, and premium shower ranges.' },
@@ -259,12 +176,14 @@ export default async function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
-              <span className="block">Kitchen, Bath, Addition</span>
-              <span className="block gradient-text">and Basement Remodeling Built Right</span>
+            <h1
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up"
+              aria-label="Garage Builders, Room Additions, Screened Porches, Decks, and ADUs Built Right"
+            >
+              Garage Builders, Room Additions, <span className="gradient-text">Screened Porches, Decks, and ADUs Built Right</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed animate-fade-in-up stagger-1 opacity-0">
-              Serving Simpsonville, Fountain Inn, Greenville County, and Laurens County with stronger planning, cleaner communication, and dependable craftsmanship from estimate through final walkthrough.
+              Serving Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna with clear estimates, better planning, and dependable craftsmanship.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-16 animate-fade-in-up stagger-2 opacity-0">
@@ -314,10 +233,10 @@ export default async function HomePage() {
             {featuredLocalPages.slice(0, 4).map((page) => (
               <a
                 key={page.slug}
-                href={`/locations/${page.slug}`}
+                href={page.path}
                 className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition hover:border-cyan-300 hover:bg-white/10"
               >
-                <div className="text-sm uppercase tracking-wide text-cyan-200">{page.city}</div>
+                <div className="text-sm uppercase tracking-wide text-cyan-200">{page.city?.displayName ?? 'Upstate SC'}</div>
                 <div className="mt-1 font-semibold text-white">{page.h1}</div>
               </a>
             ))}
@@ -382,10 +301,10 @@ export default async function HomePage() {
         <div className="mb-16 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {featuredLocalPages.map((page) => (
             <Card key={page.slug} className="h-full">
-              <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city}</div>
+              <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-blue-700">{page.city?.displayName ?? 'Upstate SC'}</div>
               <h3 className="mb-3 text-2xl font-bold text-gray-900">{page.h1}</h3>
               <p className="mb-5 text-gray-600">{page.shortDescription}</p>
-              <Button href={`/locations/${page.slug}`}>View Local Guide</Button>
+              <Button href={page.path}>View Local Guide</Button>
             </Card>
           ))}
         </div>

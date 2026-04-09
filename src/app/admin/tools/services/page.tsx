@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 interface Service {
   id: number;
@@ -44,50 +45,25 @@ export default function ServiceManagementPage() {
     menu_label: '',
   });
   const [deleting, setDeleting] = useState<number | null>(null);
-  const [authError, setAuthError] = useState('');
+  const { authLoading, authError } = useAdminAuth();
 
   useEffect(() => {
-    let mounted = true;
+    if (authLoading) {
+      return;
+    }
 
-    const initialize = async () => {
-      setAuthError('');
-      setLoading(true);
-      try {
-        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!authRes.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-            setLoading(false);
-          }
-          router.push('/admin');
-          return;
-        }
+    if (authError) {
+      setLoading(false);
+      return;
+    }
 
-        if (!mounted) {
-          return;
-        }
-
-        await loadServices();
-      } catch (error) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(error)
-              ? 'Session check timed out. Please refresh and try again.'
-              : 'Unable to verify admin session. Please refresh and try again.'
-          );
-          setLoading(false);
-        }
-      }
-    };
-
-    initialize();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
+    void loadServices();
+  }, [authLoading, authError]);
 
   const loadServices = async () => {
+    setLoading(true);
+    setError('');
+
     try {
       const res = await fetchWithTimeout('/api/admin/services', { cache: 'no-store' });
       if (res.ok) {
@@ -259,16 +235,33 @@ export default function ServiceManagementPage() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {authError && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
-            {authError}
+  if (authError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
+        <div className="max-w-xl rounded-xl border border-red-200 bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Services tool unavailable</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => router.push('/admin')}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    );
+  }
 
+  return (
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -330,7 +323,19 @@ export default function ServiceManagementPage() {
 
         {/* Services Grid */}
         <div className="grid gap-6">
-          {services.map((service) => {
+          {services.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-gray-300 bg-white p-10 text-center">
+              <h2 className="text-lg font-semibold text-gray-900">No services found</h2>
+              <p className="mt-2 text-sm text-gray-600">Create your first service to start managing visibility and content.</p>
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+              >
+                Create Service
+              </button>
+            </div>
+          ) : (
+            services.map((service) => {
             const isEditing = editingService === service.id;
             
             return (
@@ -709,7 +714,8 @@ export default function ServiceManagementPage() {
                 </div>
               </div>
             );
-          })}
+          })
+          )}
         </div>
 
         {services.length === 0 && (

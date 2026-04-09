@@ -7,6 +7,8 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
+import Script from 'next/script';
+import { buildContactPointSchema } from '@/lib/seo/schema';
 
 type GrecaptchaApi = {
   execute: (siteKey: string, options: { action: string }) => Promise<string>;
@@ -35,6 +37,8 @@ interface FormErrors {
 }
 
 export default function ContactPage() {
+  const contactSchema = buildContactPointSchema();
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -319,6 +323,12 @@ export default function ContactPage() {
 
   return (
     <>
+      <Script
+        id="contact-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

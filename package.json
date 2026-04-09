@@ -9,6 +9,7 @@
     "lint": "eslint",
     "verify:production": "node ./scripts/deploy/production-smoke.mjs",
     "import-queued": "node ./scripts/import_queued_subcontractors.js",
+    "seo:validate-robots": "node ./scripts/seo/validate-robots-sitemaps.mjs",
     "indexnow:sync-key": "node ./scripts/seo/write-indexnow-key.mjs",
     "indexnow:ping": "node ./scripts/seo/indexnow-ping.mjs"
   },

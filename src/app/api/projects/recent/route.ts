@@ -1,5 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/mysql';
+import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+
+function buildFallbackProjects(category: string | null) {
+  const mapped = projectSpotlights
+    .filter((item) => item.representative)
+    .map((item, index) => ({
+      id: index + 1,
+      title: item.title,
+      category:
+        item.serviceType.toLowerCase().includes('kitchen') || item.serviceType.toLowerCase().includes('bathroom')
+          ? 'remodeling'
+          : item.serviceType.toLowerCase().includes('deck') || item.serviceType.toLowerCase().includes('porch')
+          ? 'additions'
+          : 'handyman',
+      short_description: item.summary,
+      description: item.summary,
+      image_url: item.image,
+      before_image: null,
+      after_image: null,
+      completion_date: null,
+      project_duration: item.timeline,
+      location: item.city,
+      budget_range: item.budgetBand,
+      featured: true,
+      fallback: true,
+    }));
+
+  if (!category) return mapped;
+  return mapped.filter((item) => item.category === category);
+}
 
 // GET - List all active recent projects (public endpoint)
 export async function GET(request: NextRequest) {
@@ -29,6 +59,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(projects);
   } catch (error: any) {
     console.error('Error fetching recent projects:', error);
-    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    const fallbackProjects = buildFallbackProjects(category);
+    return NextResponse.json(fallbackProjects, {
+      status: 200,
+      headers: { 'x-projects-fallback': '1' },
+    });
   }
 }

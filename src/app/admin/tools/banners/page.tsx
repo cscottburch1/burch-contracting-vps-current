@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import { fetchWithTimeout, isAbortLikeError } from '@/lib/fetchWithTimeout';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 interface Banner {
   id: number;
@@ -28,7 +30,7 @@ export default function BannersManagement() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [authError, setAuthError] = useState('');
+  const { authLoading, authError } = useAdminAuth();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -57,47 +59,22 @@ export default function BannersManagement() {
   const iconOptions = ['AlertCircle', 'Info', 'Bell', 'Star', 'Gift', 'Zap', 'TrendingUp', 'Calendar'];
 
   useEffect(() => {
-    let mounted = true;
+    if (authLoading) {
+      return;
+    }
 
-    const initialize = async () => {
-      setAuthError('');
-      setLoading(true);
-      try {
-        const authRes = await fetchWithTimeout('/api/admin/me', { cache: 'no-store' });
-        if (!authRes.ok) {
-          if (mounted) {
-            setAuthError('Your admin session has expired. Redirecting to login...');
-            setLoading(false);
-          }
-          router.push('/admin');
-          return;
-        }
+    if (authError) {
+      setLoading(false);
+      return;
+    }
 
-        if (!mounted) {
-          return;
-        }
-
-        await loadBanners();
-      } catch (error) {
-        if (mounted) {
-          setAuthError(
-            isAbortLikeError(error)
-              ? 'Session check timed out. Please refresh and try again.'
-              : 'Unable to verify admin session. Please refresh and try again.'
-          );
-          setLoading(false);
-        }
-      }
-    };
-
-    initialize();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
+    void loadBanners();
+  }, [authLoading, authError]);
 
   const loadBanners = async () => {
+    setLoading(true);
+    setError('');
+
     try {
       const res = await fetchWithTimeout('/api/admin/banners', { cache: 'no-store' });
       if (res.ok) {
@@ -139,7 +116,7 @@ export default function BannersManagement() {
       const url = editingId ? `/api/admin/banners/${editingId}` : '/api/admin/banners';
       const method = editingId ? 'PATCH' : 'POST';
 
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -154,7 +131,7 @@ export default function BannersManagement() {
         setError('Failed to save banner');
       }
     } catch (err) {
-      setError('Failed to save banner');
+      setError(isAbortLikeError(err) ? 'Saving banner timed out' : 'Failed to save banner');
     }
   };
 
@@ -180,7 +157,7 @@ export default function BannersManagement() {
     if (!confirm('Are you sure you want to delete this banner?')) return;
 
     try {
-      const res = await fetch(`/api/admin/banners/${id}`, { method: 'DELETE' });
+      const res = await fetchWithTimeout(`/api/admin/banners/${id}`, { method: 'DELETE' });
       if (res.ok) {
         setSuccess('Banner deleted!');
         loadBanners();
@@ -189,13 +166,13 @@ export default function BannersManagement() {
         setError('Failed to delete banner');
       }
     } catch (err) {
-      setError('Failed to delete banner');
+      setError(isAbortLikeError(err) ? 'Deleting banner timed out' : 'Failed to delete banner');
     }
   };
 
   const toggleActive = async (banner: Banner) => {
     try {
-      const res = await fetch(`/api/admin/banners/${banner.id}`, {
+      const res = await fetchWithTimeout(`/api/admin/banners/${banner.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ is_active: !banner.is_active }),
@@ -205,7 +182,7 @@ export default function BannersManagement() {
         loadBanners();
       }
     } catch (err) {
-      setError('Failed to toggle banner');
+      setError(isAbortLikeError(err) ? 'Updating banner timed out' : 'Failed to toggle banner');
     }
   };
 
@@ -217,15 +194,34 @@ export default function BannersManagement() {
     );
   }
 
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="max-w-xl rounded-xl border border-red-200 bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-900">Banners tool unavailable</h1>
+          <p className="mt-2 text-gray-700">{authError}</p>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Retry
+            </button>
+            <button
+              onClick={() => router.push('/admin')}
+              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Back to Login
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        {authError && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-            {authError}
-          </div>
-        )}
-
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="flex justify-between items-center mb-8">
             <div>
@@ -239,9 +235,9 @@ export default function BannersManagement() {
               >
                 {showForm ? 'Cancel' : '+ Add Banner'}
               </button>
-              <a href="/admin/tools" className="text-blue-600 hover:underline self-center">
+              <Link href="/admin/tools" className="text-blue-600 hover:underline self-center">
                 ← Back to Tools
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -399,99 +395,100 @@ export default function BannersManagement() {
           )}
 
           <div className="space-y-4">
-            {banners.map((banner) => (
-              <div key={banner.id} className="border rounded-lg p-6 hover:shadow-md transition">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold">{banner.title}</h3>
-                      {banner.is_active ? (
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
-                          Active
-                        </span>
-                      ) : (
-                        <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-semibold">
-                          Inactive
-                        </span>
-                      )}
-                      <span className="text-sm text-gray-500">Order: {banner.display_order}</span>
-                    </div>
-                    <p className="text-gray-600 mb-2">{banner.message}</p>
-                    {banner.button_text && (
-                      <p className="text-sm text-blue-600">Button: {banner.button_text} → {banner.button_link}</p>
-                    )}
-                    {(banner.start_date || banner.end_date) && (
-                      <p className="text-xs text-gray-500 mt-2">
-                        {banner.start_date && `From: ${new Date(banner.start_date).toLocaleString()}`}
-                        {banner.start_date && banner.end_date && ' | '}
-                        {banner.end_date && `To: ${new Date(banner.end_date).toLocaleString()}`}
-                      </p>
-                    )}
-                  </div>
-                  
-                  <div className="flex gap-2 ml-4">
-                    <button
-                      onClick={() => toggleActive(banner)}
-                      className={`px-4 py-2 rounded-lg font-semibold transition ${
-                        banner.is_active
-                          ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          : 'bg-green-600 text-white hover:bg-green-700'
-                      }`}
-                    >
-                      {banner.is_active ? 'Deactivate' : 'Activate'}
-                    </button>
-                    <button
-                      onClick={() => handleEdit(banner)}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(banner.id)}
-                      className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-
-                {/* Preview */}
-                <div className="mt-4">
-                  <p className="text-sm font-semibold text-gray-600 mb-2">Preview:</p>
-                  <div className={`bg-gradient-to-r ${banner.bg_color} text-${banner.text_color} p-4 rounded-lg`}>
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
-                        {banner.icon && (
-                          <div className="bg-white/20 rounded-full p-2">
-                            <Icon name={banner.icon as any} size={20} />
-                          </div>
-                        )}
-                        <div>
-                          <p className="font-bold">{banner.title}</p>
-                          <p className="text-sm opacity-90">{banner.message}</p>
-                        </div>
-                      </div>
-                      {banner.button_text && (
-                        <div className="bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold text-sm">
-                          {banner.button_text}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {banners.length === 0 && !showForm && (
-              <div className="text-center py-12 text-gray-500">
-                <p className="text-xl mb-4">No banners yet</p>
+            {banners.length === 0 ? (
+              <div className="rounded-lg border border-dashed border-gray-300 bg-white p-10 text-center">
+                <h2 className="text-lg font-semibold text-gray-900">No banners found</h2>
+                <p className="mt-2 text-sm text-gray-600">Create a banner to publish announcements and promotions.</p>
                 <button
                   onClick={() => setShowForm(true)}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
+                  className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
                 >
-                  Create Your First Banner
+                  Create Banner
                 </button>
               </div>
+            ) : (
+              banners.map((banner) => (
+                <div key={banner.id} className="border rounded-lg p-6 hover:shadow-md transition">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-xl font-bold">{banner.title}</h3>
+                        {banner.is_active ? (
+                          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                            Active
+                          </span>
+                        ) : (
+                          <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-semibold">
+                            Inactive
+                          </span>
+                        )}
+                        <span className="text-sm text-gray-500">Order: {banner.display_order}</span>
+                      </div>
+                      <p className="text-gray-600 mb-2">{banner.message}</p>
+                      {banner.button_text && (
+                        <p className="text-sm text-blue-600">Button: {banner.button_text} → {banner.button_link}</p>
+                      )}
+                      {(banner.start_date || banner.end_date) && (
+                        <p className="text-xs text-gray-500 mt-2">
+                          {banner.start_date && `From: ${new Date(banner.start_date).toLocaleString()}`}
+                          {banner.start_date && banner.end_date && ' | '}
+                          {banner.end_date && `To: ${new Date(banner.end_date).toLocaleString()}`}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex gap-2 ml-4">
+                      <button
+                        onClick={() => toggleActive(banner)}
+                        className={`px-4 py-2 rounded-lg font-semibold transition ${
+                          banner.is_active
+                            ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            : 'bg-green-600 text-white hover:bg-green-700'
+                        }`}
+                      >
+                        {banner.is_active ? 'Deactivate' : 'Activate'}
+                      </button>
+                      <button
+                        onClick={() => handleEdit(banner)}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(banner.id)}
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Preview */}
+                  <div className="mt-4">
+                    <p className="text-sm font-semibold text-gray-600 mb-2">Preview:</p>
+                    <div className={`bg-gradient-to-r ${banner.bg_color} text-${banner.text_color} p-4 rounded-lg`}>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          {banner.icon && (
+                            <div className="bg-white/20 rounded-full p-2">
+                              <Icon name={banner.icon as any} size={20} />
+                            </div>
+                          )}
+                          <div>
+                            <p className="font-bold">{banner.title}</p>
+                            <p className="text-sm opacity-90">{banner.message}</p>
+                          </div>
+                        </div>
+                        {banner.button_text && (
+                          <div className="bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold text-sm">
+                            {banner.button_text}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
             )}
           </div>
         </div>

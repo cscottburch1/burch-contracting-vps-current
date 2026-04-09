@@ -1,16 +1,24 @@
 import { trackedBlogPaths, trackedProjectPaths } from '@/lib/seo/searchConsoleTargets';
 import { absoluteUrl } from '@/lib/seo/site';
+import { getFileLastModified } from '@/lib/seo/lastModified';
 
 function escapeXml(value: string) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
 export async function GET() {
-  const lastmod = new Date().toISOString();
-  const urls = [...trackedBlogPaths, ...trackedProjectPaths]
-    .map((path) => {
-      const loc = escapeXml(absoluteUrl(path));
-      return `<url><loc>${loc}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.78</priority></url>`;
+  const [blogLastmod, projectLastmod] = await Promise.all([
+    getFileLastModified('src/lib/seo/localSeoData.ts'),
+    getFileLastModified('src/lib/seo/projectSpotlightsData.ts'),
+  ]);
+
+  const urls = [
+    ...trackedBlogPaths.map((path) => ({ path, lastmod: blogLastmod })),
+    ...trackedProjectPaths.map((path) => ({ path, lastmod: projectLastmod })),
+  ]
+    .map((entry) => {
+      const loc = escapeXml(absoluteUrl(entry.path));
+      return `<url><loc>${loc}</loc><lastmod>${entry.lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.78</priority></url>`;
     })
     .join('');
 
