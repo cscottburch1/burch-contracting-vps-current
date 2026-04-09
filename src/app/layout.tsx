@@ -4,19 +4,16 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Script from "next/script";
-import dynamic from 'next/dynamic';
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
+import DeferredMobileStickyCta from '@/components/DeferredMobileStickyCta';
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
-
-// Dynamic import for non-critical interactive components
-const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'));
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   display: 'swap',
-  preload: true,
+  preload: false,
   weight: ['400', '500', '600', '700'],
 });
 
@@ -97,8 +94,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Resource hints for faster CSS/font loading */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Resource hints for analytics only; Geist is self-hosted by Next.js */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
@@ -110,7 +106,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <MobileStickyCta />
+        <DeferredMobileStickyCta />
         <Script id="register-sw" strategy="lazyOnload">
           {`
             if ('serviceWorker' in navigator) {
