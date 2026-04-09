@@ -17,6 +17,11 @@ if (!globalThis.__burchServicesCache) {
   globalThis.__burchServicesCache = servicesCache;
 }
 
+function isExpectedDatabaseFallbackError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return /Access denied for user|ECONNREFUSED|connect ETIMEDOUT|ENOTFOUND|ECONNRESET/i.test(message);
+}
+
 async function readCachedServices(key: string, loader: () => Promise<ActiveService[]>): Promise<ActiveService[]> {
   const now = Date.now();
   const cached = servicesCache.get(key);
@@ -30,10 +35,18 @@ async function readCachedServices(key: string, loader: () => Promise<ActiveServi
     servicesCache.set(key, { items, expiresAt: now + CACHE_TTL_MS });
     return items;
   } catch (error) {
+    const fallbackItems = cached?.items ?? [];
+    servicesCache.set(key, { items: fallbackItems, expiresAt: now + CACHE_TTL_MS });
+
     if (shouldLogServiceLoadErrors) {
-      console.error(`Error loading services for cache key "${key}":`, error);
+      if (isExpectedDatabaseFallbackError(error)) {
+        console.info(`Service settings unavailable for "${key}". Using static fallback content.`);
+      } else {
+        console.error(`Error loading services for cache key "${key}":`, error);
+      }
     }
-    return cached?.items ?? [];
+
+    return fallbackItems;
   }
 }
 

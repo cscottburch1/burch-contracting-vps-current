@@ -124,15 +124,6 @@ const TOOL_ITEMS: ToolItem[] = [
     priority: 'high',
   },
   {
-    id: 'banners',
-    name: 'Homepage Banners',
-    description: 'Manage homepage promotions and operational announcements.',
-    href: '/admin/tools/banners',
-    cta: 'Manage Banners',
-    category: 'Website/SEO Tools',
-    priority: 'medium',
-  },
-  {
     id: 'featured-projects',
     name: 'Featured Projects',
     description: 'Curate portfolio projects displayed publicly on the website.',

@@ -8,7 +8,6 @@ export default function MigrationPage() {
   const [running, setRunning] = useState(false);
   const [passwordResetRunning, setPasswordResetRunning] = useState(false);
   const [projectTrackerRunning, setProjectTrackerRunning] = useState(false);
-  const [emergencySettingsRunning, setEmergencySettingsRunning] = useState(false);
   const [proposalsRunning, setProposalsRunning] = useState(false);
   const [documentsRunning, setDocumentsRunning] = useState(false);
   const [paymentsRunning, setPaymentsRunning] = useState(false);
@@ -16,7 +15,6 @@ export default function MigrationPage() {
   const [result, setResult] = useState<any>(null);
   const [passwordResetResult, setPasswordResetResult] = useState<any>(null);
   const [projectTrackerResult, setProjectTrackerResult] = useState<any>(null);
-  const [emergencySettingsResult, setEmergencySettingsResult] = useState<any>(null);
   const [proposalsResult, setProposalsResult] = useState<any>(null);
   const [documentsResult, setDocumentsResult] = useState<any>(null);
   const [paymentsResult, setPaymentsResult] = useState<any>(null);
@@ -24,7 +22,6 @@ export default function MigrationPage() {
   const [error, setError] = useState('');
   const [passwordResetError, setPasswordResetError] = useState('');
   const [projectTrackerError, setProjectTrackerError] = useState('');
-  const [emergencySettingsError, setEmergencySettingsError] = useState('');
   const [proposalsError, setProposalsError] = useState('');
   const [documentsError, setDocumentsError] = useState('');
   const [paymentsError, setPaymentsError] = useState('');
@@ -102,31 +99,6 @@ export default function MigrationPage() {
       setProjectTrackerError(err.message || 'Failed to run migration');
     } finally {
       setProjectTrackerRunning(false);
-    }
-  };
-
-  const runEmergencySettingsMigration = async () => {
-    setEmergencySettingsRunning(true);
-    setEmergencySettingsError('');
-    setEmergencySettingsResult(null);
-
-    try {
-      const res = await fetch('/api/admin/migrate-emergency-settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setEmergencySettingsResult(data);
-      } else {
-        setEmergencySettingsError(data.error || 'Migration failed');
-      }
-    } catch (err: any) {
-      setEmergencySettingsError(err.message || 'Failed to run migration');
-    } finally {
-      setEmergencySettingsRunning(false);
     }
   };
 
@@ -393,69 +365,6 @@ export default function MigrationPage() {
                 onClick={() => {
                   setProjectTrackerError('');
                   runProjectTrackerMigration();
-                }}
-                className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Emergency Settings Migration */}
-        <div className="bg-white rounded-xl shadow-lg p-10">
-          <h1 className="text-4xl font-bold mb-4">Emergency Settings Migration</h1>
-          <p className="text-gray-600 mb-8">
-            Create the database table for emergency services banner settings. This allows you to toggle the emergency banner on/off from the admin settings.
-          </p>
-
-          {!emergencySettingsResult && !emergencySettingsError && (
-            <button
-              onClick={runEmergencySettingsMigration}
-              disabled={emergencySettingsRunning}
-              className="bg-orange-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-orange-700 transition disabled:opacity-50 text-xl"
-            >
-              {emergencySettingsRunning ? 'Running Migration...' : 'Run Emergency Settings Migration'}
-            </button>
-          )}
-
-          {emergencySettingsResult && (
-            <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
-              <div className="space-y-2 mb-4">
-                <p className="font-semibold">{emergencySettingsResult.message}</p>
-                <p className="text-sm">Tables created:</p>
-                <ul className="list-disc list-inside text-sm">
-                  {emergencySettingsResult.tables?.map((table: string, idx: number) => (
-                    <li key={idx}>{table}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 space-x-4">
-                <button
-                  onClick={() => router.push('/admin/settings')}
-                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition"
-                >
-                  Go to Settings to Toggle Banner
-                </button>
-                <button
-                  onClick={() => router.push('/')}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
-                >
-                  View Homepage
-                </button>
-              </div>
-            </div>
-          )}
-
-          {emergencySettingsError && (
-            <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
-              <p className="mb-4">{emergencySettingsError}</p>
-              <button
-                onClick={() => {
-                  setEmergencySettingsError('');
-                  runEmergencySettingsMigration();
                 }}
                 className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
               >
