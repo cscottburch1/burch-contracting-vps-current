@@ -4,17 +4,20 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Script from "next/script";
-import AIChat from "@/components/AIChat";
+import dynamic from 'next/dynamic';
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
-import MobileStickyCta from "@/components/MobileStickyCta";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
+
+// Dynamic import for non-critical interactive components
+const MobileStickyCta = dynamic(() => import('@/components/MobileStickyCta'));
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   display: 'swap',
   preload: true,
+  weight: ['400', '500', '600', '700'],
 });
 
 const geistMono = Geist_Mono({
@@ -22,6 +25,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: 'swap',
   preload: false,
+  weight: ['400'],
 });
 
 export const metadata: Metadata = {
@@ -90,10 +94,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
   return (
     <html lang="en">
+      <head>
+        {/* Resource hints for faster CSS/font loading */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -103,8 +111,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <MobileStickyCta />
-        <AIChat />
-        <Script id="register-sw" strategy="afterInteractive">
+        <Script id="register-sw" strategy="lazyOnload">
           {`
             if ('serviceWorker' in navigator) {
               window.addEventListener('load', () => {
@@ -115,12 +122,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        {recaptchaSiteKey && (
-          <Script
-            src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
-            strategy="lazyOnload"
-          />
-        )}
       </body>
     </html>
   );

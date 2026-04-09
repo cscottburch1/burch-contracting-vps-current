@@ -1,5 +1,18 @@
 # 🚀 PageSpeed Optimization - Applied Fixes
 
+## March 2026 Follow-Up: Critical Request Chain
+
+### 7. ✅ Avoid Chaining Critical Requests - FIX APPLIED
+**Observed:** Mobile PageSpeed still reported chained CSS requests on first load.  
+**Root Cause:** Initial render was discovering multiple CSS assets in sequence.  
+**Solution Applied:**
+- ✅ Set `experimental.cssChunking = false` in `next.config.ts` to avoid chained CSS discovery.
+- ✅ Set `experimental.optimizeCss = true` in `next.config.ts` to inline/optimize above-the-fold CSS.
+
+**Expected Result:**
+- Shorter CSS critical path on mobile first load
+- Lower "Avoid chaining critical requests" impact in PageSpeed
+
 ## Issues Found & Fixed
 
 ### 1. ✅ Unused JavaScript (376 KiB) - FIXED

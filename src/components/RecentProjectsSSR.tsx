@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 
 /**
  * Server-rendered recent projects section.
@@ -25,21 +25,42 @@ export default function RecentProjectsSSR() {
               key={project.slug}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
+              {(() => {
+                const responsiveImage = getResponsiveProjectImageSet(project.image);
+                return (
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
+                {isBrandedProjectImage(project.image) ? (
+                  <div className="flex h-full w-full items-center justify-center bg-white p-4">
+                    <img
+                      src={project.image}
+                      alt={project.imageAlt}
+                      className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
+                      loading="lazy"
+                      width={600}
+                      height={336}
+                    />
+                  </div>
+                ) : (
                 <img
-                  src={project.image}
+                  src={responsiveImage ? responsiveImage.mobile : project.image}
+                  srcSet={responsiveImage ? `${responsiveImage.mobile} 800w, ${responsiveImage.tablet} 1200w, ${responsiveImage.desktop} 1920w` : undefined}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   alt={project.imageAlt}
+                  title={project.imageAlt}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   loading="lazy"
                   width={600}
                   height={336}
                 />
+                )}
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800">
                     {project.serviceType}
                   </span>
                 </div>
               </div>
+                );
+              })()}
 
               <div className="p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">
@@ -53,7 +74,7 @@ export default function RecentProjectsSSR() {
                     <span aria-hidden="true">📍</span>
                     {project.city}
                   </span>
-                  <span className="text-gray-400">{project.timeline}</span>
+                  <span className="text-gray-600">{project.timeline}</span>
                 </div>
 
                 <Link

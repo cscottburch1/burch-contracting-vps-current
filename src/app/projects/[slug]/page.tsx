@@ -6,7 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
-import { getProjectSpotlightBySlug, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { getProjectSpotlightBySlug, getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
@@ -49,6 +49,16 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
   }
 
   const related = projectSpotlights.filter((item) => item.slug !== project.slug && item.serviceType === project.serviceType).slice(0, 3);
+  const brandedImage = isBrandedProjectImage(project.image);
+  const isBathroomGreenville = project.slug === 'bathroom-renovation-greenville';
+  const heroImageSrc = isBathroomGreenville ? '/images/projects/bathroom-renovation-greenville-sc.webp' : project.image;
+  const heroImageAlt = isBathroomGreenville
+    ? 'Primary Bathroom Renovation in Greenville SC by Burch Contracting'
+    : project.imageAlt;
+  const heroImageCaption = isBathroomGreenville
+    ? 'Recently completed primary bathroom renovation in Greenville, SC'
+    : 'Image shown for visual context. Spotlight content focuses on planning scope and process guidance.';
+  const responsiveHero = getResponsiveProjectImageSet(heroImageSrc);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
@@ -85,16 +95,75 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-blue-50">
-              {project.serviceType} • {project.city}
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <div className="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-blue-50">
+                {project.serviceType} • {project.city}
+              </div>
+              <h1 className="mb-5 text-4xl font-bold leading-tight md:text-6xl">{project.title}</h1>
+              <p className="mb-4 text-lg text-blue-100 md:text-xl">{project.summary}</p>
+              <p className="mb-8 max-w-2xl text-base text-blue-200 md:text-lg">
+                Homeowners in {project.city} use this spotlight to plan scope, sequence, and budget expectations before requesting a written estimate.
+              </p>
+
+              <div className="mb-8 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                  <div className="text-xs uppercase tracking-wide text-blue-100">Typical Timeline</div>
+                  <div className="mt-1 text-sm font-semibold text-white">{project.timeline}</div>
+                </div>
+                <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                  <div className="text-xs uppercase tracking-wide text-blue-100">Investment Range</div>
+                  <div className="mt-1 text-sm font-semibold text-white">{project.budgetBand}</div>
+                </div>
+                <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                  <div className="text-xs uppercase tracking-wide text-blue-100">Profile Type</div>
+                  <div className="mt-1 text-sm font-semibold text-white">{project.representative ? 'Representative Profile' : 'Project Spotlight'}</div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Button variant="primary" href="/contact" className="bg-orange-600 hover:bg-orange-700">
+                  Request Free Estimate
+                </Button>
+                <Button variant="outline" href="tel:8647244600" className="border-white text-white hover:bg-white hover:text-gray-900">
+                  Call 864-724-4600
+                </Button>
+              </div>
             </div>
-            <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">{project.title}</h1>
-            <p className="mb-6 text-lg text-blue-100 md:text-xl">{project.summary}</p>
-            <div className="flex flex-wrap gap-3 text-sm">
-              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-2">{project.timeline}</span>
-              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-2">{project.budgetBand}</span>
-              {project.representative ? <span className="rounded-full border border-cyan-200/50 bg-cyan-100/15 px-3 py-2">Representative Planning Profile</span> : null}
+
+            <div className="rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
+              <div className={`overflow-hidden rounded-xl aspect-[16/10] ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
+                {responsiveHero ? (
+                  <picture>
+                    <source media="(min-width: 1280px)" srcSet={responsiveHero.desktop} />
+                    <source media="(min-width: 768px)" srcSet={responsiveHero.tablet} />
+                    <img
+                      src={responsiveHero.mobile}
+                      srcSet={`${responsiveHero.mobile} 800w, ${responsiveHero.tablet} 1200w, ${responsiveHero.desktop} 1920w`}
+                      sizes="(min-width: 1280px) 46vw, (min-width: 768px) 50vw, 100vw"
+                      alt={heroImageAlt}
+                      title={heroImageAlt}
+                      width={1200}
+                      height={800}
+                      loading="eager"
+                      fetchPriority="high"
+                      className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
+                    />
+                  </picture>
+                ) : (
+                  <Image
+                    src={heroImageSrc}
+                    alt={heroImageAlt}
+                    width={1200}
+                    height={800}
+                    className={`rounded-xl object-cover w-full h-full ${isBathroomGreenville ? 'hover:scale-105 transition duration-500' : ''}`}
+                    priority
+                  />
+                )}
+              </div>
+              <p className="mt-3 px-1 text-xs font-semibold uppercase tracking-wide text-blue-100/90">
+                {heroImageCaption}
+              </p>
             </div>
           </div>
         </div>
@@ -103,13 +172,6 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
       <Section background="white" padding="lg">
         <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
-            <Card>
-              <Image src={project.image} alt={project.imageAlt} width={1280} height={720} className="h-72 w-full rounded-xl object-cover" />
-              <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                Image shown for visual context. Spotlight content focuses on planning scope and process guidance.
-              </p>
-            </Card>
-
             <Card>
               <h2 className="mb-4 text-2xl font-bold text-gray-900">Project Challenge</h2>
               <p className="text-lg leading-relaxed text-gray-700">{project.challenge}</p>

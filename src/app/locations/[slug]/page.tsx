@@ -20,6 +20,7 @@ import {
   buildLocalBusinessSchema,
   buildServiceSchema,
 } from '@/lib/seo/schema';
+import { isBrandedProjectImage } from '@/lib/seo/projectSpotlightsData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import TrustBar from '@/components/TrustBar';
 
@@ -509,7 +510,9 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 {page.priceRanges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">
                     <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{range.label}</div>
-                    <div className="mt-2 text-2xl font-bold text-gray-900">{range.range}</div>
+                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl [overflow-wrap:anywhere]">
+                      {range.range.replace(/-/g, ' - ')}
+                    </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">{range.details}</p>
                   </div>
                 ))}
@@ -521,13 +524,15 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
               <div className="grid gap-5 md:grid-cols-2">
                 {projectSnapshots.map((snapshot) => (
                   <div key={snapshot.title} className="rounded-2xl border border-gray-200 overflow-hidden">
-                    <Image
-                      src={snapshot.image}
-                      alt={snapshot.imageAlt}
-                      width={960}
-                      height={540}
-                      className="h-40 w-full object-cover"
-                    />
+                    <div className={isBrandedProjectImage(snapshot.image) ? 'bg-white p-3' : ''}>
+                      <Image
+                        src={snapshot.image}
+                        alt={snapshot.imageAlt}
+                        width={960}
+                        height={540}
+                        className={isBrandedProjectImage(snapshot.image) ? 'h-40 w-full object-contain' : 'h-40 w-full object-cover'}
+                      />
+                    </div>
                     <div className="p-4">
                       <h3 className="text-lg font-bold text-gray-900">{snapshot.title}</h3>
                       <p className="mt-2 text-sm text-gray-700">{snapshot.scope}</p>

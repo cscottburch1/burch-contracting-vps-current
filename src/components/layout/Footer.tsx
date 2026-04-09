@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { Icon } from '../ui/Icon';
 import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
@@ -54,10 +55,12 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Explore</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="/locations" className="hover:text-white">Service Area Guides</a></li>
-              <li><a href="/cost" className="hover:text-white">Cost Guides</a></li>
-              <li><a href="/projects" className="hover:text-white">Project Spotlights</a></li>
-              <li><a href="/blog" className="hover:text-white">Remodeling Blog</a></li>
+              <li><Link href="/locations" className="hover:text-white">Areas Served</Link></li>
+              <li><Link href="/cost" className="hover:text-white">Pricing Guide</Link></li>
+              <li><Link href="/projects" className="hover:text-white">Projects</Link></li>
+              <li><Link href="/blog" className="hover:text-white">Remodeling Blog</Link></li>
+              <li><Link href="/portal" className="hover:text-white">Customer Portal</Link></li>
+              <li><Link href="/employment" className="hover:text-white">Employment / Careers</Link></li>
             </ul>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Script from 'next/script';
 import { Icon } from '@/components/ui/Icon';
 
 declare global {
@@ -167,6 +168,13 @@ export default function DirectHireEmployeesPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      {/* Load reCAPTCHA only on employment form pages */}
+      {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          strategy="lazyOnload"
+        />
+      )}
       {/* Back Link */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <a href="/employment" className="flex items-center gap-2 text-green-600 hover:text-green-700 font-semibold">
