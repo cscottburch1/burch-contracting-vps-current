@@ -81,7 +81,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
       name: siteConfig.siteName,
       logo: {
         '@type': 'ImageObject',
-        url: absoluteUrl('/logo-transparent.png'),
+        url: absoluteUrl('/logo-transparent.webp'),
       },
     },
     mainEntityOfPage: absoluteUrl(`/projects/${project.slug}`),

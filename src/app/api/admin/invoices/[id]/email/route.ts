@@ -54,7 +54,7 @@ export async function POST(request: Request) {
           <!-- Header with Logo -->
           <tr>
             <td style="padding: 40px 40px 20px; text-align: center; border-bottom: 3px solid #1e40af;">
-              <img src="https://burchcontracting.com/logo.png" alt="Burch Contracting" style="max-width: 200px; height: auto; margin-bottom: 10px;" />
+              <img src="https://burchcontracting.com/logo-transparent.webp" alt="Burch Contracting" style="max-width: 200px; height: auto; margin-bottom: 10px;" />
               <div style="font-size: 24px; font-weight: bold; color: #1e40af; margin-bottom: 5px;">INVOICE</div>
               <div style="font-size: 14px; color: #6b7280;">${invoiceNumber}</div>
             </td>

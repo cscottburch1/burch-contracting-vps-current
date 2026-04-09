@@ -65,7 +65,7 @@ export const ProposalTemplate: React.FC<ProposalTemplateProps> = ({ data }) => {
         <div className="flex justify-between items-start mb-8 pb-8 border-b-2 border-blue-600">
           <div>
             <Image 
-              src="/logo-transparent.png" 
+              src="/logo-transparent.webp" 
               alt={businessConfig.name}
               width={200}
               height={67}

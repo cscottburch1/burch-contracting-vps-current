@@ -94,7 +94,7 @@ export async function POST(request: Request) {
     <div style="border-bottom: 4px solid #2563eb; padding-bottom: 20px; margin-bottom: 30px;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <img src="https://burchcontracting.com/logo-transparent.png" alt="Burch Contracting" style="height: 64px; width: auto; display: block;" />
+          <img src="https://burchcontracting.com/logo-transparent.webp" alt="Burch Contracting" style="height: 64px; width: auto; display: block;" />
           <div>
             <h1 style="margin: 0; color: #2563eb; font-size: 32px;">BURCH CONTRACTING</h1>
             <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">Professional ${proposalType}</p>

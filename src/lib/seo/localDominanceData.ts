@@ -466,7 +466,7 @@ function buildProjectHighlights(service: TargetService, city: TargetCity): Highl
   return city.proofNotes.map((note, index) => ({
     title: `${service.navLabel} Project ${index + 1}`,
     summary: note,
-    image: '/og-image.jpg',
+    image: '/og-image.webp',
     alt: `${service.imageAltBase} ${city.name} SC`,
   }));
 }
@@ -593,7 +593,7 @@ function buildServiceHubPage(service: TargetService): SeoLandingPageData {
     projectHighlights: targetCities.slice(0, 3).map((city, index) => ({
       title: `${city.name} ${service.navLabel}`,
       summary: city.proofNotes[index] ?? city.proofNotes[0],
-      image: '/og-image.jpg',
+      image: '/og-image.webp',
       alt: `${service.imageAltBase} ${city.name} SC`,
     })),
     faqItems: buildHubFaqs(service),

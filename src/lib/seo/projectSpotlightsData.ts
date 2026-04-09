@@ -153,7 +153,7 @@ export const projectSpotlights: ProjectSpotlight[] = [
 ];
 
 export function isBrandedProjectImage(image: string) {
-  return image === '/images/projects/logo-placeholder.jpg';
+  return image === '/images/projects/placeholder.webp';
 }
 
 export function getResponsiveProjectImageSet(image: string) {

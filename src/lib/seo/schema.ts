@@ -165,7 +165,7 @@ export function buildArticleSchema(opts: { title: string; description: string; u
       url: siteConfig.siteUrl,
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/logo-transparent.png"),
+        url: absoluteUrl("/logo-transparent.webp"),
       },
     },
     mainEntityOfPage: opts.url,

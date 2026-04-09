@@ -535,7 +535,7 @@ export default function ServiceManagementPage() {
                                 type="text"
                                 value={editForm.hero_image || ''}
                                 onChange={(e) => setEditForm({ ...editForm, hero_image: e.target.value })}
-                                placeholder="/images/services/handyman-hero.jpg"
+                                placeholder="/images/services/handyman-hero.webp"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                               />
                             </div>
@@ -547,7 +547,7 @@ export default function ServiceManagementPage() {
                                 type="text"
                                 value={editForm.featured_image || ''}
                                 onChange={(e) => setEditForm({ ...editForm, featured_image: e.target.value })}
-                                placeholder="/images/services/handyman-featured.jpg"
+                                placeholder="/images/services/handyman-featured.webp"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                               />
                             </div>

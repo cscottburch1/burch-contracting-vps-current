@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -8,14 +8,6 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import DeferredMobileStickyCta from '@/components/DeferredMobileStickyCta';
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: 'swap',
-  preload: false,
-  weight: ['400', '500', '600', '700'],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -99,7 +91,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistMono.variable} antialiased`}
       >
         <GoogleAnalytics />
         <AnalyticsEvents />

@@ -498,7 +498,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Burch Contracting",
-    "image": "https://burchcontracting.com/logo-transparent.png",
+    "image": "https://burchcontracting.com/logo-transparent.webp",
     "description": `Professional contracting services in ${content.displayName}`,
     "address": {
       "@type": "PostalAddress",

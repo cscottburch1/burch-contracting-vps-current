@@ -1,7 +1,7 @@
 export const siteConfig = {
   siteName: 'Burch Contracting',
   siteUrl: 'https://burchcontracting.com',
-  defaultOgImage: '/og-image.jpg',
+  defaultOgImage: '/og-image.webp',
   phoneDisplay: '(864) 724-4600',
   phoneHref: 'tel:8647244600',
   primaryCities: ['Simpsonville, SC', 'Fountain Inn, SC', 'Mauldin, SC'],

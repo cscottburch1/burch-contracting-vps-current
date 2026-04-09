@@ -377,7 +377,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
       locale: 'en_US',
       type: 'website',
       images: [{
-        url: 'https://burchcontracting.com/og-image.jpg',
+        url: 'https://burchcontracting.com/og-image.webp',
         width: 1200,
         height: 630,
         alt: `Burch Contracting - ${service.title}`
