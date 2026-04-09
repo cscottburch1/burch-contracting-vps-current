@@ -6,24 +6,29 @@ import { FeatureCard } from '@/components/ui/FeatureCard';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import { businessConfig } from '@/config/business';
-import Script from 'next/script';
 import Link from 'next/link';
 import RecentProjectsSSR from '@/components/RecentProjectsSSR';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildLocalBusinessSchema } from '@/lib/seo/schema';
+import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
-  title: 'Garage Builders, Room Additions, Screened Porches, Decks & ADUs in Upstate South Carolina',
+  title: 'Upstate SC Garages, Additions & Porches | Burch Contracting',
   description:
-    'Garage construction, room additions, aluminum screened porches, deck building, and ADU planning for Upstate South Carolina homeowners.',
-  alternates: { canonical: absoluteUrl('/') },
+    'Upstate SC contractor for garages, room additions, screened porches, decks, and ADUs. Free estimates and clear planning.',
+  alternates: {
+    canonical: absoluteUrl('/'),
+    languages: {
+      'en-US': absoluteUrl('/'),
+      'x-default': absoluteUrl('/'),
+    },
+  },
   openGraph: {
-    title: 'Burch Contracting | Garage Builders, Room Additions, Screened Porches, Decks & ADUs',
+    title: 'Burch Contracting | Garages, Additions & Porches in Upstate SC',
     description:
-      'Request a free estimate for garage construction, room additions, screened porches, deck building, and ADU projects across the Upstate.',
+      'Free estimates for garages, additions, screened porches, decks, and ADUs across Upstate South Carolina.',
     url: absoluteUrl('/'),
   },
 };
@@ -35,9 +40,9 @@ export default async function HomePage() {
     ? dbServices.map(mapToBusinessConfigFormat)
     : businessConfig.services;
 
-  const structuredData = buildLocalBusinessSchema({
+  const localBusinessSchema = buildLocalBusinessSchema({
     description:
-      'Trusted Upstate South Carolina contractor for garage construction, room additions, screened porches, deck building, and ADU planning. Licensed, insured, BBB A+ rated, and focused on clear estimates.',
+      'Trusted Upstate South Carolina contractor for garages, additions, screened porches, decks, and ADU planning with clear estimates.',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Home Improvement Services',
@@ -85,6 +90,11 @@ export default async function HomePage() {
       ],
     },
   });
+
+  const homeSchemaGraph = {
+    '@context': 'https://schema.org',
+    '@graph': [buildWebsiteSchema(), buildOrganizationSchema(), localBusinessSchema],
+  };
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -152,12 +162,12 @@ export default async function HomePage() {
 
   return (
     <>
-      <Script
-        id="structured-data"
+      <script
+        id="home-schema-graph"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchemaGraph) }}
       />
-      <Script
+      <script
         id="faq-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -180,9 +190,9 @@ export default async function HomePage() {
           <div className="max-w-4xl">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up"
-              aria-label="Garage Builders, Room Additions, Screened Porches, Decks, and ADUs Built Right"
+              aria-label="Garage Builders, Additions, and Porches, Decks and ADUs"
             >
-              Garage Builders, Room Additions, <span className="gradient-text">Screened Porches, Decks, and ADUs Built Right</span>
+              Garage Builders, Additions, and <span className="gradient-text">Porches, Decks & ADUs</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed animate-fade-in-up stagger-1 opacity-0">
               Serving Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna with clear estimates, better planning, and dependable craftsmanship.

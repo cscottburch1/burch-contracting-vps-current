@@ -19,13 +19,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Burch Contracting | Garage Builders, Room Additions, Screened Porches, Decks & ADUs in Upstate SC',
-  description: "Burch Contracting helps homeowners across Upstate South Carolina plan garage construction, room additions, screened porches, deck building, and ADUs with clear estimates and local expertise.",
+  title: 'Burch Contracting | Garages, Additions & Porches in Upstate SC',
+  description: "Upstate SC contractor for garages, additions, screened porches, decks, and ADUs with clear estimates and local expertise.",
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
   alternates: {
     canonical: absoluteUrl('/'),
+    languages: {
+      'en-US': absoluteUrl('/'),
+      'x-default': absoluteUrl('/'),
+    },
   },
   icons: {
     icon: [
@@ -45,8 +49,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: absoluteUrl('/'),
     siteName: "Burch Contracting",
-    title: "Burch Contracting | Garage Builders, Room Additions, Screened Porches, Decks & ADUs in Upstate SC",
-    description: "Garage construction, room additions, screened porches, deck building, and ADU planning for homeowners across Simpsonville, Fountain Inn, Mauldin, Laurens, and nearby Upstate communities.",
+    title: "Burch Contracting | Garages, Additions & Porches in Upstate SC",
+    description: "Garages, additions, screened porches, decks, and ADU planning for homeowners across Upstate South Carolina.",
     images: [
       {
         url: absoluteUrl(siteConfig.defaultOgImage),
@@ -58,8 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Burch Contracting | Local Garage, Addition, Porch, Deck & ADU Contractor",
-    description: "Request a free estimate for garage construction, room additions, aluminum screened porches, deck building, and ADU projects across Upstate South Carolina.",
+    title: "Burch Contracting | Upstate SC Garage and Addition Contractor",
+    description: "Free estimates for garages, additions, screened porches, decks, and ADUs across Upstate South Carolina.",
     images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
   robots: {
