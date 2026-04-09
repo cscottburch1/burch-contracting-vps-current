@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Burch Contracting | Garages, Additions & Porches in Upstate SC',
-  description: "Upstate SC contractor for garages, additions, screened porches, decks, and ADUs with clear estimates and local expertise.",
+  title: 'Burch Contracting | Upstate SC Garage & Addition Contractor',
+  description: "Burch is an Upstate SC garage, addition, porch, deck, and ADU contractor with clear estimates and local expertise.",
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: absoluteUrl('/'),
     siteName: "Burch Contracting",
-    title: "Burch Contracting | Garages, Additions & Porches in Upstate SC",
-    description: "Garages, additions, screened porches, decks, and ADU planning for homeowners across Upstate South Carolina.",
+    title: "Burch Contracting | Upstate SC Garage & Addition Contractor",
+    description: "Burch is an Upstate SC garage, addition, porch, deck, and ADU contractor for homeowners across the region.",
     images: [
       {
         url: absoluteUrl(siteConfig.defaultOgImage),
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Burch Contracting | Upstate SC Garage and Addition Contractor",
-    description: "Free estimates for garages, additions, screened porches, decks, and ADUs across Upstate South Carolina.",
+    title: "Burch Contracting | Upstate SC Garage & Addition Contractor",
+    description: "Free estimates from an Upstate SC garage, addition, porch, deck, and ADU contractor.",
     images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
   robots: {

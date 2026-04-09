@@ -15,9 +15,17 @@ import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema }
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
-  title: 'Upstate SC Garages, Additions & Porches | Burch Contracting',
+  title: 'Upstate SC Garage, Room Addition & Porch Contractor | Burch',
   description:
-    'Upstate SC contractor for garages, room additions, screened porches, decks, and ADUs. Free estimates and clear planning.',
+    'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates and clear planning.',
+  keywords: [
+    'Upstate SC contractor',
+    'garage contractor Upstate SC',
+    'room addition contractor Upstate SC',
+    'screened porch contractor Upstate SC',
+    'deck builder Upstate SC',
+    'ADU contractor Upstate SC',
+  ],
   alternates: {
     canonical: absoluteUrl('/'),
     languages: {
@@ -26,9 +34,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Burch Contracting | Garages, Additions & Porches in Upstate SC',
+    title: 'Burch | Upstate SC Garage, Room Addition & Porch Contractor',
     description:
-      'Free estimates for garages, additions, screened porches, decks, and ADUs across Upstate South Carolina.',
+      'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates.',
     url: absoluteUrl('/'),
   },
 };
