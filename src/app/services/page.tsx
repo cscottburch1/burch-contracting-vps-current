@@ -7,16 +7,16 @@ import { localDominanceServices, serviceHubPages, targetCities } from '@/lib/seo
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Garage Builders, Room Additions, Screened Porches, Decks & ADUs in Simpsonville, SC | Burch Contracting',
+  title: 'Garage Builders, Room Additions, Screened Porches, Decks & ADUs | Burch Contracting',
   description:
-    'Explore garage construction, room additions, screened porches, deck building, and ADU pages for Simpsonville, Fountain Inn, Mauldin, Laurens, and nearby Upstate SC cities.',
+    'Explore Burch Contracting services for garages, room additions, screened porches, decks, and ADUs across Simpsonville and nearby Upstate SC communities.',
   alternates: {
     canonical: absoluteUrl('/services'),
   },
   openGraph: {
-    title: 'Local Service Hubs | Burch Contracting',
+    title: 'Our Services | Burch Contracting',
     description:
-      'Browse the five core service pages and jump directly to the city-service landing page that matches your project intent.',
+      'Explore garages, room additions, screened porches, decks, and ADU services for homeowners across Upstate South Carolina.',
     url: absoluteUrl('/services'),
     type: 'website',
   },
@@ -28,9 +28,9 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_right,_white,_transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-6xl">Garage Construction, Additions, Porches, Decks & ADUs</h1>
+          <h1 className="text-4xl font-bold md:text-6xl">Garage Builders, Room Additions, Screened Porches, Decks & ADUs</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
-            Use this page as the master hub for the corrected local SEO structure. Every service page targets one primary keyword, links to the right city pages, and includes strong lead-generation CTAs.
+            Explore the core services Burch Contracting offers across Upstate South Carolina, from custom garages and room additions to screened porches, decks, and ADUs.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" size="lg" href="/contact">
@@ -45,16 +45,16 @@ export default function ServicesPage() {
 
       <Section background="white" padding="lg">
         <div className="mb-10 max-w-3xl">
-          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Primary service pages</h2>
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Our core services</h2>
           <p className="mt-3 text-lg text-gray-600">
-            Each page is now focused on one service keyword and routes visitors into the full city-by-service linking web.
+            Review each service to see what we build, what projects fit best, and how to get started with a free estimate.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {serviceHubPages.map((page) => (
             <Card key={page.path} className="h-full border border-gray-200">
-              <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{page.primaryKeyword}</div>
+              <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">Upstate SC Service</div>
               <h3 className="mt-2 text-2xl font-bold text-slate-900">{page.service.navLabel}</h3>
               <p className="mt-3 text-gray-600">{page.shortDescription}</p>
               <ul className="mt-4 space-y-2 text-sm text-gray-700">
@@ -66,7 +66,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
               <div className="mt-5 flex gap-3">
-                <Button href={page.path}>View Service Page</Button>
+                <Button href={page.path}>Explore Service</Button>
                 <Button variant="outline" href={siteConfig.phoneHref}>Call Now</Button>
               </div>
             </Card>
@@ -76,9 +76,9 @@ export default function ServicesPage() {
 
       <Section background="gray" padding="lg">
         <div className="mb-10 max-w-3xl">
-          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Target city coverage</h2>
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Areas we serve</h2>
           <p className="mt-3 text-lg text-gray-600">
-            The local SEO rebuild now prioritizes nine Upstate communities with dedicated city-service landing pages and tighter keyword mapping.
+            We work with homeowners across Simpsonville, Fountain Inn, Mauldin, Laurens, Woodruff, Clinton, and nearby Upstate South Carolina communities.
           </p>
         </div>
 
@@ -112,7 +112,7 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-4xl font-bold">Need a written estimate now?</h2>
           <p className="mt-4 text-lg text-gray-300">
-            Call {siteConfig.phoneDisplay} or request a free estimate online. We will help you choose the right service page and the right city page for your project.
+            Call {siteConfig.phoneDisplay} or request a free estimate online, and we will help you plan the right garage, addition, porch, deck, or ADU project for your home.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" size="lg" href="/contact">Get Free Estimate</Button>
