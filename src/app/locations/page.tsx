@@ -6,13 +6,13 @@ import { localDominanceServices, targetCities } from '@/lib/seo/localDominanceDa
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Local Service Area Pages for Simpsonville, Fountain Inn, Mauldin & Laurens County | Burch Contracting',
+  title: 'Service Areas in Upstate SC | Burch Contracting',
   description:
-    'Browse every city-service page for garage construction, room additions, screened porches, deck building, and ADUs across nine Upstate South Carolina communities.',
+    'Browse Burch Contracting service areas in Simpsonville, Fountain Inn, Mauldin, Laurens, and nearby Upstate SC communities.',
   alternates: { canonical: absoluteUrl('/locations') },
   openGraph: {
-    title: 'Local Service Area Pages | Burch Contracting',
-    description: 'Explore targeted city and service pages built for local search intent and faster estimate requests.',
+    title: 'Service Areas | Burch Contracting',
+    description: 'Explore the Upstate SC communities Burch Contracting serves for garages, additions, porches, decks, and ADUs.',
     url: absoluteUrl('/locations'),
     type: 'website',
   },
@@ -24,9 +24,9 @@ export default function LocationsIndexPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="mb-6 text-4xl font-bold md:text-6xl">City + Service Pages Built for Local Search Intent</h1>
+            <h1 className="mb-6 text-4xl font-bold md:text-6xl">Areas We Serve Across Upstate South Carolina</h1>
             <p className="text-lg text-blue-100 md:text-xl">
-              Choose your city, then jump straight to the service page that matches your project. Every page includes a single primary keyword, CTAs, internal links, and local proof signals.
+              Choose your city to explore local service options, project examples, and the fastest way to request an estimate from Burch Contracting.
             </p>
           </div>
         </div>
@@ -45,14 +45,14 @@ export default function LocationsIndexPage() {
                 {localDominanceServices.map((service) => (
                   <Card key={`${city.slug}-${service.slug}`} className="h-full border border-gray-200">
                     <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">
-                      {service.primaryKeywordBase} {city.name} SC
+                      Serving {city.displayName}
                     </div>
                     <h3 className="mt-2 text-xl font-bold text-slate-900">{service.navLabel}</h3>
                     <p className="mt-3 text-gray-600">
-                      View the {service.navLabel.toLowerCase()} page for {city.displayName} with local references, FAQs, CTA sections, and estimate prompts.
+                      See how we approach {service.navLabel.toLowerCase()} projects in {city.displayName} and request a free estimate for your home.
                     </p>
                     <div className="mt-5 flex gap-3">
-                      <Button href={`/${city.slug}/${service.slug}`}>Open Page</Button>
+                      <Button href={`/${city.slug}/${service.slug}`}>View Local Page</Button>
                       <Button variant="outline" href={`/${service.slug}`}>Main Service</Button>
                     </div>
                   </Card>

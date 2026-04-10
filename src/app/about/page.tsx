@@ -6,9 +6,9 @@ import Icon from '@/components/ui/Icon';
 import { absoluteUrl } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'About Burch Contracting',
+  title: 'About Burch Contracting | Upstate SC Contractor',
   description:
-    'Learn about Burch Contracting, a trusted remodeling contractor serving Simpsonville, Fountain Inn, and Upstate South Carolina homeowners.',
+    'Learn about Burch Contracting, an Upstate SC contractor serving Simpsonville, Fountain Inn, and nearby homeowners.',
   alternates: {
     canonical: absoluteUrl('/about'),
   },

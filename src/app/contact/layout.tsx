@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Burch Contracting - Free Estimates',
-  description: 'Get a free estimate for your home improvement project. Contact Burch Contracting in Simpsonville, SC. Call (864) 724-4600 or fill out our contact form for a quick response.',
+  title: 'Contact Burch Contracting | Free Estimate',
+  description: 'Request a free estimate from Burch Contracting in Simpsonville, SC. Call (864) 724-4600 or send us your project details online.',
   keywords: ['contact contractor', 'free estimate', 'home improvement quote', 'Simpsonville contractor', 'Burch Contracting contact', 'request estimate'],
   openGraph: {
-    title: 'Contact Burch Contracting - Free Estimates',
-    description: 'Request a free estimate for your home repair or remodeling project. Fast, professional service in Simpsonville, SC.',
+    title: 'Contact Burch Contracting | Free Estimate',
+    description: 'Request a free estimate for your home repair or remodeling project in Simpsonville and nearby Upstate SC areas.',
     url: 'https://burchcontracting.com/contact',
     type: 'website',
   },

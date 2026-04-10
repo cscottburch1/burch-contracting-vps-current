@@ -7,16 +7,16 @@ import { localDominanceServices, serviceHubPages, targetCities } from '@/lib/seo
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Garage Builders, Room Additions, Screened Porches, Decks & ADUs | Burch Contracting',
+  title: 'Garage, Addition & Porch Services | Burch Contracting',
   description:
-    'Explore Burch Contracting services for garages, room additions, screened porches, decks, and ADUs across Simpsonville and nearby Upstate SC communities.',
+    'Explore garage, room addition, screened porch, deck, and ADU services from Burch Contracting across Upstate South Carolina.',
   alternates: {
     canonical: absoluteUrl('/services'),
   },
   openGraph: {
-    title: 'Our Services | Burch Contracting',
+    title: 'Garage, Addition & Porch Services | Burch Contracting',
     description:
-      'Explore garages, room additions, screened porches, decks, and ADU services for homeowners across Upstate South Carolina.',
+      'Explore garage, room addition, screened porch, deck, and ADU services for homeowners across Upstate South Carolina.',
     url: absoluteUrl('/services'),
     type: 'website',
   },
