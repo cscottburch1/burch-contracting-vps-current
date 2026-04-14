@@ -11,6 +11,10 @@ export const metadata: Metadata = page
       title: page.metaTitle,
       description: page.metaDescription,
       alternates: { canonical: absoluteUrl(page.path) },
+      robots: {
+        index: false,
+        follow: false,
+      },
       openGraph: {
         title: page.metaTitle,
         description: page.metaDescription,

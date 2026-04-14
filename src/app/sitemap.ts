@@ -91,7 +91,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'handyman',
     'remodeling',
     'additions',
-    'basement'
   ];
 
   const serviceRoutes = services.map(service => ({
@@ -124,7 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'bathroom-remodeling',
     'room-additions',
     'decks-screened-porches',
-    'basement-finishing',
+    'garages',
   ];
 
   const calculatorRoutes = calculators.map(calc => ({

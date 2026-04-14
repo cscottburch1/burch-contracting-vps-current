@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description:
     'Estimate basement finishing budgets for rec rooms, home offices, guest suites, and premium basement projects in the Upstate South Carolina market.',
   alternates: { canonical: absoluteUrl('/calculator/basement-finishing') },
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title: 'Basement Finishing Cost Calculator | Burch Contracting',
     description:

@@ -17,14 +17,13 @@ import { localDominancePages } from '@/lib/seo/localDominanceData';
 export const metadata: Metadata = {
   title: 'Construction Renovations and Remodeling | Greenville County and Laurens County Contractor',
   description:
-    'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates and clear planning.',
+    'Burch is an Upstate SC garage, room addition, screened porch, and deck contractor offering free estimates and clear planning.',
   keywords: [
     'Upstate SC contractor',
     'garage contractor Upstate SC',
     'room addition contractor Upstate SC',
     'screened porch contractor Upstate SC',
     'deck builder Upstate SC',
-    'ADU contractor Upstate SC',
   ],
   alternates: {
     canonical: absoluteUrl('/'),
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     title: 'Burch | Upstate SC Garage, Room Addition & Porch Contractor',
     description:
-      'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates.',
+      'Burch is an Upstate SC garage, room addition, screened porch, and deck contractor offering free estimates.',
     url: absoluteUrl('/'),
     siteName: 'Burch Contracting',
     images: [
@@ -46,14 +45,14 @@ export const metadata: Metadata = {
         url: absoluteUrl(siteConfig.defaultOgImage),
         width: 1200,
         height: 630,
-        alt: 'Burch Contracting - Upstate SC garage, addition, porch, deck, and ADU contractor',
+        alt: 'Burch Contracting - Upstate SC garage, addition, screened porch, and deck contractor',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Burch Contracting | Upstate SC Garage & Addition Contractor',
-    description: 'Free estimates from an Upstate SC garage, addition, porch, deck, and ADU contractor.',
+    description: 'Free estimates from an Upstate SC garage, addition, screened porch, and deck contractor.',
     images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
 };
@@ -67,7 +66,7 @@ export default async function HomePage() {
 
   const localBusinessSchema = buildLocalBusinessSchema({
     description:
-      'Trusted Upstate South Carolina contractor for garages, additions, screened porches, decks, and ADU planning with clear estimates.',
+      'Trusted Upstate South Carolina contractor for garages, room additions, screened porches, and decks with clear estimates.',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Home Improvement Services',
@@ -102,14 +101,6 @@ export default async function HomePage() {
             '@type': 'Service',
             name: 'Deck Building',
             description: 'Custom wood and composite deck construction with code-ready details',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'ADU Construction',
-            description: 'Accessory dwelling units, guest houses, and granny pods for multigenerational living',
           },
         },
       ],
@@ -150,7 +141,7 @@ export default async function HomePage() {
         "name": "What types of home improvement services do you offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We specialize in garage construction, room additions, aluminum screened porches, deck building, and ADU or guest house planning for Upstate South Carolina homeowners."
+          "text": "We specialize in garage construction, room additions, aluminum screened porches, and deck building for Upstate South Carolina homeowners."
         }
       },
       {
@@ -182,11 +173,9 @@ export default async function HomePage() {
 
   const featuredLocalPages = localDominancePages.slice(0, 10);
   const calculatorCards = [
-    { title: 'Kitchen Remodel Budget', href: '/calculator/kitchen-remodeling', icon: 'ChefHat' as const, text: 'Compare refresh, full remodel, and custom kitchen pricing.' },
-    { title: 'Bathroom Remodel Budget', href: '/calculator/bathroom-remodeling', icon: 'Bath' as const, text: 'Estimate guest bath, primary bath, and premium shower ranges.' },
+    { title: 'Garage Build Budget', href: '/calculator/garages', icon: 'Warehouse' as const, text: 'Estimate attached and detached garage construction costs.' },
     { title: 'Room Addition Budget', href: '/calculator/room-additions', icon: 'Construction' as const, text: 'Plan square-foot expansion costs before design and permitting.' },
     { title: 'Deck and Porch Budget', href: '/calculator/decks-screened-porches', icon: 'Trees' as const, text: 'Model deck, composite, and screened porch investment ranges.' },
-    { title: 'Basement Finish Budget', href: '/calculator/basement-finishing', icon: 'Sofa' as const, text: 'Estimate basement square-foot finishing and suite-level upgrades.' },
   ];
 
   return (
@@ -224,9 +213,9 @@ export default async function HomePage() {
           <div className="max-w-4xl">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up"
-              aria-label="Garage Builders, Additions, and Porches, Decks and ADUs"
+              aria-label="Garage Builders, Room Additions, Screened Porches and Decks"
             >
-              Garage Builders, Additions, and <span className="gradient-text">Porches, Decks & ADUs</span>
+              Garage Builders, Additions & <span className="gradient-text">Screened Porches and Decks</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed animate-fade-in-up stagger-1 opacity-0">
               Serving Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna with clear estimates, better planning, and dependable craftsmanship.

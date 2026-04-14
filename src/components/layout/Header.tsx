@@ -17,12 +17,10 @@ interface NavItem {
 }
 
 const serviceLinks: NavItem[] = [
-  { label: 'Kitchen Remodeling', href: '/services/remodeling' },
-  { label: 'Bathroom Remodeling', href: '/services/remodeling' },
-  { label: 'Room Additions', href: '/services/additions' },
-  { label: 'Screened Porches & Decks', href: '/services/additions' },
-  { label: 'Basement Finishing', href: '/services/basement' },
-  { label: 'Handyman Services', href: '/services/handyman' },
+  { label: 'Decks', href: '/deck-builder' },
+  { label: 'Screened Porches', href: '/screened-porches' },
+  { label: 'Garages', href: '/garage-builder' },
+  { label: 'Home Additions', href: '/room-additions' },
 ];
 
 const areaLinks: NavItem[] = [
@@ -37,11 +35,10 @@ const areaLinks: NavItem[] = [
 ];
 
 const pricingLinks: NavItem[] = [
-  { label: 'Kitchen Remodel Cost', href: '/cost/kitchen-remodel-cost-simpsonville-sc' },
-  { label: 'Bathroom Remodel Cost', href: '/cost/bathroom-remodel-cost-greenville-sc' },
-  { label: 'Room Addition Cost', href: '/cost/room-addition-cost-greenville-sc' },
-  { label: 'Deck & Porch Cost', href: '/cost/deck-cost-simpsonville-sc' },
-  { label: 'Basement Finishing Cost', href: '/cost/basement-finishing-cost-greenville-sc' },
+  { label: 'Deck Building Cost', href: '/cost/cost-to-build-a-deck-simpsonville-sc' },
+  { label: 'Screened Porch Cost', href: '/cost/screened-porch-vs-sunroom-sc' },
+  { label: 'Garage Construction Cost', href: '/cost/garage-construction-cost-laurens-sc' },
+  { label: 'Home Addition Cost', href: '/cost/home-addition-cost-greenville-sc' },
 ];
 
 export const Header: React.FC = () => {

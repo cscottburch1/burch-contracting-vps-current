@@ -365,7 +365,8 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     keywords: `${slug}, ${service.title.toLowerCase()}, simpsonville sc, contractor`
   };
 
-  return {
+  // Add NOINDEX for basement service (de-optimize non-core services)
+  const metadata: Metadata = {
     title: meta.title,
     description: meta.description,
     keywords: meta.keywords,
@@ -392,6 +393,16 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
       canonical: `https://burchcontracting.com/services/${slug}`
     }
   };
+
+  // De-optimize basement service page
+  if (slug === 'basement') {
+    metadata.robots = {
+      index: false,
+      follow: false,
+    };
+  }
+
+  return metadata;
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
