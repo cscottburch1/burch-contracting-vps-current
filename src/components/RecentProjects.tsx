@@ -61,7 +61,7 @@ export default function RecentProjects() {
             Recent Projects
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Take a look at some of our recently completed projects across the Upstate
+            Explore our deck building, garage construction, screened porch, and home addition projects across Upstate SC
           </p>
         </div>
 
@@ -78,24 +78,34 @@ export default function RecentProjects() {
             All Projects
           </button>
           <button
-            onClick={() => setActiveCategory('handyman')}
+            onClick={() => setActiveCategory('decks')}
             className={`px-6 py-3 rounded-lg font-medium transition ${
-              activeCategory === 'handyman'
+              activeCategory === 'decks'
                 ? 'bg-blue-600 text-white shadow-lg'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            🔧 Handyman Services
+            🏡 Decks
           </button>
           <button
-            onClick={() => setActiveCategory('remodeling')}
+            onClick={() => setActiveCategory('screened-porches')}
             className={`px-6 py-3 rounded-lg font-medium transition ${
-              activeCategory === 'remodeling'
+              activeCategory === 'screened-porches'
                 ? 'bg-blue-600 text-white shadow-lg'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            🏗️ Remodeling
+            🏠 Screened Porches
+          </button>
+          <button
+            onClick={() => setActiveCategory('garages')}
+            className={`px-6 py-3 rounded-lg font-medium transition ${
+              activeCategory === 'garages'
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            🚗 Garages
           </button>
           <button
             onClick={() => setActiveCategory('additions')}
@@ -105,7 +115,7 @@ export default function RecentProjects() {
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            ➕ Additions
+            ➕ Home Additions
           </button>
         </div>
 

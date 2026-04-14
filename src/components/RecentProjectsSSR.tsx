@@ -15,7 +15,7 @@ export default function RecentProjectsSSR() {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Recent Projects</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A look at a few recent remodeling and outdoor living projects across the Upstate
+            Recent deck, garage, screened porch, and home addition projects across Upstate SC
           </p>
         </div>
 

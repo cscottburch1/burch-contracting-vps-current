@@ -37,25 +37,54 @@ const cityContent: Record<string, {
   simpsonville: {
     name: "Simpsonville",
     displayName: "Simpsonville, SC",
-    tagline: "Professional Basement Finishing, Kitchen Remodeling & Home Services in Simpsonville, SC",
-    history: "",
+    tagline: "Expert Deck Builder, Garage Contractor & Home Addition Specialist in Simpsonville, SC",
+    history: "Simpsonville has grown from a small railroad town into one of Upstate South Carolina's most desirable communities. With a thriving downtown, excellent schools, and a perfect balance of suburban convenience and small-town charm, Simpsonville attracts families seeking quality of life. The city's continued growth means homeowners regularly invest in outdoor living spaces, garage additions, and home expansions.",
     modernDay: {
-      population: "",
-      growth: "",
-      characteristics: []
+      population: "Over 24,000 residents",
+      growth: "One of South Carolina's fastest-growing cities",
+      characteristics: [
+        "Mix of established neighborhoods and new construction",
+        "Highly-rated Greenville County schools",
+        "Vibrant downtown with local businesses and events",
+        "Strong real estate market with consistent appreciation",
+        "Family-oriented community with excellent amenities"
+      ]
     },
-    neighborhoods: [],
-    whyChooseUs: [
-      "Basement finishing contractor Simpsonville SC - Transform unfinished basements into beautiful living spaces with rec rooms, home theaters, and in-law suites",
-      "Kitchen remodeling Simpsonville - Custom cabinets, granite countertops, tile backsplashes, and modern appliances for stunning kitchen renovations",
-      "Bathroom remodeling Simpsonville SC - Complete bath renovations including tub to tile shower conversions, walk-in showers, vanity installations",
-      "Room additions Simpsonville - Add valuable square footage with professionally built room additions, bump-outs, and second-story expansions",
-      "Screened porch builder Simpsonville - Custom screened porches and three-season rooms for comfortable outdoor living year-round",
-      "Deck contractor Simpsonville SC - Composite and wood deck construction, repairs, and rebuilds with expert craftsmanship",
-      "Licensed, insured, BBB A+ rated contractor serving Simpsonville for 30+ years with professional home improvement services"
+    neighborhoods: [
+      {
+        name: "Downtown Simpsonville",
+        description: "Historic core with renovated homes and walkable streets",
+        homeTypes: "Craftsman, bungalow, and traditional homes (1920s-1960s)"
+      },
+      {
+        name: "Five Forks Area",
+        description: "Family-friendly master-planned communities",
+        homeTypes: "Contemporary single-family homes (1990s-present)"
+      },
+      {
+        name: "Hillcrest & Southeast Simpsonville",
+        description: "Established neighborhoods with mature landscaping",
+        homeTypes: "Ranch, split-level, and traditional designs (1970s-2000s)"
+      }
     ],
-    localInsights: [],
-    servicesIntro: "Burch Contracting delivers expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, room additions, screened porches, and custom decks throughout Simpsonville, SC. Our professional contractors specialize in transforming homes with quality craftsmanship, premium materials, and reliable service."
+    whyChooseUs: [
+      "Deck builder Simpsonville SC - Custom wood and composite decks designed for outdoor entertaining and family gatherings",
+      "Garage builder Simpsonville - Attached and detached garage construction with expert craftsmanship and attention to detail",
+      "Screened porch contractor Simpsonville SC - Beautiful aluminum screened porches for bug-free outdoor living year-round",
+      "Home addition specialist Simpsonville - Professional room additions, bump-outs, and second-story expansions that add valuable square footage",
+      "Local contractor serving Simpsonville for 30+ years with BBB A+ rating and proven track record",
+      "Licensed and insured with comprehensive liability coverage for your protection",
+      "Free estimates with detailed scope of work and transparent pricing"
+    ],
+    localInsights: [
+      "Heritage Park hosts community events and farmer's markets",
+      "Excellent Greenville County school system attracts families",
+      "Growing downtown district with unique shops and restaurants",
+      "Strong sense of community with active neighborhood associations",
+      "Convenient access to Greenville while maintaining small-town charm",
+      "Continued residential growth drives demand for home improvements"
+    ],
+    servicesIntro: "Burch Contracting delivers expert deck building, garage construction, screened porch installation, and home addition services throughout Simpsonville, SC. Our professional contractors specialize in outdoor living spaces and structural additions with quality craftsmanship, premium materials, and reliable service."
   },
   greenville: {
     name: "Greenville",
@@ -172,25 +201,54 @@ const cityContent: Record<string, {
   woodruff: {
     name: "Woodruff",
     displayName: "Woodruff, SC",
-    tagline: "Basement Finishing, Kitchen & Bath Remodeling Services in Woodruff, SC",
-    history: "",
+    tagline: "Trusted Deck Builder, Garage Contractor & Home Addition Services in Woodruff, SC",
+    history: "Woodruff is a small town with deep roots in South Carolina's textile heritage. Founded in the late 1800s, it served as a mill town that provided employment and community for generations. Today, Woodruff maintains its small-town character while offering affordable housing and a peaceful lifestyle convenient to both Spartanburg and Greenville.",
     modernDay: {
-      population: "",
-      growth: "",
-      characteristics: []
+      population: "Approximately 4,000 residents",
+      growth: "Stable community with selective new development",
+      characteristics: [
+        "Small-town atmosphere with friendly neighbors",
+        "Affordable housing compared to larger cities",
+        "Mix of historic homes and newer construction",
+        "Convenient to I-26 and both Greenville and Spartanburg",
+        "Strong community pride and local traditions"
+      ]
     },
-    neighborhoods: [],
-    whyChooseUs: [
-      "Basement finishing Woodruff SC - Professional basement remodeling creating additional living space with family rooms, game rooms, home gyms, and guest bedrooms",
-      "Kitchen remodeling Woodruff - Transform outdated kitchens with modern designs, custom cabinets, stone countertops, tile backsplashes, and new flooring",
-      "Bathroom renovation Woodruff SC - Complete bathroom remodels featuring contemporary fixtures, tiled showers, soaking tubs, and stylish vanities",
-      "Tub to shower conversion Woodruff - Replace old bathtubs with accessible walk-in tile showers perfect for aging-in-place and modern living",
-      "Room additions Woodruff SC - Expand your home's footprint with expertly constructed room additions and home expansions",
-      "Deck and porch builder Woodruff - Custom decks and screened porches built with quality materials for durable outdoor living spaces",
-      "Trusted local contractor serving Woodruff with honest pricing, quality materials, and dependable home improvement services"
+    neighborhoods: [
+      {
+        name: "Historic Downtown",
+        description: "Original town center with historic character",
+        homeTypes: "Historic homes, mill houses (1900s-1940s)"
+      },
+      {
+        name: "Residential Woodruff",
+        description: "Established neighborhoods with mature trees",
+        homeTypes: "Ranch, traditional, and modest homes (1950s-1990s)"
+      },
+      {
+        name: "Rural Woodruff",
+        description: "Properties with acreage outside town limits",
+        homeTypes: "Homes on larger lots, some with outbuildings"
+      }
     ],
-    localInsights: [],
-    servicesIntro: "Burch Contracting provides comprehensive home remodeling services to Woodruff homeowners including basement finishing, kitchen and bathroom renovations, bath to shower conversions, room additions, decks, and screened porches. We deliver quality workmanship with fair, honest pricing and reliable service."
+    whyChooseUs: [
+      "Deck contractor Woodruff SC - Quality deck building with composite and pressure-treated wood options",
+      "Garage builder Woodruff - Professional garage construction for storage and vehicle protection",
+      "Screened porch contractor Woodruff SC - Custom screened porches for comfortable outdoor relaxation",
+      "Room addition specialist Woodruff - Expert home expansions and room additions built to code",
+      "Serving Woodruff and surrounding areas for 30+ years",
+      "BBB A+ rated with proven track record of customer satisfaction",
+      "Honest pricing and transparent communication throughout your project"
+    ],
+    localInsights: [
+      "Small-town charm with lower cost of living than larger cities",
+      "Historic downtown maintains community character",
+      "Convenient access to both Greenville and Spartanburg employment",
+      "Strong community connections and local events",
+      "Affordable property values attract first-time homebuyers",
+      "Rural setting with modern conveniences nearby"
+    ],
+    servicesIntro: "Serving Woodruff homeowners with professional deck construction, garage building, screened porch installation, and room addition services. Burch Contracting delivers honest pricing, quality craftsmanship, and dependable service to every project."
   },
   "gray-court": {
     name: "Gray Court",
@@ -246,25 +304,54 @@ const cityContent: Record<string, {
   "fountain-inn": {
     name: "Fountain Inn",
     displayName: "Fountain Inn, SC",
-    tagline: "Expert Kitchen & Bath Remodeling, Basement Finishing in Fountain Inn, SC",
-    history: "",
+    tagline: "Professional Deck Builder, Garage Contractor & Screened Porch Specialist in Fountain Inn, SC",
+    history: "Fountain Inn's history dates back to the 1830s when it served as a stagecoach stop. The town grew around textile mills and manufacturing, developing a strong working-class community. Today, Fountain Inn balances its historic downtown charm with modern growth, attracting families and young professionals who value its tight-knit community and convenient location between Greenville and Laurens.",
     modernDay: {
-      population: "",
-      growth: "",
-      characteristics: []
+      population: "Over 10,000 residents",
+      growth: "Steady residential and commercial expansion",
+      characteristics: [
+        "Historic downtown with local businesses and community events",
+        "Mix of historic homes and modern developments",
+        "Family-friendly atmosphere with strong schools",
+        "Active parks and recreation programs",
+        "Growing retail and dining options"
+      ]
     },
-    neighborhoods: [],
-    whyChooseUs: [
-      "Kitchen remodeling Fountain Inn SC - Complete kitchen renovations with custom cabinetry, quartz and granite countertops, professional tile work, and energy-efficient appliances",
-      "Bathroom remodeling Fountain Inn - Full bath transformations featuring luxurious tile showers, modern vanities, and spa-like upgrades",
-      "Bath to shower conversion Fountain Inn SC - Replace outdated tubs with beautiful walk-in tile showers, zero-threshold entries, and custom glass enclosures",
-      "Basement finishing contractor Fountain Inn - Add living space with finished basements perfect for family rooms, home offices, guest suites, and entertainment areas",
-      "Deck builder Fountain Inn SC - Custom composite and wood decks designed for outdoor entertaining and relaxation with professional installation",
-      "Screened porch contractor Fountain Inn - Build screened-in porches and outdoor living spaces for bug-free enjoyment of your backyard",
-      "Professional contractors serving Fountain Inn with licensed, insured, BBB A+ rated home improvement services and quality workmanship"
+    neighborhoods: [
+      {
+        name: "Historic Downtown",
+        description: "Original town center with restored historic homes",
+        homeTypes: "Victorian, craftsman, and traditional homes (1900s-1950s)"
+      },
+      {
+        name: "North Fountain Inn",
+        description: "Newer developments with family-oriented amenities",
+        homeTypes: "Contemporary single-family homes (1990s-present)"
+      },
+      {
+        name: "East & West Residential",
+        description: "Established neighborhoods with mature trees",
+        homeTypes: "Ranch, split-level, and traditional designs (1960s-1990s)"
+      }
     ],
-    localInsights: [],
-    servicesIntro: "Transform your Fountain Inn home with Burch Contracting's professional remodeling services. We specialize in kitchen and bathroom renovations, bath to tile shower conversions, basement finishing, custom decks, screened porches, and room additions with expert craftsmanship and attention to detail."
+    whyChooseUs: [
+      "Deck builder Fountain Inn SC - Expert composite and wood deck construction for outdoor living and entertaining",
+      "Garage contractor Fountain Inn - Quality attached and detached garage construction with professional craftsmanship",
+      "Screened porch builder Fountain Inn SC - Custom aluminum screened porches for comfortable outdoor enjoyment",
+      "Home addition contractor Fountain Inn - Professional room additions and home expansions built to last",
+      "Serving Fountain Inn for 30+ years with BBB A+ rating and proven reliability",
+      "Licensed, insured, and bonded for your complete protection",
+      "Free consultations with detailed estimates and honest pricing"
+    ],
+    localInsights: [
+      "Annual Younts Center Ice Cream Social brings community together",
+      "Historic downtown features local shops and restaurants",
+      "Strong sense of community with active civic organizations",
+      "Convenient access to both Greenville and Laurens",
+      "Growing residential areas drive demand for home improvements",
+      "Family-friendly parks and recreation facilities"
+    ],
+    servicesIntro: "Serving Fountain Inn homeowners with professional deck building, garage construction, screened porch installation, and room addition services. Burch Contracting brings 30+ years of experience, quality craftsmanship, and reliable service to every project."
   },
   mauldin: {
     name: "Mauldin",
@@ -300,12 +387,13 @@ const cityContent: Record<string, {
       }
     ],
     whyChooseUs: [
-      "Many homes are 30-60 years old and need significant updates",
-      "Original homeowners aging in place require accessibility modifications",
-      "Kitchen and bathroom remodels extremely popular in established neighborhoods",
-      "Mature properties need regular maintenance and repairs",
-      "Strong real estate market means sellers invest in pre-sale improvements",
-      "Community values experienced contractors familiar with older home construction"
+      "Deck builder Mauldin SC - Quality deck construction for established neighborhoods with mature landscaping",
+      "Garage contractor Mauldin - Expert garage additions providing valuable storage and vehicle protection",
+      "Screened porch builder Mauldin SC - Custom screened porches perfect for outdoor living in established communities",
+      "Home addition specialist Mauldin - Professional room additions that complement existing home architecture",
+      "Experience working with 30-60 year old homes and established neighborhoods",
+      "Understanding of aging-in-place modifications and accessibility needs",
+      "Licensed and insured with BBB A+ rating since 2014"
     ],
     localInsights: [
       "Mauldin Cultural Center hosts community events year-round",
@@ -315,35 +403,64 @@ const cityContent: Record<string, {
       "Convenient to Greenville employment and entertainment",
       "Family-friendly atmosphere with good schools"
     ],
-    servicesIntro: "Mauldin homeowners need contractors who understand the unique challenges of updating established homes while maintaining their character and value."
+    servicesIntro: "Mauldin homeowners need contractors who understand the unique opportunities of established homes while maintaining their character and value. Burch Contracting specializes in deck construction, garage additions, screened porches, and room additions tailored to established neighborhoods."
   },
   laurens: {
     name: "Laurens",
     displayName: "Laurens, SC",
-    tagline: "Professional Home Remodeling & Basement Finishing Services in Laurens, SC",
-    history: "",
+    tagline: "Expert Deck Builder, Garage Contractor & Home Addition Specialist in Laurens, SC",
+    history: "Laurens, the county seat of Laurens County, was established in 1785 and named after Revolutionary War hero Henry Laurens. The city has a rich history in textile manufacturing and agriculture. Today, Laurens maintains its historic downtown square while serving as a regional hub for Laurens County, offering a mix of historic charm and modern amenities.",
     modernDay: {
-      population: "",
-      growth: "",
-      characteristics: []
+      population: "Over 9,000 residents in the city",
+      growth: "Stable community with historic preservation focus",
+      characteristics: [
+        "Historic downtown square with local businesses",
+        "County government center and regional services",
+        "Mix of historic homes and modern developments",
+        "Affordable cost of living compared to Greenville",
+        "Strong sense of community and local pride"
+      ]
     },
-    neighborhoods: [],
-    whyChooseUs: [
-      "Basement finishing contractor Laurens SC - Create beautiful finished basements with rec rooms, home theaters, additional bedrooms, and functional living spaces",
-      "Kitchen remodeling Laurens - Complete kitchen transformations featuring custom cabinetry, granite or quartz countertops, designer tile work, and modern lighting",
-      "Bathroom remodeling Laurens SC - Full bathroom renovations with luxury tile showers, modern fixtures, heated floors, and spa-inspired designs",
-      "Bath to tile shower conversion Laurens - Convert outdated tub/shower combos to beautiful walk-in tile showers with frameless glass doors and custom tile patterns",
-      "Screened porch builder Laurens SC - Add screened porches and outdoor living areas for comfortable entertaining and relaxation",
-      "Deck contractor Laurens - Build custom wood and composite decks designed for your lifestyle with professional installation and quality materials",
-      "Experienced contractor serving Laurens with 30+ years expertise, licensed and insured, delivering professional home improvement solutions"
+    neighborhoods: [
+      {
+        name: "Historic District",
+        description: "Downtown area with preserved historic homes",
+        homeTypes: "Victorian, colonial revival, historic homes (1800s-1930s)"
+      },
+      {
+        name: "Residential Laurens",
+        description: "Established neighborhoods surrounding downtown",
+        homeTypes: "Ranch, traditional, and split-level homes (1950s-1990s)"
+      },
+      {
+        name: "Suburban Laurens",
+        description: "Newer developments on city outskirts",
+        homeTypes: "Contemporary single-family homes (1990s-present)"
+      }
     ],
-    localInsights: [],
-    servicesIntro: "Serving Laurens homeowners with expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, room additions, screened porches, and custom deck construction. Burch Contracting combines quality craftsmanship with reliable service and competitive pricing for all your home improvement needs."
+    whyChooseUs: [
+      "Deck builder Laurens SC - Professional deck construction with wood and composite materials for lasting outdoor spaces",
+      "Garage contractor Laurens - Expert garage building for additional storage and vehicle protection",
+      "Screened porch builder Laurens SC - Custom screened porches designed for comfortable outdoor living",
+      "Home addition contractor Laurens - Quality room additions and home expansions built to your specifications",
+      "Serving Laurens County for 30+ years with proven reliability",
+      "Licensed, insured, and BBB A+ rated for your protection",
+      "Competitive pricing with detailed estimates and no hidden costs"
+    ],
+    localInsights: [
+      "Historic courthouse square is the heart of downtown",
+      "Annual festivals and events celebrate community heritage",
+      "Affordable property values attract families and retirees",
+      "Close to Lake Greenwood for recreational opportunities",
+      "County seat provides employment and services",
+      "Strong community connections and local traditions"
+    ],
+    servicesIntro: "Serving Laurens and Laurens County with professional deck building, garage construction, screened porch installation, and room addition services. Burch Contracting delivers 30+ years of experience, quality materials, and honest service to every project."
   },
   greer: {
     name: "Greer",
     displayName: "Greer, SC",
-    tagline: "Kitchen & Bath Remodeling, Basement Finishing in Greer, SC",
+    tagline: "Professional Deck Builder, Garage Contractor & Home Addition Services in Greer, SC",
     history: "Greer began as a textile mill town in the late 1800s, founded by William and James Greer. The town developed as one of South Carolina's most successful mill communities, with multiple textile operations providing employment and community identity. Though the traditional textile industry has diminished, Greer has successfully transformed into a diverse industrial and residential hub. The city retains pride in its manufacturing heritage while embracing modern growth and development.",
     modernDay: {
       population: "Over 30,000 residents",
@@ -374,22 +491,23 @@ const cityContent: Record<string, {
       }
     ],
     whyChooseUs: [
-      "Greer homeowners often inherit historic properties requiring expert restoration knowledge",
-      "Many homes 40-70 years old need kitchen and bathroom updates for modern living",
-      "Growing families invest in additions and basement finishing for extra space",
-      "Home improvement projects add value in Greer's competitive real estate market",
-      "Properties need regular maintenance due to South Carolina's humid climate",
-      "Community values local contractors who provide quality work and fair pricing"
+      "Deck builder Greer SC - Expert deck construction with composite and wood materials for lasting outdoor spaces",
+      "Garage contractor Greer - Professional garage building for vehicle storage and additional space",
+      "Screened porch builder Greer SC - Custom screened porches for comfortable year-round outdoor living",
+      "Home addition specialist Greer - Quality room additions and home expansions tailored to your needs",
+      "Serving Greer for 30+ years with BBB A+ rating and proven customer satisfaction",
+      "Historic property expertise combined with modern building techniques",
+      "Licensed and insured with comprehensive coverage for your protection"
     ],
     localInsights: [
-      "Greer has a strong sense of community pride rooted in its mill heritage",
-      "Growing shopping and dining options make Greer increasingly self-sufficient",
-      "Good access to both Greenville's amenities and rural Upstate character",
-      "Excellent schools draw families to the area",
-      "Manufacturing still provides strong local employment",
+      "Strong community pride rooted in mill heritage",
+      "Growing shopping and dining options along Wade Hampton",
+      "Excellent access to both Greenville amenities and rural charm",
+      "Highly-rated schools attract families to the area",
+      "Manufacturing provides strong local employment base",
       "City invests in community improvements and parks"
     ],
-    servicesIntro: "Greer homeowners deserve quality craftsmanship from contractors who understand both historic properties and modern family needs. Burch Contracting brings expertise in all aspects of home remodeling to this growing community."
+    servicesIntro: "Greer homeowners deserve quality craftsmanship from contractors who understand both historic properties and modern family needs. Burch Contracting brings expertise in deck building, garage construction, screened porches, and home additions to this growing community."
   }
 };
 
@@ -424,29 +542,29 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
   // City-specific metadata optimized for target markets
   const cityMetadata: Record<string, { title: string; description: string; keywords: string }> = {
     simpsonville: {
-      title: 'Basement Finishing, Kitchen & Bath Remodeling Simpsonville SC | Burch Contracting',
-      description: 'Expert basement finishing, kitchen remodeling, bathroom renovation, bath to shower conversions, room additions, screened porches, and deck building in Simpsonville SC. Licensed, insured, BBB A+ rated contractor serving Simpsonville with 30+ years experience. Free estimates!',
-      keywords: 'basement finishing Simpsonville SC, kitchen remodeling Simpsonville, bathroom remodeling Simpsonville SC, bath to shower conversion Simpsonville, room additions Simpsonville, screened porch Simpsonville, deck builder Simpsonville, home remodeling Simpsonville, contractor Simpsonville SC'
+      title: 'Deck Builder, Garage Contractor & Home Additions Simpsonville SC | Burch Contracting',
+      description: 'Expert deck building, garage construction, screened porch installation, and home additions in Simpsonville SC. Licensed, insured, BBB A+ rated contractor serving Simpsonville for 30+ years. Professional craftsmanship, free estimates!',
+      keywords: 'deck builder Simpsonville SC, garage contractor Simpsonville, screened porch Simpsonville SC, home additions Simpsonville, room additions Simpsonville, deck construction Simpsonville, garage builder Simpsonville, contractor Simpsonville SC'
     },
     'fountain-inn': {
-      title: 'Kitchen & Bath Remodeling, Basement Finishing Fountain Inn SC | Burch Contracting',
-      description: 'Professional kitchen and bathroom remodeling, basement finishing, bath to tile shower conversions, deck building, and screened porches in Fountain Inn SC. Licensed contractor with 30+ years serving Fountain Inn. Quality craftsmanship, free estimates. Call today!',
-      keywords: 'kitchen remodeling Fountain Inn SC, bathroom remodeling Fountain Inn, basement finishing Fountain Inn SC, bath to shower conversion Fountain Inn, deck builder Fountain Inn, screened porch Fountain Inn, contractor Fountain Inn SC, home renovation Fountain Inn'
+      title: 'Deck Builder, Garage & Screened Porch Contractor Fountain Inn SC | Burch Contracting',
+      description: 'Professional deck construction, garage building, screened porches, and room additions in Fountain Inn SC. Licensed contractor with 30+ years serving Fountain Inn. Quality craftsmanship, honest pricing, free estimates. Call today!',
+      keywords: 'deck builder Fountain Inn SC, garage contractor Fountain Inn, screened porch Fountain Inn SC, home additions Fountain Inn, room additions Fountain Inn, deck construction Fountain Inn, garage builder Fountain Inn, contractor Fountain Inn SC'
     },
     woodruff: {
-      title: 'Basement Finishing, Kitchen & Bath Remodeling Woodruff SC | Burch Contracting',
-      description: 'Trusted basement finishing, kitchen remodeling, bathroom renovation, tub to shower conversions, room additions, and deck building in Woodruff SC. Licensed, insured contractor serving Woodruff with honest pricing and quality work. Free consultations!',
-      keywords: 'basement finishing Woodruff SC, kitchen remodeling Woodruff, bathroom remodeling Woodruff SC, tub to shower conversion Woodruff, room additions Woodruff, deck contractor Woodruff, screened porch Woodruff, contractor Woodruff SC'
+      title: 'Deck Builder, Garage Contractor & Home Additions Woodruff SC | Burch Contracting',
+      description: 'Trusted deck building, garage construction, screened porch installation, and room additions in Woodruff SC. Licensed, insured contractor serving Woodruff with honest pricing and quality work. Free consultations!',
+      keywords: 'deck builder Woodruff SC, garage contractor Woodruff, screened porch Woodruff SC, home additions Woodruff, room additions Woodruff, deck construction Woodruff, contractor Woodruff SC'
     },
     laurens: {
-      title: 'Basement Finishing, Kitchen & Bath Remodeling Laurens SC | Burch Contracting',
-      description: 'Expert basement finishing, kitchen and bathroom remodeling, bath to tile shower conversions, screened porches, decks, and room additions in Laurens SC. Professional contractor serving Laurens with 30+ years experience. Licensed, insured, BBB A+ rated. Free estimates!',
-      keywords: 'basement finishing Laurens SC, kitchen remodeling Laurens, bathroom remodeling Laurens SC, bath to shower conversion Laurens, deck builder Laurens, screened porch Laurens, room additions Laurens, contractor Laurens SC'
+      title: 'Deck Builder, Garage Contractor & Home Additions Laurens SC | Burch Contracting',
+      description: 'Expert deck construction, garage building, screened porches, and room additions in Laurens SC. Professional contractor serving Laurens with 30+ years experience. Licensed, insured, BBB A+ rated. Free estimates!',
+      keywords: 'deck builder Laurens SC, garage contractor Laurens, screened porch Laurens SC, home additions Laurens, room additions Laurens, deck construction Laurens, contractor Laurens SC'
     },
     greer: {
-      title: 'Kitchen & Bath Remodeling, Basement Finishing Greer SC | Burch Contracting',
-      description: 'Professional kitchen and bathroom remodeling, basement finishing, bath to tile shower conversions, deck building, and room additions in Greer SC. Licensed contractor with 30+ years experience serving Greer homeowners. Quality craftsmanship, free estimates. Call today!',
-      keywords: 'kitchen remodeling Greer SC, bathroom remodeling Greer, basement finishing Greer SC, bath to shower conversion Greer, deck builder Greer, screened porch Greer, room additions Greer, contractor Greer SC'
+      title: 'Deck Builder, Garage & Screened Porch Contractor Greer SC | Burch Contracting',
+      description: 'Professional deck building, garage construction, screened porch installation, and room additions in Greer SC. Licensed contractor with 30+ years experience serving Greer homeowners. Quality craftsmanship, free estimates. Call today!',
+      keywords: 'deck builder Greer SC, garage contractor Greer, screened porch Greer SC, home additions Greer, room additions Greer, deck construction Greer, contractor Greer SC'
     }
   };
 

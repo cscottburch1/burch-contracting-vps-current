@@ -264,6 +264,126 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Core Services Hub - Direct Links to Service Pages */}
+      <Section background="white" padding="lg">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <span className="gradient-text">Expert Construction Services</span> Across Upstate SC
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Serving Simpsonville, Fountain Inn, Mauldin, Laurens, Woodruff, and Gray Court with professional craftsmanship
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
+          <Link href="/deck-builder" className="group block">
+            <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-500">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                  <Icon name="Trees" size={28} className="text-blue-600 group-hover:text-white transition-colors" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    Professional Deck Builder in Simpsonville & Upstate SC
+                  </h3>
+                  <p className="text-gray-600 mb-3">
+                    Custom wood and composite deck construction designed for outdoor living, entertaining, and lasting value. Expert deck building across Simpsonville, Fountain Inn, Mauldin, Laurens, and surrounding areas.
+                  </p>
+                  <div className="flex items-center text-blue-600 font-semibold group-hover:gap-2 transition-all">
+                    View Deck Building Services
+                    <Icon name="ArrowRight" size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/screened-porches" className="group block">
+            <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-500">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-600 transition-colors">
+                  <Icon name="Home" size={28} className="text-green-600 group-hover:text-white transition-colors" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                    Screened Porch Contractor Serving Fountain Inn & Laurens County
+                  </h3>
+                  <p className="text-gray-600 mb-3">
+                    Custom aluminum screened porches and three-season rooms for comfortable, bug-free outdoor enjoyment year-round. Professional screened porch installation throughout Upstate SC.
+                  </p>
+                  <div className="flex items-center text-green-600 font-semibold group-hover:gap-2 transition-all">
+                    View Screened Porch Services
+                    <Icon name="ArrowRight" size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/garage-builder" className="group block">
+            <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-500">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center group-hover:bg-orange-600 transition-colors">
+                  <Icon name="Warehouse" size={28} className="text-orange-600 group-hover:text-white transition-colors" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+                    Expert Garage Builder in Mauldin, Laurens & Greenville County
+                  </h3>
+                  <p className="text-gray-600 mb-3">
+                    Attached and detached garage construction with expert craftsmanship and attention to detail. Quality garage building for vehicle protection and additional storage across the Upstate.
+                  </p>
+                  <div className="flex items-center text-orange-600 font-semibold group-hover:gap-2 transition-all">
+                    View Garage Construction Services
+                    <Icon name="ArrowRight" size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
+          <Link href="/room-additions" className="group block">
+            <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-500">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-600 transition-colors">
+                  <Icon name="Construction" size={28} className="text-purple-600 group-hover:text-white transition-colors" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                    Home Addition Specialist | Room Additions Across Woodruff & Upstate SC
+                  </h3>
+                  <p className="text-gray-600 mb-3">
+                    Professional room additions, bump-outs, and second-story expansions that add valuable square footage and living space. Expert home addition services built to last.
+                  </p>
+                  <div className="flex items-center text-purple-600 font-semibold group-hover:gap-2 transition-all">
+                    View Home Addition Services
+                    <Icon name="ArrowRight" size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </Link>
+        </div>
+
+        <div className="text-center">
+          <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
+            All services backed by 30+ years of experience, BBB A+ rating, and comprehensive licensing and insurance for your complete protection.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button variant="primary" size="lg" href="/contact">
+              <Icon name="Phone" size={20} />
+              Request Free Estimate
+            </Button>
+            <Button variant="outline" size="lg" href="/calculator/decks">
+              View Deck Calculator
+            </Button>
+            <Button variant="outline" size="lg" href="/calculator/garages">
+              View Garage Calculator
+            </Button>
+          </div>
+        </div>
+      </Section>
+
       <Section background="white" padding="lg">
         <div className="mb-16 grid gap-6 rounded-3xl bg-slate-950 p-8 text-white lg:grid-cols-[1.1fr_0.9fr]">
           <div>

@@ -223,6 +223,67 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
         </div>
       </Section>
 
+      {/* Internal Linking - Location & Service Navigation */}
+      <Section background="blue" padding="lg">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
+              Explore nearby service areas
+            </h2>
+            <p className="mt-3 text-lg text-gray-600">
+              We provide professional construction services throughout Upstate South Carolina:
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <a href="/service-areas/simpsonville" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Simpsonville, SC
+              </a>
+              <a href="/service-areas/fountain-inn" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Fountain Inn, SC
+              </a>
+              <a href="/service-areas/mauldin" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Mauldin, SC
+              </a>
+              <a href="/service-areas/laurens" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Laurens, SC
+              </a>
+              <a href="/service-areas/woodruff" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Woodruff, SC
+              </a>
+              <a href="/service-areas/gray-court" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                Gray Court, SC
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
+              Our construction services
+            </h2>
+            <p className="mt-3 text-lg text-gray-600">
+              Explore expert construction services for your home:
+            </p>
+            <div className="mt-6 space-y-3">
+              <a href="/deck-builder" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
+                <div className="font-bold text-slate-900">Professional Deck Building</div>
+                <div className="text-sm text-gray-600">Custom wood and composite decks for outdoor living</div>
+              </a>
+              <a href="/screened-porches" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all hover:bg-green-50 hover:border-green-400 hover:shadow-md">
+                <div className="font-bold text-slate-900">Screened Porch Installation</div>
+                <div className="text-sm text-gray-600">Year-round outdoor comfort and bug-free relaxation</div>
+              </a>
+              <a href="/garage-builder" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all hover:bg-orange-50 hover:border-orange-400 hover:shadow-md">
+                <div className="font-bold text-slate-900">Garage Construction</div>
+                <div className="text-sm text-gray-600">Vehicle protection and valuable storage space</div>
+              </a>
+              <a href="/room-additions" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all hover:bg-purple-50 hover:border-purple-400 hover:shadow-md">
+                <div className="font-bold text-slate-900">Room Additions & Expansions</div>
+                <div className="text-sm text-gray-600">Increase square footage and home value</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </Section>
+
       <Section background="white" padding="lg">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
