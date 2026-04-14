@@ -10,11 +10,11 @@ import { absoluteUrl } from '@/lib/seo/site';
 export const metadata: Metadata = {
   title: 'Project Spotlights | Burch Contracting',
   description:
-    'Browse project spotlight pages for kitchen remodeling, bathroom renovations, additions, decks, screened porches, and basement finishing across Upstate South Carolina.',
+    'Browse project spotlight pages for decks, screened porches, garages, and home additions across Upstate South Carolina.',
   alternates: { canonical: absoluteUrl('/projects') },
   openGraph: {
     title: 'Project Spotlights | Burch Contracting',
-    description: 'Explore project spotlight pages to understand scope, process, timeline ranges, and typical budget bands.',
+    description: 'Explore project spotlight pages for our core services: decks, screened porches, garages, and home additions.',
     url: absoluteUrl('/projects'),
   },
 };
@@ -32,6 +32,12 @@ const projectsItemListSchema = {
 };
 
 export default function ProjectsIndexPage() {
+  // Filter to show only core service projects
+  const coreServiceTypes = ['Deck Builder', 'Screened Porch Builder', 'Garage Builder', 'Room Additions'];
+  const coreProjects = projectSpotlights.filter(project => 
+    coreServiceTypes.includes(project.serviceType)
+  );
+
   return (
     <>
       <Script id="projects-item-list-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsItemListSchema) }} />
@@ -53,7 +59,7 @@ export default function ProjectsIndexPage() {
         </div>
 
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projectSpotlights.map((project) => (
+          {coreProjects.map((project) => (
             <Card key={project.slug} className="hover-lift h-full">
               <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{project.city}</div>
               <h2 className="mt-2 text-2xl font-bold text-gray-900">{project.title}</h2>

@@ -1,7 +1,7 @@
 export const businessConfig = {
   name: "Burch Contracting",
-  tagline: "Reliable Home Repair & Remodeling You Can Trust",
-  description: "Professional residential and light commercial contracting services.",
+  tagline: "Expert Deck, Garage, Porch & Home Addition Contractor",
+  description: "Professional deck building, garage construction, screened porch installation, and home additions across Upstate SC.",
 
   credentials: {
     bbbRating: "A+",
@@ -39,33 +39,11 @@ export const businessConfig = {
 
   services: [
     {
-      id: "handyman",
-      title: "Professional Handyman Services",
-      icon: "Wrench",
-      description: "Same-day repairs, installations & maintenance for homes in Simpsonville, Fountain Inn, Gray Court & Woodruff. Licensed & insured.",
-      tasks: ["Door repairs & hardware", "Cabinet & fixture installation", "Drywall & minor plumbing"]
-    },
-    {
-      id: "remodeling",
-      title: "Kitchen & Bathroom Remodeling",
-      icon: "Home",
-      description: "Complete kitchen & bath renovations with custom cabinets, granite countertops & tile work throughout the Upstate SC region. Free design consultation.",
-      tasks: ["Custom kitchen design", "Luxury bathroom remodels", "Countertops & tile installation"]
-    },
-    {
       id: "additions",
       title: "Decks, Porches & Room Additions",
       icon: "Paintbrush",
       description: "Expert deck builders & porch contractors serving Simpsonville to Laurens. Custom composite & wood decks, screened porches, room additions.",
-      tasks: ["Custom deck construction", "Screened porch building", "Outdoor living spaces"]
-    },
-    {
-      id: "basement",
-      title: "Basement Finishing & Renovations",
-      icon: "Building",
-      image: "/basement-finishing.webp",
-      description: "Transform unfinished basements into beautiful living spaces. Rec rooms, home theaters, offices & in-law suites in Simpsonville & Laurens County.",
-      tasks: ["Complete basement finishing", "Rec rooms & home theaters", "Waterproofing & egress windows"]
+      tasks: ["Custom deck construction", "Screened porch building", "Room additions"]
     }
   ],
 
@@ -102,8 +80,8 @@ export const businessConfig = {
 
   seo: {
     baseUrl: "https://www.burchcontracting.com",
-    defaultTitle: "Burch Contracting | Reliable Home Repair & Remodeling",
-    defaultDescription: "Professional contracting services in Simpsonville, SC.",
-    keywords: "contractor, home repair, remodeling, handyman, kitchen remodel, bathroom remodel, decks, porches"
+    defaultTitle: "Burch Contracting | Deck, Garage, Porch & Addition Contractor",
+    defaultDescription: "Expert deck building, garage construction, screened porch installation, and home additions in Simpsonville, SC and Upstate SC.",
+    keywords: "deck builder, garage builder, screened porch contractor, home additions, Simpsonville SC, Upstate SC"
   }
 };

@@ -15,9 +15,9 @@ import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildOrganizationSchem
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
-  title: 'Construction Renovations and Remodeling | Greenville County and Laurens County Contractor',
+  title: 'Deck Builder, Garage Builder & Home Addition Contractor | Greenville & Laurens County SC',
   description:
-    'Burch is an Upstate SC garage, room addition, screened porch, and deck contractor offering free estimates and clear planning.',
+    'Expert deck builder, screened porch contractor, garage builder, and home addition specialist in Upstate SC. Serving Simpsonville, Fountain Inn, Mauldin, Laurens, Woodruff.',
   keywords: [
     'Upstate SC contractor',
     'garage contractor Upstate SC',
@@ -60,9 +60,17 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Fetch active services from database
   const dbServices = await getServicesForPage();
-  const services = dbServices.length > 0 
+  const allServices = dbServices.length > 0 
     ? dbServices.map(mapToBusinessConfigFormat)
     : businessConfig.services;
+  
+  // Filter to only show core services (decks, porches, garages, additions)
+  // Exclude: handyman, remodeling, basement, ADU
+  const coreServiceSlugs = ['additions', 'decks', 'porches', 'screened-porches', 'garages', 'garage-builder', 'deck-builder', 'room-additions'];
+  const services = allServices.filter(service => 
+    coreServiceSlugs.includes(service.id) || 
+    service.id === 'additions' // Keep the additions service as it covers multiple core services
+  );
 
   const localBusinessSchema = buildLocalBusinessSchema({
     description:
@@ -154,18 +162,18 @@ export default async function HomePage() {
       },
       {
         "@type": "Question",
-        "name": "How long does a typical kitchen remodel take in Simpsonville?",
+        "name": "How long does it take to build a deck or screened porch?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most kitchen remodels take 4-6 weeks depending on scope. A cabinet and countertop refresh takes 2-3 weeks, while a complete gut renovation takes 8-12 weeks. We provide detailed timelines during your free consultation."
+          "text": "Most deck projects take 1-2 weeks depending on size and complexity. Screened porches typically take 2-4 weeks. We provide detailed timelines during your free consultation and keep you updated throughout the project."
         }
       },
       {
         "@type": "Question",
-        "name": "Do you offer same-day handyman services?",
+        "name": "Do you handle permits for deck and garage construction?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! We offer same-day handyman service when you call by noon. Perfect for urgent repairs like door fixes, leaky faucets, drywall patches, and fixture installations throughout Simpsonville and surrounding areas."
+          "text": "Yes! We handle all permit applications and ensure your project meets local building codes in Simpsonville, Fountain Inn, Mauldin, Woodruff, Laurens, and Gray Court. Permit costs are included in your project estimate."
         }
       }
     ]
@@ -303,10 +311,10 @@ export default async function HomePage() {
       <Section background="gray" padding="lg">
         <div className="text-center mb-16 animate-fade-in-up">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Services
+            Our Core Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            High-value remodeling and outdoor living services tailored to how Upstate families actually live
+            Expert construction services for decks, screened porches, garages, and home additions across Upstate SC
           </p>
         </div>
 
@@ -327,9 +335,9 @@ export default async function HomePage() {
 
       <Section background="white" padding="lg">
         <div className="mb-14 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-gray-900">Popular Remodeling Pages by City</h2>
+          <h2 className="mb-4 text-4xl font-bold text-gray-900">Service Pages by City</h2>
           <p className="mx-auto max-w-3xl text-xl text-gray-600">
-            These localized pages target the exact service and city combinations homeowners search before they call.
+            Find detailed information about decks, screened porches, garages, and home additions in your city.
           </p>
         </div>
 

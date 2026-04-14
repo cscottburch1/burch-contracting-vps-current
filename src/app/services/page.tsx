@@ -7,16 +7,16 @@ import { localDominanceServices, serviceHubPages, targetCities } from '@/lib/seo
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Garage, Addition & Porch Services | Burch Contracting',
+  title: 'Deck, Garage, Porch & Home Addition Services | Burch Contracting',
   description:
-    'Explore garage, room addition, screened porch, deck, and ADU services from Burch Contracting across Upstate South Carolina.',
+    'Expert deck building, garage construction, screened porch installation, and home additions from Burch Contracting across Upstate South Carolina.',
   alternates: {
     canonical: absoluteUrl('/services'),
   },
   openGraph: {
-    title: 'Garage, Addition & Porch Services | Burch Contracting',
+    title: 'Deck, Garage, Porch & Home Addition Services | Burch Contracting',
     description:
-      'Explore garage, room addition, screened porch, deck, and ADU services for homeowners across Upstate South Carolina.',
+      'Professional deck, garage, screened porch, and home addition services for homeowners across Upstate South Carolina.',
     url: absoluteUrl('/services'),
     type: 'website',
   },
@@ -28,9 +28,9 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_right,_white,_transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-6xl">Garage Builders, Room Additions, Screened Porches, Decks & ADUs</h1>
+          <h1 className="text-4xl font-bold md:text-6xl">Deck Builders, Garage Builders, Screened Porches & Home Additions</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
-            Explore the core services Burch Contracting offers across Upstate South Carolina, from custom garages and room additions to screened porches, decks, and ADUs.
+            Explore the core services Burch Contracting offers across Upstate South Carolina: decks, garages, screened porches, and home additions.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" size="lg" href="/contact">
