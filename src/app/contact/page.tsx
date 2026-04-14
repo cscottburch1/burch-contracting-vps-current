@@ -826,6 +826,7 @@ export default function ContactPage() {
           </div>
 
           <div className="space-y-6">
+            <h2 className="sr-only">How to Reach Us</h2>
             <Card padding="lg">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
               <div className="space-y-4">
