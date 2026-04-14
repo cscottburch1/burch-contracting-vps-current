@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
+            <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2">
                 <Icon name="Phone" size={18} className="mt-1" />
@@ -48,12 +48,12 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Hours</h4>
+            <h3 className="text-lg font-semibold mb-4">Hours</h3>
             <p className="text-gray-400 whitespace-pre-line">{businessConfig.contact.hours}</p>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Explore</h4>
+            <h3 className="text-lg font-semibold mb-4">Explore</h3>
             <ul className="space-y-2 text-gray-400">
               <li><Link href="/locations" className="hover:text-white">Areas Served</Link></li>
               <li><Link href="/cost" className="hover:text-white">Pricing Guide</Link></li>

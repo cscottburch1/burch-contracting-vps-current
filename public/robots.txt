@@ -13,6 +13,63 @@ Disallow: /api/
 Disallow: /crm/
 Crawl-delay: 0
 
+# AI/LLM Crawlers - Explicitly Allow for GEO/AI Search Readiness
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /api/
+Disallow: /crm/
+
 Host: https://burchcontracting.com
 Sitemap: https://burchcontracting.com/sitemap.xml
 Sitemap: https://burchcontracting.com/sitemaps/local-pages.xml

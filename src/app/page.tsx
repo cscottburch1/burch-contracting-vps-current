@@ -10,12 +10,12 @@ import Link from 'next/link';
 import RecentProjectsSSR from '@/components/RecentProjectsSSR';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import type { Metadata } from 'next';
-import { absoluteUrl } from '@/lib/seo/site';
+import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
-  title: 'Upstate SC Garage, Room Addition & Porch Contractor | Burch',
+  title: 'Construction Renovations and Remodeling | Greenville County and Laurens County Contractor',
   description:
     'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates and clear planning.',
   keywords: [
@@ -34,10 +34,27 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    type: 'website',
+    locale: 'en_US',
     title: 'Burch | Upstate SC Garage, Room Addition & Porch Contractor',
     description:
       'Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates.',
     url: absoluteUrl('/'),
+    siteName: 'Burch Contracting',
+    images: [
+      {
+        url: absoluteUrl(siteConfig.defaultOgImage),
+        width: 1200,
+        height: 630,
+        alt: 'Burch Contracting - Upstate SC garage, addition, porch, deck, and ADU contractor',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Burch Contracting | Upstate SC Garage & Addition Contractor',
+    description: 'Free estimates from an Upstate SC garage, addition, porch, deck, and ADU contractor.',
+    images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
 };
 

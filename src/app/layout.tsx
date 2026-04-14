@@ -95,6 +95,8 @@ export default function RootLayout({
         {/* Resource hints for analytics only; Geist is self-hosted by Next.js */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* AI/LLM discovery reference */}
+        <link rel="llms-txt" href="/llms.txt" type="text/plain" />
       </head>
       <body
         className={`${geistMono.variable} antialiased`}
