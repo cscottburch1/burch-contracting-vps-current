@@ -527,8 +527,8 @@ export default async function HomePage() {
                   A+
                 </div>
                 <div className="text-left">
-                  <div className="text-sm font-semibold text-gray-900">BBB Accredited</div>
-                  <div className="text-xs text-gray-600">A+ Rating Since 2014</div>
+                  <div className="text-sm font-semibold text-gray-900">A+ BBB</div>
+                  <div className="text-xs text-gray-600">Rating Since 2014</div>
                 </div>
               </div>
               <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
