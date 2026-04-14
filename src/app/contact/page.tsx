@@ -8,7 +8,8 @@ import { Icon } from '@/components/ui/Icon';
 import { Card } from '@/components/ui/Card';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
-import { buildContactPointSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildContactPointSchema } from '@/lib/seo/schema';
+import { absoluteUrl } from '@/lib/seo/site';
 
 type GrecaptchaApi = {
   execute: (siteKey: string, options: { action: string }) => Promise<string>;
@@ -38,6 +39,10 @@ interface FormErrors {
 
 export default function ContactPage() {
   const contactSchema = buildContactPointSchema();
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Contact', url: absoluteUrl('/contact') },
+  ]);
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -327,6 +332,11 @@ export default function ContactPage() {
         id="contact-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {/* Load reCAPTCHA only on contact page to prevent forced reflows site-wide */}

@@ -11,7 +11,7 @@ import RecentProjectsSSR from '@/components/RecentProjectsSSR';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
-import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 
 export const metadata: Metadata = {
@@ -121,6 +121,10 @@ export default async function HomePage() {
     '@graph': [buildWebsiteSchema(), buildOrganizationSchema(), localBusinessSchema],
   };
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+  ]);
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -191,6 +195,11 @@ export default async function HomePage() {
         id="home-schema-graph"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchemaGraph) }}
+      />
+      <script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <script
         id="faq-schema"

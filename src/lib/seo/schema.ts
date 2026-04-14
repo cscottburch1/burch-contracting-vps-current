@@ -41,6 +41,10 @@ const sharedAreaServed = [
 const sharedSameAs = [
   "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875",
   "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
+  "https://www.facebook.com/burchcontracting",
+  "https://www.instagram.com/burchcontracting",
+  "https://www.linkedin.com/company/burch-contracting",
+  "https://www.youtube.com/@burchcontracting",
 ];
 
 export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides = {}) {
