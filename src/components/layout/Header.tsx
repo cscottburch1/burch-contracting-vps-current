@@ -21,6 +21,8 @@ const serviceLinks: NavItem[] = [
   { label: 'Screened Porches', href: '/screened-porches' },
   { label: 'Garages', href: '/garage-builder' },
   { label: 'Home Additions', href: '/room-additions' },
+  { label: 'Kitchen & Bath Remodeling', href: '/kitchen-remodeling' },
+  { label: 'Basement Finishing', href: '/home-renovations' },
 ];
 
 const areaLinks: NavItem[] = [

@@ -13,6 +13,8 @@ import type { Metadata } from 'next';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
+import CitiesGrid from '@/components/locations/CitiesGrid';
+import Testimonials, { generateSampleTestimonials } from '@/components/testimonials/Testimonials';
 
 export const metadata: Metadata = {
   title: 'Deck Builder, Garage Builder & Home Addition Contractor | Greenville & Laurens County SC',
@@ -476,60 +478,23 @@ export default async function HomePage() {
       {/* SECTION 5 — FEATURED PROJECTS */}
       <RecentProjectsSSR />
 
-      {/* SECTION 6 — SERVICE AREA */}
+      {/* SECTION 5.5 — TESTIMONIALS (NEW) */}
+      <Section background="gray" padding="lg">
+        <Testimonials 
+          testimonials={generateSampleTestimonials(6)}
+          title="What Our Customers Say"
+          subtitle="Real feedback from real homeowners throughout Upstate SC"
+          showSchema={true}
+        />
+      </Section>
+
+      {/* SECTION 6 — SERVICE AREA (ENHANCED) */}
       <Section background="white" padding="lg">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Proudly Serving <span className="gradient-text">Upstate South Carolina</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Trusted construction services throughout the Greenville-Spartanburg region
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <Link href="/service-areas/simpsonville" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Simpsonville</h3>
-            </Card>
-          </Link>
-
-          <Link href="/service-areas/fountain-inn" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Fountain Inn</h3>
-            </Card>
-          </Link>
-
-          <Link href="/service-areas/mauldin" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Mauldin</h3>
-            </Card>
-          </Link>
-
-          <Link href="/service-areas/woodruff" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Woodruff</h3>
-            </Card>
-          </Link>
-
-          <Link href="/service-areas/laurens" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Laurens</h3>
-            </Card>
-          </Link>
-
-          <Link href="/service-areas/gray-court" className="group">
-            <Card className="text-center hover:shadow-xl transition-all">
-              <Icon name="MapPin" size={32} className="text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-900">Gray Court</h3>
-            </Card>
-          </Link>
-        </div>
+        <CitiesGrid 
+          title="Proudly Serving Upstate South Carolina"
+          subtitle="Trusted construction services throughout Greenville, Laurens, and Spartanburg Counties"
+          columns={4}
+        />
       </Section>
 
       {/* SECTION 7 — COST + VALUE HOOK */}

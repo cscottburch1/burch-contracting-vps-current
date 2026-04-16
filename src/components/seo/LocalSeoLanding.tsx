@@ -13,6 +13,10 @@ import {
   buildServiceSchema,
 } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import MiniCalculatorEmbed from '@/components/calculators/MiniCalculatorEmbed';
+import ProjectGallery, { generateSampleProjects } from '@/components/projects/ProjectGallery';
+import CitiesGrid from '@/components/locations/CitiesGrid';
+import Testimonials, { generateSampleTestimonials } from '@/components/testimonials/Testimonials';
 
 interface LocalSeoLandingProps {
   page: SeoLandingPageData;
@@ -164,6 +168,23 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
         </div>
       </Section>
 
+      {/* Mini Calculator Embed - Embeddable quick estimator */}
+      <Section background="blue" padding="lg">
+        <MiniCalculatorEmbed 
+          serviceType={
+            page.service.slug.includes('deck') ? 'deck' :
+            page.service.slug.includes('garage') ? 'garage' :
+            page.service.slug.includes('porch') ? 'porch' :
+            page.service.slug.includes('addition') ? 'addition' :
+            page.service.slug.includes('kitchen') || page.service.slug.includes('bath') ? 'kitchen' :
+            page.service.slug.includes('basement') ? 'basement' :
+            'deck'
+          }
+          title={`Quick ${page.service.navLabel} Cost Estimate`}
+          description={`Get an instant ballpark estimate for your ${page.service.navLabel.toLowerCase()} project in ${page.city?.name ?? 'Upstate SC'}.`}
+        />
+      </Section>
+
       <Section background="blue" padding="lg">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
@@ -194,65 +215,23 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
       </Section>
 
       <Section background="white" padding="lg">
-        <div className="mb-8 max-w-3xl">
-          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Recent Projects Near {page.city?.name ?? 'You'}
-          </h2>
-          <p className="mt-3 text-lg text-gray-600">
-            See how we've helped homeowners throughout {page.city?.displayName ?? 'the Upstate'} create beautiful, functional outdoor spaces that add real value to their properties.
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {page.projectHighlights.map((project) => (
-            <Card key={project.title} className="overflow-hidden border border-gray-200 p-0">
-              <Image
-                src={project.image}
-                alt={project.alt}
-                width={1200}
-                height={800}
-                className="h-48 w-full object-cover"
-                loading="lazy"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900">{project.title}</h3>
-                <p className="mt-3 text-gray-600">{project.summary}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
+        <ProjectGallery 
+          projects={generateSampleProjects(page.service.navLabel, 6)}
+          title={`Recent ${page.service.navLabel} Projects Near ${page.city?.name ?? 'You'}`}
+          subtitle={`See how we've helped homeowners throughout ${page.city?.displayName ?? 'the Upstate'} create beautiful, functional spaces that add real value to their properties.`}
+        />
       </Section>
 
-      {/* Internal Linking - Location & Service Navigation */}
+      {/* Enhanced Cities Grid with Service Links */}
       <Section background="blue" padding="lg">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-              Explore nearby service areas
-            </h2>
-            <p className="mt-3 text-lg text-gray-600">
-              We provide professional construction services throughout Upstate South Carolina:
-            </p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <a href="/service-areas/simpsonville" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Simpsonville, SC
-              </a>
-              <a href="/service-areas/fountain-inn" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Fountain Inn, SC
-              </a>
-              <a href="/service-areas/mauldin" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Mauldin, SC
-              </a>
-              <a href="/service-areas/laurens" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Laurens, SC
-              </a>
-              <a href="/service-areas/woodruff" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Woodruff, SC
-              </a>
-              <a href="/service-areas/gray-court" className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-blue-700 font-medium transition-all hover:bg-blue-50 hover:border-blue-400 hover:shadow-md">
-                Gray Court, SC
-              </a>
-            </div>
+            <CitiesGrid 
+              title="Service Areas Near You"
+              subtitle="We provide professional construction services throughout Upstate South Carolina"
+              serviceSlug={page.service.slug}
+              columns={2}
+            />
           </div>
 
           <div>
@@ -282,6 +261,16 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
             </div>
           </div>
         </div>
+      </Section>
+
+      {/* Customer Testimonials with Review Schema */}
+      <Section background="gray" padding="lg">
+        <Testimonials 
+          testimonials={generateSampleTestimonials(6)}
+          title="What Our Customers Say"
+          subtitle={`Real feedback from homeowners throughout ${page.city?.displayName ?? 'Upstate SC'}`}
+          showSchema={true}
+        />
       </Section>
 
       <Section background="white" padding="lg">
