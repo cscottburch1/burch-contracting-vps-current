@@ -1,5 +1,6 @@
 import type { LocationPage } from "@/lib/seo/localSeoData";
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
+import { businessConfig } from "@/config/business";
 
 type ServiceSchemaPage = {
   slug: string;
@@ -57,14 +58,20 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
     logo: absoluteUrl('/logo-transparent.webp'),
     image: absoluteUrl(siteConfig.defaultOgImage),
     telephone: siteConfig.phoneDisplay,
-    email: "estimates@burchcontracting.com",
-    foundingDate: "1995",
+    email: businessConfig.contact.email,
+    foundingDate: businessConfig.credentials.established,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Simpsonville",
-      addressRegion: "SC",
-      postalCode: "29681",
+      streetAddress: businessConfig.contact.address,
+      addressLocality: businessConfig.contact.city,
+      addressRegion: businessConfig.contact.state,
+      postalCode: businessConfig.contact.zip,
       addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "34.6341746",
+      longitude: "-82.0744941",
     },
     areaServed: sharedAreaServed,
     sameAs: sharedSameAs,
@@ -73,11 +80,18 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
     openingHours: "Mo-Fr 08:00-17:00",
     award: "Better Business Bureau A+ rating",
     inLanguage: "en-US",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: businessConfig.credentials.googleRating,
+      reviewCount: "50",
+      bestRating: "5",
+      worstRating: "1"
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
       telephone: siteConfig.phoneDisplay,
-      email: "estimates@burchcontracting.com",
+      email: businessConfig.contact.email,
       areaServed: ["US-SC"],
       availableLanguage: ["English"],
     },
@@ -87,6 +101,9 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
       "Screened porches",
       "Deck building",
       "ADU planning",
+      "Kitchen remodeling",
+      "Bathroom remodeling",
+      "Basement finishing"
     ],
   };
 
@@ -119,8 +136,11 @@ export function buildServiceSchema(page: ServiceSchemaPage) {
       name: siteConfig.siteName,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Simpsonville",
-        addressRegion: "SC",
+        streetAddress: businessConfig.contact.address,
+        addressLocality: businessConfig.contact.city,
+        addressRegion: businessConfig.contact.state,
+        postalCode: businessConfig.contact.zip,
+        addressCountry: "US",
       },
     },
     areaServed: page.city,

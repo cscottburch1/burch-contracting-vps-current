@@ -18,10 +18,10 @@ export const businessConfig = {
   contact: {
     phone: "(864) 724-4600",
     email: "estimates@burchcontracting.com",
-    address: "",
-    city: "Simpsonville",
+    address: "1095 Water Tank Rd",
+    city: "Gray Court",
     state: "SC",
-    zip: "29681",
+    zip: "29645",
     hours: "Monday - Friday: 8:00 AM - 5:00 PM\nSaturday: By Appt Only\nSunday: Closed"
   },
 

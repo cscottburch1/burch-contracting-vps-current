@@ -49,6 +49,7 @@ export default function CompetitivePricingCalculator({
   const [complexityFactor, setComplexityFactor] = useState<number>(1.0);
   const [siteConditionFactor, setSiteConditionFactor] = useState<number>(1.0);
   const [selectedAdders, setSelectedAdders] = useState<Set<number>>(new Set());
+  const [showDetailedMath, setShowDetailedMath] = useState<boolean>(false);
 
   const selectedProject = projectOptions.find(p => p.id === selectedProjectId) ?? projectOptions[0];
   const locationConfig = PRICING_CONFIG.locationFactors[locationKey];
@@ -399,16 +400,125 @@ export default function CompetitivePricingCalculator({
                   structural requirements, and scope verification. Schedule a free consultation for an accurate quote.
                 </p>
 
+                {/* Show Detailed Math Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowDetailedMath(!showDetailedMath)}
+                  className="mb-4 w-full rounded-lg border border-blue-300 bg-blue-50 px-4 py-3 text-left font-semibold text-blue-700 transition hover:bg-blue-100"
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{showDetailedMath ? 'Hide' : 'Show'} Detailed Math & Assumptions</span>
+                    <Icon name={showDetailedMath ? 'ChevronUp' : 'ChevronDown'} size={20} />
+                  </div>
+                </button>
+
+                {/* Detailed Math Panel */}
+                {showDetailedMath && (
+                  <div className="mb-6 space-y-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm">
+                    <h3 className="font-bold text-gray-900">Line-by-Line Calculation</h3>
+                    
+                    <div className="space-y-2 border-t border-gray-300 pt-3">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">1. Base Direct Cost</span>
+                        <span className="font-mono">{formatCurrency(selectedProject.directCost)}/SF</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">2. Project Size</span>
+                        <span className="font-mono">{squareFootage.toLocaleString()} SF</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">3. Initial Direct Cost</span>
+                        <span className="font-mono">{formatCurrency(squareFootage * selectedProject.directCost)}</span>
+                      </div>
+                      
+                      <div className="border-t border-gray-300 pt-2 font-semibold text-gray-700">
+                        Adjustment Factors:
+                      </div>
+                      <div className="flex justify-between pl-4">
+                        <span className="text-gray-600">• Location ({locationConfig.name})</span>
+                        <span className="font-mono">{locationConfig.factor.toFixed(2)}×</span>
+                      </div>
+                      <div className="flex justify-between pl-4">
+                        <span className="text-gray-600">• Material Level</span>
+                        <span className="font-mono">{materialFactor.toFixed(2)}×</span>
+                      </div>
+                      <div className="flex justify-between pl-4">
+                        <span className="text-gray-600">• Project Complexity</span>
+                        <span className="font-mono">{complexityFactor.toFixed(2)}×</span>
+                      </div>
+                      <div className="flex justify-between pl-4">
+                        <span className="text-gray-600">• Site Conditions</span>
+                        <span className="font-mono">{siteConditionFactor.toFixed(2)}×</span>
+                      </div>
+                      <div className="flex justify-between pl-4 font-semibold">
+                        <span className="text-gray-700">Combined Multiplier</span>
+                        <span className="font-mono">{(locationConfig.factor * materialFactor * complexityFactor * siteConditionFactor).toFixed(3)}×</span>
+                      </div>
+                      
+                      <div className="flex justify-between border-t border-gray-300 pt-2">
+                        <span className="text-gray-600">4. Adjusted Direct Cost</span>
+                        <span className="font-mono font-semibold">{formatCurrency(results.adjustedDirectCost)}</span>
+                      </div>
+                      
+                      {addersTotal > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">5. Optional Add-Ons</span>
+                          <span className="font-mono">+{formatCurrency(addersTotal)}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between border-t border-gray-300 pt-2">
+                        <span className="text-gray-600">{addersTotal > 0 ? '6' : '5'}. Subtotal Before Markup</span>
+                        <span className="font-mono font-semibold">{formatCurrency(results.subtotalBeforeOP)}</span>
+                      </div>
+                      
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">{addersTotal > 0 ? '7' : '6'}. Overhead & Profit (22.5%)</span>
+                        <span className="font-mono">+{formatCurrency(results.breakdown.overheadAndProfitAmount)}</span>
+                      </div>
+                      
+                      <div className="flex justify-between border-t-2 border-blue-600 bg-blue-50 px-2 py-2 text-base font-bold text-blue-900">
+                        <span>Final Investment (Most Common)</span>
+                        <span>{formatCurrency(results.finalPrice)}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 border-t border-gray-300 pt-3">
+                      <h4 className="mb-2 font-semibold text-gray-700">Additional Estimates:</h4>
+                      <div className="flex justify-between text-gray-600">
+                        <span>• Conservative/Budget-Friendly (×0.93)</span>
+                        <span className="font-mono">{formatCurrency(results.budgetLow)}</span>
+                      </div>
+                      <div className="flex justify-between text-gray-600">
+                        <span>• Premium/High-End Selections (×1.12)</span>
+                        <span className="font-mono">{formatCurrency(results.customHigh)}</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 rounded-lg bg-amber-50 p-3 text-xs text-amber-900">
+                      <strong>Important:</strong> These calculations use market averages and standard multipliers for planning purposes. Your actual project cost will depend on site-specific conditions, exact material selections, permit requirements, structural considerations, and final scope verification during the on-site consultation.
+                    </div>
+                  </div>
+                )}
+
                 {/* Action Buttons */}
                 <div className="space-y-3">
                   <Button variant="primary" href="/contact" fullWidth>
                     <Icon name="ClipboardEdit" size={18} />
-                    Get Your Written Estimate
+                    Get Your Free On-Site Estimate
                   </Button>
                   <Button variant="outline" href={siteConfig.phoneHref} fullWidth>
                     <Icon name="Phone" size={18} />
                     {siteConfig.phoneDisplay}
                   </Button>
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="w-full rounded-lg border-2 border-gray-300 bg-white px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
+                  >
+                    <Icon name="Printer" size={18} className="inline-block mr-2" />
+                    Save / Print This Estimate
+                  </button>
                 </div>
               </Card>
             </div>

@@ -77,8 +77,8 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
             <div className="mt-8 grid gap-3 text-sm text-blue-50 sm:grid-cols-2">
               <div className="rounded-xl bg-white/10 px-4 py-3">✅ Licensed & insured local contractor</div>
               <div className="rounded-xl bg-white/10 px-4 py-3">✅ Free estimate and written scope guidance</div>
-              <div className="rounded-xl bg-white/10 px-4 py-3">✅ Strong internal links for service and city pages</div>
-              <div className="rounded-xl bg-white/10 px-4 py-3">✅ Focused on one primary keyword per page</div>
+              <div className="rounded-xl bg-white/10 px-4 py-3">✅ Serving Upstate SC since 1995</div>
+              <div className="rounded-xl bg-white/10 px-4 py-3">✅ Transparent pricing and timelines</div>
             </div>
           </div>
 
@@ -116,10 +116,10 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
       <Section background="gray" padding="lg">
         <div className="mb-8 max-w-3xl">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Why homeowners searching for {page.primaryKeyword} choose Burch Contracting
+            Why homeowners choose Burch Contracting for {page.primaryKeyword}
           </h2>
           <p className="mt-3 text-lg text-gray-600">
-            This section reinforces the exact local keyword while giving homeowners clear reasons to contact the team now.
+            When you're ready to invest in your property, you want a contractor who understands local building requirements, communicates clearly, and delivers quality work on schedule.
           </p>
         </div>
 
@@ -196,10 +196,10 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
       <Section background="white" padding="lg">
         <div className="mb-8 max-w-3xl">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-            Recent Projects Near {page.city?.name ?? 'these service areas'}
+            Recent Projects Near {page.city?.name ?? 'You'}
           </h2>
           <p className="mt-3 text-lg text-gray-600">
-            Proof-based content matters for local SEO, so these project snapshots reinforce service relevance and geographic fit.
+            See how we've helped homeowners throughout {page.city?.displayName ?? 'the Upstate'} create beautiful, functional outdoor spaces that add real value to their properties.
           </p>
         </div>
 
@@ -291,13 +291,13 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
               What to expect from your free {page.service.navLabel.toLowerCase()} estimate in {page.city?.name ?? 'the Upstate'}
             </h2>
             <p className="mt-4 text-lg leading-8 text-gray-700">
-              When homeowners search for {page.primaryKeyword}, they usually also want clear answers on cost, contractor availability, permitting, and how quickly the work can move from estimate to production. Our estimate process is built for that exact moment. We review the property, talk through your goals, flag any site or neighborhood constraints, and explain which decisions will affect price, schedule, and long-term value the most.
+              When you're looking for a {page.primaryKeyword}, you want clear answers on cost, contractor availability, permitting, and how quickly the work can move from estimate to completion. Our estimate process is built around those questions. We review your property, talk through your goals, flag any site or neighborhood constraints, and explain which decisions will affect price, schedule, and long-term value the most.
             </p>
             <p className="mt-4 text-lg leading-8 text-gray-700">
-              That means you get more than a generic number. You get practical guidance on scope options, materials, timeline milestones, and next steps so you can confidently compare builders near you and move forward with a realistic plan. For homeowners in {page.city?.displayName ?? 'Upstate South Carolina'}, that local clarity is often what keeps the project on budget and the finished result aligned with the property.
+              That means you get more than a generic number. You get practical guidance on scope options, materials, timeline milestones, and next steps so you can confidently compare contractors and move forward with a realistic plan. For homeowners in {page.city?.displayName ?? 'Upstate South Carolina'}, this level of local clarity is what keeps projects on budget and ensures the finished result fits your property perfectly.
             </p>
             <p className="mt-4 text-lg leading-8 text-gray-700">
-              We also use this estimate stage to connect you with the right supporting pages, including related services, nearby city examples, and practical contractor guidance that answers the most common “cost,” “estimate,” and “near me” questions before the job starts. That extra planning context helps homeowners make better decisions and gives search engines stronger topical and local authority signals at the same time.
+              During the estimate, we'll also answer common questions about permitting, material choices, and typical timelines for {page.service.navLabel.toLowerCase()} projects in your area. This planning stage helps you make informed decisions and move forward with confidence.
             </p>
           </div>
 
