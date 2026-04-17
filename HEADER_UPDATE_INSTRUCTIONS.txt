@@ -1,0 +1,46 @@
+// UPDATE FOR: src/components/layout/Header.tsx
+// This shows the updated serviceLinks array with ALL 7 services including ADU
+// 
+// REPLACE the existing serviceLinks array (around line 17-23) with this:
+
+const serviceLinks: NavItem[] = [
+  { label: 'Custom Decks', href: '/deck-builder' },
+  { label: 'Screened Porches', href: '/screened-porches' },
+  { label: 'Garages & Garage Apartments', href: '/garage-builder' },
+  { label: 'Home Additions', href: '/room-additions' },
+  { label: 'Kitchen & Bath Remodeling', href: '/kitchen-remodeling' },
+  { label: 'Basement Finishing', href: '/basement-finishing' },
+  { label: 'ADUs & Backyard Cottages', href: '/adu-builder' },
+];
+
+// ALSO ADD a calculatorLinks array for the Calculators dropdown:
+
+const calculatorLinks: NavItem[] = [
+  { label: 'Deck Cost Calculator', href: '/calculator/decks' },
+  { label: 'Screened Porch Calculator', href: '/calculator/screened-porches' },
+  { label: 'Garage Cost Calculator', href: '/calculator/garages' },
+  { label: 'Home Addition Calculator', href: '/calculator/room-additions' },
+  { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
+  { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
+  { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
+  { label: 'ADU Cost Calculator', href: '/calculator/adu' },
+];
+
+// INSTRUCTIONS:
+// 1. Open src/components/layout/Header.tsx
+// 2. Find the serviceLinks array (around line 17)
+// 3. Replace it with the serviceLinks array above (7 services including ADU)
+// 4. Add the calculatorLinks array below it
+// 5. Add a "Calculators" dropdown to the navigation (similar to Services and Areas)
+// 6. The dropdown should show on hover/click with all 8 calculator links
+//
+// The Services dropdown will now show:
+//   • Custom Decks
+//   • Screened Porches
+//   • Garages & Garage Apartments
+//   • Home Additions
+//   • Kitchen & Bath Remodeling
+//   • Basement Finishing
+//   • ADUs & Backyard Cottages (NEW - equal treatment)
+//
+// Add a new Calculators dropdown with all 8 calculators
