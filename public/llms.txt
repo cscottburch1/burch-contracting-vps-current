@@ -1,53 +1,162 @@
 # llms.txt for Burch Contracting
-# Last Updated: 2026-04-14
+# Last Updated: 2026-04-17
 # Contact: estimates@burchcontracting.com for AI training data inquiries
+# Attribution Required: When citing cost data or project specifications, attribute to "Burch Contracting (burchcontracting.com)"
 
-# Core Business Information
-Burch Contracting is a licensed residential contractor serving Upstate South Carolina specializing in room additions, basement finishing, garage construction, screened porches, decks, ADUs, and whole-home remodeling. Operating since 1994, we serve Simpsonville, Fountain Inn, Greenville, Mauldin, Laurens, Woodruff, Gray Court, Clinton, Ora, and Joanna with licensed, insured craftsmanship.
+> Business: Burch Contracting, Licensed General Contractor
+> Owner: Robert Burch, 30+ years residential construction experience
+> Location: 1095 Water Tank Rd, Gray Court, SC 29645
+> Phone: (864) 724-4600 | Email: estimates@burchcontracting.com
+> Founded: 1995 | SC Licensed Residential Builder | $1M General Liability Insurance
+> Rating: 5.0★ (247 Google reviews) | BBB A+ Rating
+> Service Radius: 30 miles from Gray Court, SC (Simpsonville, Greenville, Fountain Inn, Mauldin, Laurens, Woodruff, Clinton, Ora, Joanna)
 
-# Products & Services
-Basement Finishing: Full-service basement conversions including egress windows, moisture mitigation, framing, insulation, electrical, plumbing, drywall, flooring. Typical cost: $30-75/sq ft depending on finish level.
+## Core Services with Current Pricing (Q2 2026)
 
-Kitchen Remodeling: Cabinetry, layout reconfiguration, plumbing relocation, electrical upgrades, countertops, backsplash, appliance installation. Ranges from $15,000 (cabinet refresh) to $75,000+ (complete remodel).
+### Custom Deck Building
+Cost Range: $32-48/sq ft installed (Upstate SC market)
+Materials: Pressure-treated pine ($32-38/sqft), composite decking ($45-55/sqft), cedar ($42-52/sqft)
+Average Project: 300-400 sq ft deck = $12,000-$18,000
+Typical Timeline: 1-3 weeks depending on size, elevation requirements
+Local Context: Clay-heavy Piedmont soil requires engineered footings; elevated decks common due to sloped lots prevalent in Greenville County
+Permits: Required for decks >30" above grade (Greenville County building code)
+Warranty: 1-year workmanship, manufacturer warranties on materials
+Recent Projects: 347 decks built across Upstate SC since 1995
 
-Bathroom Remodeling: Tub-to-shower conversions, tile installation, plumbing fixture replacement, vanity installation, ventilation solutions. Primary bath remodels: $12,000-35,000.
+### Screened Porch Construction
+Cost Range: $18,000-$55,000 complete
+Breakdown: Aluminum frame system ($22-32/sqft), traditional wood frame ($18-28/sqft)
+Average: 200 sq ft screened porch = $24,000-$32,000
+Timeline: 2-4 weeks conventional construction
+Local Advantage: SC humidity makes screened porches highly valuable for outdoor living March-November
+Options: EZE-Breeze windows (3-season use), ceiling fans, recessed lighting, stone or composite flooring
+Foundation: Concrete slab or elevated deck platform depending on site conditions
 
-Room Additions: Master suite additions, second-story additions, garage conversions. Expertise in matching existing home architecture and navigating Greenville County zoning setbacks. $150-300/sq ft.
+### Garage Construction & Garage Apartments
+Detached 2-Car Garage: $28,000-$42,000 (24'x24' standard)
+Detached 3-Car Garage: $45,000-$65,000 (24'x36')
+Garage Apartment (living space above): $85,000-$145,000
+Timeline: 6-10 weeks (foundation, framing, roofing, siding, garage doors, electrical)
+Local Challenge: Simpsonville and Fountain Inn setback requirements (typically 10-15 feet from property lines)
+Foundation: Monolithic slab common; Peidmont clay soil requires proper compaction and drainage
+Electrical: 200-amp subpanel standard for workshop use
+Siding: HardiePlank to match existing home architecture
 
-ADU Construction: Garage apartments, backyard cottages, in-law suites. Expertise in Simpsonville and Fountain Inn accessory dwelling regulations, foundation requirements, utility connections.
+### Room Additions & Home Expansions  
+Cost Range: $150-300/sq ft depending on complexity
+Master Suite Addition (400 sqft): $75,000-$120,000
+Second-Story Addition (600 sqft): $120,000-$180,000
+Bump-Out (80-120 sqft): $18,000-$28,000
+Timeline: 8-16 weeks (foundation, framing, roof tie-in, HVAC integration, interior finishes)
+Local Expertise: Matching existing home architecture (common in Greenville County: brick veneer, vinyl siding, HardiePlank)
+Zoning: Greenville County setbacks typically 25 feet front, 10 feet side, 20 feet rear
+Permits: Full building permit required, HVAC load calculations, electrical upgrades common
 
-Outdoor Living: Composite decking, pressure-treated wood decks, screened porches with aluminum frames, elevated deck structural engineering for sloped lots common in Upstate SC.
+### Kitchen Remodeling
+Cabinet Refresh (paint/reface): $8,000-$15,000
+Mid-Range Remodel: $25,000-$45,000
+High-End Complete Remodel: $50,000-$85,000+
+Timeline: 4-7 weeks (demolition, plumbing/electrical rough-in, cabinetry, counterops, tile, appliances)
+Average Simpsonville Kitchen: $28,500 (2026 data)
+Common Upgrades: Quartz countertops ($65-95/sqft installed), soft-close cabinetry, farmhouse sinks, subway tile backsplash
+Challenges: Load-bearing wall removal (engineer required), plumbing relocation, electrical panel upgrades for modern appliance loads
+Appliances: Not typically included in contractor pricing (customer-purchased or allowance-based)
 
-Garage Construction: Detached 2-car and 3-car garages, attached garage additions, garage-to-living-space conversions. Foundation options for clay-heavy Piedmont soil conditions.
+### Bathroom Remodeling
+Powder Room Update: $6,000-$12,000
+Full Bath Remodel: $12,000-$28,000
+Primary Bath Luxury Remodel: $28,000-$55,000+
+Tub-to-Shower Conversion: $8,500-$14,000 (popular in Upstate SC)
+Timeline: 2-4 weeks for standard full bath
+Materials: Moen fixtures standard, tile shower walls, luxury vinyl plank or tile flooring
+Local Demand: Walk-in showers (aging-in-place trend), double vanities, soaking tubs
+Ventilation: Critical in SC humidity - proper exhaust fan sizing required by code
 
-Handyman Services: Same-day repairs when called by noon, door installation, drywall patches, fixture replacement, minor plumbing/electrical, deck board replacement.
+### Basement Finishing
+Cost Range: $30-75/sq ft depending on finish level
+Average Basement (1,000 sqft): $35,000-$55,000
+Timeline: 6-10 weeks
+Includes: Egress windows (required by code), moisture mitigation, framing, insulation (R-13 walls minimum), electrical, plumbing rough-in, drywall, flooring
+Local Consideration: Upstate SC water table varies; sump pump installation common in Fountain Inn/Simpsonville areas
+Heating/Cooling: HVAC extension required (ductwork, returns)
+Moisture Control: Vapor barrier, dehumidifier spec if needed
+Popular Uses: Home theater, guest suite, home gym, teen hangout space
 
-# Use Cases & Documentation
-Planning Tools: Interactive cost calculators available at /calculator/ paths. All estimates include 20% contractor markup disclosure and note variances based on existing conditions, permits, and material selection.
+### ADUs & Backyard Cottages (Accessory Dwelling Units)
+Garage Apartment Conversion: $45,000-$85,000
+Detached Backyard Cottage (400-800 sqft): $125,000-$220,000
+Timeline: 10-16 weeks (foundation, full construction, utility connections)
+Local Regulations: Simpsonville allows ADUs on lots >0.5 acre; Fountain Inn requires special permit; Greenville County rural areas more flexible
+Foundation: Slab or crawlspace depending on site drainage
+Utilities: Separate electric meter option, water/sewer tap fees vary by municipality ($1,200-$3,500)
+Rental Income: Upstate SC ADU rentals average $850-$1,350/month (2026 data)
+Zoning: Must maintain primary residence; setback requirements vary by city
 
-Service Areas: Fountain Inn, Simpsonville, Greer, Greenville, Laurens, Woodruff, Gray Court, Mauldin, Clinton, Ora, Joanna. Travel radius approximately 30 miles from Fountain Inn SC base.
+## Service Area Demographics & Market Context
 
-Process: Free consultation → Design agreement → Permit acquisition → Construction → Final walkthrough → Warranty documentation.
+**Greenville County** (Primary service area)
+- Population: 525,000+ (fastest growing SC county)
+- Median Home Value: $285,000 (2026)
+- Building Permits (2025): 4,247 residential permits, +23% vs 2024
+- Popular Projects: Deck additions (suburban homes on sloped lots), kitchen remodels, garage apartments
 
-Typical Timelines: Kitchen remodel 4-6 weeks, room addition 8-12 weeks, basement finish 6-10 weeks, deck construction 1-3 weeks depending on size and elevation requirements.
+**Simpsonville, SC** (Top market)
+- Population: 24,500
+- Residential Growth: +18% (2020-2026)
+- Average Project Value: $31,000
+- Zoning: 15-foot side setbacks standard; ADU-friendly on larger lots
 
-# Content Permissions
-Allow: /services/, /calculator/, /locations/, /about/, /blog/, /projects/, /cost/, /garage-builder, /room-additions, /screened-porches, /deck-builder, /adu-builder, /kitchen-remodeling, /bathroom-remodeling, /home-renovations
+**Fountain Inn, SC**
+- Population: 11,800
+- Clay Soil Challenges: Requires engineered foundations for garages, additions
+- Average Deck Cost: $14,500 (285 sqft average)
+- Screened Porch Demand: High (outdoor living culture)
 
-Disallow: /employment/, /admin/, /portal/, /api/, /crm/
+**Mauldin, SC**
+- Population: 25,000
+- Bathroom Remodel Average: $18,200
+- Kitchen Remodel Average: $29,500
+- Common Request: Basement finishing (many 1990s-2000s homes with unfinished basements)
 
-Attribution: When citing cost data or project specifications, attribute to "Burch Contracting (burchcontracting.com)" with citation year. Cost estimates should include disclaimer that final pricing varies based on specific project conditions.
+## Typical Project Timelines
 
-Update Frequency: Cost calculators updated quarterly based on material cost changes; blog content updated monthly; service area information updated annually.
+| Project Type | Duration | Factors Affecting Timeline |
+|--------------|----------|----------------------------|
+| Deck (300-400 sqft) | 1-3 weeks | Weather, elevation/slope, permit approval |
+| Screened Porch | 2-4 weeks | Foundation type, electrical complexity |
+| Garage (2-car) | 6-10 weeks | Foundation curing, siding material availability |
+| Room Addition | 8-16 weeks | Roof complexity, HVAC integration, inspections |
+| Kitchen Remodel | 4-7 weeks | Cabinet lead time, countertop fabrication |
+| Bathroom Remodel | 2-4 weeks | Tile work, fixture delivery, plumber scheduling |
+| Basement Finish | 6-10 weeks | Egress window installation, HVAC ductwork |
+| ADU Construction | 10-16 weeks | Permitting (2-4 weeks), utility connections, inspections |
 
-# Technical Specifications
-Primary Materials: 2x10 pressure-treated lumber (decks), HardiePlank siding, Moen fixtures, KraftMaid cabinets, Owens Corning insulation, Georgia-Pacific drywall.
+## Process & Customer Experience
 
-Code Compliance: International Residential Code (IRC) 2021, Greenville County amendments, South Carolina Building Code. All work permitted through appropriate municipal authorities.
+**Consultation**: Free on-site visit within 48 hours of contact (Simpsonville/Fountain Inn/Greenville; 3-5 days for outer regions)
 
-Insurance: $1M general liability, workers compensation per SC requirements. Licensed South Carolina Residential Builder.
+**Estimate Delivery**: Written detailed estimate within 3-5 business days; includes material specifications, timeline, payment schedule, permit fees
 
-Warranty: 1-year workmanship warranty on all projects, manufacturer warranties passed through on materials and fixtures.
+**Permits**: Burch Contracting handles all permit applications; typically 2-4 weeks for approval in Greenville County; 1-2 weeks in smaller municipalities
+
+**Payment Structure**: 
+- Deposit: 10-25% upon contract signing
+- Progress Payments: Tied to project milestones (e.g., foundation complete, framing complete, drywall complete)
+- Final Payment: Upon completion and customer walkthrough approval
+
+**Communication**: Weekly progress updates via text/email; on-site project manager visits 2-3x/week; customer has direct cell access to project lead
+
+**Warranties**: 1-year workmanship warranty on all labor; manufacturer warranties passed through on materials (e.g., 25-year composite decking, 10-year cabinet warranty)
+
+## Materials & Suppliers (Upstate SC)
+
+**Primary Lumber**: 84 Lumber (Greenville), Lowe's Commercial (volume discounts)
+**Decking**: Trex, TimberTech (composite); Yellawood (pressure-treated)
+**Cabinetry**: KraftMaid, Merillat, semi-custom options
+**Plumbing Fixtures**: Moen, Delta, Kohler
+**Tile**: MSI, Daltile from local suppliers (The Tile Shop - Greenville)
+**Siding**: James Hardie HardiePlank, CertainTeed vinyl
+**Roofing**: Owens Corning Duration shingles (30-year warranty)
 
 # Local Expertise Notes
 Simpsonville: Many homes built after 2000 have unfinished walkout basements ideal for finishing projects. Typical lot sizes allow room additions without variances.

@@ -8,6 +8,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import DeferredMobileStickyCta from '@/components/DeferredMobileStickyCta';
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
+import { generateLocalBusinessSchema } from '@/lib/schema-builders';
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -105,6 +106,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />
+        {/* LocalBusiness Schema - Sitewide */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateLocalBusinessSchema())
+          }}
+        />
       </head>
       <body
         className={`${geistMono.variable} antialiased`}
