@@ -133,15 +133,27 @@ export const Header: React.FC = () => {
       <div className="bg-gray-900 py-2 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
-            <a
-              href={`tel:${businessConfig.contact.phone}`}
-              className="inline-flex items-center gap-2 font-semibold text-white hover:text-blue-200"
-              onClick={() => analytics.trackPhoneClick()}
-              aria-label={`Call ${businessConfig.contact.phone}`}
-            >
-              <Icon name="Phone" size={15} />
-              <span>{businessConfig.contact.phone}</span>
-            </a>
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href={`tel:${businessConfig.contact.phone}`}
+                className="inline-flex items-center gap-2 font-semibold text-white hover:text-blue-200"
+                onClick={() => analytics.trackPhoneClick()}
+                aria-label={`Call ${businessConfig.contact.phone}`}
+              >
+                <Icon name="Phone" size={15} />
+                <span>{businessConfig.contact.phone}</span>
+              </a>
+              <a
+                href="https://www.google.com/maps/place/34.6341746,-82.0744941"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-2 text-gray-200 hover:text-white"
+                aria-label="View location on Google Maps"
+              >
+                <Icon name="MapPin" size={15} />
+                <span>1095 Water Tank Rd, Gray Court, SC 29645</span>
+              </a>
+            </div>
 
             <span className="hidden lg:inline text-gray-200">
               Serving Simpsonville, Fountain Inn &amp; Upstate South Carolina
