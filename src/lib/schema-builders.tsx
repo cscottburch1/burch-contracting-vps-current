@@ -427,3 +427,76 @@ export function injectSchema(schema: any) {
   }
   return null;
 }
+
+/**
+ * Generate HowTo schema for project process
+ * Used for "Our Simple Process" sections
+ */
+export function generateHowToSchema(options?: {
+  name?: string;
+  description?: string;
+  url?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: options?.name || 'How to Work with Burch Contracting',
+    description: options?.description || 'Our simple 4-step process from consultation to project completion for home renovation projects in Upstate SC.',
+    url: options?.url || businessConfig.seo.baseUrl,
+    image: `${businessConfig.seo.baseUrl}/images/process-overview.jpg`,
+    
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'USD',
+      value: 'Varies by project'
+    },
+    
+    totalTime: 'PT2W',  // Varies, but average ~2 weeks for typical projects
+    
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Request Your Free Estimate',
+        text: 'Call us at (864) 724-4600 or fill out our contact form to get started with your home improvement project.',
+        url: `${businessConfig.seo.baseUrl}/contact`,
+        image: `${businessConfig.seo.baseUrl}/images/step-1-contact.jpg`
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'On-Site Visit & Project Review',
+        text: 'We visit your property to understand your vision and assess site conditions. Typical consultation takes 30-45 minutes.',
+        url: `${businessConfig.seo.baseUrl}/contact`,
+        image: `${businessConfig.seo.baseUrl}/images/step-2-consultation.jpg`
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: 'Clear Scope & Pricing',
+        text: 'Receive a detailed written estimate within 3-5 business days with transparent pricing, timeline, and scope breakdown.',
+        url: `${businessConfig.seo.baseUrl}/services`,
+        image: `${businessConfig.seo.baseUrl}/images/step-3-estimate.jpg`
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: 'Professional Construction',
+        text: 'We build your project with quality, craftsmanship and attention to detail, with regular progress updates throughout construction.',
+        url: `${businessConfig.seo.baseUrl}/projects`,
+        image: `${businessConfig.seo.baseUrl}/images/step-4-construction.jpg`
+      }
+    ],
+    
+    tool: [
+      {
+        '@type': 'HowToTool',
+        name: 'Cost Calculator'
+      },
+      {
+        '@type': 'HowToTool',
+        name: 'Free Consultation'
+      }
+    ]
+  };
+}

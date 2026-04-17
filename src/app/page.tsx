@@ -18,6 +18,7 @@ import { ClickableCityGrid } from '@/components/locations/ClickableCityGrid';
 import { EEATSignals } from '@/components/seo/EEATSignals';
 import Testimonials from '@/components/testimonials/Testimonials';
 import { generateSampleTestimonials } from '@/lib/sampleData';
+import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
   title: 'Deck Builder, Garage Builder & Home Addition Contractor | Greenville & Laurens County SC',
@@ -197,6 +198,11 @@ export default async function HomePage() {
         id="home-schema-graph"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchemaGraph) }}
+      />
+      <script
+        id="howto-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateHowToSchema()) }}
       />
       <script
         id="breadcrumb-schema"

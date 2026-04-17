@@ -235,9 +235,10 @@ export function buildArticleSchema(opts: { title: string; description: string; u
     description: opts.description,
     image: [absoluteUrl(siteConfig.defaultOgImage)],
     author: {
-      "@type": "Organization",
-      name: siteConfig.siteName,
-      url: siteConfig.siteUrl,
+      "@type": "Person",
+      name: "Robert Burch",
+      jobTitle: "General Contractor & Owner",
+      url: absoluteUrl("/about"),
     },
     publisher: {
       "@type": "Organization",
