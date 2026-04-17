@@ -9,7 +9,7 @@ import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
 
-type DropdownKey = 'services' | 'areas' | 'pricing' | null;
+type DropdownKey = 'services' | 'areas' | 'pricing' | 'calculators' | null;
 
 interface NavItem {
   label: string;
@@ -17,12 +17,22 @@ interface NavItem {
 }
 
 const serviceLinks: NavItem[] = [
-  { label: 'Decks', href: '/deck-builder' },
+  { label: 'Custom Decks', href: '/deck-builder' },
   { label: 'Screened Porches', href: '/screened-porches' },
-  { label: 'Garages', href: '/garage-builder' },
+  { label: 'Garages & Garage Apartments', href: '/garage-builder' },
   { label: 'Home Additions', href: '/room-additions' },
   { label: 'Kitchen & Bath Remodeling', href: '/kitchen-remodeling' },
   { label: 'Basement Finishing', href: '/home-renovations' },
+  { label: 'ADUs & Backyard Cottages', href: '/adu-builder' },
+];
+
+const calculatorLinks: NavItem[] = [
+  { label: 'Deck Cost Calculator', href: '/calculator/decks' },
+  { label: 'Screened Porch Calculator', href: '/calculator/screened-porches' },
+  { label: 'Garage Cost Calculator', href: '/calculator/garages' },
+  { label: 'Home Addition Calculator', href: '/calculator/room-additions' },
+  { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
+  { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
 ];
 
 const areaLinks: NavItem[] = [
@@ -50,6 +60,7 @@ export const Header: React.FC = () => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
   const [mobilePricingOpen, setMobilePricingOpen] = useState(false);
+  const [mobileCalculatorsOpen, setMobileCalculatorsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -66,6 +77,7 @@ export const Header: React.FC = () => {
     setMobileServicesOpen(false);
     setMobileAreasOpen(false);
     setMobilePricingOpen(false);
+    setMobileCalculatorsOpen(false);
   }, [pathname]);
 
   const currentPath = pathname ?? '';
@@ -305,6 +317,58 @@ export const Header: React.FC = () => {
                 onMouseLeave={scheduleDropdownClose}
               >
                 {pricingLinks.map((item) => (
+                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div
+              className={dropdownWrapperClass}
+              onMouseEnter={() => openDropdown('calculators')}
+              onMouseLeave={scheduleDropdownClose}
+              onBlur={closeDropdownOnBlur}
+            >
+              <div className="inline-flex items-center gap-1">
+                <Link
+                  href="/calculator"
+                  className={navLinkClass(isActive('/calculator'))}
+                  onFocus={() => openDropdown('calculators')}
+                >
+                  Calculators
+                </Link>
+                <button
+                  type="button"
+                  className={isActive('/calculator') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
+                  aria-haspopup="true"
+                  aria-expanded={activeDropdown === 'calculators'}
+                  aria-controls="desktop-calculators-menu"
+                  aria-label="Toggle Calculators submenu"
+                  onClick={() => {
+                    clearCloseTimeout();
+                    setActiveDropdown((prev) => (prev === 'calculators' ? null : 'calculators'));
+                  }}
+                  onFocus={() => openDropdown('calculators')}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      closeDropdownImmediately();
+                      (event.currentTarget as HTMLButtonElement).blur();
+                    }
+                  }}
+                >
+                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'calculators' ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                </button>
+              </div>
+              <div
+                id="desktop-calculators-menu"
+                className={`${dropdownPanelClass} ${activeDropdown === 'calculators' ? 'block' : 'hidden'}`}
+                role="menu"
+                aria-label="Calculators"
+                onMouseEnter={clearCloseTimeout}
+                onMouseLeave={scheduleDropdownClose}
+              >
+                {calculatorLinks.map((item) => (
                   <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
                     {item.label}
                   </Link>

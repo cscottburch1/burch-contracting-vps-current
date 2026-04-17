@@ -14,6 +14,8 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 import CitiesGrid from '@/components/locations/CitiesGrid';
+import { ClickableCityGrid } from '@/components/locations/ClickableCityGrid';
+import { EEATSignals } from '@/components/seo/EEATSignals';
 import Testimonials from '@/components/testimonials/Testimonials';
 import { generateSampleTestimonials } from '@/lib/sampleData';
 
@@ -259,6 +261,13 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* E-E-A-T SIGNALS (Trust Badges) */}
+      <section className="py-8 bg-gray-50 border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <EEATSignals variant="compact" />
+        </div>
+      </section>
+
       {/* SECTION 2 — CORE SERVICES (4 BLOCKS ONLY) */}
       <Section background="white" padding="lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -491,11 +500,15 @@ export default async function HomePage() {
 
       {/* SECTION 6 — SERVICE AREA (ENHANCED) */}
       <Section background="white" padding="lg">
-        <CitiesGrid 
-          title="Proudly Serving Upstate South Carolina"
-          subtitle="Trusted construction services throughout Greenville, Laurens, and Spartanburg Counties"
-          columns={4}
-        />
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Proudly Serving Upstate South Carolina
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Trusted construction services throughout Greenville, Laurens, and Spartanburg Counties
+          </p>
+        </div>
+        <ClickableCityGrid columns={3} />
       </Section>
 
       {/* SECTION 7 — COST + VALUE HOOK */}
