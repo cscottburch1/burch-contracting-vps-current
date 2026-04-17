@@ -52,6 +52,7 @@ export default function BathroomRemodelingCalculatorPage() {
         intro="Estimate the cost of updating a guest bath, primary bathroom, or walk-in shower conversion using local Upstate South Carolina pricing ranges."
         icon="Bath"
         marketLabel="Simpsonville, Fountain Inn, Greenville County, and Laurens County"
+        disclaimer="Bathroom renovation estimates include 20% contractor coordination fee covering permits, warranty, and project management. Actual pricing depends on existing plumbing rough-in complexity, tile material choices (ceramic vs porcelain), fixture quality (standard vs premium), ventilation requirements, waterproofing scope, and structural work needed for layout changes. Request a detailed quote after site inspection."
         options={[
           {
             label: 'Cosmetic Bathroom Refresh',

@@ -234,7 +234,7 @@ export default async function HomePage() {
               Custom Decks, Screened Porches, Garages & Home Additions in <span className="gradient-text">Upstate SC</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              Built Right. Priced Fair. Serving Simpsonville, Fountain Inn, Laurens & Surrounding Areas Since 1995.
+              35+ Years | 900+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Greenville & Laurens County Since 1995
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

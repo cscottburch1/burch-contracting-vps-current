@@ -348,11 +348,21 @@ export function generateOrganizationSchema() {
     
     founder: {
       '@type': 'Person',
-      name: 'Robert Burch',
-      jobTitle: 'Owner & Lead Contractor'
+      name: 'Scott Burch',
+      jobTitle: 'SC Licensed General Contractor #CLG118679'
     },
     
     foundingDate: '1995',
+    
+    areaServed: {
+      '@type': 'GeoCircle',
+      geoMidpoint: {
+        '@type': 'GeoCoordinates',
+        latitude: '34.7554',
+        longitude: '-82.2238'
+      },
+      geoRadius: '30 mi'
+    },
     
     numberOfEmployees: {
       '@type': 'QuantitativeValue',
@@ -367,7 +377,11 @@ export function generateOrganizationSchema() {
     
     sameAs: [
       businessConfig.credentials.bbbUrl,
-      businessConfig.credentials.googleUrl
+      businessConfig.credentials.googleUrl,
+      'https://www.linkedin.com/company/burch-contracting',
+      'https://www.youtube.com/@burchcontracting',
+      'https://www.houzz.com/professionals/general-contractors/burch-contracting',
+      'https://www.facebook.com/burchcontracting'
     ]
   };
 }

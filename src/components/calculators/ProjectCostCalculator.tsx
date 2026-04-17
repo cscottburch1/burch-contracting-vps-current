@@ -23,6 +23,7 @@ interface ProjectCostCalculatorProps {
   icon: IconName;
   marketLabel: string;
   options: CalculatorOption[];
+  disclaimer?: string;
 }
 
 type FinishLevel = 'value' | 'standard' | 'premium';
@@ -43,6 +44,7 @@ export default function ProjectCostCalculator({
   icon,
   marketLabel,
   options,
+  disclaimer,
 }: ProjectCostCalculatorProps) {
   const [selectedOption, setSelectedOption] = useState<CalculatorOption>(options[0]);
   const [quantity, setQuantity] = useState<number>(options[0]?.defaultQuantity ?? 1);
@@ -114,10 +116,8 @@ export default function ProjectCostCalculator({
               <div>
                 <h2 className="mb-2 text-lg font-bold text-amber-950">Budget Planning Disclaimer</h2>
                 <p className="text-sm leading-relaxed text-amber-900">
-                  This calculator is for planning only and includes a fixed 20% contractor markup in every estimate. Final
-                  pricing varies based on existing conditions, structural work, framing changes, plumbing or electrical
-                  upgrades, finish selections, permit requirements, and actual scope.
-                  We recommend using this as a starting range, then scheduling a site visit for a written estimate.
+                  {disclaimer ||
+                    'This calculator is for planning only and includes a fixed 20% contractor markup in every estimate. Final pricing varies based on existing conditions, structural work, framing changes, plumbing or electrical upgrades, finish selections, permit requirements, and actual scope. We recommend using this as a starting range, then scheduling a site visit for a written estimate.'}
                 </p>
               </div>
             </div>

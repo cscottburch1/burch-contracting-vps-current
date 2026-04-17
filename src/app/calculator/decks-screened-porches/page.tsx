@@ -22,6 +22,7 @@ export default function DecksAndPorchesCalculatorPage() {
       intro="Compare the cost of building a new deck, converting to low-maintenance composite, or adding a screened porch for more usable outdoor living space."
       icon="Trees"
       marketLabel="Simpsonville, Fountain Inn, Greenville County, and Laurens County"
+      disclaimer="Outdoor living project estimates include 20% contractor markup for site supervision and warranty coverage. Final costs depend on ground conditions, required footings depth, deck board material selection (pressure-treated vs composite), railing system complexity, stair configuration, permit requirements, and existing structure attachments. Site-specific factors like slope and access affect labor hours significantly."
       options={[
         {
           label: 'Pressure-Treated Deck',
