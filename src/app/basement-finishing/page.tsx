@@ -117,9 +117,9 @@ export default function BasementFinishingPage() {
         breadcrumbs={breadcrumbs}
         showAuthor={true}
         author={{
-          name: 'Robert Burch',
+          name: 'Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: '30+ years residential construction | 127 basements finished since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 127 basements finished since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

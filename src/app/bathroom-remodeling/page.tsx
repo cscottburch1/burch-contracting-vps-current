@@ -117,9 +117,9 @@ export default function BathroomRemodelingPage() {
         breadcrumbs={breadcrumbs}
         showAuthor={true}
         author={{
-          name: 'Robert Burch',
+          name: 'Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: '30+ years residential construction | 240 bathrooms remodeled since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 240 bathrooms remodeled since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

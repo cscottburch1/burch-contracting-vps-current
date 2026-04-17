@@ -98,9 +98,9 @@ export default function DeckBuilderPage() {
         title="Professional Custom Deck Builder in Upstate SC"
         breadcrumbs={breadcrumbs}
         author={{
-          name: 'Robert Burch',
-          role: 'Owner & Lead Carpenter',
-          experience: '30+ years | 347 decks built since 1995',
+          name: 'Scott Burch',
+          role: 'Owner & Lead Contractor',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 347 decks built since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

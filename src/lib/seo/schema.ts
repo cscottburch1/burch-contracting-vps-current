@@ -236,8 +236,8 @@ export function buildArticleSchema(opts: { title: string; description: string; u
     image: [absoluteUrl(siteConfig.defaultOgImage)],
     author: {
       "@type": "Person",
-      name: "Robert Burch",
-      jobTitle: "General Contractor & Owner",
+      name: "Scott Burch",
+      jobTitle: "SC Licensed General Contractor #CLG118679",
       url: absoluteUrl("/about"),
     },
     publisher: {

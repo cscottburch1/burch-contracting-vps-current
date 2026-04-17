@@ -117,9 +117,9 @@ export default function KitchenRemodelingPage() {
         breadcrumbs={breadcrumbs}
         showAuthor={true}
         author={{
-          name: 'Robert Burch',
+          name: 'Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: '30+ years residential construction | 187 kitchens remodeled since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 187 kitchens remodeled since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"
