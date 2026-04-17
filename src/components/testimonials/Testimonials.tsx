@@ -210,35 +210,3 @@ export default function Testimonials({
     </>
   );
 }
-
-// Sample testimonials generator for placeholder content
-export function generateSampleTestimonials(count: number = 6): TestimonialData[] {
-  const names = ['John Martinez', 'Sarah Thompson', 'Mike Davis', 'Jennifer Lee', 'Robert Wilson', 'Emily Brown', 'David Anderson', 'Lisa Garcia'];
-  const locations = ['Simpsonville, SC', 'Fountain Inn, SC', 'Greenville, SC', 'Mauldin, SC', 'Gray Court, SC', 'Laurens, SC'];
-  const services = ['Custom Deck', 'Screened Porch', 'Garage Addition', 'Home Addition', 'Kitchen Remodeling', 'Basement Finishing'];
-  const reviews = [
-    'Burch Contracting exceeded our expectations! The crew was professional, punctual, and the quality of work was outstanding. Our deck is absolutely beautiful.',
-    'From design to completion, the entire process was smooth. They listened to our needs and delivered exactly what we wanted. Highly recommend!',
-    'We could not be happier with our new garage. The attention to detail and craftsmanship is top-notch. Worth every penny.',
-    'Professional, reliable, and skilled. Our screened porch has become our favorite room in the house. Thank you Burch Contracting!',
-    'Transparent pricing, quality materials, and excellent communication throughout the project. We will definitely use them again for future projects.',
-    'The team was respectful of our property, cleaned up daily, and finished on schedule. Our addition looks like it was always part of the house.'
-  ];
-
-  const getRandomDate = (daysAgo: number) => {
-    const date = new Date();
-    date.setDate(date.getDate() - daysAgo);
-    return date.toISOString().split('T')[0];
-  };
-
-  return Array.from({ length: Math.min(count, 8) }, (_, i) => ({
-    id: `testimonial-${i + 1}`,
-    name: names[i % names.length],
-    location: locations[i % locations.length],
-    rating: (i % 2 === 0 ? 5 : 4.5) as 5 | 4.5,
-    date: getRandomDate((i + 1) * 30),
-    service: services[i % services.length],
-    review: reviews[i % reviews.length],
-    verified: i % 3 === 0
-  }));
-}

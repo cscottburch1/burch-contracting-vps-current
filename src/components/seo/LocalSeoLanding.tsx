@@ -14,9 +14,10 @@ import {
 } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import MiniCalculatorEmbed from '@/components/calculators/MiniCalculatorEmbed';
-import ProjectGallery, { generateSampleProjects } from '@/components/projects/ProjectGallery';
+import ProjectGallery from '@/components/projects/ProjectGallery';
 import CitiesGrid from '@/components/locations/CitiesGrid';
-import Testimonials, { generateSampleTestimonials } from '@/components/testimonials/Testimonials';
+import Testimonials from '@/components/testimonials/Testimonials';
+import { generateSampleProjects, generateSampleTestimonials } from '@/lib/sampleData';
 
 interface LocalSeoLandingProps {
   page: SeoLandingPageData;
@@ -172,13 +173,13 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
       <Section background="blue" padding="lg">
         <MiniCalculatorEmbed 
           serviceType={
-            page.service.slug.includes('deck') ? 'deck' :
-            page.service.slug.includes('garage') ? 'garage' :
-            page.service.slug.includes('porch') ? 'porch' :
-            page.service.slug.includes('addition') ? 'addition' :
-            page.service.slug.includes('kitchen') || page.service.slug.includes('bath') ? 'kitchen' :
-            page.service.slug.includes('basement') ? 'basement' :
-            'deck'
+            page.service.slug.includes('deck') ? 'decks' :
+            page.service.slug.includes('garage') ? 'garages' :
+            page.service.slug.includes('porch') ? 'screened-porches' :
+            page.service.slug.includes('addition') ? 'room-additions' :
+            page.service.slug.includes('kitchen') || page.service.slug.includes('bath') ? 'kitchen-remodeling' :
+            page.service.slug.includes('basement') ? 'basement-finishing' :
+            'decks'
           }
           title={`Quick ${page.service.navLabel} Cost Estimate`}
           description={`Get an instant ballpark estimate for your ${page.service.navLabel.toLowerCase()} project in ${page.city?.name ?? 'Upstate SC'}.`}

@@ -14,7 +14,8 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildBreadcrumbSchema, buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from '@/lib/seo/schema';
 import { localDominancePages } from '@/lib/seo/localDominanceData';
 import CitiesGrid from '@/components/locations/CitiesGrid';
-import Testimonials, { generateSampleTestimonials } from '@/components/testimonials/Testimonials';
+import Testimonials from '@/components/testimonials/Testimonials';
+import { generateSampleTestimonials } from '@/lib/sampleData';
 
 export const metadata: Metadata = {
   title: 'Deck Builder, Garage Builder & Home Addition Contractor | Greenville & Laurens County SC',

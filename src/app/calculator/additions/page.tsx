@@ -45,11 +45,11 @@ const serviceRates: ServiceRate[] = [
   { name: 'Built-in Deck Seating (per linear foot)', laborRate: 105.6, materialLow: 52.8, materialHigh: 105.6, timeHours: 1.5, category: 'Decks', unit: 'linear ft' },
   
   // Garage Additions
-  { name: 'One-Car Garage Addition (12x22)', laborRate: 15840, materialLow: 10560, materialHigh: 19800, timeHours: 200, category: 'Garages', unit: 'project' },
-  { name: 'Two-Car Garage Addition (20x22)', laborRate: 26400, materialLow: 19800, materialHigh: 33000, timeHours: 320, category: 'Garages', unit: 'project' },
-  { name: 'Three-Car Garage Addition (30x22)', laborRate: 39600, materialLow: 29040, materialHigh: 46200, timeHours: 480, category: 'Garages', unit: 'project' },
-  { name: 'Detached Garage (per sq ft)', laborRate: 79.2, materialLow: 52.8, materialHigh: 92.4, timeHours: 0.5, category: 'Garages', unit: 'sq ft' },
-  { name: 'Garage Conversion to Living Space', laborRate: 19800, materialLow: 13200, materialHigh: 26400, timeHours: 240, category: 'Garages', unit: 'project' },
+  { name: 'One-Car Garage Addition (12x22)', laborRate: 19008, materialLow: 12672, materialHigh: 23760, timeHours: 200, category: 'Garages', unit: 'project' },
+  { name: 'Two-Car Garage Addition (20x22)', laborRate: 31680, materialLow: 23760, materialHigh: 39600, timeHours: 320, category: 'Garages', unit: 'project' },
+  { name: 'Three-Car Garage Addition (30x22)', laborRate: 47520, materialLow: 34848, materialHigh: 55440, timeHours: 480, category: 'Garages', unit: 'project' },
+  { name: 'Detached Garage (per sq ft)', laborRate: 95.04, materialLow: 63.36, materialHigh: 110.88, timeHours: 0.5, category: 'Garages', unit: 'sq ft' },
+  { name: 'Garage Conversion to Living Space', laborRate: 23760, materialLow: 15840, materialHigh: 31680, timeHours: 240, category: 'Garages', unit: 'project' },
   
   // Outdoor Living
   { name: 'Covered Patio (per sq ft)', laborRate: 59.4, materialLow: 33, materialHigh: 66, timeHours: 0.4, category: 'Outdoor Living', unit: 'sq ft' },

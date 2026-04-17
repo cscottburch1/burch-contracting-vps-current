@@ -1,0 +1,344 @@
+PDF: audit-report-external.pdf
+Total Pages: 9
+================================================================================
+
+--- PAGE 1 ---
+S E O M A T O R  F R E E  S E O  A U D I T  R E P O R T 
+Website Audit Report
+https://burchcontracting.com/
+13 April 2026 · 23:10
+Scores
+CATEGORY SCORE
+On-Page Score 88 / 100
+Performance (Lighthouse) 98 / 100
+Accessibility (Lighthouse) 91 / 100
+SEO (Lighthouse) 92 / 100
+Best Practices (Lighthouse) 100 / 100
+Key Metrics
+METRIC VALUE
+Internal Links 83
+External Links 10
+Images 8
+Scripts 77
+Word Count 741
+Text/HTML Ratio 0.03
+Audit Category Summary
+CATEGORY SCORE FAIL WARN PASS TOTAL
+Core SEO 97 0 1 17 18
+Content 71 2 2 9 13
+Performance 81 0 5 12 17
+Links 96 0 1 14 15
+Images 95 0 2 12 14
+Security 86 1 2 11 14
+Accessibility 93 0 2 10 12
+Structured Data 90 0 1 4 5
+Social 75 1 3 5 9
+E-E-A-T 69 0 9 5 14
+URL Structure 100 0 0 13 13
+Mobile 100 0 0 5 5
+HTML Validation 100 0 0 9 9
+Redirects 100 0 0 5 5
+AI/GEO Readiness 73 0 2 3 5
+Internationalization 100 0 0 4 4
+SEOmator · https://burchcontracting.com/ 1 / 9
+
+--- PAGE 2 ---
+Detailed Audit Results
+Core SEO  —  97/100  (18 checks)
+CHECK RESULT
+WARN No Snippet Blocking Page blocks search snippets via nosnippet or max-snippet:0
+PASS Title Tag Present Title tag found: "Upstate SC Garage, Room Addition & Porch Contractor | Burch"
+PASS Title Tag Length Title length is 59 characters (good)
+PASS Meta Description Present Meta description found (121 chars)
+PASS Meta Description Length Meta description is 121 characters (good)
+PASS Canonical URL Present Canonical URL found: https://burchcontracting.com
+PASS Canonical URL Valid Canonical URL is valid: https://burchcontracting.com
+PASS Viewport Meta Tag Viewport meta tag found
+PASS Favicon Present Favicon found
+PASS H1 Tag Present H1 found: "Garage Builders, Additions, and Porches, Decks & ADUs"
+PASS Single H1 Tag Page has exactly one H1 tag
+PASS Robots Meta Directives No restrictive robots directives found
+PASS Canonical Header Validation Canonical specified via single source
+PASS Conflicting Canonical URLs At most one canonical source found
+PASS Canonical Not Pointing to Homepage This is the homepage
+PASS Canonical Protocol Match Canonical protocol matches page protocol
+PASS Canonical Loop Detection Canonical is self-referencing
+PASS Canonical and Noindex Conflict Page does not have noindex directive
+Content  —  71/100  (13 checks)
+CHECK RESULT
+FAIL Keyword Stuffing Check Keyword stuffing detected: 5 words above 2% density
+FAIL Text-to-HTML Ratio Text-to-HTML ratio is very low: 3.6% (minimum 10% recommended)
+WARN Content Reading Level Content reads at a grade 18.8 level — may be difficult for a general audience (grade 12 or below 
+recommended)
+WARN Heading Hierarchy Heading levels are skipped: h2 → h4 (skipped h3)
+PASS Content Word Count Content has 857 words
+PASS Heading Length All headings have appropriate length
+PASS Title vs H1 Duplication Title and H1 are different
+PASS Title Pixel Width Title pixel width is ~371.5px (within 580px limit)
+PASS Meta Description Pixel Width Meta description pixel width is ~740px (within 920px limit)
+PASS Broken HTML Structure No severe HTML structure issues detected
+PASS Meta Tags in Body All <meta> tags are correctly placed in <head>
+PASS Content MIME Type Content-type is text/html
+PASS Article Link Density Article link density is 10.2%
+SEOmator · https://burchcontracting.com/ 2 / 9
+
+--- PAGE 3 ---
+Detailed Audit Results
+Performance  —  81/100  (17 checks)
+CHECK RESULT
+WARN Render-Blocking Resources 2 render-blocking script(s) in <head>
+WARN No Lazy Loading Above Fold 2 of first 3 images are lazy-loaded
+WARN LCP Optimization Hints LCP candidate image not preloaded
+WARN Page Weight HTML is 217KB (recommended: <100KB)
+WARN Inline JS Size 118KB inline JS (recommended: <50KB)
+PASS DOM Size DOM has 782 elements
+PASS Preconnect Hints Preconnect hints are in place
+PASS Font Loading Optimization Font loading is optimized
+PASS CSS File Size 1 CSS file(s), 0KB inline
+PASS Text Compression Compression enabled: br
+PASS Cache Policy Caching headers present
+PASS Response Time Response time is 98ms
+PASS Brotli Compression Brotli compression enabled
+PASS Minify Inline CSS Inline CSS appears minified
+PASS Minify Inline JS Inline JavaScript appears minified
+PASS Video Instead of GIF No GIF images detected
+PASS HTTP/2+ Support HTTP/3 supported via alt-svc header
+Links  —  96/100  (15 checks)
+CHECK RESULT
+WARN Descriptive Anchor Text 2 link(s) have empty, too-short, or non-descriptive anchor text
+PASS Fragment Link Targets All fragment links point to existing elements
+PASS Invalid Links No invalid links found
+PASS Excessive Link Count Page has 87 links
+PASS No Localhost Links No localhost or development server references found
+PASS No Local File Links No local file path references found
+PASS No onclick Navigation No onclick-based navigation detected
+PASS Clean Link HREFs All link href values are clean
+PASS No HTTPS Downgrade All links use HTTPS (no protocol downgrade)
+PASS External Link Count Page has 4 external link(s)
+PASS Internal Links Present Page has 81 internal link(s)
+PASS Appropriate Nofollow Usage Nofollow usage appears appropriate
+PASS Valid Phone & Email Links All 6 tel:/mailto: link(s) have valid format
+PASS URL Depth Page depth is 0 level(s)
+PASS No Dead-End Pages Page has 81 outgoing internal link(s)
+SEOmator · https://burchcontracting.com/ 3 / 9
+
+--- PAGE 4 ---
+Detailed Audit Results
+Images  —  95/100  (14 checks)
+CHECK RESULT
+WARN Image Alt Text Length 3 images with problematic alt length: 3 with alt >125 chars
+WARN Image Filename Quality 2 images with non-descriptive filenames
+PASS Image Alt Attributes Present All 8 images have alt attributes
+PASS Image Alt Text Quality All alt texts appear descriptive
+PASS Image Dimensions Specified All 8 images have explicit dimensions
+PASS Image Lazy Loading All below-fold images use lazy loading
+PASS Modern Image Formats 6 of 6 images use modern formats (WebP/AVIF/SVG)
+PASS Responsive Images (srcset) 8 of 8 images use srcset
+PASS Figure Captions Present No <figure> elements found on the page
+PASS Inline SVG Size All 66 inline SVGs are under 100KB
+PASS Picture Element Fallback No <picture> elements found on the page
+PASS CSS Background Images for Content Found 1 inline background-image declaration (within acceptable range)
+PASS Image Dimensions Size No images with dimensions exceeding 2000px
+PASS Broken Image Detection All 8 image sources appear valid
+Security  —  86/100  (14 checks)
+CHECK RESULT
+FAIL TLS Configuration No HSTS header
+WARN HSTS Header Missing Strict-Transport-Security header
+WARN Content Security Policy No Content Security Policy found
+PASS HTTPS Page served over HTTPS
+PASS X-Frame-Options X-Frame-Options: SAMEORIGIN
+PASS X-Content-Type-Options X-Content-Type-Options: nosniff
+PASS External Links Security All target="_blank" links have rel="noopener"
+PASS Form HTTPS Actions All forms submit securely
+PASS Mixed Content No mixed content detected
+PASS Permissions Policy Permissions-Policy header present
+PASS Referrer Policy Referrer-Policy: strict-origin-when-cross-origin
+PASS No Leaked Secrets No leaked secrets detected in HTML
+PASS No Password Fields on HTTP Page served over HTTPS
+PASS No Protocol-Relative URLs No protocol-relative URLs found
+SEOmator · https://burchcontracting.com/ 4 / 9
+
+--- PAGE 5 ---
+Detailed Audit Results
+Accessibility  —  93/100  (12 checks)
+CHECK RESULT
+WARN Heading Level Order Heading hierarchy skips 1 level(s)
+WARN Skip Navigation Link No skip-to-content link found among the first links in the page
+PASS Interactive Element Labels All 4 interactive elements have discernible text
+PASS Color Contrast (Heuristic) No obvious inline-style contrast issues detected
+PASS Focus Visible Styles No focus outline removal detected
+PASS Form Input Labels No form inputs found
+PASS Landmark Regions Found 4 landmark region(s): main, navigation, banner/header, contentinfo/footer
+PASS Link Discernible Text All 93 links have discernible text
+PASS Table Headers No tables found
+PASS Touch Target Size No inline-style touch target size issues detected
+PASS Video Captions No <video> elements found
+PASS Zoom Not Disabled Viewport meta does not restrict user zooming
+Structured Data  —  90/100  (5 checks)
+CHECK RESULT
+WARN Schema Type Present 1 schema(s) missing @type property
+PASS Structured Data Present Found 2 JSON-LD block(s)
+PASS Structured Data Valid JSON All 2 JSON-LD block(s) are valid JSON
+PASS Required Schema Fields All schemas have required fields
+PASS FAQ Schema FAQPage schema is properly structured
+Social  —  75/100  (9 checks)
+CHECK RESULT
+FAIL Open Graph Image Page is missing <meta property="og:image"> tag
+WARN Open Graph Image Format No og:image found to validate
+WARN Social Share Buttons No social media share buttons or links detected
+WARN Social Media Profile Links No links to social media profiles found
+PASS Open Graph Title og:title found: "Burch | Upstate SC Garage, Room Addition & Porch Contractor"
+PASS Open Graph Description og:description found (102 chars)
+PASS Open Graph URL og:url found: https://burchcontracting.com
+PASS OG URL Matches Canonical og:url matches canonical URL
+PASS Twitter Card Meta Tag twitter:card found: "summary_large_image"
+SEOmator · https://burchcontracting.com/ 5 / 9
+
+--- PAGE 6 ---
+Detailed Audit Results
+E-E-A-T  —  69/100  (14 checks)
+CHECK RESULT
+WARN Privacy Policy No privacy policy link found
+WARN Terms of Service No terms of service link found
+WARN Author Byline No author byline found — adding author attribution improves E-E-A-T
+WARN Author Expertise Signals No author expertise signals found (bio, credentials)
+WARN Content Dates No publication or modification date found
+WARN Physical Address No physical address found
+WARN Editorial Policy No editorial policy link found
+WARN Trust Signals No trust signals detected (badges, reviews, certifications)
+WARN Disclaimers YMYL content detected without visible disclaimers
+PASS About Page Link Link to about page found
+PASS Contact Page Link Link to contact page found
+PASS External Citations 4 external link(s) found — supporting citations strengthen content
+PASS Affiliate Disclosure No affiliate links detected
+PASS YMYL Detection YMYL categories detected: legal — ensure strong E-E-A-T signals
+URL Structure  —  100/100  (13 checks)
+CHECK RESULT
+PASS URL Slug Keywords Homepage URL — no slug to check
+PASS No Stop Words in URL No stop words found in URL
+PASS No Uppercase in URL URL path is lowercase
+PASS No Underscores in URL URL uses hyphens (not underscores)
+PASS No Double Slash in Path No double slashes in URL path
+PASS No Spaces in URL No spaces in URL
+PASS No Non-ASCII in URL URL uses ASCII characters only
+PASS URL Length URL is 28 characters
+PASS No Repetitive Path Segments No repeated URL segments
+PASS URL Parameters No query parameters
+PASS No Session IDs in URL No session IDs in URL
+PASS No Tracking Parameters No tracking parameters in URL
+PASS No Internal Search URLs Not a search results page
+Mobile  —  100/100  (5 checks)
+CHECK RESULT
+PASS Readable Font Size No inline font sizes below 12px detected
+PASS Viewport Uses device-width Viewport uses width=device-width
+PASS Single Viewport Tag Single viewport meta tag
+PASS No Intrusive Interstitials No intrusive interstitials detected
+PASS No Horizontal Scroll No major horizontal scroll issues detected
+SEOmator · https://burchcontracting.com/ 6 / 9
+
+--- PAGE 7 ---
+Detailed Audit Results
+HTML Validation  —  100/100  (9 checks)
+CHECK RESULT
+PASS DOCTYPE Declaration <!DOCTYPE html> is present
+PASS Character Encoding Character encoding is declared
+PASS Valid Head Elements All <head> children are valid
+PASS Noscript in Head No <noscript> in <head>
+PASS Single Head Element Single <head> element
+PASS HTML Size Limit HTML is 0.21MB
+PASS No Placeholder Text No placeholder text detected
+PASS Single Title Element Single <title> element
+PASS Single Meta Description Single meta description
+Redirects  —  100/100  (5 checks)
+CHECK RESULT
+PASS No Meta Refresh Redirect No meta refresh redirect
+PASS No JavaScript Redirect No JavaScript redirects detected
+PASS No HTTP Refresh Header No HTTP Refresh header
+PASS Redirect Type HTTP 200 — no redirect
+PASS No HTTP Resource URLs on HTTPS All resources use HTTPS
+AI/GEO Readiness  —  73/100  (5 checks)
+CHECK RESULT
+WARN AI Bot Access 5 AI crawler(s) blocked: GPTBot, Google-Extended, CCBot, Bytespider, Amazonbot
+WARN llms.txt Reference No llms.txt reference found — consider adding one for AI discoverability
+PASS Semantic HTML 6 semantic element types found: article, section, main, nav, header, footer
+PASS Content Structure for AI Good content structure: 53 structural elements
+PASS Schema Content Drift JSON-LD content aligns with visible page text
+Internationalization  —  100/100  (4 checks)
+CHECK RESULT
+PASS HTML Lang Attribute Lang attribute: en
+PASS Hreflang Tags 2 hreflang tag(s) found for: en-US
+PASS No Hreflang on Noindex Pages Page is indexable with hreflang
+PASS Hreflang Self-Reference Hreflang includes self-referencing tag
+SEOmator · https://burchcontracting.com/ 7 / 9
+
+--- PAGE 8 ---
+Heading Structure
+H1 (1)
+1. Garage Builders, Additions, and Porches, Decks & ADUs
+H2 (9)
+1. Free estimate planning for the projects homeowners ask about most
+2. Why Choose Burch Contracting?
+3. Our Services
+4. Popular Remodeling Pages by City
+5. Service Areas We're Proud to Serve
+6. Project Cost Calculators
+7. Recent Projects
+8. What Our Customers Say
+9. Ready to Start Your Project?
+H3 (38)
+1. Licensed & Insured
+2. Clear Communication
+3. Quality Workmanship
+4. On-Time & On-Budget
+5. Handyman Services
+6. Remodeling
+7. Home Additions
+8. Basement Finishing
+9. Garage Builder in Simpsonville, SC
+10. Room Additions in Simpsonville, SC
+11. Screened Porch Contractor in Simpsonville, SC
+12. Deck Builder in Simpsonville, SC
+13. ADU Builder in Simpsonville, SC
+14. Garage Builder in Fountain Inn, SC
+15. Room Additions in Fountain Inn, SC
+16. Screened Porch Contractor in Fountain Inn, SC
+17. Deck Builder in Fountain Inn, SC
+18. ADU Builder in Fountain Inn, SC
+19. Simpsonville
+20. Greenville
+21. Five Forks
+22. Woodruff
+23. Gray Court
+24. Fountain Inn
+25. Mauldin
+26. Laurens
+27. Kitchen Remodel Budget
+28. Bathroom Remodel Budget
+29. Room Addition Budget
+30. Deck and Porch Budget
+31. Basement Finish Budget
+32. Kitchen Workflow Upgrade in Simpsonville
+33. Primary Bathroom Renovation in Greenville
+34. Room Addition Expansion in Greenville
+35. Deck Entertaining Space in Simpsonville
+36. Basement Living Suite in Greenville
+37. Screened Porch Family Space in Five Forks
+38. See All Our Google Reviews
+H4 (3)
+1. Contact
+2. Hours
+3. Explore
+SEOmator · https://burchcontracting.com/ 8 / 9
+
+--- PAGE 9 ---
+Social Media Tags
+PROPERTY VALUE
+og:title Burch | Upstate SC Garage, Room Addition & Porch Contractor
+og:description Burch is an Upstate SC garage, room addition, porch, deck, and ADU contractor offering free estimates.
+og:url https://burchcontracting.com
+twitter:card summary_large_image
+twitter:title Burch Contracting | Upstate SC Garage & Addition Contractor
+twitter:description Free estimates from an Upstate SC garage, addition, porch, deck, and ADU contractor.
+twitter:image https://burchcontracting.com/og-image.webp
+twitter:domain burchcontracting.com
+SEOmator · https://burchcontracting.com/ 9 / 9

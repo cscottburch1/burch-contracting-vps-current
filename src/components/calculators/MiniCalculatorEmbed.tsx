@@ -32,7 +32,7 @@ const defaultSizes: Record<string, { min: number; max: number; default: number; 
 
 const baseRates: Record<string, { low: number; high: number }> = {
   'decks': { low: 35, high: 65 },
-  'garages': { low: 45, high: 85 },
+  'garages': { low: 54, high: 102 },
   'screened-porches': { low: 40, high: 70 },
   'room-additions': { low: 120, high: 220 },
   'kitchen-remodeling': { low: 150, high: 300 },

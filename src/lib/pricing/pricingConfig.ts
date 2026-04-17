@@ -131,17 +131,17 @@ export const PRICING_CONFIG = {
       baseRates: {
         attachedBasic: {
           label: 'Attached Garage (basic finish)',
-          directCost: 50, // $/SF
+          directCost: 60, // $/SF
           description: 'Standard 2-car attached, basic finishes, slab foundation',
         },
         detachedStandard: {
           label: 'Detached Garage (standard finish)',
-          directCost: 74, // $/SF
+          directCost: 89, // $/SF
           description: 'Detached 2-car, standard finishes, electrical, garage door',
         },
         upgradedWorkshop: {
           label: 'Upgraded Workshop/Carriage House',
-          directCost: 99, // $/SF
+          directCost: 119, // $/SF
           description: 'Premium finishes, finished walls, upgraded electrical, upgraded door',
         },
       },
@@ -161,10 +161,10 @@ export const PRICING_CONFIG = {
         challenging: 1.25,  // Significant grading, retaining walls, or access issues
       },
       adders: [
-        { label: 'Insulated Garage Doors (×2)', cost: 1800, unit: 'per pair' },
-        { label: 'Second Floor Storage/Bonus', cost: 45, unit: 'per SF' },
-        { label: 'Upgraded Electrical Panel', cost: 1200, unit: 'per garage' },
-        { label: 'Finished Interior Walls', cost: 6, unit: 'per SF' },
+        { label: 'Insulated Garage Doors (×2)', cost: 2160, unit: 'per pair' },
+        { label: 'Second Floor Storage/Bonus', cost: 54, unit: 'per SF' },
+        { label: 'Upgraded Electrical Panel', cost: 1440, unit: 'per garage' },
+        { label: 'Finished Interior Walls', cost: 7.2, unit: 'per SF' },
       ],
     },
 

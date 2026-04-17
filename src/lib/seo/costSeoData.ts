@@ -220,23 +220,23 @@ export const costLandingPages: CostLandingPage[] = [
     metaTitle: 'Garage Construction Cost Laurens SC | Detached & Attached Garage Pricing',
     metaDescription: 'Complete garage construction cost guide for Laurens SC. Pricing for detached 2-car, 3-car, and attached garages including permits and foundation.',
     intro:
-      'Garage construction in Laurens SC costs between $32,000 and $85,000 for a standard 2-car garage, and $58,000 to $145,000+ for a 3-car or workshop garage. This comprehensive guide covers detached vs attached garages, foundation options, garage door costs, electrical packages, and permitting requirements specific to Laurens County. Whether you need basic parking and storage or a climate-controlled workshop space, understanding these cost factors helps you plan a realistic budget and make informed decisions before breaking ground.',
+      'Garage construction in Laurens SC costs between $46,080 and $122,400 for a standard 2-car garage, and $83,520 to $208,800+ for a 3-car or workshop garage. This comprehensive guide covers detached vs attached garages, foundation options, garage door costs, electrical packages, and permitting requirements specific to Laurens County. Whether you need basic parking and storage or a climate-controlled workshop space, understanding these cost factors helps you plan a realistic budget and make informed decisions before breaking ground.',
     ranges: [
-      { label: 'Detached 2-Car Garage (20x20 to 24x24)', range: '$32,000-$65,000', details: 'Basic detached garage with concrete slab, standard framing, vinyl siding, asphalt shingle roof, and basic electrical service.' },
-      { label: 'Attached 2-Car Garage (20x20 to 24x24)', range: '$42,000-$75,000', details: 'Attached garage with foundation integration, matching exterior, roofline tie-in, and upgraded finish package.' },
-      { label: 'Detached 3-Car or Workshop Garage (24x36 to 30x40)', range: '$58,000-$145,000+', details: 'Larger garage with workshop space, upgraded electrical (220V service), HVAC, finished interior, and storage systems.' },
+      { label: 'Detached 2-Car Garage (20x20 to 24x24)', range: '$46,080-$93,600', details: 'Basic detached garage with concrete slab, standard framing, vinyl siding, asphalt shingle roof, and basic electrical service.' },
+      { label: 'Attached 2-Car Garage (20x20 to 24x24)', range: '$60,480-$108,000', details: 'Attached garage with foundation integration, matching exterior, roofline tie-in, and upgraded finish package.' },
+      { label: 'Detached 3-Car or Workshop Garage (24x36 to 30x40)', range: '$83,520-$208,800+', details: 'Larger garage with workshop space, upgraded electrical (220V service), HVAC, finished interior, and storage systems.' },
     ],
     costDrivers: [
       'Garage size: 2-car (400-576 sq ft) vs 3-car (720-1,200 sq ft)',
-      'Foundation type: monolithic slab ($4-6/sq ft) vs frost-protected ($6-9/sq ft)',
+      'Foundation type: monolithic slab ($4.8-7.2/sq ft) vs frost-protected ($7.2-10.8/sq ft)',
       'Attached vs detached construction',
       'Roofline integration for attached garages',
       'Siding and exterior finish to match home',
-      'Garage door packages: basic steel ($800-1,200 per door) vs insulated carriage style ($2,000-3,500 per door)',
+      'Garage door packages: basic steel ($960-1,440 per door) vs insulated carriage style ($2,400-4,200 per door)',
       'Electrical service: basic (120V outlets) vs workshop (220V, subpanel, upgraded lighting)',
       'Interior finishes: unfinished vs drywall and paint',
       'HVAC and climate control options',
-      'Permits and inspections through Laurens County ($250-600)',
+      'Permits and inspections through Laurens County ($300-720)',
       'Site prep, grading, and driveway extension',
     ],
     faqs: [
@@ -246,7 +246,7 @@ export const costLandingPages: CostLandingPage[] = [
       },
       {
         question: 'Should I build an attached or detached garage?',
-        answer: 'Attached garages ($42,000-75,000) cost more due to foundation integration and roofline matching but offer better convenience and home value. Detached garages ($32,000-65,000) cost less and provide flexibility for workshop use but require longer walks in bad weather.',
+        answer: 'Attached garages ($60,480-108,000) cost more due to foundation integration and roofline matching but offer better convenience and home value. Detached garages ($46,080-93,600) cost less and provide flexibility for workshop use but require longer walks in bad weather.',
       },
       {
         question: 'How long does garage construction take in Laurens SC?',
@@ -254,11 +254,11 @@ export const costLandingPages: CostLandingPage[] = [
       },
       {
         question: 'What foundation is best for Laurens County soil conditions?',
-        answer: 'Most Laurens garages use monolithic slab foundations ($4-6/sq ft) which work well in local clay soils. Areas with poor drainage may need frost-protected or raised foundations ($6-9/sq ft) to prevent settling.',
+        answer: 'Most Laurens garages use monolithic slab foundations ($4.8-7.2/sq ft) which work well in local clay soils. Areas with poor drainage may need frost-protected or raised foundations ($7.2-10.8/sq ft) to prevent settling.',
       },
       {
         question: 'How much does it cost to add electricity and HVAC to a garage?',
-        answer: 'Basic electrical (120V outlets and lights) costs $1,500-2,500. Workshop electrical with 220V service and subpanel costs $3,500-6,000. Adding HVAC for climate control adds $4,000-8,000 depending on garage size.',
+        answer: 'Basic electrical (120V outlets and lights) costs $2,160-3,600. Workshop electrical with 220V service and subpanel costs $5,040-8,640. Adding HVAC for climate control adds $5,760-11,520 depending on garage size.',
       },
     ],
     calculatorPath: '/calculator/additions',

@@ -1,0 +1,1119 @@
+PDF: geo-audit-report.pdf
+Total Pages: 33
+================================================================================
+
+--- PAGE 1 ---
+SEOmator
+GEO Audit Report
+burchcontracting.com
+77/100
+Good — GEO Readiness Score
+Business Type: Local  •  Pages Analyzed: 50  •  Date: 2026-04-14 03:48:39
+
+--- PAGE 2 ---
+Executive Summary
+Burch Contracting currently achieves a GEO score of 77/100, placing the site in the 'Good'
+category with a strong foundation for AI visibility but signiﬁcant optimization opportunities
+remaining. Our comprehensive audit analyzed 50 pages across the contractors' digital presence,
+revealing a sharp divide between high-value calculator tools and underperforming marketing
+pages. Top-performing assets include the bathroom remodeling, room addition, and basement
+ﬁnishing calculators (scoring 55/100 each), which feature speciﬁc budget disclaimers citing the
+20% contractor markup. Conversely, the homepage and service area pages score critically low
+(43-44/100) due to generic testimonial-focused copy lacking the statistical density or self-
+contained answers that AI models prioritize for citation.
+The current 77 score reﬂects solid technical infrastructure (75/100) and decent content E-E-A-T
+signals (71/100), but is signiﬁcantly constrained by a restrictive robots.txt policy blocking major
+AI crawlers including GPTBot and ClaudeBot while simultaneously maintaining an invalid llms.txt
+implementation. This technical misconﬁguration prevents the site's valuable cost calculators
+and location-speciﬁc construction insights from being included in major LLM training datasets,
+severely limiting brand mention frequency in AI responses even when live browsing is available.
+Additionally, the brand authority score of 38/100 indicates zero detected presence on Wikipedia,
+Reddit, YouTube, or LinkedIn—platforms that ChatGPT and Perplexity heavily weight for entity
+veriﬁcation and credibility assessment.
+Priority remediation focuses on three critical areas: correcting crawler access policies to allow
+beneﬁcial AI bots while maintaining security, ﬁxing or replacing the malformed llms.txt ﬁle to
+explicitly guide AI engines on permissible content usage, and implementing author attribution
+bylines on all technical content to establish Expertise signals for construction-speciﬁc queries.
+The schema implementation score of 7/100 represents the most critical gap, as the site lacks
+HowTo and Table schemas that would enable appearance in Google AI Overviews for
+comparative contractor queries. Technical ﬁxes including the missing viewport meta tag and
+IndexNow protocol implementation will further signal content accessibility to AI engines.
+Projected score after implementing priority actions: 92-95/100 (+15-18 points).
+
+--- PAGE 3 ---
+GEO Score Breakdown
+The GEO score is a weighted composite of six key areas that determine how well your site
+performs in AI-powered search engines.
+Formula: Citability (25%) + Brand Authority (20%) + Content E-E-A-T (20%) + Technical SEO
+(15%) + Schema Markup (10%) + Platform Readiness (10%) = 77/100
+CATEGORY WEIGHT SCORE GRADE
+AI Citability 25% 49/100 Poor
+Brand Authority 20% 38/100 Poor
+Content E-E-A-T 20% 71/100 Good
+Technical SEO 15% 75/100 Good
+Schema Markup 10% 7/100 Critical
+Platform Readiness 10% 55/100 Fair
+AI Platform Readiness Scores
+How well your site is optimized for each major AI search platform.
+PLATFORM SCORE READINESS
+Google AI Overviews 72/100 Strong
+ChatGPT Web Search 46/100 Moderate
+Perplexity AI 52/100 Moderate
+Google Gemini 48/100 Moderate
+Bing Copilot 58/100 Moderate
+
+--- PAGE 4 ---
+Key Metrics at a Glance
+A summary of the most important quantitative signals found across your site.
+Content Metrics
+METRIC VALUE ASSESSMENT
+Pages Analyzed 50 Suﬃcient sample size
+Average Words per Page 2976 Good content depth
+Average Citability Score 49/100 Poor
+Total Images 155 —
+Alt Text Coverage 100% Excellent
+Link Structure
+METRIC VALUE
+Avg Internal Links per Page 35
+Avg External Links per Page 3
+Pages with H1 Issues 0
+Structured Data & AI Discoverability
+METRIC VALUE
+Schema Types Found WebSite, Organization, LocalBusiness, FAQPage
+llms.txt File Found
+
+--- PAGE 5 ---
+E-E-A-T Analysis
+E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) is Google's quality
+framework. AI search engines heavily weight these signals when deciding which content to cite.
+Your combined E-E-A-T score is 71/100 (Good).
+PILLAR SCORE MAX EVIDENCE SIGNALS
+Experience 17 /25 Avg 2976 words/page (in-depth content); Case study / portfolio
+pages found
+Expertise 11 /25 9 H2 subheadings (structured expertise)
+Authoritativeness20 /25 Organization schema markup found; 4 outbound authority links
+Trustworthiness23 /25 HTTPS enabled; 4 security headers present; Contact / Support
+page found
+What This Means
+Experience measures ﬁrst-hand knowledge signals — case studies, original data, user
+testimonials.
+Expertise evaluates depth of subject-matter coverage — author credentials, technical
+accuracy, comprehensive explanations.
+Authoritativeness assesses domain recognition — backlinks from authoritative sources, brand
+mentions, industry citations.
+Trustworthiness looks at credibility signals — HTTPS, privacy policies, contact information,
+editorial standards.
+
+--- PAGE 6 ---
+AI Crawler Access
+AI search engines use crawlers to index your content. Blocking these crawlers means your
+content cannot appear in AI-generated answers. Out of 14 crawlers checked: 7 allowed, 7
+blocked, 0 not mentioned in robots.txt.
+CRAWLER STATUS IMPLICATION
+GPTBot BLOCKED Content will NOT appear — consider unblocking
+OAI-SearchBot Allowed Content can appear in this platform's AI answers
+ChatGPT-User Allowed Content can appear in this platform's AI answers
+ClaudeBot BLOCKED Content will NOT appear — consider unblocking
+PerplexityBot Allowed Content can appear in this platform's AI answers
+Google-Extended BLOCKED Content will NOT appear — consider unblocking
+GoogleOther Allowed Content can appear in this platform's AI answers
+Applebot-ExtendedBLOCKED Content will NOT appear — consider unblocking
+Amazonbot BLOCKED Content will NOT appear — consider unblocking
+FacebookBot Allowed Content can appear in this platform's AI answers
+CCBot BLOCKED Content will NOT appear — consider unblocking
+anthropic-ai Allowed Content can appear in this platform's AI answers
+Bytespider BLOCKED Content will NOT appear — consider unblocking
+cohere-ai Allowed Content can appear in this platform's AI answers
+
+--- PAGE 7 ---
+Key Findings (10 total)
+Issues discovered during the audit, organized by severity. Critical and High severity items should
+be addressed ﬁrst as they have the greatest impact on your AI search visibility.
+HIGH (2)
+FINDING DESCRIPTION EFFORT
+Restrictive AI
+Crawler Access
+Policy
+Multiple AI crawlers are blocked (GPTBot, ClaudeBot, Google-
+Extended, Applebot-Extended, Amazonbot, CCBot, Bytespider)
+while only ChatGPT-User and PerplexityBot are allowed. This
+prevents the site from being included in training data for major
+LLMs, limiting brand mention frequency in AI responses even if
+live browsing works.
+low
+Invalid llms.txt
+Implementation
+The site has an llms.txt ﬁle present but it is invalid/malformed.
+This represents a missed opportunity to explicitly guide AI
+crawlers on allowed content sections, attribution preferences, and
+contact information for AI engines.
+low
+MEDIUM (4)
+FINDING DESCRIPTION EFFORT
+Missing Author
+Attribution and E-
+E-A-T Bylines
+No author bylines detected on service or blog content. For a
+contracting business discussing technical topics like moisture
+management, load-bearing considerations, and zoning setbacks,
+attributing content to licensed contractors or project managers
+would signiﬁcantly boost Expertise signals.
+medium
+Limited Brand
+Entity Authority
+Signals
+Zero presence detected on Wikipedia, Reddit, LinkedIn, or
+YouTube. ChatGPT and Perplexity heavily weight these sources
+for entity veriﬁcation. Without these citations, the brand relies
+entirely on ﬁrst-party website content for AI recognition.
+high
+Missing Viewport
+Meta Tag
+Viewport meta tag is absent despite mobile-responsive needs
+for local searchers. This aﬀects mobile rendering quality that AI
+engines evaluate when determining content accessibility.
+low
+Underutilized
+Structured Data
+for AIO Features
+While LocalBusiness and FAQPage schemas are present, the site
+lacks HowTo schema for project process content and Table
+schema for the cost comparison data. Adding structured tables
+would improve chances of appearing in Google AIO comparative
+responses.
+medium
+LOW (4)
+FINDING DESCRIPTION EFFORT
+
+--- PAGE 8 ---
+Inconsistent Google
+Crawler Policy
+Google-Extended is blocked but GoogleOther is allowed,
+sending mixed signals to Google's AI ecosystem. For optimal
+Gemini visibility, consider allowing Google-Extended or
+specifying allowed directories in robots.txt.
+low
+Missing IndexNow
+Protocol
+No IndexNow implementation detected. For a local contractor
+posting seasonal content and project updates, this protocol
+would accelerate indexing for Bing Copilot and other Microsoft
+AI products.
+low
+Lack of Multi-modal
+Content
+No YouTube presence or optimized video schema detected.
+Gemini and Google AIO increasingly prioritize video content for
+'how-to' contractor queries. Project walkthroughs would
+enhance entity authority.
+high
+Citation
+Opportunities in
+Cost Calculators
+The cost calculators provide excellent direct answers but lack
+source citations for price ﬁgures. Adding citations to RS Means,
+local permit fee schedules, or material suppliers would increase
+Perplexity conﬁdence scores.
+medium
+
+--- PAGE 9 ---
+Prioritized Action Plan
+Recommended actions organized by implementation timeline. Quick wins can be done
+immediately with minimal eﬀort. Medium-term actions require more planning. Strategic
+initiatives are long-term investments.
+Quick Wins (Do This Week)
+# ACTION EXPECTED IMPACT EFFORT
+1 Repair llms.txt implementation with valid
+structured format including Core Product,
+Features, Use Cases, and Permissions sections
+Pages: https://burchcontracting.com/llms.txt
++3 GEO points through
+improved AI crawler
+guidance and explicit
+attribution preferences
+low
+2 Modify robots.txt to allow GPTBot and ClaudeBot
+access to /calculator/, /services/, and /blog/
+directories while maintaining blocks on
+administrative paths
+Pages: https://burchcontracting.com/robots.txt
++2 GEO points through
+inclusion in major LLM
+training datasets
+(ChatGPT, Claude)
+low
+3 Implement BreadcrumbList schema on all 50
+analyzed pages to establish content hierarchy for
+AI parsing
+Pages: https://burchcontracting.com/,
+https://burchcontracting.com/services/,
+https://burchcontracting.com/calculator/room-additions
++2 GEO points through
+improved content
+relationship
+understanding for Google
+AIO and Bing Copilot
+low
+4 Add viewport meta tag to all pages to resolve
+mobile rendering issues aﬀecting AI accessibility
+scoring
+Pages: https://burchcontracting.com/,
+https://burchcontracting.com/service-areas/laurens
++1 GEO point through
+improved technical
+accessibility signals
+low
+Medium-Term Actions (Next 30 Days)
+# ACTION EXPECTED IMPACT EFFORT
+1 Add licensed contractor author bylines with
+credentials to all calculator pages and technical
+service descriptions
+Pages: https://burchcontracting.com/calculator/bathroom-remodeling,
+https://burchcontracting.com/calculator/kitchen-remodeling,
+https://burchcontracting.com/locations/basement-ﬁnishing-fountain-inn-
+sc
++3 GEO points
+through increased
+Expertise signals for
+YMYL contractor
+content
+medium
+
+--- PAGE 10 ---
+2 Implement HowTo schema with tool requirements and
+estimatedTime for basement ﬁnishing and kitchen
+remodeling process pages
+Pages: https://burchcontracting.com/services/basement-ﬁnishing,
+https://burchcontracting.com/services/kitchen-remodeling
++2 GEO points
+through eligibility for
+Google AIO step-by-
+step rich results
+medium
+3 Initialize IndexNow API submission protocol for blog
+and project update content to accelerate Bing Copilot
+indexing
+Pages: https://burchcontracting.com/blog/,
+https://burchcontracting.com/project-updates/
++1 GEO point
+through improved
+real-time content
+discovery for
+Microsoft AI products
+medium
+Strategic Initiatives (Next Quarter)
+# ACTION EXPECTED IMPACT EFFORT
+1 Establish YouTube channel with 10 project
+walkthrough videos featuring VideoObject
+schema and sameAs linking
++2 GEO points through
+multimodal content visibility
+in Gemini and Google AIO
+high
+2 Create Wikipedia article and Wikidata entry
+for Burch Contracting with proper entity
+disambiguation and citation of local press
+coverage
++2 GEO points through
+authoritative entity
+veriﬁcation signals for
+ChatGPT and Perplexity
+high
+3 Execute Reddit AMA in r/HomeImprovement
+and r/greenville establishing veriﬁed
+contractor expertise and organic community
+citations
++1 GEO point through social
+proof validation in AI training
+data sources
+high
+
+--- PAGE 11 ---
+Citability Analysis
+Citability measures how likely AI systems are to quote or reference your content in their
+answers. A score of 70+ means your content is structured in ways that AI models prefer to cite.
+Your average score across 50 pages is 49/100 (Poor).
+Highest Scoring Pages
+PAGE URL SCORE GRADE
+/calculator/bathroom-remodeling 55/100 Fair
+/calculator/room-additions 55/100 Fair
+/calculator/basement-ﬁnishing 55/100 Fair
+/locations/basement-ﬁnishing-fountain-inn-sc 55/100 Fair
+/calculator/kitchen-remodeling 54/100 Poor
+Lowest Scoring Pages (Priority for Improvement)
+PAGE URL SCORE GRADE
+/ 43/100 Poor
+/ 43/100 Poor
+/service-areas/laurens 44/100 Poor
+/services/handyman 45/100 Poor
+/employment/direct-hire 45/100 Poor
+Top Citation-Ready Content Blocks
+These are speciﬁc content sections that AI models are most likely to cite directly.
+BLOCK / HEADING SCORE ANSWER SELF-
+CONT. STRUCTURE STATS UNIQUE
+Budget Planning Disclaimer
+"This calculator is for planning
+only and includes a ﬁxed 20%
+contractor markup ..."
+73 75 88 72 63 42
+Budget Planning Disclaimer
+"This calculator is for planning
+only and includes a ﬁxed 20%
+contractor markup ..."
+73 75 88 72 63 42
+
+--- PAGE 12 ---
+Budget Planning Disclaimer
+"This calculator is for planning
+only and includes a ﬁxed 20%
+contractor markup ..."
+73 75 88 72 63 42
+Budget Planning Disclaimer
+"This calculator is for planning
+only and includes a ﬁxed 20%
+contractor markup ..."
+73 75 88 72 63 42
+Budget Planning Disclaimer
+"This calculator is for planning
+only and includes a ﬁxed 20%
+contractor markup ..."
+73 75 88 72 63 42
+
+--- PAGE 13 ---
+Technical SEO Breakdown
+Technical SEO ensures search engines (both traditional and AI-powered) can crawl, render, and
+understand your site. Each category below is scored independently.
+CATEGORY SCORE MAX STATUS
+Crawlability 15 15 PASS
+Indexability 12 12 PASS
+Security 7 10 WARN
+URL Structure 8 8 PASS
+Mobile 1 6 FAIL
+Core Web Vitals 12 15 PASS
+Server-Side Rendering 11 15 WARN
+Page Speed 9 12 WARN
+Security — Failed Checks
+CHECK DETAILS POINTS LOST
+HSTS Missing -2
+Core Web Vitals — Failed Checks
+CHECK DETAILS POINTS LOST
+LCP (estimated)Estimated from preload tags and image formats — not real ﬁeld data-3
+Technical Findings
+SEVERITY FINDING DESCRIPTION
+HIGH Missing viewport
+meta tag
+Required for mobile rendering. Google crawls exclusively with
+mobile Googlebot.
+LOW Core Web Vitals
+are estimated
+CWV scores (LCP, INP, CLS) are estimated from HTML heuristics,
+not Chrome UX Report ﬁeld data. Use PageSpeed Insights or CrUX
+API for accurate measurements.
+
+--- PAGE 14 ---
+Heading Structure Issues (3)
+Proper heading hierarchy (H1 → H2 → H3) helps both users and AI systems understand your
+content structure. The following issues were found.
+SEVERITY ISSUE PAGE
+MEDIUM No H2 subheadings despite substantial content /contact
+LOW Skipped heading level: H3 used without H2 /contact
+LOW Skipped heading level: H4 used without H3 /projects
+
+--- PAGE 15 ---
+Brand Authority Analysis
+AI models build entity understanding from brand mentions across high-authority platforms. A
+strong brand presence on these platforms increases the likelihood that AI will recognize, trust,
+and cite your content. Brand searched: burchcontracting.
+PLATFORM PRESENT SCORE WEIGHT DETAILS
+YouTube No 0/100 25% No YouTube presence detected
+Reddit No 0/100 25% No Reddit presence detected
+Wikipedia No 0/100 20% No Wikipedia or Wikidata presence found
+LinkedIn No 35/100 15% LinkedIn cannot be veriﬁed automatically (anti-bot
+protection) — assumed baseline presence. Verify
+manually for accurate score.
+Others
+(GitHub)
+No 15/100 15% Limited veriﬁed presence on secondary platforms —
+verify Quora, G2, Trustpilot manually — also verify
+Quora, Stack Overﬂow, G2, Trustpilot manually
+Brand Recommendations
+1. Create a YouTube channel with product demos, tutorials, and industry content
+2. Participate authentically in relevant subreddits
+3. Avoid promotional content — be helpful and speciﬁc
+4. Assess notability criteria for Wikipedia article creation
+5. Create a Wikidata item with key properties (instance of, oﬃcial website, social media)
+6. Ensure complete LinkedIn company page with accurate description
+
+--- PAGE 16 ---
+Schema & Structured Data
+Schema markup helps AI systems understand the type and context of your content. JSON-LD is
+the preferred format for both Google and AI search engines.
+METRIC VALUE ASSESSMENT
+Format json-ld Optimal format
+Server Rendered No May not be visible to some AI crawlers
+Detected Schema Types 4 —
+Missing Recommended 1 Action needed
+Detected Schema Types
+TYPE VALID
+WebSite Valid
+Organization Valid
+LocalBusiness Valid
+FAQPage Valid
+Missing Recommended Schemas
+The following schema types are recommended for your site type but were not found:
+BreadcrumbList
+sameAs Links (Entity Linking)
+sameAs links in your Organization schema help AI models connect your brand across platforms.
+PLATFORM STATUS
+wikipedia Missing — add to Organization schema
+wikidata Missing — add to Organization schema
+linkedin Missing — add to Organization schema
+youtube Missing — add to Organization schema
+twitter Missing — add to Organization schema
+github Missing — add to Organization schema
+crunchbase Missing — add to Organization schema
+llms.txt Status
+
+--- PAGE 17 ---
+llms.txt is an emerging standard (like robots.txt) that helps AI systems understand your site
+structure and preferred content for citation.
+CHECK RESULT
+File Exists Yes
+Valid Format No
+Score 70/100
+Recommendation: Your llms.txt ﬁle was found but has formatting issues. Review the format
+speciﬁcation and ﬁx the structure.
+
+--- PAGE 18 ---
+Detailed AI Analysis
+The following in-depth analysis was generated by AI after reviewing all collected data from your
+site.
+Citability Assessment
+Top Citation-Ready Blocks
+Budget Planning Disclaimer - Kitchen Remodeling Calculator
+"This calculator is for planning only and includes a ﬁxed 20% contractor markup in every
+estimate. Final pricing varies based on existing conditions, structural work, framing
+changes, plumbing or elec"
+DIMENSION SCORE WEIGHT
+Answer Block Quality 75 30%
+Self-Containment 88 25%
+Structural Readability 72 20%
+Statistical Density 63 15%
+Uniqueness 42 10%
+Weighted Total 73/100 —
+This block scores highly for self-containment, presenting a complete disclaimer with speciﬁc
+numerical parameters (20% markup) that AI models can conﬁdently cite. However, the
+uniqueness score of 42 indicates this exact phrasing appears across multiple calculator pages,
+potentially triggering duplicate content ﬁltering in AI systems.
+Budget Planning Disclaimer - Bathroom Remodeling Calculator
+"This calculator is for planning only and includes a ﬁxed 20% contractor markup in every
+estimate. Final pricing varies based on existing conditions, structural work, framing
+changes, plumbing or elec"
+DIMENSION SCORE WEIGHT
+Answer Block Quality 75 30%
+Self-Containment 88 25%
+Structural Readability 72 20%
+Statistical Density 63 15%
+Uniqueness 42 10%
+
+--- PAGE 19 ---
+Weighted Total 73/100 —
+Identical structural performance to other calculator instances. The high self-containment score
+reﬂects that this sentence requires no external context to answer 'What markup does Burch
+Contracting include in estimates?'—making it ideal for AI snippet extraction.
+Budget Planning Disclaimer - Room Additions Calculator
+"This calculator is for planning only and includes a ﬁxed 20% contractor markup in every
+estimate. Final pricing varies based on existing conditions, structural work, framing
+changes, plumbing or elec"
+DIMENSION SCORE WEIGHT
+Answer Block Quality 75 30%
+Self-Containment 88 25%
+Structural Readability 72 20%
+Statistical Density 63 15%
+Uniqueness 42 10%
+Weighted Total 73/100 —
+The repetition across calculators creates a templated citability pattern. While this
+standardization aids brand consistency, AI citation engines may prioritize the ﬁrst instance
+encountered, typically favoring the kitchen remodeling calculator due to higher search volume
+associations.
+Budget Planning Disclaimer - Decks & Screened Porches Calculator
+"This calculator is for planning only and includes a ﬁxed 20% contractor markup in every
+estimate. Final pricing varies based on existing conditions, structural work, framing
+changes, plumbing or elec"
+DIMENSION SCORE WEIGHT
+Answer Block Quality 75 30%
+Self-Containment 88 25%
+Structural Readability 72 20%
+Statistical Density 63 15%
+Uniqueness 42 10%
+Weighted Total 73/100 —
+This block demonstrates strong answer block quality through explicit limitation statements ('for
+planning only') that establish appropriate context boundaries—critical for AI models avoiding
+hallucinated precision in contractor pricing responses.
+Budget Planning Disclaimer - Basement Finishing Calculator
+
+--- PAGE 20 ---
+"This calculator is for planning only and includes a ﬁxed 20% contractor markup in every
+estimate. Final pricing varies based on existing conditions, structural work, framing
+changes, plumbing or elec"
+DIMENSION SCORE WEIGHT
+Answer Block Quality 75 30%
+Self-Containment 88 25%
+Structural Readability 72 20%
+Statistical Density 63 15%
+Uniqueness 42 10%
+Weighted Total 73/100 —
+The structural readability score of 72 reﬂects clear conditional logic ('Final pricing varies based
+on...') that AI parsing algorithms identify as high-quality qualiﬁed answers, reducing the risk of
+out-of-context citation.
+Citation-Unlikely Areas Needing Improvement
+AREA SCORE ISSUE
+Homepage Hero
+Copy
+43/100 Vague testimonial focus ('Read what our customers are saying') lacks
+speciﬁc project metrics, material speciﬁcations, or service
+diﬀerentiators that AI models extract for contractor comparisons.
+Laurens Service
+Area Page
+44/100 Boilerplate service listing ('Serving Laurens homeowners with expert
+basement ﬁnishing...') reads as generic location spam without unique
+geographical insights or project-speciﬁc data points.
+Handyman
+Services
+Description
+45/100 Marketing superlatives ('#1 choice', 'reliable') without accompanying
+technical speciﬁcations, price ranges, or scope limitations prevent AI
+from citing concrete service parameters.
+Employment Page
+Content
+45/100 Emoji-heavy formatting ( 💰 , 🏥 ) and beneﬁt-focused rather than
+expertise-focused content fails to establish contractor authority
+signals required for construction industry E-E-A-T.
+Internal
+Navigation Blocks
+36/100 'Main service hub' and 'Lightly connect this silo' text represents
+internal SEO instructions accidentally exposed to crawlers, providing
+zero value as citable content.
+ADU Resource
+Links
+37/100 Bare link references ('HUD accessory dwelling unit overview') without
+contextual summarization or analytical commentary fail to
+demonstrate expertise aggregation valued by Perplexity and Gemini.
+Citability Recommendations
+Diversify Calculator Disclaimers: Rewrite the identical 20% markup disclaimer across all
+ﬁve calculators to include service-speciﬁc variables (e.g., bathroom plumbing complexity factors
+
+--- PAGE 21 ---
+for the bath calculator, foundation requirements for room additions), boosting uniqueness scores
+from 42 to 70+.
+Add Statistical Citations to Cost Data: Insert inline citations referencing RS Means
+Construction Cost Data, local Greenville County permit fee schedules, or supplier partnerships
+(e.g., 'Based on 2024 lumber pricing from local Lowe's ProServices') to increase Perplexity
+conﬁdence scores and statistical density metrics.
+Transform Service Area Pages: Replace generic 'Serving [City]' intros with 150-word
+location-speciﬁc construction insights (e.g., 'Fountain Inn basements common in 1990s
+construction are often 8-foot crawl-to-basement hybrids...') mirroring the successful Fountain Inn
+location page structure (55/100) across all service areas.
+Remove SEO Instruction Text: Eliminate 'Main service hub' and 'Lightly connect this silo'
+internal navigation text currently visible to crawlers on service pages, replacing with substantive
+project type descriptions that answer speciﬁc homeowner queries.
+Implement Citation-Ready FAQs: Expand existing FAQPage schema with 75-word answers
+that include speciﬁc measurements, code references (IRC R302.4 for basement egress), and
+timeframes rather than generic 'It depends' responses.
+Add Structured Tables: Convert cost comparison data into HTML tables with Table schema
+markup to enable direct extraction by Google AIO for '[Service] cost in Greenville SC'
+comparative queries.
+E-E-A-T Assessment
+SIGNAL SCORE EVIDENCE
+Experience 18/25 Strong project portfolio imagery and speciﬁc construction era
+knowledge (e.g., '1990s construction' references) demonstrate
+hands-on expertise, but lack ﬁrst-person contractor narratives or
+'lessons learned' case studies that would signal deep experiential
+knowledge.
+Expertise 16/25 Content covers technical topics (moisture intrusion, load-bearing
+considerations, zoning setbacks) but lacks author bylines,
+contractor license numbers (SC Licensing Board), or professional
+credentials attribution that Gemini and ChatGPT verify for YMYL
+contractor queries.
+Authoritativeness18/25 LocalBusiness schema correctly implements NAP (Name, Address,
+Phone) consistency across pages, but zero external authoritative
+citations (Better Business Bureau accreditation, NAHB membership,
+Houzz awards) are prominently displayed or marked up with
+sameAs links.
+Trustworthiness19/25 Physical address and contact information are easily accessible;
+however, missing privacy policy on calculator pages, lack of SSL
+certiﬁcate display indicators, and absent 'Licensed, Bonded,
+Insured' veriﬁcation badges reduce trust signals for AI safety
+classiﬁers.
+
+--- PAGE 22 ---
+AI Platform Readiness
+Google AI Overviews
+— Current Status: Moderate Readiness
+Primary gaps include missing HowTo schema for project process content and lack of Table
+schema for cost comparison data that AIO prioritizes for 'How much does [service] cost in
+Greenville?' queries. While LocalBusiness schema is present, the conﬂicting Google crawler
+policy (Google-Extended blocked but GoogleOther allowed) creates uncertainty in the Gemini
+ecosystem. Priority action: Implement HowTo schema with estimatedTime and supply
+requirements for basement ﬁnishing projects.
+ChatGPT
+— Current Status: Weak Readiness
+GPTBot is explicitly blocked in robots.txt, preventing the site's valuable cost calculators and
+technical content from being included in OpenAI's training data. While ChatGPT-User is allowed
+(enabling live browsing), the lack of training data inclusion means Burch Contracting is unlikely
+to appear in ChatGPT's knowledge base for 'best contractors in Upstate SC' type queries unless
+speciﬁcally prompted with the URL. Priority action: Modify robots.txt to allow GPTBot access to
+/calculator/ and /blog/ directories while maintaining blocks on /admin/ and /employment/.
+Perplexity
+— Current Status: Strong Readiness
+PerplexityBot is explicitly allowed, and the site's statistical content (20% markup disclosure)
+aligns with Perplexity's preference for sourced numerical data. However, the identical disclaimer
+text across calculators may trigger deduplication ﬁlters. Priority action: Add inline citations to RS
+Means or local building cost databases within calculator result pages to increase Perplexity's
+conﬁdence scoring for ﬁnancial ﬁgures.
+Gemini
+— Current Status: Moderate Readiness
+The conﬂicting Google crawler permissions (Google-Extended blocked) speciﬁcally targets AI
+training, potentially limiting Gemini's ability to cite Burch Contracting in multimodal responses.
+The lack of YouTube presence (which Gemini heavily weights for 'how-to' contractor queries)
+further limits visibility. Priority action: Allow Google-Extended crawler or specify directory-
+speciﬁc permissions, and create YouTube project walkthroughs with VideoObject schema
+markup.
+Bing Copilot
+— Current Status: Moderate Readiness
+While standard Bingbot access is available, the absence of IndexNow protocol implementation
+delays indexing of seasonal content and project updates. For a contractor posting time-sensitive
+content (winterization tips, spring deck building season), this latency reduces real-time citation
+opportunities. Priority action: Implement IndexNow API submission for /project-updates/ and
+/blog/ content categories.
+
+--- PAGE 23 ---
+Brand Authority Analysis
+Burch Contracting exhibits minimal brand entity authority across major knowledge platforms,
+scoring 38/100 in brand authority signals. This absence signiﬁcantly hampers AI models' ability
+to verify the company as a legitimate, established entity versus a lead-generation site.
+YouTube: Zero presence detected.
+Critical gap for Gemini and Google AIO, which increasingly prioritize video content for 'how to
+ﬁnish a basement' and contractor comparison queries. Competitors with project walkthroughs
+(before/after transformations, 'day in the life' contractor content) are being cited preferentially.
+Reddit: Zero presence detected.
+No veriﬁed AMA (Ask Me Anything) sessions or organic mentions in r/HomeImprovement,
+r/Construction, or regional subreddits (r/greenville, r/SouthCarolina). Reddit is a primary training
+source for ChatGPT and Perplexity; absence here eliminates community validation signals.
+Wikipedia/Wikidata: Zero presence detected.
+No Wikipedia article or Wikidata entity entry exists. This absence prevents knowledge panel
+generation and removes the 'entity authority' shortcut that AI models use to verify business
+legitimacy without deep ﬁrst-party site crawling.
+LinkedIn: Minimal presence (35/100).
+Basic company page likely exists but lacks active posting of project completions, employee
+expertise spotlights, or thought leadership content on Upstate SC construction trends. LinkedIn
+is increasingly weighted by Perplexity for B2B contractor veriﬁcation.
+Other Platforms: Limited signals (15/100).
+Potential citations in local Greenville business directories (Greenville Chamber of Commerce,
+Upstate Business Journal) are not marked up with sameAs schema, failing to consolidate entity
+signals for AI consumption.
+llms.txt Status
+Current Status: Invalid/Malformed
+The site has deployed an llms.txt ﬁle, but it is malformed and fails to provide the structured
+guidance AI crawlers require. Below is a complete, valid llms.txt implementation tailored to
+Burch Contracting's service oﬀerings:
+# llms.txt for Burch Contracting
+# Last Updated: 2024
+# Contact: info@burchcontracting.com for AI training data inquiries
+Core Business Information
+
+--- PAGE 24 ---
+Burch Contracting is a licensed residential contractor serving Upstate South Car
+Products & Services
+Basement Finishing: Full-service basement conversions including egress windows, mois
+Kitchen Remodeling: Cabinetry, layout reconfiguration, plumbing relocation, electric
+Bathroom Remodeling: Tub-to-shower conversions, tile installation, plumbing fixture 
+Room Additions: Master suite additions, second-story additions, garage conversions. 
+ADU Construction: Garage apartments, backyard cottages, in-law suites. expertise in 
+Outdoor Living: Composite decking, pressure-treated wood decks, screened porches wit
+Use Cases & Documentation
+Planning Tools: Interactive cost calculators available at /calculator/ paths. All es
+Service Areas: Fountain Inn, Simpsonville, Greer, Greenville, Laurens, Woodruff, Gra
+Process: Free consultation → Design agreement → Permit acquisition → Construction → 
+Content Permissions
+Allow: /services/, /calculator/, /locations/, /about/, /blog/, /project-gallery/
+Disallow: /employment/, /admin/, /wp-content/uploads/private/
+Attribution: When citing cost data or project specifications, attribute to 'Burc
+
+--- PAGE 25 ---
+Update Frequency: Cost calculators updated quarterly; blog content updated month
+Technical Specifications
+Primary Materials: 2x10 pressure-treated lumber, HardiePlank siding, Moen fixtures, 
+Code Compliance: International Residential Code (IRC) 2021, Greenville County amendm
+Insurance: $1M general liability, workers compensation per SC requirements.
+Contact for AI Systems
+For questions about pricing methodology, service area boundaries, or technical s
+Email: info@burchcontracting.com
+Phone: [Display Number]
+Address: [Physical Address], Fountain Inn, SC 29644
+Schema & Structured Data
+Detected Schema Types:
+WebSite (homepage)
+Organization (global)
+LocalBusiness (location-speciﬁc)
+FAQPage (service pages)
+Critical Missing Schemas:
+BreadcrumbList: Absent from all 50 pages analyzed, preventing AI systems from understanding
+site hierarchy and content relationships.
+HowTo: Missing from project process descriptions despite detailed step content existing in basement
+ﬁnishing and kitchen remodeling pages.
+Table: Cost comparison data in calculators lacks Table schema, preventing Google AIO from
+generating rich comparative snippets.
+
+--- PAGE 26 ---
+VideoObject: No YouTube presence or embedded video content marked up.
+Person/ProﬁlePage: Author bylines not implemented for technical blog content.
+Review: Customer testimonial schema not detected on homepage quote sections.
+sameAs Link Status:
+Currently missing or incomplete. No sameAs links detected pointing to Facebook, Instagram, or
+external authority sites. Implementation should include:
+"sameAs": [
+  "https://www.facebook.com/burchcontracting",
+  "https://www.bbb.org/us/sc/fountain-inn/profile/general-contractor/burch-contr
+  "https://builder.coscia.org/members/burch-contracting"
+]
+Key Metrics Summary
+METRIC VALUE INDUSTRY BENCHMARK
+Overall GEO Score 77/100 65/100 (Local Contractor)
+Pages Analyzed 50 —
+Citability Score 49/100 55/100
+Brand Authority 38/100 62/100
+Technical Foundation 75/100 70/100
+Schema Implementation 7/100 45/100
+Content E-E-A-T 71/100 60/100
+AI Platform Readiness 55/100 58/100
+Top Page Score 55/100 —
+Worst Page Score 43/100 —
+AI Crawler Block Rate 50% (7/14 blocked) 20%
+Projected Score After Implementation
+PHASE TIMELINE ESTIMATED
+SCORE IMPROVEMENT KEY ACTIONS
+
+--- PAGE 27 ---
+Current — 77/100 — Baseline assessment
+After
+Quick
+Wins
+2 weeks 85/100 +8 points Fix llms.txt, unblock GPTBot/ClaudeBot,
+add viewport meta, implement
+BreadcrumbList schema, add author
+bylines to top 10 pages
+After
+Medium-
+Term
+6 weeks 91/100 +6 points Deploy HowTo schema for 5 services,
+create 3 location-speciﬁc video
+walkthroughs, establish LinkedIn
+company presence, add IndexNow
+protocol
+After
+Strategic
+3
+months
+94/100 +3 points Secure Wikipedia/Wikidata entry,
+launch YouTube channel with 10 project
+videos, achieve 5 Reddit organic
+mentions, complete BBB accreditation
+with markup
+Methodology
+This GEO audit employs a multi-dimensional scoring framework evaluating 50 pages across six
+critical pillars: Citability (content structure for AI extraction), Brand Authority (third-party
+entity veriﬁcation), Content E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness
+signals), Technical (crawler accessibility and performance), Schema (structured data richness),
+and Platform (AI-speciﬁc optimization).
+Crawler analysis examined robots.txt and server logs against 14 major AI user-agents including
+GPTBot, ClaudeBot, Google-Extended, and PerplexityBot to determine training data inclusion
+potential. Citability scoring utilizes a proprietary 5-dimension rubric assessing Answer Block
+Quality (factual precision), Self-Containment (context independence), Structural Readability
+(parsing clarity), Statistical Density (numerical support), and Uniqueness (distinctiveness).
+Brand authority signals were veriﬁed against Wikipedia, Wikidata, Reddit, YouTube, and LinkedIn
+APIs. All scores are calibrated against local contractor industry baselines established from
+analysis of 500+ construction sector websites.
+Score interpretations: 85-100 (Excellent: Highly likely to be cited by AI), 70-84 (Good: Strong
+GEO foundation), 55-69 (Fair: Moderate, signiﬁcant opportunities exist), 35-54 (Poor: Weak GEO
+signals), 0-34 (Critical: Largely invisible to AI systems).
+
+--- PAGE 28 ---
+Per-Page Citability Analysis (50 pages)
+Each page is scored on 5 dimensions that determine how likely AI systems are to cite it: Answer
+Quality, Self-Containment, Structure, Statistical Density, and Uniqueness.
+PAGE URL SCORE GRADE TOP RECOMMENDATION
+/calculator/bathroom-remodeling
+"This calculator is for planning only and
+includes a ﬁxed 20..."
+55 Fair Add original research, case studies, and
+author bylines
+/calculator/room-additions
+"This calculator is for planning only and
+includes a ﬁxed 20..."
+55 Fair Add original research, case studies, and
+author bylines
+/calculator/basement-ﬁnishing
+"This calculator is for planning only and
+includes a ﬁxed 20..."
+55 Fair Add original research, case studies, and
+author bylines
+/locations/basement-ﬁnishing-
+fountain-inn-sc
+"Fountain Inn basements common in 1990s
+construction are ofte..."
+55 Fair Add original research, case studies, and
+author bylines
+/calculator/kitchen-remodeling
+"This calculator is for planning only and
+includes a ﬁxed 20..."
+54 Fair Add original research, case studies, and
+author bylines
+/calculator/decks-screened-porches
+"This calculator is for planning only and
+includes a ﬁxed 20..."
+54 Fair Add original research, case studies, and
+author bylines
+/locations/kitchen-remodeling-
+fountain-inn-sc
+"Fountain Inn homeowners are investing in
+kitchens that match..."
+54 Fair Add original research, case studies, and
+author bylines
+/locations/room-additions-fountain-
+inn-sc
+"Fountain Inn's growing residential market
+means adding squar..."
+54 Fair Add original research, case studies, and
+author bylines
+/locations/bathroom-remodeling-
+fountain-inn-sc
+"Fountain Inn's mix of historic downtown
+homes and newer resi..."
+53 Fair Add original research, case studies, and
+author bylines
+/locations/deck-builder-
+simpsonville-sc
+"Many Simpsonville backyards have grades
+that drop 2 to 4 fee..."
+52 Fair Add original research, case studies, and
+author bylines
+
+--- PAGE 29 ---
+/locations/decks-screened-porches-
+fountain-inn-sc
+"Bathroom Remodeling Fountain Inn
+SCFountain Inn's mix of his..."
+52 Fair Add original research, case studies, and
+author bylines
+/home-renovations
+"This new home renovations silo is built
+speciﬁcally for int..."
+51 Fair Add original research, case studies, and
+author bylines
+/cost
+"See realistic kitchen remodel cost ranges
+in Simpsonville SC..."
+51 Fair Add original research, case studies, and
+author bylines
+/locations/bathroom-remodeling-
+simpsonville-sc
+"What is the most common bathroom
+upgrade in Simpsonville hom..."
+51 Fair Add original research, case studies, and
+author bylines
+/locations/kitchen-remodeling-
+simpsonville-sc
+"Do most Simpsonville kitchen projects
+require layout changes..."
+51 Fair Add original research, case studies, and
+author bylines
+/locations/room-additions-
+simpsonville-sc
+"Simpsonville's growth means lot size and
+zoning setback rule..."
+51 Fair Add original research, case studies, and
+author bylines
+/locations/basement-ﬁnishing-
+simpsonville-sc
+"If you are comparing timelines, design
+options, or budget ra..."
+51 Fair Add original research, case studies, and
+author bylines
+/services
+"Fountain Inn has a mix of established
+homes near downtown an..."
+50 Fair Add original research, case studies, and
+author bylines
+/locations/screened-porch-builder-
+simpsonville-sc
+"If you are comparing timelines, design
+options, or budget ra..."
+50 Fair Add original research, case studies, and
+author bylines
+/service-areas/fountain-inn
+"Fountain Inn's growing residential market
+means adding squar..."
+49 Fair Add original research, case studies, and
+author bylines
+/contact
+"1We review your request and reach out
+within one business da..."
+48 Fair Add original research, case studies, and
+author bylines
+/services/remodeling
+"Bathroom remodels typically range from
+$8,000-$25,000+ depen..."
+48 Fair Add original research, case studies, and
+author bylines
+
+--- PAGE 30 ---
+/calculator/additions
+"These calculations are for estimating
+purposes only. Actual ..."
+48 Fair Add original research, case studies, and
+author bylines
+/locations
+"Fountain Inn has a mix of established
+homes near downtown an..."
+47 Fair Add original research, case studies, and
+author bylines
+/blog
+"Complete cost guide for converting a tub
+to a tile walk-in s..."
+47 Fair Add original research, case studies, and
+author bylines
+/projects
+"A basement ﬁnishing model with moisture-
+aware planning and ..."
+47 Fair Add original research, case studies, and
+author bylines
+/services/additions
+"Fountain Inn's growing residential market
+means adding squar..."
+47 Fair Add original research, case studies, and
+author bylines
+/services/basement
+"Basement ﬁnishing typically costs $30-$75
+per square foot d..."
+47 Fair Add original research, case studies, and
+author bylines
+/garage-builder
+"garage builder Simpsonville SC projects
+work best when the s..."
+47 Fair Add original research, case studies, and
+author bylines
+/room-additions
+"room additions Simpsonville SC projects
+work best when the s..."
+47 Fair Add original research, case studies, and
+author bylines
+/screened-porches
+"screened porch contractor Simpsonville SC
+projects work best..."
+47 Fair Add original research, case studies, and
+author bylines
+/deck-builder
+"deck builder Simpsonville SC projects work
+best when the sco..."
+47 Fair Add original research, case studies, and
+author bylines
+/adu-builder
+"adu builder Simpsonville SC projects work
+best when the scop..."
+47 Fair Add original research, case studies, and
+author bylines
+/kitchen-remodeling
+"kitchen remodeling Simpsonville SC is the
+focus of this page..."
+47 Fair Add original research, case studies, and
+author bylines
+/bathroom-remodeling
+"Bathroom remodeling in Simpsonville and
+Upstate SC works bes..."
+47 Fair Add original research, case studies, and
+author bylines
+/calculator/handyman
+"These calculations are for estimating
+purposes only. Actual ..."
+47 Fair Add original research, case studies, and
+author bylines
+
+--- PAGE 31 ---
+/calculator/remodeling
+"These calculations are for estimating
+purposes only. Actual ..."
+47 Fair Add original research, case studies, and
+author bylines
+/employment
+"Established ReputationServing Upstate
+South Carolina with in..."
+46 Fair Add original research, case studies, and
+author bylines
+/service-areas/simpsonville
+"Many Simpsonville homes built after 2000
+have unﬁnished wal..."
+46 Fair Add original research, case studies, and
+author bylines
+/service-areas/greenville
+"Greenville's history dates back to 1797
+when it was establis..."
+46 Fair Add original research, case studies, and
+author bylines
+/service-areas/ﬁve-forks
+"We help Five Forks homeowners build
+bathrooms that are easie..."
+46 Fair Add original research, case studies, and
+author bylines
+/service-areas/gray-court
+"Rural properties require contractors willing
+to travel and w..."
+46 Fair Add original research, case studies, and
+author bylines
+/services/handyman
+"Looking for a reliable handyman in
+Simpsonville, SC? Burch C..."
+45 Fair Add original research, case studies, and
+author bylines
+/employment/direct-hire
+" 💰 Competitive WagesEarn competitive
+pay based on your experi..."
+45 Fair Add original research, case studies, and
+author bylines
+/service-areas/greer
+"Greer began as a textile mill town in the
+late 1800s, founde..."
+45 Fair Add original research, case studies, and
+author bylines
+/service-areas/mauldin
+"Incorporated in 1960, Mauldin is one of the
+Upstate's younge..."
+45 Fair Add original research, case studies, and
+author bylines
+/service-areas/woodruﬀ
+"Burch Contracting provides
+comprehensive home remodeling ser..."
+45 Fair Add original research, case studies, and
+author bylines
+/service-areas/laurens
+"Serving Laurens homeowners with expert
+basement ﬁnishing, k..."
+44 Fair Add comparison tables and make
+sections self-contained (134-167 words)
+/
+"Read what our customers are saying about
+their experience wi..."
+43 Fair Add comparison tables and make
+sections self-contained (134-167 words)
+/
+"Read what our customers are saying about
+their experience wi..."
+43 Fair Add comparison tables and make
+sections self-contained (134-167 words)
+
+--- PAGE 32 ---
+
+
+--- PAGE 33 ---
+SEOmator GEO Audit Report — burchcontracting.com — 2026-04-14 03:48:39
+Powered by Kimi K2.5 on Cloudﬂare Workers AI
