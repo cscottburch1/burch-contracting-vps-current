@@ -508,7 +508,7 @@ export default async function HomePage() {
             Trusted construction services throughout Greenville, Laurens, and Spartanburg Counties
           </p>
         </div>
-        <ClickableCityGrid columns={3} />
+        <ClickableCityGrid columns={3} compact={true} />
       </Section>
 
       {/* SECTION 7 — COST + VALUE HOOK */}
