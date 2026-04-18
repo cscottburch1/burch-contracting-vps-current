@@ -7,12 +7,12 @@ import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } fr
 
 export const metadata: Metadata = {
   title: 'Screened Porch Builder in Upstate SC | Burch Contracting',
-  description: 'Professional screened porch construction in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Aluminum & wood frames. Licensed, insured. Free estimates.',
+  description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Aluminum & wood frames. Licensed, insured. Free estimates.',
   alternates: { canonical: absoluteUrl('/screened-porches') },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Screened Porch Builder in Upstate SC | Burch Contracting',
-    description: 'Professional screened porch construction in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Free estimates.',
+    description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Free estimates.',
     url: absoluteUrl('/screened-porches'),
     type: 'website',
   },
