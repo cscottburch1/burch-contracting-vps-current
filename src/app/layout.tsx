@@ -101,21 +101,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload critical LCP hero image (homepage) for faster First Contentful Paint */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/hero/deck-hero.webp"
-          type="image/webp"
-          fetchPriority="high"
-        />
-        
-        {/* Preconnect to critical third-party domains - establishes early connection */}
-        <link rel="preconnect" href="https://www.google-analytics.com" />
+        {/* Preconnect to critical third-party domains for faster script loading */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
         
-        {/* DNS prefetch for non-critical resources */}
+        {/* DNS prefetch for fonts - non-blocking */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />

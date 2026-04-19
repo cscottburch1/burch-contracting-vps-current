@@ -222,7 +222,7 @@ export default function SubcontractorJoinPage() {
                 <div className="text-5xl mb-4">⚡</div>
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Fast Payments</h3>
                 <p className="text-gray-700">
-                  Net 30 payment terms with reliable, on-time payments. No chasing down checks.
+                  Net 30 payment terms or less with reliable, on-time payments. No chasing down checks.
                 </p>
               </div>
               
