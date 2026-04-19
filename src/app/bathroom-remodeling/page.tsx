@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
-import { EEATSignals } from '@/components/seo/EEATSignals';
 import { ClickableCityGrid } from '@/components/locations/ClickableCityGrid';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
@@ -147,9 +146,6 @@ export default function BathroomRemodelingPage() {
               </Button>
             </div>
           </div>
-
-          {/* Trust Signals */}
-          <EEATSignals variant="full" className="mb-12" />
 
           {/* Key Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ClickableCityGrid from '@/components/locations/ClickableCityGrid';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
@@ -122,8 +121,6 @@ export default function ScreenedPorchesPage() {
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
             I've built over 200 screened porches across Greenville County since 1995 - from simple aluminum-framed conversions to elegant wood-framed outdoor rooms with ceiling fans, stone fireplaces, and tile floors. Whether you're converting an existing deck in Simpsonville or building a new covered porch in Fountain Inn, I'll create a bug-free outdoor space you can enjoy from March through November.
           </p>
-          
-          <EEATSignals variant="full" />
 
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">

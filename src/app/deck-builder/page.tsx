@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ClickableCityGrid from '@/components/locations/ClickableCityGrid';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
@@ -123,8 +122,6 @@ export default function DeckBuilderPage() {
             I've built 347 custom decks across Greenville County since 1995 - from simple ground-level pressure-treated platforms to multi-tiered composite masterpieces with custom lighting and built-in seating. Whether you need a backyard gathering space in Simpsonville, a hillside deck in Fountain Inn, or a poolside retreat in Mauldin, I'll design and build a deck tailored to your home and budget.
           </p>
           
-          <EEATSignals variant="full" />
-
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">

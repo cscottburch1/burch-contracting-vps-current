@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ClickableCityGrid from '@/components/locations/ClickableCityGrid';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
@@ -122,8 +121,6 @@ export default function AduBuilderPage() {
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
             I've built 7 accessory dwelling units across Greenville County since 2015 - from garage apartments above 2-car garages to standalone backyard cottages with full kitchens and baths. Whether you need a rental property for income ($850-$1,500/month), in-law suite for aging parents, or guest house for extended family, I handle design, permitting, zoning compliance, and turn-key construction.
           </p>
-          
-          <EEATSignals variant="full" />
 
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
