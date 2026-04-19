@@ -60,6 +60,26 @@ export const costLandingPages: CostLandingPage[] = [
     relatedServicePath: '/services/remodeling',
   },
   {
+    slug: 'bathroom-remodel-cost-simpsonville-sc',
+    serviceName: 'Bathroom Remodeling',
+    city: 'Simpsonville SC',
+    h1: 'How Much Does Bathroom Remodeling Cost in Simpsonville SC?',
+    metaTitle: 'Bathroom Remodel Cost Simpsonville SC | Burch Contracting',
+    metaDescription: 'Understand bathroom remodel costs in Simpsonville SC for guest baths, primary suites, tub-to-shower conversions, and premium upgrades.',
+    intro:
+      'Bathroom remodeling cost in Simpsonville depends on fixture quality, tile choices, shower vs tub decisions, storage upgrades, and whether plumbing locations stay in place. These ranges help homeowners plan realistic budgets before requesting detailed estimates.',
+    ranges: [
+      { label: 'Bathroom Refresh', range: '$9,000-$17,000', details: 'Vanity, fixtures, paint, flooring, and lighting updates without moving plumbing or major tile work.' },
+      { label: 'Full Bathroom Remodel', range: '$18,000-$38,000', details: 'New tile shower or tub, vanity package, flooring, ventilation, and storage improvements.' },
+      { label: 'Premium Bathroom', range: '$39,000-$82,000+', details: 'Custom tile shower, frameless glass, high-end fixtures, and spa-inspired design elements.' },
+    ],
+    costDrivers: ['Tile complexity and waterproofing systems', 'Shower or tub selection and size', 'Fixture quality and finish choices', 'Vanity customization and storage upgrades', 'Ventilation improvements and code updates'],
+    faqs: baseFaqs,
+    calculatorPath: '/calculator/bathroom-remodeling',
+    relatedLocationPath: '/locations/bathroom-remodeling-simpsonville-sc',
+    relatedServicePath: '/services/remodeling',
+  },
+  {
     slug: 'kitchen-remodel-cost-greenville-sc',
     serviceName: 'Kitchen Remodeling',
     city: 'Greenville SC',

@@ -762,6 +762,42 @@ export const serviceLandingPages: ServiceLandingPage[] = [
     faqs: baseFaqs,
   },
   {
+    slug: "bathroom-remodeling-woodruff-sc",
+    serviceName: "Bathroom Remodeling",
+    city: "Woodruff SC",
+    h1: "Bathroom Remodeling Woodruff SC",
+    metaTitle: "Bathroom Remodeling Woodruff SC | Burch Contracting",
+    metaDescription:
+      "Bathroom remodeling in Woodruff SC with smart storage planning, modern fixtures, and durable tile work for long-term satisfaction.",
+    shortDescription:
+      "We help Woodruff homeowners update bathrooms with practical layouts, quality materials, and realistic project budgets.",
+    keywords: ["bathroom remodeling Woodruff SC", "bath remodel Woodruff SC", "bathroom renovation Woodruff SC"],
+    priceRanges: [
+      { label: "Bath Refresh", range: "$8,000-$15,000", details: "Vanity, fixtures, flooring, and cosmetic updates without moving plumbing." },
+      { label: "Full Remodel", range: "$16,000-$34,000", details: "Complete bathroom renovation with new tile, shower, vanity, and updated ventilation." },
+      { label: "Premium Bathroom", range: "$35,000-$72,000+", details: "Custom tile shower, high-end fixtures, and spa-inspired design upgrades." },
+    ],
+    faqs: baseFaqs,
+  },
+  {
+    slug: "bathroom-remodeling-laurens-sc",
+    serviceName: "Bathroom Remodeling",
+    city: "Laurens SC",
+    h1: "Bathroom Remodeling Laurens SC",
+    metaTitle: "Bathroom Remodeling Laurens SC | Burch Contracting",
+    metaDescription:
+      "Bathroom remodeling in Laurens SC focused on better functionality, moisture control, and durable material choices.",
+    shortDescription:
+      "We design Laurens bathroom remodels around improved storage, modern fixtures, and finishes that last.",
+    keywords: ["bathroom remodeling Laurens SC", "bath remodel Laurens SC", "bathroom renovation Laurens SC"],
+    priceRanges: [
+      { label: "Cosmetic Update", range: "$7,500-$14,500", details: "Vanity replacement, new fixtures, flooring, and finish improvements." },
+      { label: "Full Remodel", range: "$15,000-$33,000", details: "New shower or tub, tile work, ventilation upgrades, and storage planning." },
+      { label: "Custom Bathroom", range: "$34,000-$70,000+", details: "Premium tile, custom vanity, frameless shower, and luxury fixture selections." },
+    ],
+    faqs: baseFaqs,
+  },
+  {
     slug: "room-additions-five-forks-sc",
     serviceName: "Room Additions",
     city: "Five Forks SC",
