@@ -31,4 +31,3 @@ jobs:
             npm run build
             pm2 restart burch-contracting
             echo "✅ Deploy finished at $(date)"
-fix: updated deploy workflow to use correct server IP and root user
