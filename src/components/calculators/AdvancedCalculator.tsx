@@ -3,8 +3,9 @@
 import React, { useState, useRef } from 'react';
 import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+
+// Lazy load heavy PDF libraries only when needed
+// This reduces initial bundle size by ~400KB
 
 interface CalculatorResult {
   total: number;
@@ -85,6 +86,12 @@ export const AdvancedCalculator: React.FC<AdvancedCalculatorProps> = ({
     
     setIsGeneratingPDF(true);
     try {
+      // Dynamically import heavy libraries only when PDF button is clicked
+      const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf')
+      ]);
+      
       // Capture the calculator result as canvas
       const canvas = await html2canvas(resultRef.current, {
         scale: 2,

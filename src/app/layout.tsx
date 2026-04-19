@@ -101,12 +101,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Resource hints for analytics only; Geist is self-hosted by Next.js */}
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Preload LCP hero images for faster rendering */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/deck-hero.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+        
+        {/* Preconnect to critical third-party domains */}
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        
+        {/* DNS prefetch for other resources */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />
-        {/* LocalBusiness Schema - Sitewide */}
+        
+        {/* LocalBusiness Schema - Sitewide - Inline for immediate parsing */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -123,6 +137,8 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <DeferredMobileStickyCta />
+        
+        {/* Service Worker - Load after page interactive */}
         <Script id="register-sw" strategy="lazyOnload">
           {`
             if ('serviceWorker' in navigator) {
