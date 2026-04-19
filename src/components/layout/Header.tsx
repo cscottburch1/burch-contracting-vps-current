@@ -13,16 +13,26 @@ type DropdownKey = 'services' | 'areas' | 'pricing' | 'calculators' | null;
 
 interface NavItem {
   label: string;
-  href: string;
+  href?: string; // Optional for group headers
+  subItems?: NavItem[]; // For nested dropdown items
 }
 
+// FIXED: Split "Kitchen & Bath Remodeling" into two separate accessible items
+// FIXED: Corrected "Basement Finishing" link from /home-renovations to /basement-finishing
 const serviceLinks: NavItem[] = [
   { label: 'Custom Decks', href: '/deck-builder' },
   { label: 'Screened Porches', href: '/screened-porches' },
   { label: 'Garages & Garage Apartments', href: '/garage-builder' },
   { label: 'Home Additions', href: '/room-additions' },
-  { label: 'Kitchen & Bath Remodeling', href: '/kitchen-remodeling' },
-  { label: 'Basement Finishing', href: '/home-renovations' },
+  // Kitchen & Bath now split into two clear items for better UX
+  {
+    label: 'Kitchen & Bath Remodeling',
+    subItems: [
+      { label: 'Kitchen Remodeling', href: '/kitchen-remodeling' },
+      { label: 'Bathroom Remodeling', href: '/bathroom-remodeling' },
+    ],
+  },
+  { label: 'Basement Finishing', href: '/basement-finishing' },
   { label: 'ADUs & Backyard Cottages', href: '/adu-builder' },
 ];
 
@@ -220,11 +230,34 @@ export const Header: React.FC = () => {
                 onMouseEnter={clearCloseTimeout}
                 onMouseLeave={scheduleDropdownClose}
               >
-                {serviceLinks.map((item) => (
-                  <Link key={`${item.label}-${item.href}`} href={item.href} className={dropdownLinkClass} role="menuitem">
-                    {item.label}
-                  </Link>
-                ))}
+                {serviceLinks.map((item) => {
+                  // Render group with sub-items
+                  if (item.subItems) {
+                    return (
+                      <div key={item.label} className="py-1">
+                        <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                          {item.label}
+                        </div>
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={`${subItem.label}-${subItem.href}`}
+                            href={subItem.href!}
+                            className={`${dropdownLinkClass} pl-6`}
+                            role="menuitem"
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    );
+                  }
+                  // Render regular link
+                  return (
+                    <Link key={`${item.label}-${item.href}`} href={item.href!} className={dropdownLinkClass} role="menuitem">
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -273,7 +306,7 @@ export const Header: React.FC = () => {
                 onMouseLeave={scheduleDropdownClose}
               >
                 {areaLinks.map((item) => (
-                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                  <Link key={item.href} href={item.href!} className={dropdownLinkClass} role="menuitem">
                     {item.label}
                   </Link>
                 ))}
@@ -329,7 +362,7 @@ export const Header: React.FC = () => {
                 onMouseLeave={scheduleDropdownClose}
               >
                 {pricingLinks.map((item) => (
-                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                  <Link key={item.href} href={item.href!} className={dropdownLinkClass} role="menuitem">
                     {item.label}
                   </Link>
                 ))}
@@ -381,7 +414,7 @@ export const Header: React.FC = () => {
                 onMouseLeave={scheduleDropdownClose}
               >
                 {calculatorLinks.map((item) => (
-                  <Link key={item.href} href={item.href} className={dropdownLinkClass} role="menuitem">
+                  <Link key={item.href} href={item.href!} className={dropdownLinkClass} role="menuitem">
                     {item.label}
                   </Link>
                 ))}
@@ -449,11 +482,33 @@ export const Header: React.FC = () => {
                 </div>
                 {mobileServicesOpen && (
                   <div id="mobile-services-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
-                    {serviceLinks.map((item) => (
-                      <Link key={`${item.label}-${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
-                        {item.label}
-                      </Link>
-                    ))}
+                    {serviceLinks.map((item) => {
+                      // Render group with sub-items
+                      if (item.subItems) {
+                        return (
+                          <div key={item.label} className="py-1">
+                            <div className="py-1.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                              {item.label}
+                            </div>
+                            {item.subItems.map((subItem) => (
+                              <Link
+                                key={`${subItem.label}-${subItem.href}-mobile`}
+                                href={subItem.href!}
+                                className="block py-1.5 pl-3 text-gray-700 hover:text-blue-700"
+                              >
+                                {subItem.label}
+                              </Link>
+                            ))}
+                          </div>
+                        );
+                      }
+                      // Render regular link
+                      return (
+                        <Link key={`${item.label}-${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                          {item.label}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -477,7 +532,7 @@ export const Header: React.FC = () => {
                 {mobileAreasOpen && (
                   <div id="mobile-areas-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {areaLinks.map((item) => (
-                      <Link key={`${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                      <Link key={`${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
                         {item.label}
                       </Link>
                     ))}
@@ -508,7 +563,7 @@ export const Header: React.FC = () => {
                 {mobilePricingOpen && (
                   <div id="mobile-pricing-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {pricingLinks.map((item) => (
-                      <Link key={`${item.href}-mobile`} href={item.href} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                      <Link key={`${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
                         {item.label}
                       </Link>
                     ))}
