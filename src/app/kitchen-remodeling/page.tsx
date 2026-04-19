@@ -35,7 +35,7 @@ const breadcrumbs = [
 const faqs = [
   {
     question: 'How much does a kitchen remodel cost in Simpsonville and Greenville?',
-    answer: 'Kitchen remodeling costs in Upstate SC vary widely by scope and finishes. A budget refresh (new paint, hardware, countertops only) runs $15,000-$25,000. Mid-range remodels with stock or semi-custom cabinets, quartz countertops, subway tile backsplash, and mid-grade appliances average $25,000-$45,000. High-end remodels with custom cabinets, premium stone, designer tile, and luxury appliances run $50,000-$85,000+. In 2026, the average kitchen remodel in Simpsonville is $28,500 while Greenville averages $32,200. I\'ve completed 187 kitchen remodels since 1995, with most projects in the $30,000-$50,000 range.'
+    answer: 'Kitchen remodeling costs in Upstate SC vary widely by scope and finishes. A budget refresh (new paint, hardware, countertops only) runs $15,000-$25,000. Mid-range remodels with stock or semi-custom cabinets, quartz countertops, subway tile backsplash, and mid-grade appliances average $25,000-$45,000. High-end remodels with custom cabinets, premium stone, designer tile, and luxury appliances run $50,000-$85,000+. In 2026, the average kitchen remodel in Simpsonville is $28,500 while Greenville averages $32,200. I\'ve completed 47 kitchen remodels since 1995, with most projects in the $30,000-$50,000 range.'
   },
   {
     question: 'Should I replace cabinets or just reface them?',
@@ -136,7 +136,7 @@ export default function KitchenRemodelingPage() {
               Professional Kitchen Remodeling in Upstate SC
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              I've remodeled 187 kitchens across Greenville County since 1995 - from simple cabinet and countertop refreshes to complete gut renovations with new layouts, custom cabinetry, and high-end appliances. Every project starts with understanding how you cook and entertain, then designing a functional, beautiful space that fits your budget. I coordinate all trades (electrical, plumbing, tile, countertops) so you work with one contractor from design through final cleanup.
+              I've remodeled 47 kitchens across Greenville County since 1995 - from simple cabinet and countertop refreshes to complete gut renovations with new layouts, custom cabinetry, and high-end appliances. Every project starts with understanding how you cook and entertain, then designing a functional, beautiful space that fits your budget. I coordinate all trades (electrical, plumbing, tile, countertops) so you work with one contractor from design through final cleanup.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button href="tel:8647244600" variant="primary" size="lg">
@@ -166,7 +166,7 @@ export default function KitchenRemodelingPage() {
               <div className="text-gray-600">Weeks Typical Timeline</div>
             </Card>
             <Card className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">187</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">47</div>
               <div className="text-gray-600">Kitchens Remodeled Since 1995</div>
             </Card>
           </div>

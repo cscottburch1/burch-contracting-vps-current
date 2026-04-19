@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl('/bathroom-remodeling') },
   openGraph: {
     title: 'Bathroom Remodeling Contractor - Upstate SC | Burch Contracting',
-    description: 'Transform your bathroom with custom tile work, modern vanities, and walk-in showers. 30+ years experience with 240+ bathroom remodels completed.',
+    description: 'Transform your bathroom with custom tile work, modern vanities, and walk-in showers. 30+ years experience with 60+ bathroom remodels completed.',
     url: absoluteUrl('/bathroom-remodeling'),
     type: 'website',
   },
@@ -35,7 +35,7 @@ const breadcrumbs = [
 const faqs = [
   {
     question: 'How much does a bathroom remodel cost in Greenville County?',
-    answer: 'Bathroom remodeling costs vary significantly by scope and bathroom size. A full hall bathroom (5x8) remodel averages $12,000-$28,000 including demolition, new tile shower, vanity, toilet, flooring, lighting, and paint. Primary bathroom remodels (larger, often with separate tub and shower) run $28,000-$55,000. Tub-to-shower conversions in existing footprint cost $8,500-$14,000. Small powder room updates run $6,000-$12,000. I\'ve completed 240 bathroom remodels across Upstate SC since 1995. Most of my Simpsonville and Fountain Inn projects fall in the $15,000-$32,000 range for complete bath renovations.'
+    answer: 'Bathroom remodeling costs vary significantly by scope and bathroom size. A full hall bathroom (5x8) remodel averages $12,000-$28,000 including demolition, new tile shower, vanity, toilet, flooring, lighting, and paint. Primary bathroom remodels (larger, often with separate tub and shower) run $28,000-$55,000. Tub-to-shower conversions in existing footprint cost $8,500-$14,000. Small powder room updates run $6,000-$12,000. I\'ve completed 60 bathroom remodels across Upstate SC since 1995. Most of my Simpsonville and Fountain Inn projects fall in the $15,000-$32,000 range for complete bath renovations.'
   },
   {
     question: 'How long does a bathroom remodel take?',
@@ -136,7 +136,7 @@ export default function BathroomRemodelingPage() {
               Professional Bathroom Remodeling in Upstate SC
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              I've remodeled 240 bathrooms across Greenville County since 1995 - from simple tub-to-shower conversions to complete luxury primary bathroom transformations. Every project includes meticulous tile work, proper waterproofing, modern fixtures, and attention to the details that make bathrooms both beautiful and functional. I coordinate plumbing, electrical, tile, and finish work so you work with one contractor from design through final grout sealing.
+              I've remodeled 60 bathrooms across Greenville County since 1995 - from simple tub-to-shower conversions to complete luxury primary bathroom transformations. Every project includes meticulous tile work, proper waterproofing, modern fixtures, and attention to the details that make bathrooms both beautiful and functional. I coordinate plumbing, electrical, tile, and finish work so you work with one contractor from design through final grout sealing.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button href="tel:8647244600" variant="primary" size="lg">
