@@ -119,7 +119,7 @@ export default function KitchenRemodelingPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 187 kitchens remodeled since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 47 kitchens remodeled since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

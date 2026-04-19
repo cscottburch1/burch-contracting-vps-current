@@ -33,7 +33,7 @@ export default function HomeAdditionsCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 93 additions built',
+        experience: '30+ years | 23 room additions completed',
       }}
       showCredentials={true}
       credentialsVariant="compact"

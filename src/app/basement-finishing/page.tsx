@@ -35,7 +35,7 @@ const breadcrumbs = [
 const faqs = [
   {
     question: 'How much does it cost to finish a basement in Upstate SC?',
-    answer: 'Basement finishing in Greenville County typically costs $30-75 per square foot depending on the finish level. A standard 1,000 sq ft basement averages $35,000-$55,000 including egress windows, moisture mitigation, framing, insulation, electrical, drywall, and flooring. Higher-end finishes with wet bars, home theaters, or luxury bathrooms run $55,000-$75,000+. I\'ve finished 127 basements across Upstate SC since 1995, with most projects in the $40,000-$50,000 range.'
+    answer: 'Basement finishing in Greenville County typically costs $30-75 per square foot depending on the finish level. A standard 1,000 sq ft basement averages $35,000-$55,000 including egress windows, moisture mitigation, framing, insulation, electrical, drywall, and flooring. Higher-end finishes with wet bars, home theaters, or luxury bathrooms run $55,000-$75,000+. I\'ve finished 32 basements across Upstate SC since 1995, with most projects in the $40,000-$50,000 range.'
   },
   {
     question: 'Do I need egress windows for a finished basement?',
@@ -119,7 +119,7 @@ export default function BasementFinishingPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 127 basements finished since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 32 basements finished since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

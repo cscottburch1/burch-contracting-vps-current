@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Screened Porch Builder in Upstate SC | Burch Contracting',
-    description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Free estimates.',
+    description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 50+ porches built since 1995. Free estimates.',
     url: absoluteUrl('/screened-porches'),
     type: 'website',
   },
@@ -100,7 +100,7 @@ export default function ScreenedPorchesPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 200+ screened porches built since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 50+ porches built since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"
@@ -159,7 +159,7 @@ export default function ScreenedPorchesPage() {
               <strong>Why the demand surge?</strong> South Carolina's mosquito and no-see-um seasons (April-October) make screened outdoor living valuable. Average Simpsonville home gains $18,000-$24,000 in resale value with a screened porch - about 70-85% of construction cost recovered. Outdoor living space became a top-5 buyer priority after 2020.
             </p>
             <p className="mb-4">
-              <strong>Regional specifics I've learned building 200+ porches:</strong> Upstate SC humidity (65-85% March-October) makes aluminum framing outlast wood by 10+ years. Fiberglass screening resists tears from oak branches and pine needles better than aluminum (I stopped using aluminum screening in 2012). Most Simpsonville neighborhoods require 10-15 foot rear setbacks. Budget $3,500-$6,200 for electrical (fans, outlets, lighting).
+              <strong>Regional specifics I've learned building 50+ porches:</strong> Upstate SC humidity (65-85% March-October) makes aluminum framing outlast wood by 10+ years. Fiberglass screening resists tears from oak branches and pine needles better than aluminum (I stopped using aluminum screening in 2012). Most Simpsonville neighborhoods require 10-15 foot rear setbacks. Budget $3,500-$6,200 for electrical (fans, outlets, lighting).
             </p>
             <p>
               I don't push premium materials unless you're staying in your home 7+ years. For flip projects or tight budgets, basic aluminum framing with fiberglass screening and a concrete floor delivers the livable space clients want at $18,000-$24,000. But if you're building your forever home, invest in wood framing, tongue-and-groove ceilings, and tile floors - it'll last 25+ years and add charm.

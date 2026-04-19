@@ -35,7 +35,7 @@ const breadcrumbs = [
 const faqs = [
   {
     question: 'How much does a room addition cost in Greenville County?',
-    answer: 'Room additions in Upstate SC cost $150-300 per square foot depending on complexity and finishes. A standard 16x20 master bedroom addition (320 sq ft) averages $55,000-$75,000 including foundation, framing, exterior siding/roofing to match your home, electrical, HVAC extension, insulation, drywall, flooring, and trim. Two-story additions run $200-300/sqft. I\'ve completed 93 room additions across Greenville County since 1995, with most projects in the $60,000-$95,000 range for single-story additions with bathroom.'
+    answer: 'Room additions in Upstate SC cost $150-300 per square foot depending on complexity and finishes. A standard 16x20 master bedroom addition (320 sq ft) averages $55,000-$75,000 including foundation, framing, exterior siding/roofing to match your home, electrical, HVAC extension, insulation, drywall, flooring, and trim. Two-story additions run $200-300/sqft. I\'ve completed 23 room additions across Greenville County since 1995, with most projects in the $60,000-$95,000 range for single-story additions with bathroom.'
   },
   {
     question: 'Do I need a building permit for a room addition?',
@@ -119,7 +119,7 @@ export default function RoomAdditionsPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 93 room additions completed since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 23 room additions completed since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"

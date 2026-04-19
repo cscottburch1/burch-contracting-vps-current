@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     question: 'How much does it cost to build an ADU in Simpsonville SC?',
-    answer: 'ADU construction costs in Simpsonville vary by type and size. Garage apartments (24x24 with 500-700 sqft living space above) cost $65,000-$95,000. Detached 1-bedroom cottages (600-800 sqft) run $125,000-$185,000. Larger 2-bedroom detached ADUs (900-1200 sqft) cost $175,000-$220,000. Costs include foundation, full framing, exterior siding/roofing, complete interior finishing, kitchen, bathroom, HVAC, and electrical. I\'ve built 27 ADUs across Upstate SC since 2015, with most projects in the $85,000-$165,000 range.',
+    answer: 'ADU construction costs in Simpsonville vary by type and size. Garage apartments (24x24 with 500-700 sqft living space above) cost $65,000-$95,000. Detached 1-bedroom cottages (600-800 sqft) run $125,000-$185,000. Larger 2-bedroom detached ADUs (900-1200 sqft) cost $175,000-$220,000. Costs include foundation, full framing, exterior siding/roofing, complete interior finishing, kitchen, bathroom, HVAC, and electrical. I\'ve built 7 ADUs across Upstate SC since 2015, with most projects in the $85,000-$165,000 range.',
   },
   {
     question: 'Are ADUs allowed in Greenville County and Simpsonville?',
@@ -100,7 +100,7 @@ export default function AduBuilderPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 27 ADUs built since 2015',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 7 ADUs built since 2015',
         }}
         showCredentials={true}
         credentialsVariant="full"
@@ -120,7 +120,7 @@ export default function AduBuilderPage() {
             Professional ADU Builder in Simpsonville & Upstate SC
           </h1>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            I've built 27 accessory dwelling units across Greenville County since 2015 - from garage apartments above 2-car garages to standalone backyard cottages with full kitchens and baths. Whether you need a rental property for income ($850-$1,500/month), in-law suite for aging parents, or guest house for extended family, I handle design, permitting, zoning compliance, and turn-key construction.
+            I've built 7 accessory dwelling units across Greenville County since 2015 - from garage apartments above 2-car garages to standalone backyard cottages with full kitchens and baths. Whether you need a rental property for income ($850-$1,500/month), in-law suite for aging parents, or guest house for extended family, I handle design, permitting, zoning compliance, and turn-key construction.
           </p>
           
           <EEATSignals variant="full" />
@@ -128,7 +128,7 @@ export default function AduBuilderPage() {
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <div className="text-3xl font-bold text-blue-900 mb-2">27</div>
+              <div className="text-3xl font-bold text-blue-900 mb-2">7</div>
               <div className="text-sm text-gray-700">ADUs Built Since 2015</div>
             </div>
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">

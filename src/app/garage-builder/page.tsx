@@ -7,7 +7,7 @@ import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } fr
 
 export const metadata: Metadata = {
   title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
-  description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 109 garages built since 1995. 2-car, 3-car, detached garages & apartments. Licensed, insured. Free estimates.',
+  description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 27 garages built since 1995. 2-car, 3-car, detached garages & apartments. Licensed, insured. Free estimates.',
   alternates: { canonical: absoluteUrl('/garage-builder') },
   robots: { index: true, follow: true },
   openGraph: {
@@ -100,7 +100,7 @@ export default function GarageBuilderPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 109 garages built since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 27 garages built since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"
@@ -159,7 +159,7 @@ export default function GarageBuilderPage() {
               <strong>Why the demand surge?</strong> Post-2020, remote work increased need for home workshops and storage. New subdivisions often have minimal garage space (1-car or 2-car at most). Garage apartments generate $850-$1,200/month rental income in Simpsonville - attractive for homeowners seeking passive revenue. Average Upstate SC home gains $22,000-$38,000 in resale value with a detached 2-car garage.
             </p>
             <p className="mb-4">
-              <strong>Regional specifics I've learned building 109 garages:</strong> Greenville County clay soil requires 12-18 inches of compacted stone under slabs to prevent cracking. Most neighborhoods enforce architectural guidelines - your garage must match house siding/roofing. Simpsonville requires 5-foot side setbacks and 10-foot rear setbacks for detached structures. Budget $3,500-$6,200 for electrical if you want outlets, lights, and garage door openers hardwired.
+              <strong>Regional specifics I've learned building 27 garages:</strong> Greenville County clay soil requires 12-18 inches of compacted stone under slabs to prevent cracking. Most neighborhoods enforce architectural guidelines - your garage must match house siding/roofing. Simpsonville requires 5-foot side setbacks and 10-foot rear setbacks for detached structures. Budget $3,500-$6,200 for electrical if you want outlets, lights, and garage door openers hardwired.
             </p>
             <p>
               I don't push garage apartments on every project - if you're not renting it out or using it as an in-law suite, the extra $45K-$85K doesn't make sense. But if you need income property or multi-generational living, a garage apartment can pay for itself in 6-8 years through rent. Basic storage garages serve most Upstate SC families well at $28K-$42K.

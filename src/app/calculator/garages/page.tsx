@@ -33,7 +33,7 @@ export default function GaragesCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 109 garages built',
+        experience: '30+ years | 27 garages built',
       }}
       showCredentials={true}
       credentialsVariant="compact"
