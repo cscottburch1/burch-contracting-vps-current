@@ -90,7 +90,7 @@ const serviceContent: Record<string, {
   remodeling: {
     title: "#1 Kitchen & Bathroom Remodeling Contractor in Simpsonville, SC | Free Design",
     subtitle: "Award-Winning Kitchen & Bath Remodels in Simpsonville & Upstate SC",
-    description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, bath to tile shower conversions, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 30+ years experience.",
+    description: "Transform your Simpsonville home with the region's #1 rated kitchen and bathroom remodeling contractor. Burch Contracting specializes in complete kitchen renovations, bathroom remodels, bath to tile shower conversions, custom cabinets, granite and quartz countertops, tile work, and modern fixtures throughout Simpsonville, Fountain Inn, Woodruff, and Laurens SC. From design consultation to final walkthrough, we deliver stunning remodels that increase your home's value. Free estimates & 3D design available. Licensed, insured, and BBB A+ rated with 35+ years experience.",
     benefits: [
       "🎨 Free Design Consultation & 3D Renderings",
       "🏆 BBB A+ Rated - Licensed & Insured Remodeling Contractors",

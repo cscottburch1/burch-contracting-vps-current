@@ -32,7 +32,7 @@ export default function BathroomRemodelingCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 60 bathrooms remodeled',
+        experience: '35+ years | 60 bathrooms remodeled',
       }}
       showCredentials={true}
       credentialsVariant="compact"

@@ -101,7 +101,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preload LCP hero images for faster rendering */}
+        {/* Preload critical LCP hero images for faster First Contentful Paint */}
         <link
           rel="preload"
           as="image"
@@ -109,12 +109,24 @@ export default function RootLayout({
           type="image/webp"
           fetchPriority="high"
         />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/kitchen-hero.webp"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/bathroom-hero.webp"
+          type="image/webp"
+        />
         
-        {/* Preconnect to critical third-party domains */}
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* Preconnect to critical third-party domains - establishes early connection */}
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         
-        {/* DNS prefetch for other resources */}
+        {/* DNS prefetch for non-critical resources */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         
         {/* AI/LLM discovery reference */}

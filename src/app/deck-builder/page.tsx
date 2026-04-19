@@ -111,7 +111,7 @@ export default function DeckBuilderPage() {
         ]}
         showCTA={true}
         ctaTitle="Ready to Build Your Dream Deck?"
-        ctaDescription="Free estimates on custom decks for Simpsonville, Greenville & Fountain Inn homes. Licensed, insured, 30 years experience."
+        ctaDescription="Free estimates on custom decks for Simpsonville, Greenville & Fountain Inn homes. Licensed, insured, 35+ years experience."
       >
         {/* Hero Section */}
         <section className="mb-12">

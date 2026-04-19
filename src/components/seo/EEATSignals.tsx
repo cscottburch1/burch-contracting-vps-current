@@ -23,8 +23,8 @@ export const EEATSignals: React.FC<EEATSignalsProps> = ({
   showLicensing = true,
   className = ''
 }) => {
-  const currentYear = new Date().getFullYear();
-  const yearsInBusiness = currentYear - 1995;
+  // Fixed to 35+ years for consistent E-E-A-T messaging across all pages
+  const yearsInBusiness = 35;
 
   if (variant === 'minimal') {
     return (

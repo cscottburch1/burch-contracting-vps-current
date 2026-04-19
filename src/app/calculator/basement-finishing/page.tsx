@@ -35,7 +35,7 @@ export default function BasementFinishingCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 32 basements finished',
+        experience: '35+ years | 32 basements finished',
       }}
       showCredentials={true}
       credentialsVariant="compact"

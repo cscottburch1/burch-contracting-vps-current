@@ -32,7 +32,7 @@ export default function DecksCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Carpenter',
-        experience: '30+ years | 87 decks built',
+        experience: '35+ years | 87 decks built',
       }}
       showCredentials={true}
       credentialsVariant="compact"

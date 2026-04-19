@@ -32,7 +32,7 @@ export default function ScreenedPorchesCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 50+ screened porches built',
+        experience: '35+ years | 50+ screened porches built',
       }}
       showCredentials={true}
       credentialsVariant="compact"

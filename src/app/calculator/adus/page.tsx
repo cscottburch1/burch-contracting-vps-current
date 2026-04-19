@@ -32,7 +32,7 @@ export default function ADUCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 12 ADUs built',
+        experience: '35+ years | 12 ADUs built',
       }}
       showCredentials={true}
       credentialsVariant="compact"

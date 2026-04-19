@@ -32,7 +32,7 @@ export default function KitchenRemodelingCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '30+ years | 47 kitchens remodeled',
+        experience: '35+ years | 47 kitchens remodeled',
       }}
       showCredentials={true}
       credentialsVariant="compact"

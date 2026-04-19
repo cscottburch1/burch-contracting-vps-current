@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Basement Finishing Contractor | Upstate SC | Burch Contracting',
-  description: 'Professional basement finishing in Greenville, Simpsonville, Fountain Inn. Egress windows, moisture control, electrical, plumbing. 30+ years experience. Free estimates.',
+  description: 'Professional basement finishing in Greenville, Simpsonville, Fountain Inn. Egress windows, moisture control, electrical, plumbing. 35+ years experience. Free estimates.',
   alternates: { canonical: absoluteUrl('/basement-finishing') },
   openGraph: {
     title: 'Basement Finishing Contractor - Upstate SC | Burch Contracting',

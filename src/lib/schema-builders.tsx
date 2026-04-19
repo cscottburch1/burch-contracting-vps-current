@@ -103,11 +103,11 @@ export function generateLocalBusinessSchema() {
       }
     ],
     
-    // Ratings & reviews
+    // Ratings & reviews (verified Google Business Profile count)
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '5.0',
-      reviewCount: '247',
+      reviewCount: '12',
       bestRating: '5',
       worstRating: '1'
     },
@@ -214,7 +214,7 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: '5.0',
-        reviewCount: '247'
+        reviewCount: '12'
       }
     },
     
@@ -372,7 +372,7 @@ export function generateOrganizationSchema() {
     award: [
       'BBB A+ Rating',
       'Google 5.0 Star Rating',
-      '30+ Years in Business'
+      '35+ Years Experience'
     ],
     
     sameAs: [
