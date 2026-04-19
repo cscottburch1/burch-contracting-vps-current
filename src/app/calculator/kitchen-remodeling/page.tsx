@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
 
@@ -45,8 +44,6 @@ export default function KitchenRemodelingCalculatorPage() {
       ]}
       showCTA={false}
     >
-      <EEATSignals variant="compact" />
-      
       <ProjectCostCalculator
         title="Kitchen Remodeling Cost Calculator"
         intro="Build a realistic kitchen remodel budget for Simpsonville and Fountain Inn homes before you request bids. Compare refresh, full remodel, and custom kitchen investment ranges."

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
 
@@ -48,8 +47,6 @@ export default function BasementFinishingCalculatorPage() {
       ]}
       showCTA={false}
     >
-      <EEATSignals variant="compact" />
-      
       <ProjectCostCalculator
         title="Basement Finishing Cost Calculator"
         intro="Estimate the cost of converting unfinished square footage into a comfortable family room, office, guest suite, or premium entertainment level."

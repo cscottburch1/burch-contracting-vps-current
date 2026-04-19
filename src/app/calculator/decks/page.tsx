@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
 
@@ -45,8 +44,6 @@ export default function DecksCalculatorPage() {
       ]}
       showCTA={false}
     >
-      <EEATSignals variant="compact" />
-      
       <CompetitivePricingCalculator
         serviceKey="decks"
         title="Deck Cost Calculator"

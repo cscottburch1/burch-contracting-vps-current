@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import EEATSignals from '@/components/seo/EEATSignals';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
 
@@ -45,8 +44,6 @@ export default function BathroomRemodelingCalculatorPage() {
       ]}
       showCTA={false}
     >
-      <EEATSignals variant="compact" />
-      
       <ProjectCostCalculator
         title="Bathroom Remodeling Cost Calculator"
         intro="Estimate the cost of updating a guest bath, primary bathroom, or walk-in shower conversion using local Upstate South Carolina pricing ranges."
