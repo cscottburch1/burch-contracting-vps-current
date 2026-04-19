@@ -43,6 +43,8 @@ const calculatorLinks: NavItem[] = [
   { label: 'Home Addition Calculator', href: '/calculator/room-additions' },
   { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
   { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
+  { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
+  { label: 'ADU Cost Calculator', href: '/calculator/adus' },
 ];
 
 const areaLinks: NavItem[] = [
