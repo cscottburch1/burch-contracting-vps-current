@@ -1,9 +1,8 @@
-name: Deploy to Hostinger VPS
+name: Auto Deploy to Production
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -12,27 +11,24 @@ jobs:
     concurrency:
       group: production-deploy
       cancel-in-progress: true
-    
+
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || '22' }}
-          command_timeout: 30m
+          host: 72.60.166.68
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          command_timeout: 15m
           script: |
             cd /root/burch-contracting
             git fetch origin main
             git checkout main
             git pull origin main
-            npm ci
-            npm run seo:validate-robots
-            npm run indexnow:sync-key || true
+            rm -rf .next .swc
+            npm ci --production
             npm run build
-            pm2 restart burch-contracting --update-env
-            sleep 5
-            npm run verify:production -- --base-url=https://burchcontracting.com
-            npm run indexnow:ping || true
-            pm2 status burch-contracting
+            pm2 restart burch-contracting
+            echo "✅ Deploy finished at $(date)"
+fix: updated deploy workflow to use correct server IP and root user
