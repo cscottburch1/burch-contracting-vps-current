@@ -105,8 +105,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         
+        {/* DNS prefetch for fonts - non-blocking */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />
+        
+        {/* LocalBusiness Schema - Sitewide - Inline for immediate parsing */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateLocalBusinessSchema())
+          }}
+        />
       </head>
       <body
         className={`${geistMono.variable} antialiased`}
@@ -117,16 +129,6 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <DeferredMobileStickyCta />
-        
-        {/* LocalBusiness Schema - Deferred to after interactive for better FCP/LCP */}
-        <Script 
-          id="local-business-schema" 
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateLocalBusinessSchema())
-          }}
-        />
         
         {/* Service Worker - Load after page interactive */}
         <Script id="register-sw" strategy="lazyOnload">
