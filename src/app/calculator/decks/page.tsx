@@ -31,7 +31,7 @@ export default function DecksCalculatorPage() {
       breadcrumbs={breadcrumbs}
       showAuthor={true}
       author={{
-        name: 'Robert Burch',
+        name: 'C. Scott Burch',
         role: 'Owner & Lead Carpenter',
         experience: '30+ years | 347 decks built',
       }}

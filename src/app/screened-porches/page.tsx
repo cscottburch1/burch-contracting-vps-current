@@ -98,7 +98,7 @@ export default function ScreenedPorchesPage() {
         title="Professional Screened Porch Builder in Upstate SC"
         breadcrumbs={breadcrumbs}
         author={{
-          name: 'Scott Burch',
+          name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
           experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 200+ screened porches built since 1995',
         }}

@@ -34,7 +34,7 @@ export default function BasementFinishingCalculatorPage() {
       breadcrumbs={breadcrumbs}
       showAuthor={true}
       author={{
-        name: 'Robert Burch',
+        name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
         experience: '30+ years | 127 basements finished',
       }}

@@ -117,7 +117,7 @@ export default function RoomAdditionsPage() {
         breadcrumbs={breadcrumbs}
         showAuthor={true}
         author={{
-          name: 'Scott Burch',
+          name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
           experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 93 room additions completed since 1995',
         }}

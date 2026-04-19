@@ -98,7 +98,7 @@ export default function DeckBuilderPage() {
         title="Professional Custom Deck Builder in Upstate SC"
         breadcrumbs={breadcrumbs}
         author={{
-          name: 'Scott Burch',
+          name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
           experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 347 decks built since 1995',
         }}

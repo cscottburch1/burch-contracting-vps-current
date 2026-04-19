@@ -31,7 +31,7 @@ export default function KitchenRemodelingCalculatorPage() {
       breadcrumbs={breadcrumbs}
       showAuthor={true}
       author={{
-        name: 'Robert Burch',
+        name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
         experience: '30+ years | 187 kitchens completed',
       }}
