@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const trustPoints = [
-  '30+ years serving Upstate South Carolina homeowners',
+  '35+ years serving Upstate South Carolina homeowners',
   'Licensed and insured residential remodeling team',
   'Clear communication from estimate through final walkthrough',
   'Focused on kitchens, bathrooms, additions, decks, porches, basements, and handyman work',
