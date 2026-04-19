@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
-import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
+import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
   title: 'ADU Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
   description:
-    'Calculate ADU and accessory dwelling unit costs with competitive local pricing. From garage apartments to backyard cottages. Transparent 22.5% overhead & profit.',
+    'Calculate ADU and accessory dwelling unit costs with local pricing. From garage apartments to backyard cottages. Licensed contractor estimates.',
   alternates: { canonical: absoluteUrl('/calculator/adus') },
   robots: { index: true, follow: true },
   openGraph: {
@@ -44,12 +44,40 @@ export default function ADUCalculatorPage() {
       ]}
       showCTA={false}
     >
-      <CompetitivePricingCalculator
-        serviceKey="adus"
+      <ProjectCostCalculator
         title="ADU Cost Calculator"
-        intro="Plan your accessory dwelling unit project with competitive local pricing. From garage apartments to detached backyard cottages with transparent cost breakdowns for all construction phases."
+        intro="Estimate the cost of building an accessory dwelling unit (ADU) - from simple garage apartments to fully detached backyard cottages with kitchen, bath, and living space."
         icon="Home"
-        marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
+        marketLabel="Simpsonville, Fountain Inn, Gray Court & Greenville County"
+        options={[
+          {
+            label: 'Garage Apartment (Above Existing Garage)',
+            unit: 'sq ft',
+            defaultQuantity: 550,
+            lowRate: 95,
+            highRate: 135,
+            leadTime: '8 to 12 weeks',
+            scope: 'Finish space above existing garage with kitchenette, bath, and living area. Includes stairs, utilities, and finishes.',
+          },
+          {
+            label: 'Basic Detached ADU',
+            unit: 'sq ft',
+            defaultQuantity: 650,
+            lowRate: 165,
+            highRate: 215,
+            leadTime: '12 to 18 weeks',
+            scope: 'Complete new construction ADU with foundation, framing, roof, basic kitchen, bath, HVAC, and standard finishes.',
+          },
+          {
+            label: 'Premium Backyard Cottage',
+            unit: 'sq ft',
+            defaultQuantity: 800,
+            lowRate: 220,
+            highRate: 295,
+            leadTime: '16 to 24 weeks',
+            scope: 'High-end ADU with custom design, full kitchen, luxury bath, upgraded finishes, covered porch, and landscaping.',
+          },
+        ]}
       />
     </UniversalPageTemplate>
   );
