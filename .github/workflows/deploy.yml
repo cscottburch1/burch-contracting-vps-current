@@ -34,4 +34,3 @@ jobs:
             npm run build
             pm2 restart burch-contracting
             echo "✅ Deploy finished at $(date)"
-fix: corrected auto-deploy workflow
