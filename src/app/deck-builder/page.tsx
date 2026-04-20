@@ -6,12 +6,12 @@ import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } fr
 
 export const metadata: Metadata = {
   title: 'Custom Deck Builder in Upstate SC | Burch Contracting',
-  description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 87 decks built since 1995. Composite, pressure-treated & hardwood. Licensed, insured. Free estimates.',
+  description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 47 decks built since 1995. Composite, pressure-treated & hardwood. Licensed, insured. Free estimates.',
   alternates: { canonical: absoluteUrl('/deck-builder') },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Custom Deck Builder in Upstate SC | Burch Contracting',
-    description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 87 decks built since 1995. Free estimates.',
+    description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 47 decks built since 1995. Free estimates.',
     url: absoluteUrl('/deck-builder'),
     type: 'website',
   },
@@ -99,7 +99,7 @@ export default function DeckBuilderPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 47 decks built since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 4git push origin main7 decks built since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"
