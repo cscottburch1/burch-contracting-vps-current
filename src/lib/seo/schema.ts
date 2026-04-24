@@ -82,10 +82,10 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
     inLanguage: "en-US",
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: businessConfig.credentials.googleRating,
-      reviewCount: "50",
-      bestRating: "5",
-      worstRating: "1"
+      ratingValue: "5.0",
+      reviewCount: 12,
+      bestRating: 5,
+      worstRating: 1
     },
     contactPoint: {
       "@type": "ContactPoint",

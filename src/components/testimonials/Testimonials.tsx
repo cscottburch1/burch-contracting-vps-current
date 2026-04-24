@@ -36,13 +36,6 @@ export default function Testimonials({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Burch Contracting",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": calculateAverageRating(),
-        "reviewCount": testimonials.length,
-        "bestRating": "5",
-        "worstRating": "1"
-      },
       "review": testimonials.map(t => ({
         "@type": "Review",
         "author": {

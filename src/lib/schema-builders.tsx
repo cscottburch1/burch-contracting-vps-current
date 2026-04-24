@@ -107,9 +107,9 @@ export function generateLocalBusinessSchema() {
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '5.0',
-      reviewCount: '12',
-      bestRating: '5',
-      worstRating: '1'
+      reviewCount: 12,
+      bestRating: 5,
+      worstRating: 1
     },
     
     // Price range
@@ -210,11 +210,6 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
         addressLocality: businessConfig.contact.city,
         addressRegion: businessConfig.contact.state,
         postalCode: businessConfig.contact.zip
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5.0',
-        reviewCount: '12'
       }
     },
     
