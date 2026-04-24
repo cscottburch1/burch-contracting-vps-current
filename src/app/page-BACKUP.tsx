@@ -127,61 +127,6 @@ export default async function HomePage() {
     { name: 'Home', url: absoluteUrl('/') },
   ]);
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What areas does Burch Contracting serve in South Carolina?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We proudly serve Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna throughout the Upstate SC region."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is Burch Contracting licensed and insured?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, Burch Contracting is fully licensed and insured with an A+ BBB rating since 2014. We've been serving the Upstate SC area for over 30 years with professional, reliable service."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What types of home improvement services do you offer?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We specialize in garage construction, room additions, aluminum screened porches, and deck building for Upstate South Carolina homeowners."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you offer free estimates?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! We provide free, no-obligation estimates for all services. Contact us at (864) 724-4600 or through our website to schedule your free consultation."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How long does it take to build a deck or screened porch?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most deck projects take 1-2 weeks depending on size and complexity. Screened porches typically take 2-4 weeks. We provide detailed timelines during your free consultation and keep you updated throughout the project."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you handle permits for deck and garage construction?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! We handle all permit applications and ensure your project meets local building codes in Simpsonville, Fountain Inn, Mauldin, Woodruff, Laurens, and Gray Court. Permit costs are included in your project estimate."
-        }
-      }
-    ]
-  };
-
   const featuredLocalPages = localDominancePages.slice(0, 10);
   const calculatorCards = [
     { title: 'Garage Build Budget', href: '/calculator/garages', icon: 'Warehouse' as const, text: 'Estimate attached and detached garage construction costs.' },
@@ -201,12 +146,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <script
-        id="faq-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      
+
       {/* SECTION 1 — HERO (ABOVE THE FOLD) */}
       <section className="relative overflow-hidden py-24 text-white md:py-40">
         <div

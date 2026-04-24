@@ -8,7 +8,6 @@ import QuickEstimateForm from '@/components/seo/QuickEstimateForm';
 import type { RenovationPageData } from '@/lib/seo/renovationSeoData';
 import {
   buildBreadcrumbSchema,
-  buildFaqSchema,
   buildLocalBusinessSchema,
   buildServiceSchema,
 } from '@/lib/seo/schema';
@@ -31,7 +30,6 @@ export default function RenovationSeoLanding({ page }: RenovationSeoLandingProps
   ];
 
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
-  const faqSchema = buildFaqSchema(page.faqItems);
   const localBusinessSchema = buildLocalBusinessSchema({
     description: page.metaDescription,
   });
@@ -51,7 +49,6 @@ export default function RenovationSeoLanding({ page }: RenovationSeoLandingProps
   return (
     <>
       <Script id={`${page.id}-breadcrumb-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id={`${page.id}-faq-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id={`${page.id}-local-business-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <Script id={`${page.id}-service-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 

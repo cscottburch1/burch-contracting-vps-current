@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { blogPosts, buildBlogSections, getBlogBySlug, serviceLandingPages } from '@/lib/seo/localSeoData';
 import { costLandingPages } from '@/lib/seo/costSeoData';
-import { buildArticleSchema, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo/schema';
+import { buildArticleSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import TrustBar from '@/components/TrustBar';
 
@@ -58,7 +58,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     { name: 'Blog', url: absoluteUrl('/blog') },
     { name: post.title, url: absoluteUrl(`/blog/${post.slug}`) },
   ]);
-  const faqSchema = buildFaqSchema(post.faqs);
   const articleSchema = buildArticleSchema({
     title: post.metaTitle,
     description: post.metaDescription,
@@ -74,7 +73,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <>
       <Script id={`blog-breadcrumb-${post.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id={`blog-faq-${post.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id={`blog-article-${post.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">

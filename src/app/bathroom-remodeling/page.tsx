@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
-import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
+import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
 import { ClickableCityGrid } from '@/components/locations/ClickableCityGrid';
 import { Section } from '@/components/ui/Section';
@@ -100,7 +100,6 @@ export default function BathroomRemodelingPage() {
                 { city: 'Gray Court', state: 'SC' },
               ],
             }),
-            generateFAQSchema(faqs),
             generateBreadcrumbSchema([
               { name: 'Home', url: absoluteUrl('/') },
               { name: 'Services', url: absoluteUrl('/services') },

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ClickableCityGrid from '@/components/locations/ClickableCityGrid';
 import { absoluteUrl } from '@/lib/seo/site';
-import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
+import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
   title: 'ADU Builder in Upstate SC | Accessory Dwelling Units | Burch Contracting',
@@ -72,12 +72,6 @@ export default function AduBuilderPage() {
               ],
             })
           ),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateFAQSchema(faqs)),
         }}
       />
       <script

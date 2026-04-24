@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ClickableCityGrid from '@/components/locations/ClickableCityGrid';
 import { absoluteUrl } from '@/lib/seo/site';
-import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
+import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
   title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
@@ -72,12 +72,6 @@ export default function GarageBuilderPage() {
               ],
             })
           ),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateFAQSchema(faqs)),
         }}
       />
       <script

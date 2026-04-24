@@ -46,7 +46,7 @@ interface UniversalPageTemplateProps {
   ctaDescription?: string;
   
   // Schema
-  schemaType?: 'Service' | 'Article' | 'FAQPage' | 'Product';
+  schemaType?: 'Service' | 'Article' | 'Product';
   
   // Layout options
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';

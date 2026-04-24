@@ -8,7 +8,6 @@ import QuickEstimateForm from '@/components/seo/QuickEstimateForm';
 import type { SeoLandingPageData } from '@/lib/seo/localDominanceData';
 import {
   buildBreadcrumbSchema,
-  buildFaqSchema,
   buildLocalBusinessSchema,
   buildServiceSchema,
 } from '@/lib/seo/schema';
@@ -36,7 +35,6 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
   ];
 
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
-  const faqSchema = buildFaqSchema(page.faqItems);
   const localBusinessSchema = buildLocalBusinessSchema({
     description: page.metaDescription,
   });
@@ -56,7 +54,6 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
   return (
     <>
       <Script id={`${page.id}-breadcrumb-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id={`${page.id}-faq-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id={`${page.id}-local-business-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <Script id={`${page.id}-service-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 

@@ -9,7 +9,7 @@ import { businessConfig } from '@/config/business';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import Script from 'next/script';
 import { getServiceBySlug, getActiveServices } from '@/lib/services';
-import { buildBreadcrumbSchema, buildFaqSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import { absoluteUrl } from '@/lib/seo/site';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
 import { costLandingPages } from '@/lib/seo/costSeoData';
@@ -114,11 +114,6 @@ const serviceContent: Record<string, {
       {
         title: "Bath to Tile Shower Conversions",
         description: "Replace outdated tub/shower combos with beautiful walk-in tile showers featuring custom tile, frameless glass doors, and modern fixtures.",
-        icon: "Bath"
-      },
-      {
-        title: "Countertop Installation",
-        description: "Expert installation of granite, quartz, marble, and solid surface countertops with professional fabrication.",
         icon: "Square"
       },
       {
@@ -462,8 +457,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
     { name: serviceConfig?.title || service.title, url: absoluteUrl(`/services/${slug}`) },
   ]);
 
-  const faqSchema = buildFaqSchema(service.faq);
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -501,11 +494,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
         id="service-breadcrumb-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <Script
-        id="service-faq-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero Section */}

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { costLandingPages, getCostLandingPageBySlug } from '@/lib/seo/costSeoData';
 import { blogPosts } from '@/lib/seo/localSeoData';
-import { buildBreadcrumbSchema, buildFaqSchema, buildLocalBusinessSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import TrustBar from '@/components/TrustBar';
 
@@ -58,7 +58,6 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
     { name: 'Cost Guides', url: absoluteUrl('/cost') },
     { name: page.h1, url: absoluteUrl(`/cost/${page.slug}`) },
   ]);
-  const faqSchema = buildFaqSchema(page.faqs);
   const localBusinessSchema = buildLocalBusinessSchema();
   const relatedBlogPosts = blogPosts
     .filter((b) => b.serviceType === page.serviceName)
@@ -67,7 +66,6 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
   return (
     <>
       <Script id={`cost-breadcrumb-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Script id={`cost-faq-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id={`cost-local-business-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">

@@ -16,7 +16,6 @@ import {
 import { costLandingPages } from '@/lib/seo/costSeoData';
 import {
   buildBreadcrumbSchema,
-  buildFaqSchema,
   buildLocalBusinessSchema,
   buildServiceSchema,
 } from '@/lib/seo/schema';
@@ -411,14 +410,12 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
   ]);
 
   const serviceSchema = buildServiceSchema(page);
-  const faqSchema = buildFaqSchema(uniqueFaqs);
   const localBusinessSchema = buildLocalBusinessSchema();
 
   return (
     <>
       <Script id={`local-service-breadcrumb-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id={`local-service-schema-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
-      <Script id={`local-service-faq-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <Script id={`local-business-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">

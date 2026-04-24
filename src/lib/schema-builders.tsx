@@ -17,11 +17,6 @@ interface ServiceSchemaOptions {
   }[];
 }
 
-interface FAQSchemaItem {
-  question: string;
-  answer: string;
-}
-
 interface ReviewSchemaItem {
   author: string;
   rating: number;
@@ -245,24 +240,6 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
         validFrom: new Date().toISOString()
       }]
     }
-  };
-}
-
-/**
- * Generate FAQ schema
- */
-export function generateFAQSchema(faqs: FAQSchemaItem[]) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer
-      }
-    }))
   };
 }
 
