@@ -91,6 +91,7 @@ export const Footer: React.FC = () => {
               <li><Link href="/room-additions" className="hover:text-white">Home Additions</Link></li>
               <li><Link href="/kitchen-remodeling" className="hover:text-white">Kitchen Remodeling</Link></li>
               <li><Link href="/bathroom-remodeling" className="hover:text-white">Bathroom Remodeling</Link></li>
+              <li><Link href="/adu-builder" className="hover:text-white">Accessory Dwelling Units</Link></li>
             </ul>
           </div>
 

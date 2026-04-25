@@ -113,7 +113,7 @@ export default function DeckBuilderPage() {
             Professional Custom Deck Builder in Upstate SC
           </h1>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            I've built 47 custom decks across Greenville County since 1995 - from simple ground-level pressure-treated platforms to multi-tiered composite masterpieces with custom lighting and built-in seating. Whether you need a backyard gathering space in Simpsonville, a hillside deck in Fountain Inn, or a poolside retreat in Mauldin, I'll design and build a deck tailored to your home and budget.
+            I've built 45+ custom decks across Greenville County since 1995 - from simple ground-level pressure-treated platforms to multi-tiered composite masterpieces with custom lighting and built-in seating. Whether you need a backyard gathering space in Simpsonville, a hillside deck in Fountain Inn, or a poolside retreat in Mauldin, I'll design and build a deck tailored to your home and budget.
           </p>
           
           {/* Key Stats */}
