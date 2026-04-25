@@ -2,7 +2,6 @@
 
 import { Card } from '@/components/ui/Card';
 import Icon from '@/components/ui/Icon';
-import Script from 'next/script';
 
 export interface TestimonialData {
   id: string;
@@ -26,42 +25,8 @@ interface TestimonialsProps {
 export default function Testimonials({ 
   testimonials,
   title = "What Our Customers Say",
-  subtitle = "Real feedback from real homeowners throughout Upstate SC.",
-  showSchema = true
+  subtitle = "Real feedback from real homeowners throughout Upstate SC."
 }: TestimonialsProps) {
-  
-  // Generate JSON-LD Review Schema
-  const generateReviewSchema = () => {
-    return {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Burch Contracting",
-      "review": testimonials.map(t => ({
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": t.name
-        },
-        "datePublished": t.date,
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": t.rating.toString(),
-          "bestRating": "5",
-          "worstRating": "1"
-        },
-        "reviewBody": t.review,
-        "itemReviewed": {
-          "@type": "Service",
-          "name": t.service,
-          "provider": {
-            "@type": "Organization",
-            "name": "Burch Contracting"
-          }
-        }
-      }))
-    };
-  };
-
   const calculateAverageRating = (): string => {
     if (testimonials.length === 0) return "5.0";
     const sum = testimonials.reduce((acc, t) => acc + t.rating, 0);
@@ -102,17 +67,6 @@ export default function Testimonials({
 
   return (
     <>
-      {/* JSON-LD Schema */}
-      {showSchema && testimonials.length > 0 && (
-        <Script
-          id="testimonials-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateReviewSchema())
-          }}
-        />
-      )}
-
       <div className="space-y-8">
         {/* Header */}
         <div className="max-w-3xl text-center mx-auto">

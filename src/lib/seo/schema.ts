@@ -80,13 +80,6 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
     openingHours: "Mo-Fr 08:00-17:00",
     award: "Better Business Bureau A+ rating",
     inLanguage: "en-US",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: 12,
-      bestRating: 5,
-      worstRating: 1
-    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
@@ -165,21 +158,6 @@ export function buildAreaServedSchema(page: LocationPage) {
       name: siteConfig.siteName,
     },
     url: absoluteUrl(`/locations/${page.slug}`),
-  };
-}
-
-export function buildFaqSchema(items: Array<{ question: string; answer: string }>) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
   };
 }
 

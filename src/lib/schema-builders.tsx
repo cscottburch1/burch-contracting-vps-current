@@ -17,13 +17,6 @@ interface ServiceSchemaOptions {
   }[];
 }
 
-interface ReviewSchemaItem {
-  author: string;
-  rating: number;
-  reviewBody: string;
-  datePublished: string;
-}
-
 interface ProjectSchemaOptions {
   name: string;
   description: string;
@@ -241,36 +234,6 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
       }]
     }
   };
-}
-
-/**
- * Generate Review schema
- */
-export function generateReviewSchema(reviews: ReviewSchemaItem[]) {
-  return reviews.map(review => ({
-    '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: {
-      '@type': 'GeneralContractor',
-      name: businessConfig.name
-    },
-    author: {
-      '@type': 'Person',
-      name: review.author
-    },
-    reviewRating: {
-      '@type': 'Rating',
-      ratingValue: review.rating,
-      bestRating: '5',
-      worstRating: '1'
-    },
-    reviewBody: review.reviewBody,
-    datePublished: review.datePublished,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Google'
-    }
-  }));
 }
 
 /**
