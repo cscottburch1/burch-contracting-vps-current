@@ -116,63 +116,7 @@ export function generateLocalBusinessSchema() {
       businessConfig.credentials.bbbUrl,
       businessConfig.credentials.googleUrl,
       `${businessConfig.seo.baseUrl}/about`
-    ],
-    
-    // Services offered
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Construction Services',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Custom Deck Building',
-            description: 'Professional custom deck construction and installation'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Screened Porch Construction',
-            description: 'Expert screened porch design and building services'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Garage Construction',
-            description: 'Custom garage building and detached garage construction'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Home Additions',
-            description: 'Room additions, bump-outs, and home expansions'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Kitchen Remodeling',
-            description: 'Complete kitchen renovation and remodeling services'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Bathroom Remodeling',
-            description: 'Professional bathroom renovation and updates'
-          }
-        }
-      ]
-    }
+    ]
   };
 }
 
@@ -220,18 +164,6 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
     brand: {
       '@type': 'Brand',
       name: businessConfig.name
-    },
-    
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: options.serviceName + ' Services',
-      itemListElement: [{
-        '@type': 'Offer',
-        price: options.priceRange || 'Contact for quote',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        validFrom: new Date().toISOString()
-      }]
     }
   };
 }

@@ -81,44 +81,6 @@ export default async function HomePage() {
   const localBusinessSchema = buildLocalBusinessSchema({
     description:
       'Trusted Upstate South Carolina contractor for garages, room additions, screened porches, and decks with clear estimates.',
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Home Improvement Services',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Garage Construction',
-            description: 'Custom attached and detached garage construction with clear planning and pricing',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Room Additions',
-            description: 'Bedroom, family room, and flex-space additions built for long-term value',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Screened Porches',
-            description: 'Low-maintenance aluminum screened porch construction for Upstate homes',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Deck Building',
-            description: 'Custom wood and composite deck construction with code-ready details',
-          },
-        },
-      ],
-    },
   });
 
   const homeSchemaGraph = {

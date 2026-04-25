@@ -1,8 +1,84 @@
-# Final Review Snippets Validation
+# Review Snippets — Final Validation Guide
 
-## Final state in codebase
-- Only one AggregateRating block exists sitewide, inside the main LocalBusiness schema:
-  - ratingValue: "5.0"
+**Date**: April 25, 2026  
+**GSC Error**: "Cannot continue validation process" — Review Snippets  
+**Affected pages**: `/calculator/garages`, `/bathroom-remodeling` (and all service/calculator pages)  
+**Root cause identified and fixed**: `hasOfferCatalog` with nested `Offer > itemOffered > Service` objects was nested inside the sitewide `GeneralContractor` schema that also carries `aggregateRating`. Google's Review Snippets validator tried to resolve `itemReviewed` on those nested `Service` entities, failed, and emitted the validation error.
+
+---
+
+## What Was Changed
+
+### 1. `src/lib/schema-builders.tsx` — `generateLocalBusinessSchema()`
+- **Removed**: entire `hasOfferCatalog` block (6 nested `Offer > itemOffered > Service` objects)
+- **Kept**: single canonical `aggregateRating` (ratingValue 5.0, reviewCount 12, bestRating 5, worstRating 1)
+
+### 2. `src/lib/schema-builders.tsx` — `generateServiceSchema()`
+- **Removed**: `hasOfferCatalog` block containing a nested `Offer` with `price` / `priceCurrency`
+
+### 3. `src/app/page.tsx` — Homepage
+- **Removed**: `hasOfferCatalog` argument passed to `buildLocalBusinessSchema()`
+
+---
+
+## Schema State After Fix
+
+### Sitewide (every page via `layout.tsx`)
+- `GeneralContractor` with `aggregateRating` (5.0, reviewCount 12) — **no nested Service objects**
+
+### Service pages
+- `Service` schema with `provider` reference — **no `aggregateRating`, no nesting**
+
+### Calculator pages
+- No page-level schema — inherits sitewide only
+
+---
+
+## Validation Steps
+
+### 1. Deploy to production
+
+### 2. Test in Rich Results Test
+URL: https://search.google.com/test/rich-results  
+Test each affected URL:
+- `https://burchcontracting.com/calculator/garages`
+- `https://burchcontracting.com/bathroom-remodeling`
+- `https://burchcontracting.com/` (homepage)
+
+Expected: no "Cannot continue validation process" warning, no Review Snippets errors
+
+### 3. URL Inspection in Search Console
+Test Live URL for each affected page. Confirm Structured Data section shows no Review Snippets errors.
+
+### 4. Submit Validate Fix
+GSC → Enhancements → Review Snippets → click the issue → **Validate Fix**
+
+### 5. Monitor timeline
+| Day | Status |
+|-----|--------|
+| 0 | "Validating" in GSC |
+| 1–7 | Google re-crawls |
+| 7–14 | "Passed" (green checkmark) |
+
+---
+
+## Confirm fix locally
+
+```bash
+npx tsc --noEmit   # should exit 0
+
+grep -r "AggregateRating" src/
+# Expected: 3 lines, all in src/lib/schema-builders.tsx (canonical definition only)
+
+grep -r "itemReviewed" src/
+# Expected: no results
+
+grep -r "hasOfferCatalog" src/ --include="*.tsx" --include="*.ts" | grep -v BACKUP | grep -v "schema.ts"
+# Expected: no results (only dead type definition remains in schema.ts)
+```
+
+## Original file (preserved below for reference)
+- ratingValue: "5.0"
   - reviewCount: 12
   - bestRating: 5
   - worstRating: 1
