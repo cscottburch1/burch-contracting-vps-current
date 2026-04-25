@@ -113,7 +113,7 @@ export default function ScreenedPorchesPage() {
             Professional Screened Porch Builder in Upstate SC
           </h1>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            I've built over 200 screened porches across Greenville County since 1995 - from simple aluminum-framed conversions to elegant wood-framed outdoor rooms with ceiling fans, stone fireplaces, and tile floors. Whether you're converting an existing deck in Simpsonville or building a new covered porch in Fountain Inn, I'll create a bug-free outdoor space you can enjoy from March through November.
+            I've built over 50+ screened porches across Greenville County since 1995 - from simple aluminum-framed conversions to elegant wood-framed outdoor rooms with ceiling fans, stone fireplaces, and tile floors. Whether you're converting an existing deck in Simpsonville or building a new covered porch in Fountain Inn, I'll create a bug-free outdoor space you can enjoy from March through November.
           </p>
 
           {/* Key Stats */}
