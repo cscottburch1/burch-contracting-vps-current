@@ -1,4 +1,5 @@
 import { businessConfig } from '@/config/business';
+import { siteConfig } from '@/lib/seo/site';
 
 interface ServiceSchemaOptions {
   serviceName: string;
@@ -38,7 +39,7 @@ export function generateLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'GeneralContractor',
-    '@id': `${businessConfig.seo.baseUrl}#business`,
+    '@id': `${siteConfig.siteUrl}/#business`,
     name: businessConfig.name,
     alternateName: 'Burch Contracting',
     description: businessConfig.tagline,
@@ -134,15 +135,7 @@ export function generateServiceSchema(options: ServiceSchemaOptions) {
     
     provider: {
       '@type': 'GeneralContractor',
-      name: businessConfig.name,
-      telephone: businessConfig.contact.phone,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: businessConfig.contact.address,
-        addressLocality: businessConfig.contact.city,
-        addressRegion: businessConfig.contact.state,
-        postalCode: businessConfig.contact.zip
-      }
+      '@id': `${siteConfig.siteUrl}/#business`
     },
     
     areaServed: options.areaServed || businessConfig.serviceArea.locations.map(area => ({

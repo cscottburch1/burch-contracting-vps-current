@@ -1,11 +1,160 @@
 # Review Snippets — Final Validation Guide
 
 **Date**: April 25, 2026  
-**GSC Error**: "Cannot continue validation process" — Review Snippets  
-**Affected pages**: `/calculator/garages`, `/bathroom-remodeling` (and all service/calculator pages)  
-**Root cause identified and fixed**: `hasOfferCatalog` with nested `Offer > itemOffered > Service` objects was nested inside the sitewide `GeneralContractor` schema that also carries `aggregateRating`. Google's Review Snippets validator tried to resolve `itemReviewed` on those nested `Service` entities, failed, and emitted the validation error.
+**GSC Errors**: "Cannot continue validation process" + "Review has multiple aggregate ratings"  
+**Affected pages**: `/calculator/garages`, `/bathroom-remodeling`
 
 ---
+
+## Root Cause (Definitive)
+
+Two compounding issues were creating the "multiple aggregate ratings" signal:
+
+### Issue 1 — Inconsistent `@id` across two LocalBusiness schemas
+The site emits two separate LocalBusiness schemas built by different builder functions:
+
+| Function | `@id` produced | File |
+|----------|---------------|------|
+| `generateLocalBusinessSchema()` | `https://www.burchcontracting.com#business` | `src/lib/schema-builders.tsx` |
+| `buildLocalBusinessSchema()` | `https://burchcontracting.com/#localbusiness` | `src/lib/seo/schema.ts` |
+
+Google canonicalizes `www.burchcontracting.com` and `burchcontracting.com` as the same domain. When it merges these two entities by name + URL and finds one carries `aggregateRating` and the other doesn't, it reports ambiguity. When it keeps them separate, it sees two entities for the same business — one with a rating — and reports "multiple aggregate ratings".
+
+**Fix**: Changed `generateLocalBusinessSchema()` to use the canonical non-`www` domain (`siteConfig.siteUrl`) so its `@id` is now `https://burchcontracting.com/#business` — consistent with the rest of the SEO stack.
+
+### Issue 2 — Embedded anonymous `GeneralContractor` in `generateServiceSchema()`
+The `provider` field in `generateServiceSchema()` embedded a full `GeneralContractor` object with `name`, `telephone`, and `address` but **no `@id`**. On `/bathroom-remodeling`, this created a second anonymous `GeneralContractor` entity on the same page as the sitewide entity (which has `aggregateRating`). Google attempted to associate the `aggregateRating` with both entities, triggering the validation error.
+
+**Fix**: Replaced the full embedded provider object with a slim `@id`-only reference pointing to the same canonical entity.
+
+---
+
+## What Was Changed
+
+### `src/lib/schema-builders.tsx`
+
+**Change 1 — Consistent `@id`**:
+```diff
+- '@id': `${businessConfig.seo.baseUrl}#business`,   // https://www.burchcontracting.com#business
++ '@id': `${siteConfig.siteUrl}/#business`,           // https://burchcontracting.com/#business
+```
+
+**Change 2 — Slim provider reference**:
+```diff
+  provider: {
+    '@type': 'GeneralContractor',
+-   name: businessConfig.name,
+-   telephone: businessConfig.contact.phone,
+-   address: { '@type': 'PostalAddress', ... }
++   '@id': `${siteConfig.siteUrl}/#business`
+  },
+```
+
+Also added `import { siteConfig } from '@/lib/seo/site'` to the file.
+
+### No other files changed
+- `src/lib/seo/schema.ts` — `buildLocalBusinessSchema()` already had no `aggregateRating` ✅  
+- `src/app/layout.tsx` — canonical `aggregateRating` source, untouched ✅  
+- Calculator pages — no page-level schema emitted, untouched ✅  
+- Testimonials, UniversalPageTemplate — no schema emission, untouched ✅
+
+---
+
+## Resulting Schema State
+
+### Every page (via `layout.tsx`)
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  "@id": "https://burchcontracting.com/#business",
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5.0", "reviewCount": 12 }
+}
+```
+Single entity, consistent `@id`, single `aggregateRating`.
+
+### Service pages (`/bathroom-remodeling`, `/garage-builder`, etc.)
+```json
+{
+  "@type": "Service",
+  "provider": {
+    "@type": "GeneralContractor",
+    "@id": "https://burchcontracting.com/#business"
+  }
+}
+```
+Provider is a reference to the existing entity — no duplication, no second copy of the rated entity.
+
+### Calculator pages (`/calculator/garages`, etc.)
+No page-level schema. Inherits only the sitewide LocalBusiness.
+
+---
+
+## Validation Steps
+
+### 1. Deploy to production
+Push the current branch. Only `src/lib/schema-builders.tsx` changed.
+
+### 2. Verify in Rich Results Test
+Open https://search.google.com/test/rich-results and test:
+- `https://burchcontracting.com/calculator/garages`
+- `https://burchcontracting.com/bathroom-remodeling`
+- `https://burchcontracting.com/`
+
+**Expected for each**:
+- ✅ No "Cannot continue validation process" warning
+- ✅ No "Review has multiple aggregate ratings" warning
+- ✅ Single `GeneralContractor` detected with consistent `@id`
+- ✅ `AggregateRating` shows once, under the top-level LocalBusiness
+
+To verify the emitted JSON manually: open Chrome DevTools → Elements → search for `ld+json` in the page source. Confirm only ONE `aggregateRating` block, and the `@id` on the LocalBusiness is `https://burchcontracting.com/#business`.
+
+### 3. URL Inspection in Search Console
+For each affected URL:
+1. GSC → URL Inspection → paste URL → **Test Live URL**
+2. Expand **Structured Data** section
+3. Confirm no errors under Review Snippets
+
+### 4. Submit Validate Fix
+1. GSC → **Enhancements** → **Review Snippets**  
+   (or **Search Appearance** → **Rich Results** → Review Snippets)
+2. Click the issue showing "Cannot continue validation process"
+3. Click **Validate Fix** button
+4. Repeat for each listed URL under that issue
+
+### 5. Monitor
+| Day | Expected status |
+|-----|-----------------|
+| 0 | "Validating" shown in GSC |
+| 1–7 | Google re-crawls affected pages |
+| 7–14 | Status changes to "Passed" ✅ |
+
+---
+
+## Quick verification commands
+
+```bash
+# TypeScript clean
+npx tsc --noEmit
+# Expected exit code: 0 ✅
+
+# Single AggregateRating in codebase
+grep -r "AggregateRating\|aggregateRating" src/
+# Expected: 2 lines in src/lib/schema-builders.tsx only (the canonical definition)
+
+# No itemReviewed anywhere
+grep -r "itemReviewed" src/
+# Expected: no results
+
+# Consistent @id usage
+grep -r "siteUrl}/#business\|burchcontracting.com/#business" src/
+# Expected: 2 matches in src/lib/schema-builders.tsx (generateLocalBusinessSchema + generateServiceSchema provider)
+```
+
+---
+
+## Original file reference (for record)
+- ratingValue: "5.0"
 
 ## What Was Changed
 
