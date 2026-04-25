@@ -32,7 +32,7 @@ export default function KitchenRemodelingCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '35+ years | 47 kitchens remodeled',
+        experience: '35+ years experience',
       }}
       showCredentials={true}
       credentialsVariant="compact"
@@ -49,7 +49,7 @@ export default function KitchenRemodelingCalculatorPage() {
         intro="Build a realistic kitchen remodel budget for Simpsonville and Fountain Inn homes before you request bids. Compare refresh, full remodel, and custom kitchen investment ranges."
         icon="ChefHat"
         marketLabel="Simpsonville, Fountain Inn, Greenville County, and Laurens County"
-        disclaimer="Kitchen remodeling costs include 20% contractor markup covering project management, insurance, and warranty. Final pricing varies based on cabinet selections, countertop materials (granite vs quartz), plumbing fixture upgrades, electrical panel capacity for new appliances, structural modifications for open-concept layouts, and finish-level choices. Schedule a site visit for exact pricing."
+        disclaimer="Kitchen remodeling costs include 22.5% contractor markup covering project management, insurance, and warranty. Final pricing varies based on cabinet selections, countertop materials (granite vs quartz), plumbing fixture upgrades, electrical panel capacity for new appliances, structural modifications for open-concept layouts, and finish-level choices. Schedule a site visit for exact pricing."
         options={[
           {
             label: 'Kitchen Refresh',
