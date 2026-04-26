@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl('/calculator/bathroom-remodeling') },
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'Bathroom Remodel Cost Calculator | Burch Contracting',
+    title: 'Bathroom Remodel Cost Calculator Provided By Burch Contracting',
     description:
       'Compare cosmetic, standard, and premium bathroom remodeling budgets for homes in Simpsonville and Fountain Inn, SC.',
     url: absoluteUrl('/calculator/bathroom-remodeling'),
@@ -32,7 +32,7 @@ export default function BathroomRemodelingCalculatorPage() {
       author={{
         name: 'C. Scott Burch',
         role: 'Owner & Lead Contractor',
-        experience: '35+ years | 60 bathrooms remodeled',
+        experience: '35+ years experience',
       }}
       showCredentials={true}
       credentialsVariant="compact"
@@ -49,7 +49,7 @@ export default function BathroomRemodelingCalculatorPage() {
         intro="Estimate the cost of updating a guest bath, primary bathroom, or walk-in shower conversion using local Upstate South Carolina pricing ranges."
         icon="Bath"
         marketLabel="Simpsonville, Fountain Inn, Greenville County, and Laurens County"
-        disclaimer="Bathroom renovation estimates include 20% contractor coordination fee covering permits, warranty, and project management. Actual pricing depends on existing plumbing rough-in complexity, tile material choices (ceramic vs porcelain), fixture quality (standard vs premium), ventilation requirements, waterproofing scope, and structural work needed for layout changes. Request a detailed quote after site inspection."
+        disclaimer="Bathroom renovation estimates include 22.5% contractor coordination fee covering permits, warranty, and project management. Actual pricing depends on existing plumbing rough-in complexity, tile material choices (ceramic vs porcelain), fixture quality (standard vs premium), ventilation requirements, waterproofing scope, and structural work needed for layout changes. Request a detailed quote after site inspection."
         options={[
           {
             label: 'Cosmetic Bathroom Refresh',
