@@ -182,7 +182,7 @@ export default function RoomAdditionsPage() {
                   <strong>Why the surge?</strong> Upstate SC home prices jumped 34% from 2020-2025, making additions more economical than moving (average moving cost including realtor fees, closing costs, and moving expenses: $48,000-$72,000). Most additions are master suite projects for 1990s-2000s homes built with only one primary bedroom.
                 </p>
                 <p className="mb-4">
-                  <strong>What I've learned building 93 additions:</strong> Matching your existing exterior is critical - I stock siding samples from every major Upstate SC builder (1975-2010) and work with brick suppliers to match mortar color precisely. Foundation choice matters - our Piedmont clay soil shifts seasonally, so proper footings prevent cracks. Most clients underestimate HVAC costs ($3,500-$6,500 typical for system upgrades or mini-splits).
+                  <strong>What I've learned building 23 additions:</strong> Matching your existing exterior is critical - I stock siding samples from every major Upstate SC builder (1975-2010) and work with brick suppliers to match mortar color precisely. Foundation choice matters - our Piedmont clay soil shifts seasonally, so proper footings prevent cracks. Most clients underestimate HVAC costs ($3,500-$6,500 typical for system upgrades or mini-splits).
                 </p>
                 <p>
                   Single-story additions typically cost $175-225/sqft all-in. Two-story additions run $200-300/sqft but give you double the space. For homes under 1,800 square feet in Simpsonville or Fountain Inn, a 400 sq ft master suite addition ($70,000-$90,000) beats moving costs and avoids higher property taxes of a larger home.
