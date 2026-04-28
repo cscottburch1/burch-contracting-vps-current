@@ -10,11 +10,11 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Room Additions | Primary Suites | Guest Suites | Simpsonville & Greenville SC',
-  description: 'Professional room additions in Greenville, Simpsonville, Fountain Inn. Master suites, sunrooms, in-law suites. $150-300/sqft. 30+ years experience. Licensed, insured.',
+  title: 'Room Additions | Primary Suites | Guest Suites | Greenville, Mauldin, Simpsonville and Fountain Inn SC',
+  description: 'Professional room additions in Greenville, Mauldin, Simpsonville, Fountain Inn. Master suites, sunrooms, in-law suites. $150-300/sqft. 30+ years experience. Licensed, insured.',
   alternates: { canonical: absoluteUrl('/room-additions') },
   openGraph: {
-    title: 'Room Additions - Simpsonville & Greenville SC | Burch Contracting',
+    title: 'Room Additions - Greenville, Mauldin, Simpsonville and Fountain Inn SC | Burch Contracting',
     description: 'Expand your living space with custom room additions. Expert construction with proper foundations, matching exteriors, and seamless integration. 30+ years building homes in Upstate SC.',
     url: absoluteUrl('/room-additions'),
     type: 'website',
@@ -72,7 +72,7 @@ const relatedPages = [
   {
     title: 'Home Remodeling Services',
     href: '/home-renovations',
-    description: 'Complete home remodeling including additions and renovations'
+    description: 'Complete home remodeling including roomadditions and renovations'
   },
 ];
 
@@ -87,7 +87,7 @@ export default function RoomAdditionsPage() {
             generateServiceSchema({
               serviceName: 'Room Additions',
               serviceType: 'RoomAddition',
-              description: 'Professional home addition services including master suites, sunrooms, in-law suites, and custom living space expansions. Complete construction from foundation to finish for homes in Upstate South Carolina.',
+              description: 'Professional room addition services including master suites, sunrooms, in-law suites, and custom living space expansions. Complete construction from foundation to finish for homes in Upstate South Carolina.',
               url: absoluteUrl('/room-additions'),
               priceRange: '$150-$300 per square foot',
               areaServed: [
@@ -95,9 +95,6 @@ export default function RoomAdditionsPage() {
                 { city: 'Fountain Inn', state: 'SC' },
                 { city: 'Greenville', state: 'SC' },
                 { city: 'Mauldin', state: 'SC' },
-                { city: 'Laurens', state: 'SC' },
-                { city: 'Woodruff', state: 'SC' },
-                { city: 'Gray Court', state: 'SC' },
               ],
             }),
             generateBreadcrumbSchema([
@@ -182,7 +179,7 @@ export default function RoomAdditionsPage() {
                   <strong>Why the surge?</strong> Upstate SC home prices jumped 34% from 2020-2025, making additions more economical than moving (average moving cost including realtor fees, closing costs, and moving expenses: $48,000-$72,000). Most additions are master suite projects for 1990s-2000s homes built with only one primary bedroom.
                 </p>
                 <p className="mb-4">
-                  <strong>What I've learned building 23 additions:</strong> Matching your existing exterior is critical - I stock siding samples from every major Upstate SC builder (1975-2010) and work with brick suppliers to match mortar color precisely. Foundation choice matters - our Piedmont clay soil shifts seasonally, so proper footings prevent cracks. Most clients underestimate HVAC costs ($3,500-$6,500 typical for system upgrades or mini-splits).
+                  <strong>What I've learned building room additions:</strong> Matching your existing exterior is critical - Foundation choice matters - our Piedmont clay soil shifts seasonally, so proper footings prevent cracks. Most clients underestimate HVAC costs ($3,500-$6,500 typical for system upgrades or mini-splits).
                 </p>
                 <p>
                   Single-story additions typically cost $175-225/sqft all-in. Two-story additions run $200-300/sqft but give you double the space. For homes under 1,800 square feet in Simpsonville or Fountain Inn, a 400 sq ft master suite addition ($70,000-$90,000) beats moving costs and avoids higher property taxes of a larger home.
