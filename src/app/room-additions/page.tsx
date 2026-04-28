@@ -110,7 +110,7 @@ export default function RoomAdditionsPage() {
       />
 
       <UniversalPageTemplate
-        title="Room Addition Contractor - Upstate SC"
+        title="Room Addition Contractor - Greenville, Mauldin, Simpsonville and Fountain Inn SC"
         description="Expand your living space with custom room additions built to match your home's style and structure."
         breadcrumbs={breadcrumbs}
         showAuthor={true}
