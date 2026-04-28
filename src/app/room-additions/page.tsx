@@ -10,11 +10,11 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Room Addition Contractor | Upstate SC | Burch Contracting',
+  title: 'Room Additions | Primary Suites | Guest Suites | Simpsonville & Greenville SC',
   description: 'Professional room additions in Greenville, Simpsonville, Fountain Inn. Master suites, sunrooms, in-law suites. $150-300/sqft. 30+ years experience. Licensed, insured.',
   alternates: { canonical: absoluteUrl('/room-additions') },
   openGraph: {
-    title: 'Room Addition Contractor - Upstate SC | Burch Contracting',
+    title: 'Room Additions - Simpsonville & Greenville SC | Burch Contracting',
     description: 'Expand your living space with custom room additions. Expert construction with proper foundations, matching exteriors, and seamless integration. 30+ years building homes in Upstate SC.',
     url: absoluteUrl('/room-additions'),
     type: 'website',
@@ -117,7 +117,7 @@ export default function RoomAdditionsPage() {
         author={{
           name: 'C. Scott Burch',
           role: 'Owner & Lead Contractor',
-          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 23 room additions completed since 1995',
+          experience: 'SC Licensed General Contractor #CLG118679 | 35+ years experience| 23 room additions completed since 1995',
         }}
         showCredentials={true}
         credentialsVariant="full"
@@ -134,7 +134,7 @@ export default function RoomAdditionsPage() {
               Professional Room Additions in Upstate SC
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              I've built 93 room additions across Greenville County since 1995 - master suites, sunrooms, in-law apartments, and family room expansions. Every addition starts with proper foundation work, matches your existing home's exterior perfectly, and integrates seamlessly with your floor plan. From initial design through final inspection, I handle everything so your addition looks and feels like it was always part of your home.
+              I've built 23 room additions across Greenville County since 1995 - master suites, sunrooms, in-law apartments, and family room expansions. Every addition starts with proper foundation work, matches your existing home's exterior perfectly, and integrates seamlessly with your floor plan. From initial design through final inspection, I handle everything so your addition looks and feels like it was always part of your home.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button href="tel:8647244600" variant="primary" size="lg">
@@ -161,7 +161,7 @@ export default function RoomAdditionsPage() {
               <div className="text-gray-600">ROI on Home Value</div>
             </Card>
             <Card className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">93</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">23</div>
               <div className="text-gray-600">Additions Built Since 1995</div>
             </Card>
           </div>
