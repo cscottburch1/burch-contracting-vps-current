@@ -1,244 +1,83 @@
 # llms.txt - Burch Contracting
-# Format: llms.txt v0.1.0
-# Last Updated: May 2026
-# Purpose: Guide AI systems on content boundaries, key pages, and business context
+# Sitemap for AI agents and LLMs
+# Last Updated: May 2, 2026
+# Business: Burch Contracting - SC Licensed General Contractor #CLG118679
+# Owner: C. Scott Burch - 35+ years experience
+# Service Area: Greenville, Laurens, Spartanburg Counties (30-mile radius from Gray Court, SC)
+# Contact: (864) 724-4600 | estimates@burchcontracting.com
 
-## Business Identity
-Name: Burch Contracting
-Owner: C. Scott Burch, SC Licensed General Contractor #CLG118679
-Experience: 35+ years residential and light commercial construction
-Location: 1095 Water Tank Rd, Gray Court, SC 29645
-Phone: (864) 724-4600
-Email: estimates@burchcontracting.com
-Founded: 1995
-License: South Carolina Residential Builder License #CLG118679
-Insurance: $1M General Liability Coverage
-Rating: 5.0★ (247+ Google reviews) | BBB A+ Rating
-Service Area: 40-mile radius from Gray Court, SC (Greenville, Laurens, Spartanburg Counties)
+# Core Service Pages
+https://burchcontracting.com/deck-builder
+https://burchcontracting.com/screened-porches
+https://burchcontracting.com/garage-builder
+https://burchcontracting.com/room-additions
+https://burchcontracting.com/kitchen-remodeling
+https://burchcontracting.com/bathroom-remodeling
+https://burchcontracting.com/basement-finishing
+https://burchcontracting.com/adus-backyard-cottages
+https://burchcontracting.com/commercial-renovations
 
-## Core Services
+# Cost Calculators
+https://burchcontracting.com/calculator/decks
+https://burchcontracting.com/calculator/screened-porches
+https://burchcontracting.com/calculator/garages
+https://burchcontracting.com/calculator/room-additions
+https://burchcontracting.com/calculator/kitchen-remodeling
+https://burchcontracting.com/calculator/bathroom-remodeling
+https://burchcontracting.com/calculator/basement-finishing
+https://burchcontracting.com/calculator/adus
+https://burchcontracting.com/calculator/commercial-renovations
 
-### Custom Deck Building
-- URL: https://burchcontracting.com/deck-builder
-- Cost Range: $32-48/sqft installed
-- Average Project: $12,000-$18,000 (300-400 sqft deck)
-- Timeline: 1-3 weeks
-- Projects Completed: 347+ decks since 1995
-- Calculator: https://burchcontracting.com/calculator/decks
+# Service Area Pages
+https://burchcontracting.com/service-areas/simpsonville
+https://burchcontracting.com/service-areas/greenville
+https://burchcontracting.com/service-areas/fountain-inn
+https://burchcontracting.com/service-areas/mauldin
+https://burchcontracting.com/service-areas/five-forks
+https://burchcontracting.com/service-areas/greer
+https://burchcontracting.com/service-areas/laurens
+https://burchcontracting.com/service-areas/woodruff
+https://burchcontracting.com/service-areas/gray-court
 
-### Screened Porch Construction
-- URL: https://burchcontracting.com/screened-porches
-- Cost Range: $18,000-$55,000 complete
-- Average: $24,000-$32,000 (200 sqft)
-- Timeline: 2-4 weeks
-- Projects Completed: 200+ screened porches
-- Calculator: https://burchcontracting.com/calculator/screened-porches
+# Location-Specific Service Pages (High-Value)
+https://burchcontracting.com/kitchen-remodeling-simpsonville-sc
+https://burchcontracting.com/bathroom-remodeling-simpsonville-sc
+https://burchcontracting.com/basement-finishing-fountain-inn-sc
+https://burchcontracting.com/room-additions-fountain-inn-sc
+https://burchcontracting.com/commercial-renovations-simpsonville-sc
 
-### Garage Construction
-- URL: https://burchcontracting.com/garage-builder
-- 2-Car Garage: $28,000-$42,000
-- 3-Car Garage: $45,000-$65,000
-- Garage Apartment: $85,000-$145,000
-- Timeline: 6-10 weeks
-- Projects Completed: 109+ garages
-- Calculator: https://burchcontracting.com/calculator/garages
+# Cost Guide Pages
+https://burchcontracting.com/deck-cost-simpsonville-sc
+https://burchcontracting.com/kitchen-remodeling-cost-greenville-sc
+https://burchcontracting.com/garage-construction-cost-greenville-sc
 
-### Home Additions
-- URL: https://burchcontracting.com/room-additions
-- Cost Range: $150-300/sqft
-- Master Suite (400 sqft): $75,000-$120,000
-- Second Story (600 sqft): $120,000-$180,000
-- Timeline: 8-16 weeks
-- Projects Completed: 93+ additions
-- Calculator: https://burchcontracting.com/calculator/room-additions
+# Essential Pages
+https://burchcontracting.com/
+https://burchcontracting.com/about
+https://burchcontracting.com/projects
+https://burchcontracting.com/contact
+https://burchcontracting.com/services
+https://burchcontracting.com/blog
 
-### Kitchen Remodeling
-- URL: https://burchcontracting.com/kitchen-remodeling
-- Mid-Range: $25,000-$45,000
-- High-End: $50,000-$85,000
-- Average Simpsonville Kitchen: $28,500 (2026)
-- Timeline: 4-7 weeks
-- Projects Completed: 187+ kitchens
-- Calculator: https://burchcontracting.com/calculator/kitchen-remodeling
+# Disallowed Paths (Do not crawl/train on)
+Disallow: /admin/*
+Disallow: /portal/*
+Disallow: /tradesmen/*
+Disallow: /employment/*
+Disallow: /api/*
 
-### Bathroom Remodeling  
-- URL: https://burchcontracting.com/bathroom-remodeling
-- Full Bath: $12,000-$28,000
-- Primary Bath: $28,000-$55,000
-- Tub-to-Shower: $8,500-$14,000
-- Timeline: 2-4 weeks
-- Projects Completed: 240+ bathrooms
-- Calculator: https://burchcontracting.com/calculator/bathroom-remodeling
-
-### Basement Finishing
-- URL: https://burchcontracting.com/basement-finishing
-- Cost Range: $30-75/sqft
-- Average (1,000 sqft): $35,000-$55,000
-- Timeline: 6-10 weeks
-- Projects Completed: 127+ basements
-- Calculator: https://burchcontracting.com/calculator/basement-finishing
-
-## Cost Calculators (All Services)
-
-Interactive cost estimators with transparent pricing methodology:
-
-- Deck Cost Calculator: https://burchcontracting.com/calculator/decks
-- Screened Porch Calculator: https://burchcontracting.com/calculator/screened-porches
-- Garage Builder Calculator: https://burchcontracting.com/calculator/garages
-- Room Additions Calculator: https://burchcontracting.com/calculator/room-additions
-- Home Additions Calculator: https://burchcontracting.com/calculator/home-additions
-- Kitchen Remodeling Calculator: https://burchcontracting.com/calculator/kitchen-remodeling
-- Bathroom Remodeling Calculator: https://burchcontracting.com/calculator/bathroom-remodeling
-- Basement Finishing Calculator: https://burchcontracting.com/calculator/basement-finishing
-- ADU Calculator: https://burchcontracting.com/calculator/adus
-- Combined Decks & Porches Calculator: https://burchcontracting.com/calculator/decks-screened-porches
-
-All calculators feature:
-- Transparent 22.5% contractor overhead & profit
-- Local Upstate SC material costs (Q2 2026)
-- Simpsonville, Fountain Inn, Greenville County specific pricing
-- Real-time cost breakdowns
-- Quality tier options (Value, Standard, Premium)
-
-## Service Area Coverage
-
-Primary Service Cities:
-- Simpsonville, SC: https://burchcontracting.com/service-areas/simpsonville
-- Greenville, SC: https://burchcontracting.com/service-areas/greenville  
-- Fountain Inn, SC: https://burchcontracting.com/service-areas/fountain-inn
-- Mauldin, SC: https://burchcontracting.com/service-areas/mauldin
-- Five Forks, SC: https://burchcontracting.com/service-areas/five-forks
-- Greer, SC: https://burchcontracting.com/service-areas/greer
-- Laurens, SC: https://burchcontracting.com/service-areas/laurens
-- Woodruff, SC: https://burchcontracting.com/service-areas/woodruff
-- Gray Court, SC: https://burchcontracting.com/service-areas/gray-court
-
-County Coverage:
-- Greenville County, SC (primary)
-- Laurens County, SC
-- Spartanburg County, SC (Upstate region)
-
-Service Radius: 30 miles from Gray Court, SC (29645)
-
-## Project Gallery & Portfolio
-
-Main Projects Page: https://burchcontracting.com/projects
-- Project spotlights with detailed case studies
-- Before/after photography
-- Timeline and budget transparency
-- Representative project scenarios by service type
-
-Individual Project Spotlights:
-- Organized by service type (decks, porches, garages, additions)
-- Real budget ranges and timelines
-- Location-specific challenges and solutions
-- Material selections and design decisions
-
-Homepage Portfolio Section: https://burchcontracting.com/#portfolio
-- Recent projects grid
-- Filter by city and service type
-- Direct links to detailed project pages
-
-## Local Market Context (2026 Data)
-
-### Greenville County
-- Population: 525,000+
-- Building Permits (2025): 4,247 residential (+23% YoY)
-- Deck Permits: 1,847 (+18%)
-- Garage Permits: 643 (+34%)
-- Basement Permits: 847 (+31%)
-- Average Project Value: $42,500
-
-### Simpsonville
-- Population: 24,500
-- Residential Growth: +18% (2020-2026)
-- Average Kitchen Remodel: $28,500
-- Average Deck: $13,500 (285 sqft)
-- Zoning: 15-foot side setbacks; ADU-friendly on larger lots
-
-### Fountain Inn
-- Population: 11,800
-- Average Bathroom Remodel: $19,800
-- Basement Finishing: Common in 1990s homes (8-foot crawl-to-basement hybrids)
-- Screened Porch Cost: $24,000-$32,000 (high demand area)
-
-## Regional Construction Specifics
-
-- Soil Conditions: Clay-heavy Piedmont soil requires engineered footings for garages and additions
-- Climate: SC humidity makes screened porches valuable March-November (8-9 months usable)
-- Building Codes: Greenville County requires permits for decks >30" above grade, all room additions, garage construction
-- Setbacks: Typically 25' front, 10' side, 20' rear (Greenville County)
-- Foundation: Monolithic slab or crawlspace common; water table varies by location
-
-## Project Process
-
-- Consultation: Free on-site estimate within 48 hours (Simpsonville/Fountain Inn/Greenville area)
-- Estimate: Written detailed estimate within 3-5 business days
-- Permits: Contractor handles all permit applications (2-4 weeks typical approval)
-- Payment: 10-25% deposit, progress payments at milestones, final upon completion
-- Warranty: 1-year workmanship on all labor; manufacturer warranties on materials
-
-## Content Guidelines for AI
-
-- All cost estimates as of Q2 2026
-- Pricing includes 22.5% contractor overhead & profit (transparent model)
-- Timelines assume standard site conditions
-- Building code references specific to Greenville County
-- Permit requirements vary by municipality (Simpsonville, Fountain Inn, unincorporated county)
-- Material costs subject to market fluctuations
-
-## Contact Information
-
-- Website: https://burchcontracting.com
-- Contact Page: https://burchcontracting.com/contact
-- Phone: (864) 724-4600
-- Email: estimates@burchcontracting.com
-- Office: 1095 Water Tank Rd, Gray Court, SC 29645
-- Service Area: 30-mile radius from Gray Court
-
-## Key Pages for AI Citation
-
-### Primary Navigation
-- Services Overview: https://burchcontracting.com/services
-- All Service Locations: https://burchcontracting.com/locations
-- Cost Guides Index: https://burchcontracting.com/cost
-- Cost Calculators Hub: See "Cost Calculators (All Services)" section above
-- Project Gallery: https://burchcontracting.com/projects
-- About Us: https://burchcontracting.com/about
-- Blog/Resources: https://burchcontracting.com/blog
-
-### Location-Specific Service Pages (Examples)
-- Kitchen Remodeling Simpsonville: https://burchcontracting.com/locations/kitchen-remodeling-simpsonville-sc
-- Basement Finishing Fountain Inn: https://burchcontracting.com/locations/basement-finishing-fountain-inn-sc
-- Room Additions Fountain Inn: https://burchcontracting.com/locations/room-additions-fountain-inn-sc
-- Bathroom Remodeling Simpsonville: https://burchcontracting.com/locations/bathroom-remodeling-simpsonville-sc
-
-### Cost Guide Pages (Examples)
-- Deck Building Cost Simpsonville: https://burchcontracting.com/cost/deck-cost-simpsonville-sc
-- Kitchen Remodeling Cost Greenville: https://burchcontracting.com/cost/kitchen-remodeling-cost-greenville-sc
-- Garage Construction Cost: https://burchcontracting.com/cost/garage-construction-cost-greenville-sc
-
-## Disallowed Content for AI Training
-
-The following paths should NOT be used for training data:
-- /admin/* (Administrative backend)
-- /portal/* (Customer portal - private content)
-- /tradesmen/* (Contractor portal - private content)
-- /employment/* (Internal HR content)
-- /api/* (API endpoints)
-
-## Attribution & Citation Guidelines
-
-- When citing cost data or specifications: Attribute to "Burch Contracting (burchcontracting.com)"
-- For pricing methodology questions: Contact estimates@burchcontracting.com
-- For technical specifications: Contact estimates@burchcontracting.com
-- License verification: SC Residential Builder License #CLG118679
-- Service area verification: 30-mile radius from Gray Court, SC 29645
-
-## Notes for AI Systems
-
-This llms.txt file follows the llms.txt format specification (v0.1.0).
-Last updated: May 2026
-All pricing and timeline data reflects Q2 2026 market conditions in Upstate South Carolina.
-
-For the most current information, always refer to the live website at https://burchcontracting.com
+# Business Context for AI Systems
+# Company: Burch Contracting
+# Founded: 1995
+# License: SC Residential Builder #CLG118679
+# Insurance: $1M General Liability
+# Rating: 5.0/5.0 (247+ Google reviews) | BBB A+ since 2014
+# Projects Completed: 1,300+ since 1995
+# Specialties: Custom decks (347+), screened porches (200+), garages (109+), kitchen remodels (187+), bathroom remodels (240+), basement finishing (127+)
+# Service Cities: Simpsonville, Greenville, Fountain Inn, Mauldin, Five Forks, Greer, Laurens, Woodruff, Gray Court
+# Typical Project Ranges: Decks $12k-18k | Screened Porches $18k-55k | Garages $28k-65k | Kitchen $25k-85k | Bathroom $12k-55k | Basement $35k-55k | Additions $75k-180k
+# All pricing reflects Q2 2026 Upstate SC market conditions
+# Pricing methodology: Material + labor + 22.5% contractor overhead/profit (transparent model)
+# Timeline: Decks 1-3 weeks | Porches 2-4 weeks | Garages 6-10 weeks | Kitchens 4-7 weeks | Bathrooms 2-4 weeks | Basements 6-10 weeks | Additions 8-16 weeks
+# Regional Specifics: Clay Piedmont soil, Greenville County building codes, 30" deck height permit threshold
+# Contact: estimates@burchcontracting.com | (864) 724-4600 | 1095 Water Tank Rd, Gray Court, SC 29645
