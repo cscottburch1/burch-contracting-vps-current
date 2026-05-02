@@ -55,6 +55,7 @@ const areaLinks: NavItem[] = [
   { label: 'Mauldin, SC', href: '/service-areas/mauldin' },
   { label: 'Five Forks, SC', href: '/service-areas/five-forks' },
   { label: 'Gray Court, SC', href: '/service-areas/gray-court' },
+  { label: 'Woodruff, SC', href: '/service-areas/woodruff' },
   { label: 'Laurens, SC', href: '/service-areas/laurens' },
 ];
 
@@ -572,6 +573,37 @@ export const Header: React.FC = () => {
                   </div>
                 )}
               </div>
+
+              <div>
+                <div className="flex w-full items-center justify-between py-2">
+                  <Link href="/calculator" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                    Calculators
+                  </Link>
+                  <button
+                    type="button"
+                    className="p-1 text-black"
+                    onClick={() => setMobileCalculatorsOpen((prev) => !prev)}
+                    aria-expanded={mobileCalculatorsOpen}
+                    aria-controls="mobile-calculators-menu"
+                    aria-label="Toggle Calculators submenu"
+                  >
+                    <Icon name="ChevronDown" size={18} className={mobileCalculatorsOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                  </button>
+                </div>
+                {mobileCalculatorsOpen && (
+                  <div id="mobile-calculators-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
+                    {calculatorLinks.map((item) => (
+                      <Link key={`${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <Link href="/about" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                About
+              </Link>
 
               <Link href="/contact" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
                 Contact

@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Garage Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -24,8 +26,39 @@ export default function GaragesCalculatorPage() {
     { label: 'Garage Calculator', href: '/calculator/garages' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Garage Cost Calculator',
+    description: 'Calculate garage construction costs for Simpsonville, Fountain Inn, and Greenville County. Estimate 2-car, 3-car, and workshop garage pricing with transparent contractor markup.',
+    url: absoluteUrl('/calculator/garages'),
+    serviceName: 'Garage Construction',
+    minPrice: 25000,
+    maxPrice: 75000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Garage Construction Cost Calculator',
+    description: 'Transparent garage construction pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/garages'),
+    serviceName: 'Garage Construction',
+    minPrice: 25000,
+    maxPrice: 75000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Garage Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -52,5 +85,6 @@ export default function GaragesCalculatorPage() {
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />
     </UniversalPageTemplate>
+    </>
   );
 }

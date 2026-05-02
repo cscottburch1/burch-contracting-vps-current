@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'ADU Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -24,8 +26,39 @@ export default function ADUCalculatorPage() {
     { label: 'ADU Calculator', href: '/calculator/adus' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'ADU Cost Calculator',
+    description: 'Calculate ADU and accessory dwelling unit costs for Simpsonville, Fountain Inn, and Greenville County. Estimate garage apartments and backyard cottages with transparent pricing.',
+    url: absoluteUrl('/calculator/adus'),
+    serviceName: 'ADU Construction',
+    minPrice: 50000,
+    maxPrice: 180000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'ADU Cost Calculator',
+    description: 'Transparent ADU construction pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/adus'),
+    serviceName: 'ADU Construction',
+    minPrice: 50000,
+    maxPrice: 180000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="ADU Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -80,5 +113,6 @@ export default function ADUCalculatorPage() {
         ]}
       />
     </UniversalPageTemplate>
+    </>
   );
 }

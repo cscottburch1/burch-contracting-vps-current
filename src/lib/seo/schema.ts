@@ -261,3 +261,186 @@ export function buildContactPointSchema() {
     },
   };
 }
+
+type CalculatorSchemaOptions = {
+  name: string;
+  description: string;
+  url: string;
+  serviceName: string;
+  minPrice?: number;
+  maxPrice?: number;
+  priceCurrency?: string;
+  datePublished?: string;
+  dateModified?: string;
+};
+
+/**
+ * Build SoftwareApplication schema for cost calculators
+ * Helps AI engines understand and cite calculator tools
+ */
+export function buildCalculatorSoftwareApplicationSchema(opts: CalculatorSchemaOptions) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    applicationCategory: "FinanceApplication",
+    applicationSubCategory: "Cost Calculator",
+    operatingSystem: "Web Browser",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: opts.priceCurrency || "USD",
+      availability: "https://schema.org/InStock",
+    },
+    provider: {
+      "@type": "LocalBusiness",
+      "@id": absoluteUrl('/#localbusiness'),
+      name: siteConfig.siteName,
+      telephone: siteConfig.phoneDisplay,
+    },
+    audience: {
+      "@type": "Audience",
+      audienceType: "Homeowners planning renovation projects",
+      geographicArea: {
+        "@type": "AdministrativeArea",
+        name: "Greenville County, Laurens County, Spartanburg County, South Carolina",
+      },
+    },
+    about: {
+      "@type": "Service",
+      serviceType: opts.serviceName,
+      provider: {
+        "@type": "LocalBusiness",
+        "@id": absoluteUrl('/#localbusiness'),
+      },
+    },
+    datePublished: opts.datePublished || "2026-04-01",
+    dateModified: opts.dateModified || "2026-05-02",
+    inLanguage: "en-US",
+  };
+}
+
+/**
+ * Build Dataset schema for calculator pricing data
+ * Documents the original research and pricing methodology
+ */
+export function buildCalculatorDatasetSchema(opts: CalculatorSchemaOptions) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: `${opts.serviceName} Cost Data - Upstate South Carolina (2026)`,
+    description: `Transparent pricing dataset for ${opts.serviceName.toLowerCase()} projects in Simpsonville, Fountain Inn, and Greenville County. Includes material costs, labor rates, and 22.5% contractor overhead & profit based on 35+ years of project data.`,
+    url: opts.url,
+    license: "https://creativecommons.org/licenses/by/4.0/",
+    creator: {
+      "@type": "Organization",
+      "@id": absoluteUrl('/#organization'),
+      name: siteConfig.siteName,
+      email: businessConfig.contact.email,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": absoluteUrl('/#organization'),
+      name: siteConfig.siteName,
+    },
+    datePublished: opts.datePublished || "2026-04-01",
+    dateModified: opts.dateModified || "2026-05-02",
+    spatialCoverage: {
+      "@type": "Place",
+      geo: {
+        "@type": "GeoShape",
+        box: "34.4 -82.4 35.0 -81.8",
+      },
+      name: "Upstate South Carolina (Greenville, Laurens, Spartanburg Counties)",
+    },
+    temporalCoverage: "2026",
+    variableMeasured: [
+      "Material costs per square foot",
+      "Labor costs per hour",
+      "Contractor overhead and profit percentage",
+      "Project timeline estimates",
+      "Quality tier pricing (Value, Standard, Premium)",
+    ],
+    ...(opts.minPrice && opts.maxPrice ? {
+      distribution: {
+        "@type": "DataDownload",
+        encodingFormat: "text/html",
+        contentUrl: opts.url,
+        description: `Interactive calculator showing cost range ${opts.priceCurrency || "USD"} $${opts.minPrice.toLocaleString()}-$${opts.maxPrice.toLocaleString()}`,
+      },
+    } : {}),
+    isAccessibleForFree: true,
+    keywords: [
+      opts.serviceName,
+      "cost calculator",
+      "pricing data",
+      "Upstate South Carolina",
+      "Simpsonville",
+      "Fountain Inn",
+      "Greenville County",
+      "contractor pricing",
+      "transparent pricing",
+      "2026 construction costs",
+    ],
+  };
+}
+
+/**
+ * Build Person schema for author bylines
+ * Boosts E-E-A-T signals for content authorship
+ */
+export function buildPersonSchema(opts: {
+  name: string;
+  jobTitle: string;
+  description: string;
+  email?: string;
+  image?: string;
+  sameAs?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": absoluteUrl('/#author'),
+    name: opts.name,
+    jobTitle: opts.jobTitle,
+    description: opts.description,
+    url: absoluteUrl('/about'),
+    ...(opts.email ? { email: opts.email } : {}),
+    ...(opts.image ? { 
+      image: {
+        "@type": "ImageObject",
+        url: opts.image,
+      } 
+    } : {}),
+    ...(opts.sameAs && opts.sameAs.length > 0 ? { sameAs: opts.sameAs } : {}),
+    worksFor: {
+      "@type": "Organization",
+      "@id": absoluteUrl('/#organization'),
+      name: siteConfig.siteName,
+    },
+    knowsAbout: [
+      "General contracting",
+      "Deck construction",
+      "Garage building",
+      "Screened porch installation",
+      "Home additions",
+      "Kitchen remodeling",
+      "Bathroom remodeling",
+      "Basement finishing",
+      "ADU construction",
+      "South Carolina building codes",
+      "Residential construction",
+    ],
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "Professional License",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "South Carolina Department of Labor, Licensing and Regulation",
+      },
+      about: "SC General Contractor License #CLG118679",
+    },
+  };
+}

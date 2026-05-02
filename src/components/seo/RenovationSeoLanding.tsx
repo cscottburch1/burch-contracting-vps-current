@@ -10,8 +10,10 @@ import {
   buildBreadcrumbSchema,
   buildLocalBusinessSchema,
   buildServiceSchema,
+  buildPersonSchema,
 } from '@/lib/seo/schema';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import { primaryAuthor } from '@/lib/seo/author';
 
 interface RenovationSeoLandingProps {
   page: RenovationPageData;
@@ -42,6 +44,15 @@ export default function RenovationSeoLanding({ page }: RenovationSeoLandingProps
     path: page.path,
   });
 
+  const personSchema = buildPersonSchema({
+    name: primaryAuthor.name,
+    jobTitle: `${primaryAuthor.role}, SC License #${primaryAuthor.licenseNumber}`,
+    description: primaryAuthor.bio,
+    email: primaryAuthor.email,
+    image: primaryAuthor.image,
+    sameAs: primaryAuthor.sameAs,
+  });
+
   const areaLine = page.city
     ? `${page.city.displayName} · ${page.city.county}`
     : 'Serving Simpsonville, Fountain Inn, Mauldin, Gray Court, Laurens, Woodruff, Clinton, Ora, and Joanna';
@@ -51,6 +62,7 @@ export default function RenovationSeoLanding({ page }: RenovationSeoLandingProps
       <Script id={`${page.id}-breadcrumb-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id={`${page.id}-local-business-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <Script id={`${page.id}-service-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <Script id={`${page.id}-person-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-emerald-900 to-cyan-900 py-16 text-white md:py-24">
         <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_right,_white,_transparent_40%)]" />
@@ -327,6 +339,31 @@ export default function RenovationSeoLanding({ page }: RenovationSeoLandingProps
                   </a>
                 </Card>
               ))}
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section background="white" padding="lg">
+        <div className="max-w-4xl mx-auto">
+          <div className="border-l-4 border-emerald-600 bg-gray-50 p-6 rounded-r-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-emerald-600 flex items-center justify-center text-white text-2xl font-bold">
+                  {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-emerald-600 uppercase tracking-wide mb-1">Written by</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{primaryAuthor.name}</h3>
+                <p className="text-gray-700 mb-2">{primaryAuthor.role}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  SC Licensed General Contractor #{primaryAuthor.licenseNumber} | {primaryAuthor.yearsExperience}+ years{page.city ? ` serving ${page.city.displayName}` : ' serving Upstate SC'}
+                </p>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {primaryAuthor.bio}
+                </p>
+              </div>
             </div>
           </div>
         </div>

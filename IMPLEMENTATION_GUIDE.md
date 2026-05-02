@@ -587,7 +587,7 @@ export default function SimpsonvilleDeckPage() {
           <ul>
             <li><strong>Local Expertise</strong> - 30+ years serving Simpsonville and Greenville County</li>
             <li><strong>Licensed & Insured</strong> - Fully certified South Carolina General Contractor</li>
-            <li><strong>BBB A+ Rated</strong> - Accredited since 2014 with perfect consumer reviews</li>
+            <li><strong>BBB A+ Rated</strong> - A+ Rating since 2014 with perfect consumer reviews</li>
             <li><strong>Google 5.0 Stars</strong> - Hundreds of verified 5-star reviews from real customers</li>
             <li><strong>Free Estimates</strong> - No-obligation on-site consultation and detailed quote</li>
             <li><strong>Transparent Pricing</strong> - Clear, itemized estimates with no hidden fees</li>

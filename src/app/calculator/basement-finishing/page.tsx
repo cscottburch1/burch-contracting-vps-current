@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Basement Finishing Cost Calculator Simpsonville & Fountain Inn SC',
@@ -27,8 +29,39 @@ export default function BasementFinishingCalculatorPage() {
     { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Basement Finishing Cost Calculator',
+    description: 'Calculate basement finishing costs for Simpsonville, Fountain Inn, and Greenville County. Estimate rec rooms, home offices, and entertainment spaces with transparent pricing per square foot.',
+    url: absoluteUrl('/calculator/basement-finishing'),
+    serviceName: 'Basement Finishing',
+    minPrice: 25000,
+    maxPrice: 75000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Basement Finishing Cost Calculator',
+    description: 'Transparent basement finishing pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/basement-finishing'),
+    serviceName: 'Basement Finishing',
+    minPrice: 25000,
+    maxPrice: 75000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Basement Finishing Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -83,5 +116,6 @@ export default function BasementFinishingCalculatorPage() {
         ]}
       />
     </UniversalPageTemplate>
+    </>
   );
 }

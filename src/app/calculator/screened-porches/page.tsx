@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Screened Porch Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -24,8 +26,39 @@ export default function ScreenedPorchesCalculatorPage() {
     { label: 'Screened Porch Calculator', href: '/calculator/screened-porches' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Screened Porch Cost Calculator',
+    description: 'Calculate screened porch construction costs for Simpsonville, Fountain Inn, and Greenville County with transparent pricing for screen enclosures and outdoor living spaces.',
+    url: absoluteUrl('/calculator/screened-porches'),
+    serviceName: 'Screened Porch Construction',
+    minPrice: 15000,
+    maxPrice: 55000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Screened Porch Cost Calculator',
+    description: 'Transparent screened porch construction pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/screened-porches'),
+    serviceName: 'Screened Porch Construction',
+    minPrice: 15000,
+    maxPrice: 55000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Screened Porch Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -52,5 +85,6 @@ export default function ScreenedPorchesCalculatorPage() {
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />
     </UniversalPageTemplate>
+    </>
   );
 }

@@ -81,9 +81,9 @@ export const UniversalPageTemplate: React.FC<UniversalPageTemplateProps> = ({
   }[maxWidth];
 
   const defaultAuthor: AuthorInfo = {
-    name: 'Robert Burch',
+    name: 'Scott Burch',
     role: 'Owner & Lead Contractor',
-    experience: '30+ years experience in residential construction'
+    experience: '35+ years experience in residential construction'
   };
 
   const authorInfo = author || defaultAuthor;

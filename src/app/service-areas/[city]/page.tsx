@@ -10,9 +10,10 @@ import { ServiceCard } from '@/components/ui/ServiceCard';
 import Script from 'next/script';
 import { getServicesForPage, mapToBusinessConfigFormat } from '@/lib/services';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
-import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildPersonSchema } from '@/lib/seo/schema';
 import { absoluteUrl } from '@/lib/seo/site';
 import TrustBar from '@/components/TrustBar';
+import { primaryAuthor } from '@/lib/seo/author';
 
 // City-specific content with rich history and modern context
 const cityContent: Record<string, {
@@ -611,7 +612,14 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
     { name: 'Service Areas', url: absoluteUrl('/services') },
     { name: content.displayName, url: absoluteUrl(`/service-areas/${city}`) },
   ]);
-
+  const personSchema = buildPersonSchema({
+    name: primaryAuthor.name,
+    jobTitle: `${primaryAuthor.role}, ${primaryAuthor.licenseNumber}`,
+    description: primaryAuthor.bio,
+    email: primaryAuthor.email,
+    image: primaryAuthor.image,
+    sameAs: primaryAuthor.sameAs,
+  });
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -646,6 +654,11 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         id="service-area-breadcrumbs"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <Script
+        id="service-area-person-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
 
       {/* Hero Section */}
@@ -833,6 +846,32 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           </div>
         </Section>
       )}
+
+      {/* Author Byline - E-E-A-T Signal */}
+      <Section background="white" padding="lg">
+        <div className="max-w-4xl mx-auto">
+          <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                  {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-1">Written by</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{primaryAuthor.name}</h3>
+                <p className="text-gray-700 mb-2">{primaryAuthor.role}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  SC Licensed General Contractor #{primaryAuthor.licenseNumber} | {primaryAuthor.yearsExperience}+ years serving {content.displayName} and Upstate SC
+                </p>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {primaryAuthor.bio}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
 
       {/* CTA */}
       <Section background="dark" padding="lg">

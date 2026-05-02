@@ -18,10 +18,12 @@ import {
   buildBreadcrumbSchema,
   buildLocalBusinessSchema,
   buildServiceSchema,
+  buildPersonSchema,
 } from '@/lib/seo/schema';
 import { isBrandedProjectImage } from '@/lib/seo/projectSpotlightsData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import TrustBar from '@/components/TrustBar';
+import { primaryAuthor } from '@/lib/seo/author';
 
 interface LocalServicePageProps {
   params: Promise<{ slug: string }>;
@@ -221,10 +223,11 @@ function getLocalTestimonials(serviceName: string, city: string): LocalTestimoni
 
 function getProjectSnapshots(serviceName: string, city: string): LocalProjectSnapshot[] {
   const cityToken = city.toLowerCase().replace(/\s+/g, '-');
+  const cityShort = city.replace(' SC', ''); // "Simpsonville SC" → "Simpsonville"
 
   const fallback: LocalProjectSnapshot[] = [
     {
-      title: `${serviceName} Planning Package`,
+      title: `${serviceName} Planning for ${cityShort} Homes`,
       scope: 'Scope, allowances, and sequence review before production start.',
       timeline: '2 to 4 week preconstruction planning',
       image: '/images/projects/placeholder.webp',
@@ -235,14 +238,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
   const byService: Record<string, LocalProjectSnapshot[]> = {
     'Kitchen Remodeling': [
       {
-        title: 'Family Kitchen Workflow Upgrade',
+        title: `${cityShort} Family Kitchen Workflow Upgrade`,
         scope: 'Cabinet reconfiguration, island optimization, and lighting plan updates.',
         timeline: '6 to 9 week construction window',
         image: '/og-image.webp',
         imageAlt: `Kitchen remodeling project in ${city}`,
       },
       {
-        title: 'Cabinet + Countertop Modernization',
+        title: `${cityShort} Cabinet + Countertop Modernization`,
         scope: 'New storage layout, countertop replacement, and fixture package.',
         timeline: '4 to 7 week construction window',
         image: '/og-image.webp',
@@ -251,14 +254,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Bathroom Remodeling': [
       {
-        title: 'Primary Bath Comfort Upgrade',
+        title: `${cityShort} Primary Bath Comfort Upgrade`,
         scope: 'Shower conversion, vanity improvements, and ventilation correction.',
         timeline: '3 to 6 week construction window',
         image: '/og-image.webp',
         imageAlt: `Bathroom remodeling project in ${city}`,
       },
       {
-        title: 'Guest Bath Refresh Scope',
+        title: `${cityShort} Guest Bath Refresh Scope`,
         scope: 'Targeted layout, fixture, and finish updates for higher daily usability.',
         timeline: '2 to 4 week construction window',
         image: '/og-image.webp',
@@ -267,14 +270,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Room Additions': [
       {
-        title: 'Bedroom + Flex Space Addition',
+        title: `${cityShort} Bedroom + Flex Space Addition`,
         scope: 'Foundation, framing, utility tie-ins, and complete interior finish package.',
         timeline: '10 to 16 week construction window',
         image: '/og-image.webp',
         imageAlt: `Room addition project in ${city}`,
       },
       {
-        title: 'Family Room Expansion',
+        title: `${cityShort} Family Room Expansion`,
         scope: 'Roof integration, HVAC extension, and finished living area expansion.',
         timeline: '9 to 14 week construction window',
         image: '/og-image.webp',
@@ -283,14 +286,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Screened Porch Builder': [
       {
-        title: 'Screened Porch Comfort Build',
+        title: `${cityShort} Screened Porch Comfort Build`,
         scope: 'Roofed porch enclosure, fan and lighting prep, and trim detailing.',
         timeline: '4 to 7 week construction window',
         image: '/og-image.webp',
         imageAlt: `Screened porch project in ${city}`,
       },
       {
-        title: 'Outdoor Seating Extension',
+        title: `${cityShort} Outdoor Seating Extension`,
         scope: 'Traffic flow, screen durability upgrades, and weather-protected layout planning.',
         timeline: '3 to 6 week construction window',
         image: '/og-image.webp',
@@ -299,14 +302,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Deck Builder': [
       {
-        title: 'Composite Deck Entertaining Plan',
+        title: `${cityShort} Composite Deck Entertaining Plan`,
         scope: 'Deck framing, railing package, and integrated stair transitions.',
         timeline: '3 to 5 week construction window',
         image: '/og-image.webp',
         imageAlt: `Deck project in ${city}`,
       },
       {
-        title: 'Backyard Access Deck Upgrade',
+        title: `${cityShort} Backyard Access Deck Upgrade`,
         scope: 'Safer circulation, material durability, and low-maintenance detailing.',
         timeline: '2 to 4 week construction window',
         image: '/og-image.webp',
@@ -315,14 +318,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Decks and Screened Porches': [
       {
-        title: 'Combined Deck + Screened Porch Plan',
+        title: `${cityShort} Combined Deck + Screened Porch Plan`,
         scope: 'Dual-zone outdoor living for cooking, dining, and weather-protected seating.',
         timeline: '5 to 9 week construction window',
         image: '/og-image.webp',
         imageAlt: `Deck and screened porch project in ${city}`,
       },
       {
-        title: 'Outdoor Room Durability Upgrade',
+        title: `${cityShort} Outdoor Room Durability Upgrade`,
         scope: 'Moisture management details, improved circulation, and low-maintenance materials.',
         timeline: '4 to 8 week construction window',
         image: '/og-image.webp',
@@ -331,14 +334,14 @@ function getProjectSnapshots(serviceName: string, city: string): LocalProjectSna
     ],
     'Basement Finishing': [
       {
-        title: 'Multi-Use Basement Conversion',
+        title: `${cityShort} Multi-Use Basement Conversion`,
         scope: 'Office + rec-room zoning with storage and code-compliant finish systems.',
         timeline: '7 to 12 week construction window',
         image: '/og-image.webp',
         imageAlt: `Basement finishing project in ${city}`,
       },
       {
-        title: 'Guest Suite Basement Planning',
+        title: `${cityShort} Guest Suite Basement Planning`,
         scope: 'Comfort upgrades, lighting strategy, and flexible living layout priorities.',
         timeline: '8 to 14 week construction window',
         image: '/og-image.webp',
@@ -411,12 +414,22 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
 
   const serviceSchema = buildServiceSchema(page);
   const localBusinessSchema = buildLocalBusinessSchema();
+  
+  const personSchema = buildPersonSchema({
+    name: primaryAuthor.name,
+    jobTitle: `${primaryAuthor.role}, SC License #${primaryAuthor.licenseNumber}`,
+    description: primaryAuthor.bio,
+    email: primaryAuthor.email,
+    image: primaryAuthor.image,
+    sameAs: primaryAuthor.sameAs,
+  });
 
   return (
     <>
       <Script id={`local-service-breadcrumb-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id={`local-service-schema-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <Script id={`local-business-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+      <Script id={`local-person-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_left,_white_0,_transparent_45%)]"></div>
@@ -651,7 +664,30 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
           </div>
         </Section>
       )}
-
+      <Section background="white" padding="lg">
+        <div className="max-w-4xl mx-auto">
+          <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                  {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-1">Written by</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{primaryAuthor.name}</h3>
+                <p className="text-gray-700 mb-2">{primaryAuthor.role}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  SC Licensed General Contractor #{primaryAuthor.licenseNumber} | {primaryAuthor.yearsExperience}+ years serving {page.city}
+                </p>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {primaryAuthor.bio}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
       <Section background="dark" padding="lg">
         <div className="mx-auto max-w-3xl text-center text-white">
           <h2 className="mb-4 text-4xl font-bold">Talk Through Your {page.city} Project</h2>

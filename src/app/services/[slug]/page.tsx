@@ -9,10 +9,11 @@ import { businessConfig } from '@/config/business';
 import { TestimonialCard } from '@/components/ui/TestimonialCard';
 import Script from 'next/script';
 import { getServiceBySlug, getActiveServices } from '@/lib/services';
-import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { buildBreadcrumbSchema, buildPersonSchema } from '@/lib/seo/schema';
 import { absoluteUrl } from '@/lib/seo/site';
 import { serviceLandingPages } from '@/lib/seo/localSeoData';
 import { costLandingPages } from '@/lib/seo/costSeoData';
+import { primaryAuthor } from '@/lib/seo/author';
 
 // Service content database
 const serviceContent: Record<string, {
@@ -457,6 +458,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
     { name: serviceConfig?.title || service.title, url: absoluteUrl(`/services/${slug}`) },
   ]);
 
+  const personSchema = buildPersonSchema({
+    name: primaryAuthor.name,
+    jobTitle: `${primaryAuthor.role}, SC License #${primaryAuthor.licenseNumber}`,
+    description: primaryAuthor.bio,
+    email: primaryAuthor.email,
+    image: primaryAuthor.image,
+    sameAs: primaryAuthor.sameAs,
+  });
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -494,6 +504,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
         id="service-breadcrumb-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <Script
+        id="service-person-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
 
       {/* Hero Section */}
@@ -715,6 +730,32 @@ export default async function ServicePage({ params }: ServicePageProps) {
               />
             </div>
           ))}
+        </div>
+      </Section>
+
+      {/* Author Byline - E-E-A-T Signal */}
+      <Section background="white" padding="lg">
+        <div className="max-w-4xl mx-auto">
+          <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
+                  {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-1">Written by</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{primaryAuthor.name}</h3>
+                <p className="text-gray-700 mb-2">{primaryAuthor.role}</p>
+                <p className="text-sm text-gray-600 mb-3">
+                  SC Licensed General Contractor #{primaryAuthor.licenseNumber} | {primaryAuthor.yearsExperience}+ years serving Upstate South Carolina
+                </p>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {primaryAuthor.bio}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </Section>
 

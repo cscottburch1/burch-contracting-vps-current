@@ -5,7 +5,7 @@ const trustItems = [
   {
     icon: 'Award' as const,
     label: `BBB ${businessConfig.credentials.bbbRating} Rated`,
-    detail: `Accredited since ${businessConfig.credentials.bbbSince}`,
+    detail: `A+ Rating since ${businessConfig.credentials.bbbSince}`,
   },
   {
     icon: 'Clock' as const,

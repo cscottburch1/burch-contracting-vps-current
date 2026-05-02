@@ -113,7 +113,7 @@ export const EEATSignals: React.FC<EEATSignalsProps> = ({
               </div>
             </div>
             <p className="text-sm text-gray-600">
-              Better Business Bureau accredited since 2014 with a perfect A+ rating
+              Better Business Bureau A+ rating since 2014
             </p>
           </div>
         )}
@@ -192,7 +192,7 @@ export const EEATSignals: React.FC<EEATSignalsProps> = ({
             <div className="flex items-start gap-2">
               <Icon name="CheckCircle" size={16} className="text-green-600 mt-0.5 flex-shrink-0" />
               <span className="text-gray-700">
-                <strong>BBB Accredited</strong> - A+ Rating Since 2014
+                <strong>BBB A+ Rating</strong> - Since 2014
               </span>
             </div>
             <div className="flex items-start gap-2">

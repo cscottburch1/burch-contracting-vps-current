@@ -39,11 +39,60 @@ export const businessConfig = {
 
   services: [
     {
-      id: "additions",
-      title: "Decks, Porches & Room Additions",
-      icon: "Paintbrush",
-      description: "Expert deck builders & porch contractors serving Simpsonville to Laurens. Custom composite & wood decks, screened porches, room additions.",
-      tasks: ["Custom deck construction", "Screened porch building", "Room additions"]
+      id: "deck-builder",
+      title: "Custom Decks",
+      icon: "Home",
+      description: "Custom deck construction with composite and wood materials",
+      tasks: ["Deck design", "Material selection", "Professional installation"]
+    },
+    {
+      id: "screened-porches",
+      title: "Screened Porches",
+      icon: "Grid",
+      description: "Custom screened porch construction for outdoor living",
+      tasks: ["Porch design", "Screen installation", "Quality construction"]
+    },
+    {
+      id: "garage-builder",
+      title: "Garages & Garage Apartments",
+      icon: "Warehouse",
+      description: "Detached garages and garage apartment construction",
+      tasks: ["Garage construction", "Apartment additions", "Custom designs"]
+    },
+    {
+      id: "room-additions",
+      title: "Home Additions",
+      icon: "PlusSquare",
+      description: "Room additions to expand your living space",
+      tasks: ["Addition planning", "Design services", "Expert construction"]
+    },
+    {
+      id: "kitchen-remodeling",
+      title: "Kitchen Remodeling",
+      icon: "Utensils",
+      description: "Complete kitchen renovation and remodeling services",
+      tasks: ["Kitchen design", "Cabinet installation", "Full remodels"]
+    },
+    {
+      id: "bathroom-remodeling",
+      title: "Bathroom Remodeling",
+      icon: "Droplet",
+      description: "Bathroom renovation and upgrade services",
+      tasks: ["Bath design", "Fixture installation", "Complete remodels"]
+    },
+    {
+      id: "basement-finishing",
+      title: "Basement Finishing",
+      icon: "Layers",
+      description: "Transform your basement into usable living space",
+      tasks: ["Basement design", "Framing & drywall", "Complete finishing"]
+    },
+    {
+      id: "adu-builder",
+      title: "ADUs & Backyard Cottages",
+      icon: "Building",
+      description: "Accessory dwelling units and backyard cottage construction",
+      tasks: ["ADU planning", "Design services", "Complete construction"]
     }
   ],
 

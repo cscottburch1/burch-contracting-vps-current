@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Home Addition Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -24,8 +26,39 @@ export default function RoomAdditionsCalculatorPage() {
     { label: 'Room Addition Calculator', href: '/calculator/room-additions' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Room Addition Cost Calculator',
+    description: 'Calculate room addition costs for Simpsonville, Fountain Inn, and Greenville County. Estimate single-story and two-story additions with transparent pricing per square foot.',
+    url: absoluteUrl('/calculator/room-additions'),
+    serviceName: 'Room Additions',
+    minPrice: 45000,
+    maxPrice: 180000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Room Addition Cost Calculator',
+    description: 'Transparent room addition construction pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/room-additions'),
+    serviceName: 'Room Additions',
+    minPrice: 45000,
+    maxPrice: 180000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Room Addition Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -52,5 +85,6 @@ export default function RoomAdditionsCalculatorPage() {
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />
     </UniversalPageTemplate>
+    </>
   );
 }

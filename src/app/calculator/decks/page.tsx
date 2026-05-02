@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Deck Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -24,8 +26,39 @@ export default function DecksCalculatorPage() {
     { label: 'Deck Cost Calculator', href: '/calculator/decks' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Deck Cost Calculator',
+    description: 'Calculate deck construction costs for Simpsonville, Fountain Inn, and Greenville County with transparent pricing including materials, labor, and contractor markup.',
+    url: absoluteUrl('/calculator/decks'),
+    serviceName: 'Deck Building',
+    minPrice: 8000,
+    maxPrice: 45000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Deck Building Cost Calculator',
+    description: 'Transparent deck construction pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/decks'),
+    serviceName: 'Deck Building',
+    minPrice: 8000,
+    maxPrice: 45000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Deck Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -52,5 +85,6 @@ export default function DecksCalculatorPage() {
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />
     </UniversalPageTemplate>
+    </>
   );
 }

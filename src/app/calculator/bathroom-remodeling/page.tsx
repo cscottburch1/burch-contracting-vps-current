@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Bathroom Remodel Cost Calculator Simpsonville & Fountain Inn SC',
@@ -24,8 +26,39 @@ export default function BathroomRemodelingCalculatorPage() {
     { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
   ];
 
+  const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
+    name: 'Bathroom Remodeling Cost Calculator',
+    description: 'Calculate bathroom remodeling costs for Simpsonville, Fountain Inn, and Greenville County. Estimate cosmetic updates to luxury bath renovations with transparent pricing.',
+    url: absoluteUrl('/calculator/bathroom-remodeling'),
+    serviceName: 'Bathroom Remodeling',
+    minPrice: 9000,
+    maxPrice: 55000,
+    dateModified: '2026-05-02',
+  });
+
+  const datasetSchema = buildCalculatorDatasetSchema({
+    name: 'Bathroom Remodeling Cost Calculator',
+    description: 'Transparent bathroom remodeling pricing data for Upstate South Carolina',
+    url: absoluteUrl('/calculator/bathroom-remodeling'),
+    serviceName: 'Bathroom Remodeling',
+    minPrice: 9000,
+    maxPrice: 55000,
+    dateModified: '2026-05-02',
+  });
+
   return (
-    <UniversalPageTemplate
+    <>
+      <Script
+        id="calculator-software-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(calculatorSchema) }}
+      />
+      <Script
+        id="calculator-dataset-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+      />
+      <UniversalPageTemplate
       title="Bathroom Remodeling Cost Calculator - Simpsonville & Upstate SC"
       breadcrumbs={breadcrumbs}
       showAuthor={true}
@@ -81,5 +114,6 @@ export default function BathroomRemodelingCalculatorPage() {
         ]}
       />
     </UniversalPageTemplate>
+    </>
   );
 }
