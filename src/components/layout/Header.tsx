@@ -34,6 +34,7 @@ const serviceLinks: NavItem[] = [
   },
   { label: 'Basement Finishing', href: '/basement-finishing' },
   { label: 'ADUs & Backyard Cottages', href: '/adu-builder' },
+  { label: 'Commercial Renovations', href: '/commercial-renovations' },
 ];
 
 const calculatorLinks: NavItem[] = [

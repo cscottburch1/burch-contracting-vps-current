@@ -93,6 +93,13 @@ export const businessConfig = {
       icon: "Building",
       description: "Accessory dwelling units and backyard cottage construction",
       tasks: ["ADU planning", "Design services", "Complete construction"]
+    },
+    {
+      id: "commercial-renovations",
+      title: "Commercial Renovations",
+      icon: "Briefcase",
+      description: "Commercial tenant improvements including office build-outs, retail upfits, and medical office renovations",
+      tasks: ["Office build-outs", "Retail upfits", "Medical office renovations"]
     }
   ],
 

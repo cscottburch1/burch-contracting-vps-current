@@ -93,6 +93,7 @@ export const Footer: React.FC = () => {
               <li><Link href="/bathroom-remodeling" className="hover:text-white">Bathroom Remodeling</Link></li>
               <li><Link href="/basement-finishing" className="hover:text-white">Basement Finishing</Link></li>
               <li><Link href="/adu-builder" className="hover:text-white">ADUs & Backyard Cottages</Link></li>
+              <li><Link href="/commercial-renovations" className="hover:text-white">Commercial Renovations</Link></li>
             </ul>
           </div>
 
