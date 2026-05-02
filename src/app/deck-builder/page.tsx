@@ -119,7 +119,7 @@ export default function DeckBuilderPage() {
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <div className="text-3xl font-bold text-blue-900 mb-2">347</div>
+              <div className="text-3xl font-bold text-blue-900 mb-2">45+</div>
               <div className="text-sm text-gray-700">Decks Built Since 1995</div>
             </div>
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
@@ -150,7 +150,7 @@ export default function DeckBuilderPage() {
               <strong>Why the surge?</strong> Outdoor living demand jumped after 2020, and Upstate SC's climate allows 8-9 months of outdoor use. Composite decking market share grew to 62% in 2025 (vs 41% in 2020) as homeowners prioritize low maintenance.
             </p>
             <p className="mb-4">
-              <strong>Regional specifics I've learned building 347 decks:</strong> Our clay-heavy Piedmont soil requires engineered footings extending 18-24 inches below grade to prevent settling. Fountain Inn's lower-lying areas need extra moisture protection under joists. Greenville County enforces 15-foot rear setbacks for attached decks. Most clients budget $1,800-$3,200 for stairs and railings beyond the deck platform.
+              <strong>Regional specifics I've learned building 45+ decks:</strong> Our clay-heavy Piedmont soil requires engineered footings extending 18-24 inches below grade to prevent settling. Fountain Inn's lower-lying areas need extra moisture protection under joists. Greenville County enforces 15-foot rear setbacks for attached decks. Most clients budget $1,800-$3,200 for stairs and railings beyond the deck platform.
             </p>
             <p>
               I don't upsell composite on every job - pressure-treated makes sense for budgets under $12,000 or if you're planning to sell within 5 years. But for Upstate SC's humidity and temperature swings (20°F winters to 95°F summers), composite saves you $400-$700 annually in sealing and staining labor.
