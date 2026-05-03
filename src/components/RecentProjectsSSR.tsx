@@ -1,5 +1,53 @@
+'use client';
+
 import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
 import { getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+
+interface ProjectImageProps {
+  project: typeof projectSpotlights[0];
+}
+
+function ProjectImage({ project }: ProjectImageProps) {
+  const [imgError, setImgError] = useState(false);
+  const responsiveImage = getResponsiveProjectImageSet(project.image);
+  const fallbackImage = '/images/projects/placeholder.webp';
+
+  // Use fallback if image failed to load
+  const imageSrc = imgError ? fallbackImage : (responsiveImage ? responsiveImage.mobile : project.image);
+
+  if (isBrandedProjectImage(project.image) || imgError) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-white p-4">
+        <Image
+          src={imageSrc}
+          alt={project.imageAlt}
+          className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
+          width={600}
+          height={336}
+          onError={() => setImgError(true)}
+          placeholder="blur"
+          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={imageSrc}
+      alt={project.imageAlt}
+      title={project.imageAlt}
+      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+      width={600}
+      height={336}
+      onError={() => setImgError(true)}
+      placeholder="blur"
+      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+"
+    />
+  );
+}
 
 /**
  * Server-rendered recent projects section.
@@ -25,42 +73,14 @@ export default function RecentProjectsSSR() {
               key={project.slug}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
-              {(() => {
-                const responsiveImage = getResponsiveProjectImageSet(project.image);
-                return (
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
-                {isBrandedProjectImage(project.image) ? (
-                  <div className="flex h-full w-full items-center justify-center bg-white p-4">
-                    <img
-                      src={project.image}
-                      alt={project.imageAlt}
-                      className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
-                      loading="lazy"
-                      width={600}
-                      height={336}
-                    />
-                  </div>
-                ) : (
-                <img
-                  src={responsiveImage ? responsiveImage.mobile : project.image}
-                  srcSet={responsiveImage ? `${responsiveImage.mobile} 800w, ${responsiveImage.tablet} 1200w, ${responsiveImage.desktop} 1920w` : undefined}
-                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                  alt={project.imageAlt}
-                  title={project.imageAlt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                  loading="lazy"
-                  width={600}
-                  height={336}
-                />
-                )}
+                <ProjectImage project={project} />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800">
                     {project.serviceType}
                   </span>
                 </div>
               </div>
-                );
-              })()}
 
               <div className="p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">

@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface LogoProps {
   variant?: 'header' | 'footer' | 'invoice';
@@ -8,6 +11,8 @@ interface LogoProps {
 }
 
 export function Logo({ variant = 'header', className = '', href = '/' }: LogoProps) {
+  const [imgError, setImgError] = useState(false);
+  
   const sizes = {
     header: { width: 180, height: 60 },
     footer: { width: 150, height: 50 },
@@ -19,7 +24,7 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
 
   const logoImage = (
     <Image
-      src="/logo-transparent.webp"
+      src={imgError ? "/favicon.webp" : "/logo-transparent.webp"}
       alt="Burch Contracting Logo"
       width={size.width}
       height={size.height}
@@ -27,6 +32,7 @@ export function Logo({ variant = 'header', className = '', href = '/' }: LogoPro
       priority={isHeaderLogo}
       fetchPriority={isHeaderLogo ? 'high' : undefined}
       loading={isHeaderLogo ? 'eager' : 'lazy'}
+      onError={() => setImgError(true)}
     />
   );
 

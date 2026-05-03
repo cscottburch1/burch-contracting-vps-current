@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import Icon from '@/components/ui/Icon';
 
@@ -20,6 +21,22 @@ interface ProjectGalleryProps {
   projects: ProjectGalleryItem[];
   title?: string;
   subtitle?: string;
+}
+
+function ProjectGalleryImage({ project }: { project: ProjectGalleryItem }) {
+  const [imgError, setImgError] = useState(false);
+  const fallbackImage = '/images/projects/placeholder.webp';
+
+  return (
+    <Image
+      src={imgError ? fallbackImage : project.imagePath}
+      alt={project.altText}
+      fill
+      className="object-cover transition-transform duration-300 group-hover:scale-105"
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      onError={() => setImgError(true)}
+    />
+  );
 }
 
 export default function ProjectGallery({ 
@@ -43,13 +60,7 @@ export default function ProjectGallery({
           <Card key={project.id} className="group overflow-hidden border border-gray-200 p-0 transition-shadow hover:shadow-xl">
             {/* Image */}
             <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-              <Image
-                src={project.imagePath}
-                alt={project.altText}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
+              <ProjectGalleryImage project={project} />
               
               {/* City Badge */}
               <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-sm font-semibold text-gray-800 shadow-md backdrop-blur-sm">
