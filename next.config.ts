@@ -37,6 +37,17 @@ const nextConfig: NextConfig = {
     return config;
   },
   
+  // Permanent redirect: /calculator hub → /calculators hub
+  async redirects() {
+    return [
+      {
+        source: '/calculator',
+        destination: '/calculators',
+        permanent: true,
+      },
+    ];
+  },
+
   // Headers for caching
   async headers() {
     return [

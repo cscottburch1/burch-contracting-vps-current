@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
+import { EEATSignals } from '@/components/seo/EEATSignals';
+import { CommercialMiniCalculator } from '@/components/calculators/CommercialMiniCalculator';
 import { ClickableCityGrid } from '@/components/locations/ClickableCityGrid';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
@@ -190,8 +192,7 @@ export default function CommercialRenovationsPage() {
           role: 'Owner & Lead Contractor',
           experience: 'SC Licensed General Contractor #CLG118679 | 35+ years | 47 commercial tenant improvements completed',
         }}
-        showCredentials={true}
-        credentialsVariant="full"
+        showCredentials={false}
         lastUpdated={new Date('2026-05-02')}
         relatedPages={relatedPages}
         showCTA={true}
@@ -237,6 +238,13 @@ export default function CommercialRenovationsPage() {
               <div className="text-3xl font-bold text-blue-600 mb-2">A+</div>
               <div className="text-sm text-gray-600">BBB Rating Since 2014</div>
             </Card>
+          </div>
+        </Section>
+
+        {/* E-E-A-T Signals — exactly once, immediately after hero */}
+        <Section background="gray" padding="md">
+          <div className="max-w-4xl mx-auto">
+            <EEATSignals variant="compact" />
           </div>
         </Section>
 
@@ -661,27 +669,10 @@ export default function CommercialRenovationsPage() {
           </div>
         </Section>
 
-        {/* Mini Calculator CTA */}
+        {/* Embedded Commercial Renovations Cost Calculator */}
         <Section background="white" padding="lg">
           <div className="max-w-3xl mx-auto">
-            <Card padding="lg" className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-              <div className="text-center">
-                <Icon name="Calculator" className="mx-auto text-blue-600 mb-4" size={48} />
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                  Calculate Your Commercial Tenant Improvement Cost
-                </h2>
-                <p className="text-lg text-gray-700 mb-6">
-                  Get an instant estimate for your office build-out, retail upfit, or medical office renovation based on square footage and finish level.
-                </p>
-                <Button href="/calculator/commercial-renovations" variant="primary" size="lg">
-                  <Icon name="Calculator" size={20} />
-                  Launch Free Cost Calculator
-                </Button>
-                <p className="text-sm text-gray-600 mt-4">
-                  Takes 2 minutes · No personal info required · Instant results
-                </p>
-              </div>
-            </Card>
+            <CommercialMiniCalculator />
           </div>
         </Section>
 

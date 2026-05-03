@@ -381,15 +381,15 @@ export const Header: React.FC = () => {
             >
               <div className="inline-flex items-center gap-1">
                 <Link
-                  href="/calculator"
-                  className={navLinkClass(isActive('/calculator'))}
-                  onFocus={() => openDropdown('calculators')}
+                  href="/calculators"
+                  className={navLinkClass(isActive('/calculators') || isActive('/calculator'))}
+                  onFocus={() => openDropdown('calculators')
                 >
                   Calculators
                 </Link>
                 <button
                   type="button"
-                  className={isActive('/calculator') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
+                  className={isActive('/calculators') || isActive('/calculator') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
                   aria-haspopup="true"
                   aria-expanded={activeDropdown === 'calculators'}
                   aria-controls="desktop-calculators-menu"
@@ -577,7 +577,7 @@ export const Header: React.FC = () => {
 
               <div>
                 <div className="flex w-full items-center justify-between py-2">
-                  <Link href="/calculator" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                  <Link href="/calculators" className="text-left text-lg font-semibold text-black hover:text-blue-700">
                     Calculators
                   </Link>
                   <button
