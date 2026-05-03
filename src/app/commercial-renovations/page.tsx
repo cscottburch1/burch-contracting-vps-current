@@ -34,10 +34,10 @@ const breadcrumbs = [
 const faqs = [
   {
     question: 'How much does a commercial tenant upfit cost in Upstate SC?',
-    answer: 'Commercial tenant improvements in Greenville County typically cost $45-$120 per square foot depending on the type and scope. Office build-outs average $50-$75/sqft, retail upfits $45-$85/sqft, medical offices $70-$110/sqft, and restaurant fit-outs $85-$120/sqft. A standard 2,000 sqft office space averages $100,000-$150,000 including demising walls, HVAC zones, electrical/data, lighting, flooring, and finishes. I've completed 47 commercial tenant improvements across Upstate SC since 1995, with projects ranging from $35,000 to $650,000.'
+    answer: 'Commercial tenant improvements in Greenville County typically cost $45-$120 per square foot depending on the type and scope. Office build-outs average $50-$75/sqft, retail upfits $45-$85/sqft, medical offices $70-$110/sqft, and restaurant fit-outs $85-$120/sqft. A standard 2,000 sqft office space averages $100,000-$150,000 including demising walls, HVAC zones, electrical/data, lighting, flooring, and finishes. I have completed 47 commercial tenant improvements across Upstate SC since 1995, with projects ranging from $35,000 to $650,000.'
   },
   {
-    question: 'What's included in a typical office build-out?',
+    question: 'What is included in a typical office build-out?',
     answer: 'A standard office build-out includes: demising walls and private office construction, open workspace framing, electrical outlets and dedicated circuits (typically 1 per 100 sqft), LED lighting with occupancy sensors, HVAC zone creation and ductwork, drop ceiling installation or replacement, data/phone cable infrastructure, flooring (carpet tile, LVP, or polished concrete), paint and trim, ADA-compliant restroom access, fire suppression system modifications, and building code compliance. I coordinate with electricians, HVAC contractors, and data installers to ensure seamless integration. Most office build-outs take 6-10 weeks depending on size and complexity.'
   },
   {
@@ -53,8 +53,8 @@ const faqs = [
     answer: 'Yes, I regularly coordinate tenant improvements while adjacent businesses remain operational. Strategies include: after-hours construction for noisy demolition work, phased construction to maintain partial occupancy, temporary partitions with dust barriers (ZipWall systems), dedicated construction entrances separate from customer access, and weekend-intensive work to minimize weekday disruption. For office spaces, I can build out one floor while another remains operational. For retail, I can section off construction areas and maintain storefront access. Restaurant fit-outs typically require full closure due to health department requirements. I develop custom phasing plans for each project to minimize business interruption.'
   },
   {
-    question: 'What's the difference between tenant improvement allowance and turnkey build-out?',
-    answer: 'Tenant Improvement (TI) Allowance: Landlord provides a fixed dollar amount (typically $10-$40/sqft in Upstate SC) toward build-out costs. You control design and contractor selection but are responsible for costs exceeding the allowance. Turnkey Build-Out: Landlord completes all improvements to your specifications before you move in, typically reflected in higher base rent. Most commercial leases in Greenville County offer TI allowances ranging from $15-$25/sqft. I help negotiate TI allowances during lease discussions, provide detailed estimates to maximize your allowance coverage, and work directly with landlords who prefer approved contractor lists. On 47 tenant improvement projects, I've helped clients leverage TI allowances saving an average of $18,000-$35,000 in out-of-pocket costs.'
+    question: 'What is the difference between tenant improvement allowance and turnkey build-out?',
+    answer: 'Tenant Improvement (TI) Allowance: Landlord provides a fixed dollar amount (typically $10-$40/sqft in Upstate SC) toward build-out costs. You control design and contractor selection but are responsible for costs exceeding the allowance. Turnkey Build-Out: Landlord completes all improvements to your specifications before you move in, typically reflected in higher base rent. Most commercial leases in Greenville County offer TI allowances ranging from $15-$25/sqft. I help negotiate TI allowances during lease discussions, provide detailed estimates to maximize your allowance coverage, and work directly with landlords who prefer approved contractor lists. On 47 tenant improvement projects, I have helped clients leverage TI allowances saving an average of $18,000-$35,000 in out-of-pocket costs.'
   },
 ];
 
