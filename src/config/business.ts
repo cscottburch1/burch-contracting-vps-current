@@ -40,9 +40,9 @@ export const businessConfig = {
   services: [
     {
       id: "deck-builder",
-      title: "Deck Builders",
+      title: "Custom Decks",
       icon: "Home",
-      description: "Custom deck construction with composite or pressure treated wood materials",
+      description: "Custom deck construction with composite and wood materials",
       tasks: ["Deck design", "Material selection", "Professional installation"]
     },
     {
@@ -54,7 +54,7 @@ export const businessConfig = {
     },
     {
       id: "garage-builder",
-      title: "Garage Builders",
+      title: "Custom Garages",
       icon: "Warehouse",
       description: "Detached garages and garage apartment construction",
       tasks: ["Garage construction", "Apartment additions", "Custom designs"]
