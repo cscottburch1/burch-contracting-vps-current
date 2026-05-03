@@ -486,7 +486,7 @@ export default function CommercialRenovationsSimpsonvillePage() {
         {/* Calculator CTA */}
         <Section background="gray" padding="lg">
           <div className="max-w-3xl mx-auto">
-            <Card padding="xl" className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+            <Card padding="lg" className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
               <div className="text-center">
                 <Icon name="Calculator" className="mx-auto text-blue-600 mb-4" size={48} />
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -520,7 +520,7 @@ export default function CommercialRenovationsSimpsonvillePage() {
         {/* Final CTA */}
         <Section background="gray" padding="lg">
           <div className="max-w-4xl mx-auto">
-            <Card padding="xl" className="bg-gradient-to-br from-blue-600 to-blue-700 text-white text-center">
+            <Card padding="lg" className="bg-gradient-to-br from-blue-600 to-blue-700 text-white text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Ready to Start Your Simpsonville Commercial Project?
               </h2>
