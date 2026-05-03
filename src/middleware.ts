@@ -77,14 +77,14 @@ export function middleware(req: NextRequest) {
   // 9. X-Permitted-Cross-Domain-Policies - Restrict cross-domain policies
   headers.set('X-Permitted-Cross-Domain-Policies', 'none');
 
-  // 10. Cross-Origin-Embedder-Policy - Prevent resource loading attacks
-  headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
+  // 10. Cross-Origin-Embedder-Policy - Disabled to allow Google Maps and other embedded content
+  // headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
 
   // 11. Cross-Origin-Opener-Policy - Isolate browsing context
   headers.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
 
-  // 12. Cross-Origin-Resource-Policy - Control resource sharing
-  headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+  // 12. Cross-Origin-Resource-Policy - Relaxed to allow embedded resources like Google Maps
+  headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
 
   return response;
 }
