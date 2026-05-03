@@ -113,14 +113,14 @@ export const Footer: React.FC = () => {
         {/* Google Maps Embed */}
         <div className="mb-8 rounded-xl overflow-hidden border border-gray-700 shadow-lg">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.285!2d-82.0744941!3d34.6341746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM4JzAzLjAiTiA4MsKwMDQnMjguMiJX!5e0!3m2!1sen!2sus!4v1645123456789!5m2!1sen!2sus"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3275.2850456789!2d-82.07669558486845!3d34.63417458044791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88578d1a6ee3c001%3A0x147295d161e89612!2sBurch%20Contracting!5e0!3m2!1sen!2sus!4v1714780800000!5m2!1sen!2sus"
             width="100%" 
             height="300" 
             style={{ border: 0 }} 
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Burch Contracting Location - 1095 Water Tank Rd, Gray Court, SC 29645 (34.6341746, -82.0744941)"
+            title="Burch Contracting Location - 1095 Water Tank Rd, Gray Court, SC 29645"
           />
         </div>
 
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
                 Proudly serving {businessConfig.serviceArea.locations.slice(0, 5).join(', ')}, and all of Upstate SC since 1995
               </p>
               <p className="text-gray-500 text-xs">
-                © {currentYear} {businessConfig.name}. All rights reserved. Licensed & Insured Contractor.
+                © {currentYear} {businessConfig.name}. All rights reserved. SC Licensed Construction, Remodeling and Renovations Contractor.
               </p>
             </div>
           </div>
