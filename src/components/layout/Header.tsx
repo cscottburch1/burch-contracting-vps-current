@@ -383,7 +383,7 @@ export const Header: React.FC = () => {
                 <Link
                   href="/calculators"
                   className={navLinkClass(isActive('/calculators') || isActive('/calculator'))}
-                  onFocus={() => openDropdown('calculators')
+                  onFocus={() => openDropdown('calculators')}
                 >
                   Calculators
                 </Link>
