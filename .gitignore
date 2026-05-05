@@ -48,6 +48,10 @@ next-env.d.ts
 *.uca
 AggregateCache.uca
 
+# Uploaded files
+/public/uploads/resumes/*
+!/public/uploads/resumes/.gitkeep
+
 # Temporary / generated artifacts
 /tmp/
 build-latest.txt

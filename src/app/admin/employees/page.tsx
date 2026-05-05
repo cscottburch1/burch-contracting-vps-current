@@ -21,6 +21,8 @@ interface EmployeeApplication {
   status: 'pending' | 'reviewing' | 'approved' | 'rejected';
   created_at: string;
   updated_at: string;
+  resume_url?: string;
+  resume_file_name?: string;
 }
 
 export default function EmployeesPage() {
@@ -278,6 +280,22 @@ export default function EmployeesPage() {
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Certifications</h3>
                   <p className="text-gray-700 whitespace-pre-wrap">{selectedApp.certifications}</p>
+                </div>
+              )}
+
+              {/* Resume */}
+              {selectedApp.resume_url && (
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Resume</h3>
+                  <a
+                    href={selectedApp.resume_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                  >
+                    <Icon name="Download" size={18} />
+                    Download Resume ({selectedApp.resume_file_name || 'Resume'})
+                  </a>
                 </div>
               )}
 

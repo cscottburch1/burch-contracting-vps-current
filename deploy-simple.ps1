@@ -1,5 +1,5 @@
 ﻿# Deploy to Hostinger VPS
-$VPS = "root@156.67.71.222"
+$VPS = "root@72.60.166.68"
 Write-Host "Deploying to production..." -ForegroundColor Green
 $script = @"
 set -e

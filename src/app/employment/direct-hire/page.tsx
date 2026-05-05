@@ -35,11 +35,14 @@ export default function DirectHireEmployeesPage() {
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [formStartTime, setFormStartTime] = useState<number>(0);
+  const [resume, setResume] = useState<File | null>(null);
+  const [resumeError, setResumeError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitMessage('');
+    setResumeError('');
 
     try {
       const formData = new FormData(e.currentTarget);
@@ -66,6 +69,26 @@ export default function DirectHireEmployeesPage() {
       // Time-based bot detection
       const timeTaken = Date.now() - formStartTime;
       
+      // Handle resume file if present
+      let resumeBase64 = '';
+      let resumeFileName = '';
+      let resumeFileSize = 0;
+      if (resume) {
+        resumeFileName = resume.name;
+        resumeFileSize = resume.size;
+        const reader = new FileReader();
+        resumeBase64 = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => {
+            const result = reader.result as string;
+            // Extract base64 data without the data:mime;base64, prefix
+            const base64 = result.split(',')[1];
+            resolve(base64);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(resume);
+        });
+      }
+      
       const data = {
         first_name: formData.get('first_name'),
         last_name: formData.get('last_name'),
@@ -83,6 +106,9 @@ export default function DirectHireEmployeesPage() {
         website: formData.get('website'), // honeypot
         recaptchaToken,
         formTimeTaken: timeTaken,
+        resume: resumeBase64,
+        resumeFileName,
+        resumeFileSize,
       };
 
       const res = await fetch('/api/employment/direct-hire', {
@@ -96,6 +122,7 @@ export default function DirectHireEmployeesPage() {
       if (res.ok) {
         setShowForm(false);
         setSubmitSuccess(true);
+        setResume(null);
         try {
           e.currentTarget.reset();
         } catch (resetErr) {
@@ -525,6 +552,70 @@ export default function DirectHireEmployeesPage() {
                   rows={4}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
+              </div>
+
+              {/* Resume Upload */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Icon name="Upload" size={20} />
+                  Resume / Application
+                </h3>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Upload Your Resume (Optional)
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
+                      <Icon name="Paperclip" size={18} />
+                      Choose File
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx,.txt"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            // Validate file size (max 5MB)
+                            if (file.size > 5 * 1024 * 1024) {
+                              setResumeError('File size must be less than 5MB');
+                              setResume(null);
+                              e.target.value = '';
+                              return;
+                            }
+                            // Validate file type
+                            const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'];
+                            if (!validTypes.includes(file.type)) {
+                              setResumeError('Please upload a PDF, DOC, DOCX, or TXT file');
+                              setResume(null);
+                              e.target.value = '';
+                              return;
+                            }
+                            setResumeError('');
+                            setResume(file);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+                    {resume && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-600">{resume.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => setResume(null)}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Icon name="X" size={18} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  {resumeError && (
+                    <p className="text-sm text-red-600">{resumeError}</p>
+                  )}
+                  <p className="text-sm text-gray-500">
+                    Accepted formats: PDF, DOC, DOCX, TXT (Max 5MB)
+                  </p>
+                </div>
               </div>
 
               {/* Honeypot field */}

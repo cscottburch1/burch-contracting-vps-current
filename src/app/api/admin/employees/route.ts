@@ -5,8 +5,13 @@ import { query } from '@/lib/mysql';
 export async function GET(request: Request) {
   try {
     const results = await query(
-      `SELECT * FROM direct_hire_applications 
-       ORDER BY created_at DESC`
+      `SELECT 
+        da.*,
+        ed.document_url as resume_url,
+        ed.file_name as resume_file_name
+      FROM direct_hire_applications da
+      LEFT JOIN employee_documents ed ON da.id = ed.application_id AND ed.document_type = 'resume'
+      ORDER BY da.created_at DESC`
     );
 
     return NextResponse.json(results);

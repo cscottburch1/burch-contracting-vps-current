@@ -4,6 +4,9 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import { validateRecaptcha } from '@/lib/recaptcha';
 import { sendEmail } from '@/lib/mailer';
 import { detectSpam } from '@/lib/spamDetection';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 export async function POST(request: Request) {
   try {
@@ -49,6 +52,11 @@ export async function POST(request: Request) {
       years_experience,
       certifications,
       bio,
+      
+      // Resume upload
+      resume,
+      resumeFileName,
+      resumeFileSize,
     } = body;
 
     // Honeypot check - if filled, it's a bot
@@ -106,7 +114,7 @@ export async function POST(request: Request) {
 
     // Insert into database
     try {
-      const result = await query(
+      const result: any = await query(
         `INSERT INTO direct_hire_applications (
           first_name, last_name, email, phone, 
           address, city, state, zip,
@@ -131,6 +139,51 @@ export async function POST(request: Request) {
           'pending', // Initial status
         ]
       );
+
+      const applicationId = result.insertId;
+
+      // Handle resume file upload if present
+      let resumeUrl = null;
+      if (resume && resumeFileName) {
+        try {
+          // Create uploads directory if it doesn't exist
+          const uploadsDir = join(process.cwd(), 'public', 'uploads', 'resumes');
+          if (!existsSync(uploadsDir)) {
+            await mkdir(uploadsDir, { recursive: true });
+          }
+
+          // Generate unique filename
+          const timestamp = Date.now();
+          const sanitizedFileName = resumeFileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+          const uniqueFileName = `${timestamp}_${sanitizedFileName}`;
+          const filePath = join(uploadsDir, uniqueFileName);
+
+          // Decode base64 and save file
+          const buffer = Buffer.from(resume, 'base64');
+          await writeFile(filePath, buffer);
+
+          // Store relative URL for database
+          resumeUrl = `/uploads/resumes/${uniqueFileName}`;
+
+          // Record in employee_documents table
+          await query(
+            `INSERT INTO employee_documents (
+              application_id, document_type, document_url, 
+              file_name, file_size, created_at
+            ) VALUES (?, ?, ?, ?, ?, NOW())`,
+            [
+              applicationId,
+              'resume',
+              resumeUrl,
+              resumeFileName,
+              resumeFileSize || buffer.length,
+            ]
+          );
+        } catch (fileError) {
+          console.error('Failed to save resume file:', fileError);
+          // Don't fail the entire application if file upload fails
+        }
+      }
 
       // Send confirmation email to applicant
       try {
@@ -182,6 +235,7 @@ export async function POST(request: Request) {
                     <li>Experience: ${experience_level}</li>
                     ${years_experience ? `<li>Years of Experience: ${years_experience}</li>` : ''}
                     ${address ? `<li>Address: ${address}, ${city}, ${state} ${zip}</li>` : ''}
+                    ${resumeUrl ? `<li>Resume: <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://burchcontracting.com'}${resumeUrl}">Download Resume</a></li>` : ''}
                   </ul>
                   <p><strong>About:</strong></p>
                   <p>${bio || 'No additional information provided'}</p>
