@@ -10,7 +10,7 @@ interface CityServicePageProps {
   params: Promise<{ city: string; service: string }>;
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return [...localDominancePages, ...renovationCityPages].map((page) => ({
