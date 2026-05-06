@@ -27,21 +27,16 @@ jobs:
           script: |
             set -e
 
-            # Load NVM (install if missing)
+            # Force NVM Node 20 ahead of system node in PATH
             export NVM_DIR="$HOME/.nvm"
-            if [ ! -s "$NVM_DIR/nvm.sh" ]; then
-              echo "Installing NVM..."
-              curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-            fi
-            . "$NVM_DIR/nvm.sh"
-            nvm install 20 --no-progress
-            nvm use 20
-            nvm alias default 20
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm use 20 || nvm install 20 --no-progress
+            export PATH="$NVM_DIR/versions/node/$(nvm version 20)/bin:$PATH"
             echo "Node: $(node -v), npm: $(npm -v)"
 
             cd /var/www/burch-contracting
 
-            # Handle local drift before pulling
+            # Sync to latest main (handle any local drift)
             git fetch origin main
             git stash --include-untracked || true
             git checkout main
@@ -56,11 +51,11 @@ jobs:
             npm run build
             echo "Build complete"
 
-            # Restart PM2 (update-env if running, start fresh if not)
+            # Restart PM2 preserving env vars
             if pm2 describe burch-contracting > /dev/null 2>&1; then
               pm2 restart burch-contracting --update-env
             else
               pm2 start npm --name burch-contracting -- start
             fi
             pm2 save
-            echo "? Deploy finished at $(date)"
+            echo "Deploy finished at $(date)"
