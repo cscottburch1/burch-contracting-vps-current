@@ -85,15 +85,11 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/deck-builder" className="hover:text-white">Custom Decks</Link></li>
-              <li><Link href="/screened-porches" className="hover:text-white">Screened Porches</Link></li>
-              <li><Link href="/garage-builder" className="hover:text-white">Garages & Garage Apartments</Link></li>
-              <li><Link href="/room-additions" className="hover:text-white">Home Additions</Link></li>
-              <li><Link href="/kitchen-remodeling" className="hover:text-white">Kitchen Remodeling</Link></li>
-              <li><Link href="/bathroom-remodeling" className="hover:text-white">Bathroom Remodeling</Link></li>
-              <li><Link href="/basement-finishing" className="hover:text-white">Basement Finishing</Link></li>
-              <li><Link href="/adu-builder" className="hover:text-white">ADUs & Backyard Cottages</Link></li>
-              <li><Link href="/commercial-renovations" className="hover:text-white">Commercial Renovations</Link></li>
+              <li><Link href="/additions" className="hover:text-white">Additions</Link></li>
+              <li><Link href="/garages" className="hover:text-white">Garages</Link></li>
+              <li><Link href="/outdoor-living" className="hover:text-white">Outdoor Living</Link></li>
+              <li><Link href="/remodeling" className="hover:text-white">Remodeling</Link></li>
+              <li><Link href="/commercial-upfits" className="hover:text-white">Commercial Upfits</Link></li>
             </ul>
           </div>
 
@@ -103,9 +99,8 @@ export const Footer: React.FC = () => {
               <li><Link href="/about" className="hover:text-white">About Us</Link></li>
               <li><Link href="/projects" className="hover:text-white">Our Projects</Link></li>
               <li><Link href="/contact" className="hover:text-white">Get Free Estimate</Link></li>
-              <li><Link href="/locations" className="hover:text-white">Service Areas</Link></li>
-              <li><Link href="/cost" className="hover:text-white">Cost Calculators</Link></li>
-              <li><Link href="/blog" className="hover:text-white">Blog & Resources</Link></li>
+              <li><Link href="/service-areas" className="hover:text-white">Service Areas</Link></li>
+              <li><Link href="/pricing" className="hover:text-white">Pricing Guide</Link></li>
             </ul>
           </div>
         </div>

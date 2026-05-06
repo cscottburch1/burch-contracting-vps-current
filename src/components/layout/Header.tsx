@@ -9,62 +9,37 @@ import { Logo } from '../ui/Logo';
 import { businessConfig } from '@/config/business';
 import { analytics } from '@/lib/analytics';
 
-type DropdownKey = 'services' | 'areas' | 'pricing' | 'calculators' | null;
+type DropdownKey = 'services' | 'areas' | null;
 
 interface NavItem {
   label: string;
-  href?: string; // Optional for group headers
-  subItems?: NavItem[]; // For nested dropdown items
+  href?: string;
+  subItems?: NavItem[];
 }
 
-// FIXED: Split "Kitchen & Bath Remodeling" into two separate accessible items
-// FIXED: Corrected "Basement Finishing" link from /home-renovations to /basement-finishing
+// Five core services aligned with lead generation focus
 const serviceLinks: NavItem[] = [
-  { label: 'Custom Decks', href: '/deck-builder' },
-  { label: 'Screened Porches', href: '/screened-porches' },
-  { label: 'Garages & Garage Apartments', href: '/garage-builder' },
-  { label: 'Home Additions', href: '/room-additions' },
-  // Kitchen & Bath now split into two clear items for better UX
+  { label: 'Additions', href: '/additions' },
+  { label: 'Garages', href: '/garages' },
   {
-    label: 'Kitchen & Bath Remodeling',
+    label: 'Outdoor Living',
+    href: '/outdoor-living',
     subItems: [
-      { label: 'Kitchen Remodeling', href: '/kitchen-remodeling' },
-      { label: 'Bathroom Remodeling', href: '/bathroom-remodeling' },
+      { label: 'Decks', href: '/outdoor-living/decks' },
+      { label: 'Screened Porches', href: '/outdoor-living/screened-porches' },
+      { label: 'Covered Patios', href: '/outdoor-living/covered-patios' },
     ],
   },
-  { label: 'Basement Finishing', href: '/basement-finishing' },
-  { label: 'ADUs & Backyard Cottages', href: '/adu-builder' },
-  { label: 'Commercial Renovations', href: '/commercial-renovations' },
+  { label: 'Remodeling', href: '/remodeling' },
+  { label: 'Commercial Upfits', href: '/commercial-upfits' },
 ];
 
-const calculatorLinks: NavItem[] = [
-  { label: 'Deck Cost Calculator', href: '/calculator/decks' },
-  { label: 'Screened Porch Calculator', href: '/calculator/screened-porches' },
-  { label: 'Garage Cost Calculator', href: '/calculator/garages' },
-  { label: 'Home Addition Calculator', href: '/calculator/room-additions' },
-  { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
-  { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
-  { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
-  { label: 'ADU Cost Calculator', href: '/calculator/adus' },
-];
-
+// Four target service areas for focused local SEO
 const areaLinks: NavItem[] = [
-  { label: 'Simpsonville, SC', href: '/service-areas/simpsonville' },
-  { label: 'Fountain Inn, SC', href: '/service-areas/fountain-inn' },
-  { label: 'Greenville, SC', href: '/service-areas/greenville' },
-  { label: 'Greer, SC', href: '/service-areas/greer' },
-  { label: 'Mauldin, SC', href: '/service-areas/mauldin' },
-  { label: 'Five Forks, SC', href: '/service-areas/five-forks' },
-  { label: 'Gray Court, SC', href: '/service-areas/gray-court' },
-  { label: 'Woodruff, SC', href: '/service-areas/woodruff' },
-  { label: 'Laurens, SC', href: '/service-areas/laurens' },
-];
-
-const pricingLinks: NavItem[] = [
-  { label: 'Deck Building Cost', href: '/cost/cost-to-build-a-deck-simpsonville-sc' },
-  { label: 'Screened Porch Cost', href: '/cost/screened-porch-vs-sunroom-sc' },
-  { label: 'Garage Construction Cost', href: '/cost/garage-construction-cost-laurens-sc' },
-  { label: 'Home Addition Cost', href: '/cost/home-addition-cost-greenville-sc' },
+  { label: 'Simpsonville, SC', href: '/service-areas/simpsonville-sc' },
+  { label: 'Mauldin, SC', href: '/service-areas/mauldin-sc' },
+  { label: 'Fountain Inn, SC', href: '/service-areas/fountain-inn-sc' },
+  { label: 'Woodruff, SC', href: '/service-areas/woodruff-sc' },
 ];
 
 export const Header: React.FC = () => {
@@ -73,8 +48,6 @@ export const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
-  const [mobilePricingOpen, setMobilePricingOpen] = useState(false);
-  const [mobileCalculatorsOpen, setMobileCalculatorsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -90,8 +63,6 @@ export const Header: React.FC = () => {
     setActiveDropdown(null);
     setMobileServicesOpen(false);
     setMobileAreasOpen(false);
-    setMobilePricingOpen(false);
-    setMobileCalculatorsOpen(false);
   }, [pathname]);
 
   const currentPath = pathname ?? '';
@@ -170,7 +141,7 @@ export const Header: React.FC = () => {
             </div>
 
             <span className="hidden lg:inline text-gray-200">
-              Serving Simpsonville, Fountain Inn &amp; Upstate South Carolina
+              Serving Simpsonville, Mauldin, Fountain Inn &amp; Woodruff
             </span>
 
             <div className="flex items-center gap-4">
@@ -190,6 +161,11 @@ export const Header: React.FC = () => {
           <Logo variant="header" />
 
           <div className="hidden lg:flex items-center gap-7">
+            <Link href="/" className={navLinkClass(currentPath === '/')}>
+              Home
+            </Link>
+
+            {/* Services Dropdown */}
             <div
               className={dropdownWrapperClass}
               onMouseEnter={() => openDropdown('services')}
@@ -235,18 +211,21 @@ export const Header: React.FC = () => {
                 onMouseLeave={scheduleDropdownClose}
               >
                 {serviceLinks.map((item) => {
-                  // Render group with sub-items
                   if (item.subItems) {
                     return (
                       <div key={item.label} className="py-1">
-                        <div className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <Link
+                          href={item.href!}
+                          className={`${dropdownLinkClass} font-bold text-blue-700 border-b border-gray-100`}
+                          role="menuitem"
+                        >
                           {item.label}
-                        </div>
+                        </Link>
                         {item.subItems.map((subItem) => (
                           <Link
                             key={`${subItem.label}-${subItem.href}`}
                             href={subItem.href!}
-                            className={`${dropdownLinkClass} pl-6`}
+                            className={`${dropdownLinkClass} pl-6 text-sm`}
                             role="menuitem"
                           >
                             {subItem.label}
@@ -255,7 +234,6 @@ export const Header: React.FC = () => {
                       </div>
                     );
                   }
-                  // Render regular link
                   return (
                     <Link key={`${item.label}-${item.href}`} href={item.href!} className={dropdownLinkClass} role="menuitem">
                       {item.label}
@@ -265,6 +243,7 @@ export const Header: React.FC = () => {
               </div>
             </div>
 
+            {/* Service Areas Dropdown */}
             <div
               className={dropdownWrapperClass}
               onMouseEnter={() => openDropdown('areas')}
@@ -273,19 +252,19 @@ export const Header: React.FC = () => {
             >
               <div className="inline-flex items-center gap-1">
                 <Link
-                  href="/locations"
-                  className={navLinkClass(isActive('/service-areas') || isActive('/locations'))}
+                  href="/service-areas"
+                  className={navLinkClass(isActive('/service-areas'))}
                   onFocus={() => openDropdown('areas')}
                 >
-                  Areas Served
+                  Service Areas
                 </Link>
                 <button
                   type="button"
-                  className={isActive('/service-areas') || isActive('/locations') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
+                  className={isActive('/service-areas') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
                   aria-haspopup="true"
                   aria-expanded={activeDropdown === 'areas'}
                   aria-controls="desktop-areas-menu"
-                  aria-label="Toggle Areas Served submenu"
+                  aria-label="Toggle Service Areas submenu"
                   onClick={() => {
                     clearCloseTimeout();
                     setActiveDropdown((prev) => (prev === 'areas' ? null : 'areas'));
@@ -305,7 +284,7 @@ export const Header: React.FC = () => {
                 id="desktop-areas-menu"
                 className={`${dropdownPanelClass} ${activeDropdown === 'areas' ? 'block' : 'hidden'}`}
                 role="menu"
-                aria-label="Areas Served"
+                aria-label="Service Areas"
                 onMouseEnter={clearCloseTimeout}
                 onMouseLeave={scheduleDropdownClose}
               >
@@ -321,109 +300,9 @@ export const Header: React.FC = () => {
               Projects
             </Link>
 
-            <div
-              className={dropdownWrapperClass}
-              onMouseEnter={() => openDropdown('pricing')}
-              onMouseLeave={scheduleDropdownClose}
-              onBlur={closeDropdownOnBlur}
-            >
-              <div className="inline-flex items-center gap-1">
-                <Link
-                  href="/cost"
-                  className={navLinkClass(isActive('/cost'))}
-                  onFocus={() => openDropdown('pricing')}
-                >
-                  Pricing Guide
-                </Link>
-                <button
-                  type="button"
-                  className="text-gray-800 hover:text-blue-600"
-                  aria-haspopup="true"
-                  aria-expanded={activeDropdown === 'pricing'}
-                  aria-controls="desktop-pricing-menu"
-                  aria-label="Toggle Pricing Guide submenu"
-                  onClick={() => {
-                    clearCloseTimeout();
-                    setActiveDropdown((prev) => (prev === 'pricing' ? null : 'pricing'));
-                  }}
-                  onFocus={() => openDropdown('pricing')}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Escape') {
-                      closeDropdownImmediately();
-                      (event.currentTarget as HTMLButtonElement).blur();
-                    }
-                  }}
-                >
-                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'pricing' ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
-              </div>
-              <div
-                id="desktop-pricing-menu"
-                className={`${dropdownPanelClass} ${activeDropdown === 'pricing' ? 'block' : 'hidden'}`}
-                role="menu"
-                aria-label="Pricing Guide"
-                onMouseEnter={clearCloseTimeout}
-                onMouseLeave={scheduleDropdownClose}
-              >
-                {pricingLinks.map((item) => (
-                  <Link key={item.href} href={item.href!} className={dropdownLinkClass} role="menuitem">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div
-              className={dropdownWrapperClass}
-              onMouseEnter={() => openDropdown('calculators')}
-              onMouseLeave={scheduleDropdownClose}
-              onBlur={closeDropdownOnBlur}
-            >
-              <div className="inline-flex items-center gap-1">
-                <Link
-                  href="/calculators"
-                  className={navLinkClass(isActive('/calculators') || isActive('/calculator'))}
-                  onFocus={() => openDropdown('calculators')}
-                >
-                  Calculators
-                </Link>
-                <button
-                  type="button"
-                  className={isActive('/calculators') || isActive('/calculator') ? 'text-blue-700' : 'text-gray-800 hover:text-blue-600'}
-                  aria-haspopup="true"
-                  aria-expanded={activeDropdown === 'calculators'}
-                  aria-controls="desktop-calculators-menu"
-                  aria-label="Toggle Calculators submenu"
-                  onClick={() => {
-                    clearCloseTimeout();
-                    setActiveDropdown((prev) => (prev === 'calculators' ? null : 'calculators'));
-                  }}
-                  onFocus={() => openDropdown('calculators')}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Escape') {
-                      closeDropdownImmediately();
-                      (event.currentTarget as HTMLButtonElement).blur();
-                    }
-                  }}
-                >
-                  <Icon name="ChevronDown" size={16} className={activeDropdown === 'calculators' ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                </button>
-              </div>
-              <div
-                id="desktop-calculators-menu"
-                className={`${dropdownPanelClass} ${activeDropdown === 'calculators' ? 'block' : 'hidden'}`}
-                role="menu"
-                aria-label="Calculators"
-                onMouseEnter={clearCloseTimeout}
-                onMouseLeave={scheduleDropdownClose}
-              >
-                {calculatorLinks.map((item) => (
-                  <Link key={item.href} href={item.href!} className={dropdownLinkClass} role="menuitem">
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <Link href="/pricing" className={navLinkClass(isActive('/pricing'))}>
+              Pricing
+            </Link>
 
             <Link href="/about" className={navLinkClass(isActive('/about'))}>
               About
@@ -441,7 +320,7 @@ export const Header: React.FC = () => {
               href="/contact"
               className="bg-orange-600 hover:bg-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
             >
-              Free Estimate
+              Request Estimate
             </Button>
           </div>
 
@@ -468,6 +347,11 @@ export const Header: React.FC = () => {
                 {businessConfig.contact.phone}
               </a>
 
+              <Link href="/" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                Home
+              </Link>
+
+              {/* Mobile Services */}
               <div>
                 <div className="flex w-full items-center justify-between py-2">
                   <Link href="/services" className="text-left text-lg font-semibold text-black hover:text-blue-700">
@@ -487,13 +371,15 @@ export const Header: React.FC = () => {
                 {mobileServicesOpen && (
                   <div id="mobile-services-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
                     {serviceLinks.map((item) => {
-                      // Render group with sub-items
                       if (item.subItems) {
                         return (
                           <div key={item.label} className="py-1">
-                            <div className="py-1.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                            <Link
+                              href={item.href!}
+                              className="block py-1.5 font-semibold text-blue-700 hover:text-blue-800"
+                            >
                               {item.label}
-                            </div>
+                            </Link>
                             {item.subItems.map((subItem) => (
                               <Link
                                 key={`${subItem.label}-${subItem.href}-mobile`}
@@ -506,7 +392,6 @@ export const Header: React.FC = () => {
                           </div>
                         );
                       }
-                      // Render regular link
                       return (
                         <Link key={`${item.label}-${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
                           {item.label}
@@ -517,10 +402,11 @@ export const Header: React.FC = () => {
                 )}
               </div>
 
+              {/* Mobile Service Areas */}
               <div>
                 <div className="flex w-full items-center justify-between py-2">
-                  <Link href="/locations" className="text-left text-lg font-semibold text-black hover:text-blue-700">
-                    Areas Served
+                  <Link href="/service-areas" className="text-left text-lg font-semibold text-black hover:text-blue-700">
+                    Service Areas
                   </Link>
                   <button
                     type="button"
@@ -528,7 +414,7 @@ export const Header: React.FC = () => {
                     onClick={() => setMobileAreasOpen((prev) => !prev)}
                     aria-expanded={mobileAreasOpen}
                     aria-controls="mobile-areas-menu"
-                    aria-label="Toggle Areas Served submenu"
+                    aria-label="Toggle Service Areas submenu"
                   >
                     <Icon name="ChevronDown" size={18} className={mobileAreasOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
                   </button>
@@ -548,59 +434,9 @@ export const Header: React.FC = () => {
                 Projects
               </Link>
 
-              <div>
-                <div className="flex w-full items-center justify-between py-2">
-                  <Link href="/cost" className="text-left text-lg font-semibold text-black hover:text-blue-700">
-                    Pricing Guide
-                  </Link>
-                  <button
-                    type="button"
-                    className="p-1 text-black"
-                    onClick={() => setMobilePricingOpen((prev) => !prev)}
-                    aria-expanded={mobilePricingOpen}
-                    aria-controls="mobile-pricing-menu"
-                    aria-label="Toggle Pricing Guide submenu"
-                  >
-                    <Icon name="ChevronDown" size={18} className={mobilePricingOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                  </button>
-                </div>
-                {mobilePricingOpen && (
-                  <div id="mobile-pricing-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
-                    {pricingLinks.map((item) => (
-                      <Link key={`${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <div className="flex w-full items-center justify-between py-2">
-                  <Link href="/calculators" className="text-left text-lg font-semibold text-black hover:text-blue-700">
-                    Calculators
-                  </Link>
-                  <button
-                    type="button"
-                    className="p-1 text-black"
-                    onClick={() => setMobileCalculatorsOpen((prev) => !prev)}
-                    aria-expanded={mobileCalculatorsOpen}
-                    aria-controls="mobile-calculators-menu"
-                    aria-label="Toggle Calculators submenu"
-                  >
-                    <Icon name="ChevronDown" size={18} className={mobileCalculatorsOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
-                  </button>
-                </div>
-                {mobileCalculatorsOpen && (
-                  <div id="mobile-calculators-menu" className="mt-1 space-y-1 border-l border-gray-200 pl-4">
-                    {calculatorLinks.map((item) => (
-                      <Link key={`${item.href}-mobile`} href={item.href!} className="block py-1.5 text-gray-700 hover:text-blue-700">
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <Link href="/pricing" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                Pricing
+              </Link>
 
               <Link href="/about" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
                 About
@@ -617,7 +453,7 @@ export const Header: React.FC = () => {
                 fullWidth
                 className="bg-orange-600 hover:bg-orange-700"
               >
-                Free Estimate
+                Request Estimate
               </Button>
             </div>
           </div>
