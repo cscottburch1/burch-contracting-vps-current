@@ -51,11 +51,19 @@ jobs:
             npm run build
             echo "Build complete"
 
-            # Restart PM2 preserving env vars
+            # Restart PM2 — ensure it runs from the correct cwd
+            APP_CWD=/var/www/burch-contracting
             if pm2 describe burch-contracting > /dev/null 2>&1; then
-              pm2 restart burch-contracting --update-env
+              RUNNING_CWD=$(pm2 show burch-contracting 2>/dev/null | grep 'exec cwd' | awk '{print $NF}')
+              if [ "$RUNNING_CWD" = "$APP_CWD" ]; then
+                pm2 restart burch-contracting --update-env
+              else
+                echo "PM2 cwd mismatch ($RUNNING_CWD != $APP_CWD) — recreating process"
+                pm2 delete burch-contracting
+                pm2 start npm --name burch-contracting --cwd "$APP_CWD" -- start
+              fi
             else
-              pm2 start npm --name burch-contracting -- start
+              pm2 start npm --name burch-contracting --cwd "$APP_CWD" -- start
             fi
             pm2 save
             echo "Deploy finished at $(date)"
