@@ -498,19 +498,18 @@ export default function MigrationPage() {
 
         {/* Payments Migration */}
         <div className="bg-white rounded-xl shadow-lg p-10">
-          <h1 className="text-4xl font-bold mb-4">💳 Stripe Payments Migration</h1>
+          <h1 className="text-4xl font-bold mb-4">Payments Migration (Disabled)</h1>
           <p className="text-gray-600 mb-8">
-            Create database tables for Stripe payment processing. This enables invoice payments, 
-            tracks payment status, and links customers to Stripe accounts.
+            Online payments are not enabled for this project. Payment migration is intentionally disabled.
           </p>
 
           {!paymentsResult && !paymentsError && (
             <button
               onClick={runPaymentsMigration}
-              disabled={paymentsRunning}
-              className="bg-blue-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 text-xl"
+              disabled={true}
+              className="bg-gray-400 text-white px-8 py-4 rounded-lg font-bold transition disabled:opacity-80 text-xl cursor-not-allowed"
             >
-              {paymentsRunning ? 'Running Migration...' : 'Run Payments Migration'}
+              Online Payments Disabled
             </button>
           )}
 
@@ -537,10 +536,10 @@ export default function MigrationPage() {
                   Go to Invoices
                 </button>
                 <button
-                  onClick={() => router.push('/admin/settings')}
+                  onClick={() => router.push('/admin/dashboard')}
                   className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
                 >
-                  Configure Stripe Keys
+                  Back to Dashboard
                 </button>
               </div>
             </div>

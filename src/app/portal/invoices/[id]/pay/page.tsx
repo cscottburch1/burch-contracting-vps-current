@@ -2,76 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
-
-function CheckoutForm({ invoice, clientSecret }: any) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const router = useRouter();
-  const [error, setError] = useState('');
-  const [processing, setProcessing] = useState(false);
-  const [succeeded, setSucceeded] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setProcessing(true);
-    setError('');
-
-    const { error: submitError } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/portal/invoices/${invoice.id}/success`,
-      },
-    });
-
-    if (submitError) {
-      setError(submitError.message || 'Payment failed');
-      setProcessing(false);
-    } else {
-      setSucceeded(true);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement />
-
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-800 p-4 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      <button
-        type="submit"
-        disabled={!stripe || processing || succeeded}
-        className="w-full bg-blue-600 text-white py-4 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed text-xl"
-      >
-        {processing ? 'Processing...' : `Pay $${invoice.total_amount.toFixed(2)}`}
-      </button>
-    </form>
-  );
-}
 
 export default function PayInvoicePage() {
   const params = useParams();
   const invoiceId = Array.isArray(params?.id) ? params.id[0] : (params?.id || '');
   const router = useRouter();
   const [invoice, setInvoice] = useState<any>(null);
-  const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchInvoiceAndCreateIntent = async () => {
+    const fetchInvoice = async () => {
       if (!invoiceId) {
         setError('Invalid invoice ID');
         setLoading(false);
@@ -86,33 +27,14 @@ export default function PayInvoicePage() {
         }
         const invoiceData = await invoiceRes.json();
         setInvoice(invoiceData.invoice);
-
-        // Create payment intent
-        const intentRes = await fetch('/api/payments/create-intent', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            invoiceId: invoiceData.invoice.id,
-            customerId: invoiceData.invoice.customer_id,
-            amount: invoiceData.invoice.total_amount,
-            customerEmail: invoiceData.invoice.customer_email,
-          }),
-        });
-
-        if (!intentRes.ok) {
-          throw new Error('Failed to create payment intent');
-        }
-
-        const intentData = await intentRes.json();
-        setClientSecret(intentData.clientSecret);
       } catch (err: any) {
-        setError(err.message || 'Failed to load payment page');
+        setError(err.message || 'Failed to load invoice');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchInvoiceAndCreateIntent();
+    fetchInvoice();
   }, [invoiceId]);
 
   if (loading) {
@@ -178,21 +100,18 @@ export default function PayInvoicePage() {
           </div>
 
           <div className="border-t pt-6">
-            <h2 className="text-xl font-bold mb-4">Payment Information</h2>
-            <p className="text-gray-600 text-sm mb-6">
-              Pay securely with credit card or ACH bank transfer. ACH transfers are subject to a lower fee (0.8% vs 2.9% + $0.30).
-            </p>
-
-            {clientSecret && stripePromise && (
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm invoice={invoice} clientSecret={clientSecret} />
-              </Elements>
-            )}
+            <h2 className="text-xl font-bold mb-4">Online Payments Disabled</h2>
+            <div className="rounded-lg border border-amber-300 bg-amber-50 p-4">
+              <p className="text-amber-900 font-semibold">Online payments are not enabled.</p>
+              <p className="text-amber-800 text-sm mt-2">
+                Please contact Burch Contracting directly to arrange payment for this invoice.
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="text-center text-sm text-gray-500">
-          <p>🔒 Payments are processed securely through Stripe</p>
+          <p>Need help with invoice payment options? Please contact our office.</p>
           <button
             onClick={() => router.push('/portal/invoices')}
             className="text-blue-600 hover:underline mt-4"
