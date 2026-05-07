@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     description: 'Professional garage construction in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
     url: absoluteUrl('/garages'),
     type: 'website',
+    images: [{ url: absoluteUrl('/og-image.webp'), width: 1200, height: 630, alt: 'Garage Builder & Construction in Upstate SC | Burch Contracting' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Garage Builder in Upstate SC | Burch Contracting',
+    description: 'Attached & detached garage construction in Simpsonville, Mauldin, Fountain Inn and Woodruff SC.',
+    images: [absoluteUrl('/og-image.webp')],
   },
 };
 

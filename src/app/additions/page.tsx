@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     description: 'Professional home additions & room expansions in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
     url: absoluteUrl('/additions'),
     type: 'website',
+    images: [{ url: absoluteUrl('/og-image.webp'), width: 1200, height: 630, alt: 'Home Additions Contractor in Upstate SC | Burch Contracting' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Home Additions Contractor | Upstate SC | Burch Contracting',
+    description: 'Home additions & room expansions in Simpsonville, Mauldin, Fountain Inn and Woodruff SC.',
+    images: [absoluteUrl('/og-image.webp')],
   },
 };
 

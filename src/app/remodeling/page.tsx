@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     description: 'Professional home remodeling in Upstate SC. Kitchen & bathroom renovations. Free estimates.',
     url: absoluteUrl('/remodeling'),
     type: 'website',
+    images: [{ url: absoluteUrl('/og-image.webp'), width: 1200, height: 630, alt: 'Home Remodeling Contractor in Upstate SC | Burch Contracting' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Home Remodeling Contractor | Upstate SC | Burch Contracting',
+    description: 'Kitchen, bathroom and whole-home remodeling in Simpsonville, Mauldin, Fountain Inn and Woodruff SC.',
+    images: [absoluteUrl('/og-image.webp')],
   },
 };
 

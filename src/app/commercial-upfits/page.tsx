@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     description: 'Professional commercial build-outs in Upstate SC. Retail, office, restaurant upfits.',
     url: absoluteUrl('/commercial-upfits'),
     type: 'website',
+    images: [{ url: absoluteUrl('/og-image.webp'), width: 1200, height: 630, alt: 'Commercial Tenant Upfits in Upstate SC | Burch Contracting' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Commercial Tenant Upfits | Upstate SC | Burch Contracting',
+    description: 'Retail, office and light commercial tenant upfits in Simpsonville, Mauldin, Fountain Inn and Woodruff SC.',
+    images: [absoluteUrl('/og-image.webp')],
   },
 };
 

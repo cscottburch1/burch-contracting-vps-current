@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     description: 'Custom outdoor spaces in Upstate SC. Decks, screened porches, covered patios. Free estimates.',
     url: absoluteUrl('/outdoor-living'),
     type: 'website',
+    images: [{ url: absoluteUrl('/og-image.webp'), width: 1200, height: 630, alt: 'Outdoor Living, Decks & Screened Porches in Upstate SC | Burch Contracting' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Decks, Screened Porches & Outdoor Living | Burch Contracting',
+    description: 'Custom decks, screened porches and covered patios in Simpsonville, Mauldin, Fountain Inn and Woodruff SC.',
+    images: [absoluteUrl('/og-image.webp')],
   },
 };
 

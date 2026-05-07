@@ -32,8 +32,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Burch Contracting | Upstate SC Garage & Addition Contractor',
-  description: "Burch is an Upstate SC garage, addition, porch, deck, and ADU contractor with clear estimates and local expertise.",
+  title: 'Additions, Garages & Outdoor Living Contractor in Upstate SC | Burch Contracting',
+  description: 'Burch Contracting is an Upstate SC contractor serving Simpsonville, Mauldin, Fountain Inn and Woodruff with home additions, garages, outdoor living, remodeling and commercial upfits.',
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: absoluteUrl('/'),
     siteName: "Burch Contracting",
-    title: "Burch Contracting | Upstate SC Garage & Addition Contractor",
-    description: "Burch is an Upstate SC garage, addition, porch, deck, and ADU contractor for homeowners across the region.",
+    title: "Burch Contracting | Upstate SC Additions, Garages & Outdoor Living",
+    description: "SC licensed general contractor serving Simpsonville, Mauldin, Fountain Inn and Woodruff with additions, garages, decks, screened porches, remodeling and commercial upfits.",
     images: [
       {
         url: absoluteUrl(siteConfig.defaultOgImage),
@@ -77,8 +77,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Burch Contracting | Upstate SC Garage & Addition Contractor",
-    description: "Free estimates from an Upstate SC garage, addition, porch, deck, and ADU contractor.",
+    title: "Burch Contracting | Upstate SC Contractor",
+    description: "Additions, garages, outdoor living, remodeling and commercial upfits in Simpsonville, Mauldin, Fountain Inn and Woodruff.",
     images: [absoluteUrl(siteConfig.defaultOgImage)],
   },
   robots: {
