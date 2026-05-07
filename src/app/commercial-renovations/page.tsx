@@ -14,16 +14,13 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Commercial Tenant Improvements & Upfits Upstate SC | Greenville, Simpsonville, Greer',
   description: 'Expert commercial tenant space renovations & upfits in Upstate SC. Office build-outs, retail upfits, medical office renovations, restaurant fit-outs. 35+ years. Licensed & insured. Free estimates.',
-  alternates: { canonical: absoluteUrl('/commercial-renovations') },
+  alternates: { canonical: absoluteUrl('/commercial-upfits') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Commercial Tenant Improvements & Upfits - Upstate SC | Burch Contracting',
     description: 'Professional commercial tenant space renovations, office build-outs, retail upfits, medical office renovations, and restaurant fit-outs across Greenville, Simpsonville, Greer, Mauldin, and Fountain Inn.',
     url: absoluteUrl('/commercial-renovations'),
     type: 'website',
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
 };
 

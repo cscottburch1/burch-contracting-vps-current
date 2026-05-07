@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Outdoor Living, Decks & Screened Porches | Upstate SC | Burch Contracting',
+  title: 'Outdoor Living, Decks & Screened Porches in Upstate SC | Burch Contracting',
   description:
     'Custom decks, screened porches, and covered patios in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Composite decking, premium finishes. Free estimates.',
   alternates: {
@@ -41,7 +41,7 @@ export default function OutdoorLivingPage() {
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Outdoor Living Spaces</h1>
+          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Outdoor Living, Decks &amp; Screened Porches in Upstate SC</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
             Custom decks, screened porches & covered patios for Simpsonville, Mauldin, Fountain Inn & Woodruff
           </p>

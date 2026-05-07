@@ -7,8 +7,8 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 export const metadata: Metadata = {
   title: 'ADU Builder in Upstate SC | Accessory Dwelling Units | Burch Contracting',
   description: 'Professional ADU construction in Simpsonville, Greenville & Fountain Inn. Garage apartments, backyard cottages, in-law suites. $65K-$220K. 35+ years experience. Licensed, insured.',
-  alternates: { canonical: absoluteUrl('/adu-builder') },
-  robots: { index: true, follow: true },
+  alternates: { canonical: absoluteUrl('/additions') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'ADU Builder in Upstate SC | Burch Contracting',
     description: 'Professional accessory dwelling unit construction. Garage apartments, backyard cottages, granny flats. Turn-key ADU builds since 1995.',

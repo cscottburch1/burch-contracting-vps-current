@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Service Areas | Simpsonville, Mauldin, Fountain Inn & Woodruff SC | Burch Contracting',
+  title: 'Service Areas in Simpsonville, Mauldin, Fountain Inn & Woodruff | Burch Contracting',
   description:
     'Burch Contracting serves Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Additions, garages, decks, outdoor living & remodeling.',
   alternates: {

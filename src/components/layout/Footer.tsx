@@ -94,15 +94,23 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">Service Areas</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/about" className="hover:text-white">About Us</Link></li>
-              <li><Link href="/projects" className="hover:text-white">Our Projects</Link></li>
-              <li><Link href="/contact" className="hover:text-white">Get Free Estimate</Link></li>
-              <li><Link href="/service-areas" className="hover:text-white">Service Areas</Link></li>
-              <li><Link href="/pricing" className="hover:text-white">Pricing Guide</Link></li>
+              <li><Link href="/service-areas/simpsonville-sc" className="hover:text-white">Simpsonville, SC</Link></li>
+              <li><Link href="/service-areas/mauldin-sc" className="hover:text-white">Mauldin, SC</Link></li>
+              <li><Link href="/service-areas/fountain-inn-sc" className="hover:text-white">Fountain Inn, SC</Link></li>
+              <li><Link href="/service-areas/woodruff-sc" className="hover:text-white">Woodruff, SC</Link></li>
+              <li><Link href="/service-areas" className="hover:text-white">All Service Areas</Link></li>
             </ul>
           </div>
+        </div>
+
+        {/* Quick links row */}
+        <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-sm text-gray-400 border-b border-gray-800 pb-8">
+          <Link href="/about" className="hover:text-white">About</Link>
+          <Link href="/projects" className="hover:text-white">Projects</Link>
+          <Link href="/pricing" className="hover:text-white">Pricing</Link>
+          <Link href="/contact" className="hover:text-white">Get Free Estimate</Link>
         </div>
 
         {/* Google Maps Embed */}
@@ -123,7 +131,7 @@ export const Footer: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">
               <p className="text-gray-400 text-sm mb-2">
-                Proudly serving {businessConfig.serviceArea.locations.slice(0, 5).join(', ')}, and all of Upstate SC since 1995
+                Proudly serving Simpsonville, Mauldin, Fountain Inn, and Woodruff homeowners and small businesses across the Upstate SC region.
               </p>
               <p className="text-gray-500 text-xs">
                 © {currentYear} {businessConfig.name}. All rights reserved. SC Licensed Construction, Remodeling and Renovations Contractor.

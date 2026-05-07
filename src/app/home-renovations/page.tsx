@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: homeRenovationsHub.metaTitle,
   description: homeRenovationsHub.metaDescription,
   alternates: {
-    canonical: absoluteUrl(homeRenovationsHub.path),
+    canonical: absoluteUrl('/remodeling'),
   },
   openGraph: {
     title: homeRenovationsHub.metaTitle,
