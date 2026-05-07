@@ -121,7 +121,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden py-24 text-white md:py-40">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/projects/basement-finishing.webp')" }}
+          style={{ backgroundImage: "url('/images/projects/2-car-garage-concept-image.webp')" }}
           aria-hidden="true"
         ></div>
         <div className="absolute inset-0 bg-linear-to-r from-slate-950/85 via-slate-900/75 to-blue-950/60" aria-hidden="true"></div>
