@@ -7,8 +7,8 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 export const metadata: Metadata = {
   title: 'Custom Deck Builder in Upstate SC | Burch Contracting',
   description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 47 decks built since 1995. Composite, pressure-treated & hardwood. Licensed, insured. Free estimates.',
-  alternates: { canonical: absoluteUrl('/deck-builder') },
-  robots: { index: true, follow: true },
+  alternates: { canonical: absoluteUrl('/outdoor-living/decks') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Custom Deck Builder in Upstate SC | Burch Contracting',
     description: 'Professional custom deck construction in Simpsonville, Greenville & Fountain Inn. 47 decks built since 1995. Free estimates.',

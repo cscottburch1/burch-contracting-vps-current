@@ -21,9 +21,9 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Deck Builder, Garage Builder & Home Addition Contractor | Greenville & Laurens County SC',
+  title: 'Home Additions, Garages & Outdoor Living Contractor | Upstate SC | Burch Contracting',
   description:
-    'Expert deck builder, screened porch contractor, garage builder, and home addition specialist in Upstate SC. Serving Simpsonville, Fountain Inn, Mauldin, Laurens, Woodruff.',
+    'Expert home addition contractor, garage builder, and outdoor living specialist in Upstate SC. Serving Simpsonville, Mauldin, Fountain Inn & Woodruff. Licensed, insured. Free estimates.',
   keywords: [
     'Upstate SC contractor',
     'garage contractor Upstate SC',
@@ -131,12 +131,12 @@ export default async function HomePage() {
           <div className="max-w-5xl mx-auto text-center">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="Custom Decks, Screened Porches, Garages & Home Additions in Upstate SC"
+              aria-label="Home Additions, Garages & Outdoor Living in Upstate SC"
             >
-              Custom Decks, Screened Porches, Garages & Home Additions in <span className="gradient-text">Upstate SC</span>
+              Home Additions, Garages &amp; Outdoor Living in <span className="gradient-text">Upstate SC</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              35+ Years | 900+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Greenville & Laurens County Since 1995
+              30+ Years | 900+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn &amp; Woodruff
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -179,7 +179,7 @@ export default async function HomePage() {
       {/* SECTION 2 — CORE SERVICES (4 BLOCKS ONLY) */}
       <Section background="white" padding="lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          <Link href="/deck-builder" className="group block">
+          <Link href="/outdoor-living/decks" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-blue-100 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
@@ -199,7 +199,7 @@ export default async function HomePage() {
             </Card>
           </Link>
 
-          <Link href="/screened-porches" className="group block">
+          <Link href="/outdoor-living/screened-porches" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-green-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-green-100 rounded-2xl flex items-center justify-center group-hover:bg-green-600 transition-colors">
@@ -219,7 +219,7 @@ export default async function HomePage() {
             </Card>
           </Link>
 
-          <Link href="/garage-builder" className="group block">
+          <Link href="/garages" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-orange-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-orange-100 rounded-2xl flex items-center justify-center group-hover:bg-orange-600 transition-colors">
@@ -239,7 +239,7 @@ export default async function HomePage() {
             </Card>
           </Link>
 
-          <Link href="/room-additions" className="group block">
+          <Link href="/additions" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-purple-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-purple-100 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 transition-colors">

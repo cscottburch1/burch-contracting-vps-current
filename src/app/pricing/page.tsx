@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Pricing Guide | Additions, Garages & Remodeling Costs | Burch Contracting',
+  title: 'Construction Pricing Guide for Additions, Garages & Outdoor Living | Burch Contracting',
   description:
     'Transparent pricing for home additions, garages, outdoor living & remodeling in Upstate SC. Budget guides, cost factors & free estimates.',
   alternates: {

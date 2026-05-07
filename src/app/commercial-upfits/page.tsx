@@ -7,14 +7,14 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Commercial Tenant Upfits & Build-Outs | Upstate SC | Burch Contracting',
+  title: 'Commercial Tenant Upfits in Upstate SC | Burch Contracting',
   description:
     'Professional commercial tenant upfits & build-outs in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Retail, office, restaurant build-outs. Licensed, bonded, insured.',
   alternates: {
     canonical: absoluteUrl('/commercial-upfits'),
   },
   openGraph: {
-    title: 'Commercial Tenant Upfits & Build-Outs | Burch Contracting',
+    title: 'Commercial Tenant Upfits in Upstate SC | Burch Contracting',
     description: 'Professional commercial build-outs in Upstate SC. Retail, office, restaurant upfits.',
     url: absoluteUrl('/commercial-upfits'),
     type: 'website',
@@ -41,7 +41,7 @@ export default function CommercialUpfitsPage() {
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Commercial Tenant Upfits</h1>
+          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Commercial Tenant Upfits in Upstate SC</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
             Professional build-outs & tenant improvements for retail, office & restaurant spaces in Upstate SC
           </p>

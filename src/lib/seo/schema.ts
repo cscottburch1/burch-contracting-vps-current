@@ -29,14 +29,10 @@ type LocalBusinessSchemaOverrides = {
 
 const sharedAreaServed = [
   { "@type": "City", name: "Simpsonville SC" },
-  { "@type": "City", name: "Fountain Inn SC" },
   { "@type": "City", name: "Mauldin SC" },
-  { "@type": "City", name: "Gray Court SC" },
-  { "@type": "City", name: "Laurens SC" },
+  { "@type": "City", name: "Fountain Inn SC" },
   { "@type": "City", name: "Woodruff SC" },
-  { "@type": "City", name: "Clinton SC" },
-  { "@type": "City", name: "Ora SC" },
-  { "@type": "City", name: "Joanna SC" },
+  { "@type": "State", name: "Upstate South Carolina" },
 ];
 
 const sharedSameAs = [
@@ -89,14 +85,14 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
       availableLanguage: ["English"],
     },
     knowsAbout: [
-      "Garage construction",
-      "Room additions",
-      "Screened porches",
-      "Deck building",
-      "ADU planning",
-      "Kitchen remodeling",
-      "Bathroom remodeling",
-      "Basement finishing"
+      "Home Additions",
+      "Garage Construction",
+      "Outdoor Living",
+      "Custom Decks",
+      "Screened Porches",
+      "Covered Patios",
+      "Home Remodeling",
+      "Commercial Tenant Upfits"
     ],
   };
 

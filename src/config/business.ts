@@ -1,7 +1,7 @@
 export const businessConfig = {
   name: "Burch Contracting",
-  tagline: "Expert Deck, Garage, Porch & Home Addition Contractor",
-  description: "Professional deck building, garage construction, screened porch installation, and home additions across Upstate SC.",
+  tagline: "Additions, Garages & Outdoor Living Contractor | Upstate SC",
+  description: "Custom home additions, garage construction, outdoor living spaces, and remodeling across Simpsonville, Mauldin, Fountain Inn & Woodruff SC.",
 
   credentials: {
     bbbRating: "A+",
@@ -33,73 +33,66 @@ export const businessConfig = {
   },
 
   serviceArea: {
-    description: "Proudly serving Simpsonville and surrounding Upstate SC communities",
-    locations: ["Simpsonville", "Fountain Inn", "Mauldin", "Gray Court", "Laurens", "Woodruff", "Clinton", "Ora", "Joanna"]
+    description: "Proudly serving Simpsonville, Mauldin, Fountain Inn, Woodruff and surrounding Upstate SC communities",
+    locations: ["Simpsonville", "Mauldin", "Fountain Inn", "Woodruff", "Gray Court"]
   },
 
   services: [
     {
-      id: "deck-builder",
-      title: "Custom Decks",
-      icon: "Home",
-      description: "Custom deck construction with composite and wood materials",
-      tasks: ["Deck design", "Material selection", "Professional installation"]
-    },
-    {
-      id: "screened-porches",
-      title: "Screened Porches",
-      icon: "Grid",
-      description: "Custom screened porch construction for outdoor living",
-      tasks: ["Porch design", "Screen installation", "Quality construction"]
-    },
-    {
-      id: "garage-builder",
-      title: "Custom Garages",
-      icon: "Warehouse",
-      description: "Detached garages and garage apartment construction",
-      tasks: ["Garage construction", "Apartment additions", "Custom designs"]
-    },
-    {
-      id: "room-additions",
+      id: "additions",
       title: "Home Additions",
-      icon: "PlusSquare",
-      description: "Room additions to expand your living space",
+      icon: "Construction",
+      description: "Room additions and home expansions that add valuable square footage",
       tasks: ["Addition planning", "Design services", "Expert construction"]
     },
     {
-      id: "kitchen-remodeling",
-      title: "Kitchen Remodeling",
-      icon: "Utensils",
-      description: "Complete kitchen renovation and remodeling services",
-      tasks: ["Kitchen design", "Cabinet installation", "Full remodels"]
+      id: "garages",
+      title: "Custom Garages",
+      icon: "Warehouse",
+      description: "Attached and detached garage construction for vehicle protection and storage",
+      tasks: ["Garage construction", "Custom designs", "Attached & detached"]
     },
     {
-      id: "bathroom-remodeling",
-      title: "Bathroom Remodeling",
-      icon: "Droplet",
-      description: "Bathroom renovation and upgrade services",
-      tasks: ["Bath design", "Fixture installation", "Complete remodels"]
+      id: "outdoor-living",
+      title: "Outdoor Living",
+      icon: "Trees",
+      description: "Decks, screened porches, and covered patios for year-round outdoor enjoyment",
+      tasks: ["Custom decks", "Screened porches", "Covered patios"]
     },
     {
-      id: "basement-finishing",
-      title: "Basement Finishing",
-      icon: "Layers",
-      description: "Transform your basement into usable living space",
-      tasks: ["Basement design", "Framing & drywall", "Complete finishing"]
+      id: "outdoor-living/decks",
+      title: "Decks",
+      icon: "Trees",
+      description: "Composite, pressure-treated, and hardwood deck construction",
+      tasks: ["Composite decks", "Pressure-treated", "Multi-level designs"]
     },
     {
-      id: "adu-builder",
-      title: "ADUs & Backyard Cottages",
-      icon: "Building",
-      description: "Accessory dwelling units and backyard cottage construction",
-      tasks: ["ADU planning", "Design services", "Complete construction"]
+      id: "outdoor-living/screened-porches",
+      title: "Screened Porches",
+      icon: "Grid",
+      description: "Aluminum and wood framed screened porch construction",
+      tasks: ["Aluminum framing", "Wood framing", "Deck conversions"]
     },
     {
-      id: "commercial-renovations",
-      title: "Commercial Renovations",
+      id: "outdoor-living/covered-patios",
+      title: "Covered Patios",
+      icon: "Home",
+      description: "Covered patio structures for year-round outdoor living",
+      tasks: ["Solid roof covers", "Pergolas", "Attached covers"]
+    },
+    {
+      id: "remodeling",
+      title: "Remodeling",
+      icon: "Hammer",
+      description: "Kitchen, bath, and whole-home remodeling services",
+      tasks: ["Kitchen remodeling", "Bathroom remodeling", "Whole-home renovations"]
+    },
+    {
+      id: "commercial-upfits",
+      title: "Commercial Upfits",
       icon: "Briefcase",
-      description: "Commercial tenant improvements including office build-outs, retail upfits, and medical office renovations",
-      tasks: ["Office build-outs", "Retail upfits", "Medical office renovations"]
+      description: "Commercial tenant improvements, office build-outs, and retail upfits",
+      tasks: ["Office build-outs", "Retail upfits", "Medical offices"]
     }
   ],
 

@@ -7,7 +7,7 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Contractor in Woodruff SC | Home Additions, Garages & Decks | Burch Contracting',
+  title: 'Contractor in Woodruff SC for Additions, Garages & Outdoor Living | Burch Contracting',
   description:
     'Burch Contracting serves Woodruff SC with professional additions, garages, outdoor living & remodeling. Licensed contractor. Free estimates.',
   alternates: {
@@ -41,7 +41,7 @@ export default function WoodruffPage() {
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Contractor in Woodruff, SC</h1>
+          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Contractor in Woodruff SC</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
             Professional home additions, garages, outdoor living & remodeling for Woodruff families
           </p>

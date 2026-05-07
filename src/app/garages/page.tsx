@@ -7,14 +7,14 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Garage Builder in Upstate SC | Detached & Attached Garages | Burch Contracting',
+  title: 'Garage Builder & Garage Construction in Upstate SC | Burch Contracting',
   description:
     'Professional garage construction & garage apartments in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Detached & attached garages, workshop spaces. Free estimates.',
   alternates: {
     canonical: absoluteUrl('/garages'),
   },
   openGraph: {
-    title: 'Garage Builder in Upstate SC | Burch Contracting',
+    title: 'Garage Builder & Garage Construction in Upstate SC | Burch Contracting',
     description: 'Professional garage construction in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
     url: absoluteUrl('/garages'),
     type: 'website',
@@ -41,7 +41,7 @@ export default function GaragesPage() {
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Garage Builder for Upstate SC</h1>
+          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">Garage Builder &amp; Garage Construction in Upstate SC</h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-blue-100 md:text-xl">
             Custom detached & attached garages, workshop spaces & garage apartments for Simpsonville, Mauldin, Fountain Inn & Woodruff
           </p>

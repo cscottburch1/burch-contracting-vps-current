@@ -12,16 +12,13 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Basement Finishing Contractor | Upstate SC | Burch Contracting',
   description: 'Professional basement finishing in Greenville, Simpsonville, Fountain Inn. Egress windows, moisture control, electrical, plumbing. 35+ years experience. Free estimates.',
-  alternates: { canonical: absoluteUrl('/basement-finishing') },
+  alternates: { canonical: absoluteUrl('/remodeling') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Basement Finishing Contractor - Upstate SC | Burch Contracting',
     description: 'Transform your unfinished basement into valuable living space. Expert basement finishing with proper moisture control, egress windows, and code-compliant construction.',
     url: absoluteUrl('/basement-finishing'),
     type: 'website',
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
 };
 

@@ -7,8 +7,8 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 export const metadata: Metadata = {
   title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
   description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 27 garages built since 1995. 2-car, 3-car, detached garages & apartments. Licensed, insured. Free estimates.',
-  alternates: { canonical: absoluteUrl('/garage-builder') },
-  robots: { index: true, follow: true },
+  alternates: { canonical: absoluteUrl('/garages') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
     description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 109 garages built since 1995. Free estimates.',
