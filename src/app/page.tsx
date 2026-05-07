@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    title: 'Burch | Upstate SC Garage, Room Addition & Porch Contractor',
+    title: 'Burch Contracting | Upstate SC Additions, Garages & Outdoor Living Contractor',
     description:
-      'Burch is an Upstate SC garage, room addition, screened porch, and deck contractor offering free estimates.',
+      'Upstate SC Additions, Garages & Outdoor Living Contractor.',
     url: absoluteUrl('/'),
     siteName: 'Burch Contracting',
     images: [
@@ -80,7 +80,7 @@ export default async function HomePage() {
 
   const localBusinessSchema = buildLocalBusinessSchema({
     description:
-      'Trusted Upstate South Carolina contractor for garages, room additions, screened porches, and decks with clear estimates.',
+      'Trusted Upstate SC Additions, Garages & Outdoor Living Contractor.',
   });
 
   const homeSchemaGraph = {
