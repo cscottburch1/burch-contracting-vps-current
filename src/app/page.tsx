@@ -133,7 +133,7 @@ export default async function HomePage() {
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               aria-label="Upstate SC Additions, Garages & Outdoor Living Contractor"
             >
-              Upstate SC Additions, Garages & Outdoor Living Contractor</span>
+              Upstate SC Additions, Garages &amp; Outdoor Living Contractor
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
