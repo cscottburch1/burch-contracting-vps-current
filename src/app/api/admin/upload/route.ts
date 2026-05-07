@@ -1,8 +1,32 @@
 import { NextResponse } from 'next/server';
 import { verifyAdminAuth } from '@/lib/adminAuth';
 import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { join, extname } from 'path';
 import { existsSync } from 'fs';
+
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'text/plain',
+]);
+
+const ALLOWED_EXTENSIONS = new Set([
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.gif',
+  '.webp',
+  '.pdf',
+  '.doc',
+  '.docx',
+  '.txt',
+]);
 
 export async function POST(request: Request) {
   try {
@@ -22,6 +46,12 @@ export async function POST(request: Request) {
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
       return NextResponse.json({ error: 'File size exceeds 10MB limit' }, { status: 400 });
+    }
+
+    // Validate file type and extension for safer admin uploads
+    const extension = extname(file.name || '').toLowerCase();
+    if (!ALLOWED_MIME_TYPES.has((file.type || '').toLowerCase()) || !ALLOWED_EXTENSIONS.has(extension)) {
+      return NextResponse.json({ error: 'File type is not allowed' }, { status: 400 });
     }
 
     // Create uploads directory if it doesn't exist

@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "verify:production": "node ./scripts/deploy/production-smoke.mjs",
     "import-queued": "node ./scripts/import_queued_subcontractors.js",
     "seo:validate-robots": "node ./scripts/seo/validate-robots-sitemaps.mjs",
@@ -42,7 +43,7 @@
     "axe-core": "^4.11.1",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.1.1",
+    "eslint-config-next": "^15.5.0",
     "playwright": "^1.57.0",
     "tailwindcss": "^4",
     "typescript": "^5"

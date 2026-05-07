@@ -124,7 +124,7 @@ export default async function HomePage() {
           style={{ backgroundImage: "url('/images/projects/2-car-garage-concept-image.webp')" }}
           aria-hidden="true"
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/75 to-blue-950/60" aria-hidden="true"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-slate-950/85 via-slate-900/75 to-blue-950/60" aria-hidden="true"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -272,7 +272,7 @@ export default async function HomePage() {
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12">
           <div className="space-y-6">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+              <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
@@ -282,7 +282,7 @@ export default async function HomePage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+              <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
@@ -292,7 +292,7 @@ export default async function HomePage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+              <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
@@ -302,7 +302,7 @@ export default async function HomePage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+              <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
@@ -312,7 +312,7 @@ export default async function HomePage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+              <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>

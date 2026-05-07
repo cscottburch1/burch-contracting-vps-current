@@ -265,7 +265,7 @@ export default function ContactPage() {
   if (submitSuccess) {
     return (
       <>
-        <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
+        <section className="relative bg-linear-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in backdrop-blur">
@@ -302,19 +302,19 @@ export default function ContactPage() {
                 <h3 className="text-lg font-bold text-gray-900 mb-4">What Happens Next?</h3>
                 <ul className="list-none space-y-4 text-sm text-gray-700">
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
                     <span className="pt-0.5">We review your request and reach out within one business day to confirm details.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
                     <span className="pt-0.5">We schedule a convenient time to visit your property and walk through the scope.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
                     <span className="pt-0.5">You receive a written estimate with scope, allowances, timeline, and payment milestones.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
                     <span className="pt-0.5">Once approved, we schedule your project start date and assign a dedicated project lead.</span>
                   </li>
                 </ul>
@@ -347,7 +347,7 @@ export default function ContactPage() {
         />
       )}
 
-      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900 text-white py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-linear-to-br from-blue-900 via-blue-800 to-gray-900 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
@@ -762,18 +762,18 @@ export default function ContactPage() {
                           className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-lg"
                         >
                           <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <Icon name="File" size={16} className="text-blue-600 flex-shrink-0" />
+                            <Icon name="File" size={16} className="text-blue-600 shrink-0" />
                             <span className="text-sm text-gray-700 truncate">
                               {file.name}
                             </span>
-                            <span className="text-xs text-gray-500 flex-shrink-0">
+                            <span className="text-xs text-gray-500 shrink-0">
                               ({(file.size / 1024).toFixed(0)} KB)
                             </span>
                           </div>
                           <button
                             type="button"
                             onClick={() => removeFile(index)}
-                            className="text-red-500 hover:text-red-700 flex-shrink-0 ml-2"
+                            className="text-red-500 hover:text-red-700 shrink-0 ml-2"
                             aria-label="Remove file"
                           >
                             <Icon name="X" size={18} />
@@ -831,7 +831,7 @@ export default function ContactPage() {
               <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <Icon name="Phone" className="text-blue-600 flex-shrink-0 mt-1" size={20} />
+                  <Icon name="Phone" className="text-blue-600 shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-semibold text-gray-900">Phone</p>
                     <a href={`tel:${businessConfig.contact.phone}`} className="text-blue-600 hover:underline">
@@ -841,7 +841,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Icon name="Mail" className="text-blue-600 flex-shrink-0 mt-1" size={20} />
+                  <Icon name="Mail" className="text-blue-600 shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
                     <a href={`mailto:${businessConfig.contact.email}`} className="text-blue-600 hover:underline">
@@ -851,7 +851,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Icon name="MapPin" className="text-blue-600 flex-shrink-0 mt-1" size={20} />
+                  <Icon name="MapPin" className="text-blue-600 shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-semibold text-gray-900">Service Area</p>
                     <p className="text-gray-600">{businessConfig.contact.city}, {businessConfig.contact.state}</p>
@@ -859,7 +859,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Icon name="Clock" className="text-blue-600 flex-shrink-0 mt-1" size={20} />
+                  <Icon name="Clock" className="text-blue-600 shrink-0 mt-1" size={20} />
                   <div>
                     <p className="font-semibold text-gray-900">Business Hours</p>
                     <p className="text-gray-600 whitespace-pre-line text-sm">{businessConfig.contact.hours}</p>
@@ -872,19 +872,19 @@ export default function ContactPage() {
               <h3 className="text-lg font-bold text-gray-900 mb-3">What Happens Next?</h3>
               <ul className="list-none space-y-4 text-sm text-gray-700">
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
                   <span className="pt-0.5">We review your request and reach out within one business day to confirm details.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
                   <span className="pt-0.5">We schedule a convenient time to visit your property and walk through the scope.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
                   <span className="pt-0.5">You receive a written estimate with scope, allowances, timeline, and payment milestones.</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">4</span>
                   <span className="pt-0.5">Once approved, we schedule your project start date and assign a dedicated project lead.</span>
                 </li>
               </ul>
