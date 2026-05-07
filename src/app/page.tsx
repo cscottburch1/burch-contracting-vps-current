@@ -21,7 +21,7 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Home Additions, Garages & Outdoor Living Contractor | Upstate SC | Burch Contracting',
+  title: 'Additions, Garages & Outdoor Living Contractor in Upstate SC | Burch Contracting',
   description:
     'Expert home addition contractor, garage builder, and outdoor living specialist in Upstate SC. Serving Simpsonville, Mauldin, Fountain Inn & Woodruff. Licensed, insured. Free estimates.',
   keywords: [
@@ -131,12 +131,13 @@ export default async function HomePage() {
           <div className="max-w-5xl mx-auto text-center">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="Home Additions, Garages & Outdoor Living in Upstate SC"
+              aria-label="Upstate SC Additions, Garages & Outdoor Living Contractor"
             >
-              Home Additions, Garages &amp; Outdoor Living in <span className="gradient-text">Upstate SC</span>
+              Upstate SC Additions, Garages & Outdoor Living Contractor</span>
             </h1>
+            
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              30+ Years | 900+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn &amp; Woodruff
+              35+ Years | 400+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn & Woodruff with custom garages, home additions, decks, screened porches, remodeling, and light commercial upfits.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
