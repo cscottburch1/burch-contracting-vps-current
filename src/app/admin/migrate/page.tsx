@@ -10,21 +10,18 @@ export default function MigrationPage() {
   const [projectTrackerRunning, setProjectTrackerRunning] = useState(false);
   const [proposalsRunning, setProposalsRunning] = useState(false);
   const [documentsRunning, setDocumentsRunning] = useState(false);
-  const [paymentsRunning, setPaymentsRunning] = useState(false);
   const [leadScoringRunning, setLeadScoringRunning] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [passwordResetResult, setPasswordResetResult] = useState<any>(null);
   const [projectTrackerResult, setProjectTrackerResult] = useState<any>(null);
   const [proposalsResult, setProposalsResult] = useState<any>(null);
   const [documentsResult, setDocumentsResult] = useState<any>(null);
-  const [paymentsResult, setPaymentsResult] = useState<any>(null);
   const [leadScoringResult, setLeadScoringResult] = useState<any>(null);
   const [error, setError] = useState('');
   const [passwordResetError, setPasswordResetError] = useState('');
   const [projectTrackerError, setProjectTrackerError] = useState('');
   const [proposalsError, setProposalsError] = useState('');
   const [documentsError, setDocumentsError] = useState('');
-  const [paymentsError, setPaymentsError] = useState('');
   const [leadScoringError, setLeadScoringError] = useState('');
 
   const runMigration = async () => {
@@ -149,31 +146,6 @@ export default function MigrationPage() {
       setDocumentsError(err.message || 'Failed to run migration');
     } finally {
       setDocumentsRunning(false);
-    }
-  };
-
-  const runPaymentsMigration = async () => {
-    setPaymentsRunning(true);
-    setPaymentsError('');
-    setPaymentsResult(null);
-
-    try {
-      const res = await fetch('/api/admin/migrate-payments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setPaymentsResult(data);
-      } else {
-        setPaymentsError(data.error || 'Migration failed');
-      }
-    } catch (err: any) {
-      setPaymentsError(err.message || 'Failed to run migration');
-    } finally {
-      setPaymentsRunning(false);
     }
   };
 
@@ -487,72 +459,6 @@ export default function MigrationPage() {
                 onClick={() => {
                   setDocumentsError('');
                   runDocumentsMigration();
-                }}
-                className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Payments Migration */}
-        <div className="bg-white rounded-xl shadow-lg p-10">
-          <h1 className="text-4xl font-bold mb-4">Payments Migration (Disabled)</h1>
-          <p className="text-gray-600 mb-8">
-            Online payments are not enabled for this project. Payment migration is intentionally disabled.
-          </p>
-
-          {!paymentsResult && !paymentsError && (
-            <button
-              onClick={runPaymentsMigration}
-              disabled={true}
-              className="bg-gray-400 text-white px-8 py-4 rounded-lg font-bold transition disabled:opacity-80 text-xl cursor-not-allowed"
-            >
-              Online Payments Disabled
-            </button>
-          )}
-
-          {paymentsResult && (
-            <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
-              <div className="space-y-2 mb-4">
-                <p className="font-semibold">{paymentsResult.message}</p>
-                <p className="text-sm">Tables created:</p>
-                <ul className="list-disc list-inside text-sm">
-                  {paymentsResult.tables?.map((table: string, idx: number) => (
-                    <li key={idx}>{table}</li>
-                  ))}
-                </ul>
-                {paymentsResult.invoicesAltered && (
-                  <p className="text-sm mt-2">✓ Invoices table altered with payment tracking columns</p>
-                )}
-              </div>
-              <div className="mt-6 space-x-4">
-                <button
-                  onClick={() => router.push('/admin/invoices')}
-                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition"
-                >
-                  Go to Invoices
-                </button>
-                <button
-                  onClick={() => router.push('/admin/dashboard')}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition"
-                >
-                  Back to Dashboard
-                </button>
-              </div>
-            </div>
-          )}
-
-          {paymentsError && (
-            <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
-              <p className="mb-4">{paymentsError}</p>
-              <button
-                onClick={() => {
-                  setPaymentsError('');
-                  runPaymentsMigration();
                 }}
                 className="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition"
               >
