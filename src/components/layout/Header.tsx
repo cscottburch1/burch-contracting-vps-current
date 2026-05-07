@@ -143,15 +143,6 @@ export const Header: React.FC = () => {
             <span className="hidden lg:inline text-gray-200">
               Serving Simpsonville, Mauldin, Fountain Inn &amp; Woodruff
             </span>
-
-            <div className="flex items-center gap-4">
-              <Link href="/portal" className="font-medium text-gray-200 hover:text-white">
-                Customer Portal
-              </Link>
-              <Link href="/employment" className="font-medium text-gray-200 hover:text-white">
-                Employment / Careers
-              </Link>
-            </div>
           </div>
         </div>
       </div>

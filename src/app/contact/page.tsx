@@ -568,9 +568,14 @@ export default function ContactPage() {
                       required
                     >
                       <option value="">Select a service...</option>
-                      {businessConfig.services.map(service => (
-                        <option key={service.id} value={service.id}>{service.title}</option>
-                      ))}
+                      <option value="additions">Home Additions</option>
+                      <option value="garages">Garages</option>
+                      <option value="outdoor-living">Outdoor Living</option>
+                      <option value="outdoor-living/decks">Decks</option>
+                      <option value="outdoor-living/screened-porches">Screened Porches</option>
+                      <option value="outdoor-living/covered-patios">Covered Patios</option>
+                      <option value="remodeling">Remodeling</option>
+                      <option value="commercial-upfits">Commercial Upfits</option>
                     </select>
                     {errors.serviceType && <p className="mt-1 text-sm text-red-500">{errors.serviceType}</p>}
                   </div>
