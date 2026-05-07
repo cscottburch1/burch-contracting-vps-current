@@ -121,7 +121,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden py-24 text-white md:py-40">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/projects/2-car-garage-concept-image.webp')" }}
+          style={{ backgroundImage: "url('/public/basement-finishing.webp')" }}
           aria-hidden="true"
         ></div>
         <div className="absolute inset-0 bg-linear-to-r from-slate-950/85 via-slate-900/75 to-blue-950/60" aria-hidden="true"></div>
@@ -137,7 +137,7 @@ export default async function HomePage() {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              35+ Years | 400+ Projects Completed | SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn & Woodruff with custom garages, home additions, decks, screened porches, remodeling, and light commercial upfits.
+              SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn & Woodruff with custom garages, home additions, decks, screened porches, remodeling, and light commercial upfits.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
