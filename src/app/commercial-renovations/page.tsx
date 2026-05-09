@@ -714,7 +714,7 @@ export default function CommercialRenovationsPage() {
                 Free on-site consultation and detailed estimate. I'll help you maximize your TI allowance and deliver a quality build-out on schedule.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button href="tel:8647244600" variant="primary" size="lg" className="bg-white text-blue-700 hover:bg-gray-100">
+                <Button href="tel:8647244600" variant="primary" size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
                   <Icon name="Phone" size={20} />
                   Call (864) 724-4600
                 </Button>

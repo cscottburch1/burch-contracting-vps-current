@@ -218,7 +218,7 @@ export default function RemodellingPage() {
           <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
             Get a free estimate for your kitchen or bathroom remodel.
           </p>
-          <Button variant="primary" size="lg" href="/contact" className="bg-white text-blue-700 hover:bg-gray-100">
+          <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
             Request Free Estimate
           </Button>
         </div>

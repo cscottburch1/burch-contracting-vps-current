@@ -158,7 +158,7 @@ export default function ServiceAreasPage() {
           <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
             Contact us for a free estimate. We'll discuss your project and provide clear pricing.
           </p>
-          <Button variant="primary" size="lg" href="/contact" className="bg-white text-blue-700 hover:bg-gray-100">
+          <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
             Request Free Estimate
           </Button>
         </div>
