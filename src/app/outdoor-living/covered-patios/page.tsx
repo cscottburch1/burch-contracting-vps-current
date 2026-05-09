@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'How much does a covered patio cost in Upstate SC?',
-    a: 'Covered patios typically cost $15,000–$45,000 depending on size, roof type, and finish level. A simple solid-roof cover on an existing patio slab runs $15,000–$25,000. A fully built covered patio with concrete, ceiling fans, and lighting runs $25,000–$45,000. We provide free detailed estimates.',
+    a: 'Covered patios typically cost $15,000â€“$45,000 depending on size, roof type, and finish level. A simple solid-roof cover on an existing patio slab runs $15,000â€“$25,000. A fully built covered patio with concrete, ceiling fans, and lighting runs $25,000â€“$45,000. We provide free detailed estimates.',
   },
   {
     q: 'What\'s the best roofing option for a covered patio?',
-    a: 'Solid aluminum panel roofing is our most popular option — weathertight, low-maintenance, and matches most homes. Standing seam metal roofs offer a premium look. Open pergola structures provide shade without full coverage. We recommend a solid roof for maximum weather protection in SC.',
+    a: 'Solid aluminum panel roofing is our most popular option â€” weathertight, low-maintenance, and matches most homes. Standing seam metal roofs offer a premium look. Open pergola structures provide shade without full coverage. We recommend a solid roof for maximum weather protection in SC.',
   },
   {
     q: 'Can I attach a covered patio to my existing home?',
@@ -36,7 +36,7 @@ const faqs = [
   },
   {
     q: 'Do I need a permit for a covered patio?',
-    a: 'Yes, covered patios with roofs require building permits in Greenville County and most municipalities. We handle all permitting — typical approval takes 7–12 business days.',
+    a: 'Yes, covered patios with roofs require building permits in Greenville County and most municipalities. We handle all permitting â€” typical approval takes 7â€“12 business days.',
   },
 ];
 
@@ -56,7 +56,7 @@ export default function CoveredPatiosPage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-amber-900 to-orange-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-amber-900 to-orange-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-amber-300">
             Outdoor Living
@@ -86,7 +86,7 @@ export default function CoveredPatiosPage() {
         <div className="max-w-4xl">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Outdoor Living You Can Use Year-Round</h2>
           <p className="mt-4 text-lg text-gray-600">
-            A covered patio gives you shaded outdoor space for dining, entertaining, and relaxing — protected from rain, direct sun, and weather. We design covered structures that complement your home and maximize usable outdoor space.
+            A covered patio gives you shaded outdoor space for dining, entertaining, and relaxing â€” protected from rain, direct sun, and weather. We design covered structures that complement your home and maximize usable outdoor space.
           </p>
         </div>
 
@@ -163,13 +163,13 @@ export default function CoveredPatiosPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/outdoor-living/decks" className="hover:text-blue-700">
-              Custom Decks →
+              Custom Decks â†’
             </Link>
             <Link href="/outdoor-living/screened-porches" className="hover:text-blue-700">
-              Screened Porches →
+              Screened Porches â†’
             </Link>
             <Link href="/pricing" className="hover:text-blue-700">
-              Pricing Guide →
+              Pricing Guide â†’
             </Link>
           </div>
         </div>
@@ -177,3 +177,4 @@ export default function CoveredPatiosPage() {
     </>
   );
 }
+

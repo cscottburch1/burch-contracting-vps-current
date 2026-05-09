@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
@@ -193,7 +193,7 @@ export default function BasementFinishingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Shield" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -207,7 +207,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Droplet" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -221,7 +221,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Frame" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -235,7 +235,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Zap" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -249,7 +249,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Droplets" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -263,7 +263,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Paintbrush" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -277,7 +277,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Grid" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -291,7 +291,7 @@ export default function BasementFinishingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Thermometer" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -348,19 +348,19 @@ export default function BasementFinishingPage() {
               <h4 className="text-lg font-bold text-gray-900 mb-2">Additional Costs to Consider</h4>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Moisture Remediation:</strong> $2,500-$6,000 if waterproofing or sump pump needed</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Buildingte Permits:</strong> $450-$850 (Greenville County), includes electrical, plumbing, and final inspections</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>HVAC Upgrade:</strong> $0-$3,500 depending on existing system capacity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Structural Repairs:</strong> $1,500-$4,000 if foundation cracks or floor leveling required</span>
                 </li>
               </ul>
@@ -422,3 +422,4 @@ export default function BasementFinishingPage() {
     </>
   );
 }
+

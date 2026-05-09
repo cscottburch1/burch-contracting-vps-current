@@ -100,7 +100,7 @@ export function AdminNav() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="no-print lg:hidden fixed top-4 left-4 z-[60] bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+        className="no-print lg:hidden fixed top-4 left-4 z-60 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
       >
         {mobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -116,14 +116,14 @@ export function AdminNav() {
       {/* Sidebar */}
       <nav
         className={`
-          no-print fixed top-0 left-0 bottom-0 bg-gradient-to-b from-gray-900 to-gray-800 text-white
+          no-print fixed top-0 left-0 bottom-0 bg-linear-to-b from-gray-900 to-gray-800 text-white
           transition-all duration-300 ease-in-out z-50 flex flex-col
           ${collapsed ? 'w-20' : 'w-64'}
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700 flex-shrink-0">
+        <div className="flex items-center justify-between p-4 border-b border-gray-700 shrink-0">
           {!collapsed && (
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">
@@ -165,7 +165,7 @@ export function AdminNav() {
                   `}
                   title={collapsed ? item.name : ''}
                 >
-                  <Icon size={20} className="flex-shrink-0" />
+                  <Icon size={20} className="shrink-0" />
                   
                   {!collapsed && (
                     <>
@@ -211,7 +211,7 @@ export function AdminNav() {
                   `}
                   title={collapsed ? item.name : ''}
                 >
-                  <Icon size={20} className="flex-shrink-0" />
+                  <Icon size={20} className="shrink-0" />
                   {!collapsed && <span className="font-medium">{item.name}</span>}
                 </Link>
               );
@@ -223,7 +223,7 @@ export function AdminNav() {
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-600 hover:text-white transition"
               title={collapsed ? 'Logout' : ''}
             >
-              <LogOut size={20} className="flex-shrink-0" />
+              <LogOut size={20} className="shrink-0" />
               {!collapsed && <span className="font-medium">Logout</span>}
             </button>
           </div>
@@ -231,7 +231,7 @@ export function AdminNav() {
 
         {/* Keyboard Shortcuts Hint */}
         {!collapsed && (
-          <div className="p-4 border-t border-gray-700 flex-shrink-0">
+          <div className="p-4 border-t border-gray-700 shrink-0">
             <div className="text-xs text-gray-400">
               <div className="font-semibold mb-1">Keyboard Shortcuts</div>
               <div>Alt + 1-8 for quick nav</div>

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
@@ -198,7 +198,7 @@ export default function KitchenRemodelingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Box" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -212,7 +212,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Square" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -226,7 +226,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Grid" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -240,7 +240,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Square" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -254,7 +254,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Zap" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -268,7 +268,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Lightbulb" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -282,7 +282,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Droplet" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -296,7 +296,7 @@ export default function KitchenRemodelingPage() {
 
               <Card>
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name="Zap" size={24} className="text-blue-600" />
                   </div>
                   <div>
@@ -325,11 +325,11 @@ export default function KitchenRemodelingPage() {
                 </p>
                 <ul className="space-y-2 text-gray-700 mb-4">
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span><strong>Example:</strong> 10x12 kitchen = $18,500 average</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span>Best for functional kitchens needing updated aesthetics</span>
                   </li>
                 </ul>
@@ -342,11 +342,11 @@ export default function KitchenRemodelingPage() {
                 </p>
                 <ul className="space-y-2 text-gray-700 mb-4">
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span><strong>Example:</strong> 12x14 kitchen = $34,000 average</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span>Most popular tier for Simpsonville/Fountain Inn homes</span>
                   </li>
                 </ul>
@@ -359,11 +359,11 @@ export default function KitchenRemodelingPage() {
                 </p>
                 <ul className="space-y-2 text-gray-700 mb-4">
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span><strong>Example:</strong> 14x18 gourmet kitchen = $68,000 average</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                    <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                     <span>Common in Greenville area homes $450K+</span>
                   </li>
                 </ul>
@@ -374,19 +374,19 @@ export default function KitchenRemodelingPage() {
               <h4 className="text-lg font-bold text-gray-900 mb-2">Additional Costs to Consider</h4>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Appliances:</strong> $3,500-$12,000 depending on brand and package (you purchase separately)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Structural Work:</strong> $6,500-$12,000 to remove wall for open concept (includes beam, drywall, flooring patch)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Permits:</strong> $350-$650 for electrical and plumbing work in Greenville County</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Icon name="Check" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="Check" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span><strong>Windows/Doors:</strong> $800-$2,500 per opening if adding or enlarging windows</span>
                 </li>
               </ul>
@@ -448,3 +448,4 @@ export default function KitchenRemodelingPage() {
     </>
   );
 }
+

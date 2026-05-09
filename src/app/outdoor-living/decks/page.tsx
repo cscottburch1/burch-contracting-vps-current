@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -24,19 +24,19 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'How much does a custom deck cost in Simpsonville SC?',
-    a: 'Decks in Upstate SC typically cost $30–$50 per square foot installed. A standard 12×16 pressure-treated deck runs $12,000–$15,000. Composite decks with stairs and railings typically run $18,000–$28,000. We provide detailed written estimates at no charge.',
+    a: 'Decks in Upstate SC typically cost $30â€“$50 per square foot installed. A standard 12Ã—16 pressure-treated deck runs $12,000â€“$15,000. Composite decks with stairs and railings typically run $18,000â€“$28,000. We provide detailed written estimates at no charge.',
   },
   {
     q: 'What deck material is best for SC\'s climate?',
-    a: 'Composite decking handles SC humidity and temperature swings without warping or rotting. It lasts 25–30+ years with minimal maintenance. Pressure-treated wood is more affordable but needs sealing every 2–3 years. We recommend composite for most homeowners.',
+    a: 'Composite decking handles SC humidity and temperature swings without warping or rotting. It lasts 25â€“30+ years with minimal maintenance. Pressure-treated wood is more affordable but needs sealing every 2â€“3 years. We recommend composite for most homeowners.',
   },
   {
     q: 'Do I need a permit for a deck in Greenville County?',
-    a: 'Yes. Decks above 18 inches or over 200 square feet require a building permit in Greenville County. We handle all permitting for you — typical approval takes 7–12 business days.',
+    a: 'Yes. Decks above 18 inches or over 200 square feet require a building permit in Greenville County. We handle all permitting for you â€” typical approval takes 7â€“12 business days.',
   },
   {
     q: 'How long does deck construction take?',
-    a: 'Most decks take 1–2 weeks of construction after permits are approved. Complex multi-level decks may take 2–3 weeks. We keep you updated throughout.',
+    a: 'Most decks take 1â€“2 weeks of construction after permits are approved. Complex multi-level decks may take 2â€“3 weeks. We keep you updated throughout.',
   },
 ];
 
@@ -56,7 +56,7 @@ export default function DecksPage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-300">
             Outdoor Living
@@ -94,7 +94,7 @@ export default function DecksPage() {
           <Card className="border border-gray-200">
             <h3 className="text-xl font-bold text-slate-900 mb-2">Composite Decks</h3>
             <p className="text-gray-600 text-sm">
-              Low-maintenance composite decking that resists rot, fading, and warping. Lasts 25–30+ years with minimal upkeep.
+              Low-maintenance composite decking that resists rot, fading, and warping. Lasts 25â€“30+ years with minimal upkeep.
             </p>
           </Card>
           <Card className="border border-gray-200">
@@ -163,13 +163,13 @@ export default function DecksPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/outdoor-living/screened-porches" className="hover:text-blue-700">
-              Screened Porches →
+              Screened Porches â†’
             </Link>
             <Link href="/outdoor-living/covered-patios" className="hover:text-blue-700">
-              Covered Patios →
+              Covered Patios â†’
             </Link>
             <Link href="/pricing" className="hover:text-blue-700">
-              Pricing Guide →
+              Pricing Guide â†’
             </Link>
           </div>
         </div>
@@ -177,3 +177,4 @@ export default function DecksPage() {
     </>
   );
 }
+

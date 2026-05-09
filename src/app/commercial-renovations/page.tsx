@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 import { UniversalPageTemplate } from '@/components/templates/UniversalPageTemplate';
@@ -238,7 +238,7 @@ export default function CommercialRenovationsPage() {
           </div>
         </Section>
 
-        {/* E-E-A-T Signals — exactly once, immediately after hero */}
+        {/* E-E-A-T Signals â€” exactly once, immediately after hero */}
         <Section background="gray" padding="md">
           <div className="max-w-4xl mx-auto">
             <EEATSignals variant="compact" />
@@ -706,7 +706,7 @@ export default function CommercialRenovationsPage() {
         {/* Final CTA */}
         <Section background="gray" padding="lg">
           <div className="max-w-4xl mx-auto">
-            <Card padding="lg" className="bg-gradient-to-br from-blue-600 to-blue-700 text-white text-center">
+            <Card padding="lg" className="bg-linear-to-br from-blue-600 to-blue-700 text-white text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Ready to Start Your Commercial Tenant Improvement?
               </h2>
@@ -724,7 +724,7 @@ export default function CommercialRenovationsPage() {
                 </Button>
               </div>
               <p className="text-sm text-blue-200 mt-6">
-                SC Licensed General Contractor #CLG118679 • 35+ Years Experience • BBB A+ • 5.0 Google Rating
+                SC Licensed General Contractor #CLG118679 â€¢ 35+ Years Experience â€¢ BBB A+ â€¢ 5.0 Google Rating
               </p>
             </Card>
           </div>
@@ -733,3 +733,4 @@ export default function CommercialRenovationsPage() {
     </>
   );
 }
+
