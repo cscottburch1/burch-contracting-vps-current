@@ -41,7 +41,7 @@ export default function CostIndexPage() {
     <>
       <Script id="cost-item-list-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(costItemListSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-bold md:text-6xl">Local Remodeling Cost Guides</h1>
@@ -87,7 +87,7 @@ export default function CostIndexPage() {
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" href="/contact">Get Free Estimate</Button>
-            <Button variant="outline" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button variant="ctaOutlineLight" href={siteConfig.phoneHref}>
               Call {siteConfig.phoneDisplay}
             </Button>
           </div>

@@ -258,7 +258,7 @@ export default function PricingPage() {
           <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
             Contact us today for a free, no-obligation estimate tailored to your project and budget.
           </p>
-          <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
+          <Button variant="ctaLight" size="lg" href="/contact">
             Request Free Estimate
           </Button>
         </div>

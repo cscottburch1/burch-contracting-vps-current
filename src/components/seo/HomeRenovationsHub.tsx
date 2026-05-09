@@ -22,8 +22,8 @@ export default function HomeRenovationsHub() {
       <Script id="home-renovations-breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id="home-renovations-local-business-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-emerald-900 to-cyan-900 py-16 text-white md:py-24">
-        <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_right,_white,_transparent_40%)]" />
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-emerald-900 to-cyan-900 py-16 text-white md:py-24">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.35fr_0.9fr] lg:px-8">
           <div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-200">Interior Remodeling SEO Silo</p>

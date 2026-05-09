@@ -662,7 +662,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-gray-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
+      <section className="relative bg-linear-to-br from-blue-900 via-gray-900 to-blue-900 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -723,7 +723,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
               <ul className="space-y-2">
                 {content.modernDay.characteristics.map((char, index) => (
                   <li key={index} className="flex items-start gap-2 text-gray-700">
-                    <Icon name="CheckCircle2" size={18} className="text-blue-600 flex-shrink-0 mt-0.5" />
+                    <Icon name="CheckCircle2" size={18} className="text-blue-600 shrink-0 mt-0.5" />
                     <span>{char}</span>
                   </li>
                 ))}
@@ -772,7 +772,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
           <div className="grid gap-4">
             {content.whyChooseUs.map((reason, index) => (
               <div key={index} className="flex items-start gap-4 p-4 bg-blue-50 rounded-lg hover-lift">
-                <Icon name="Home" className="text-blue-600 flex-shrink-0 mt-1" size={24} />
+                <Icon name="Home" className="text-blue-600 shrink-0 mt-1" size={24} />
                 <p className="text-lg text-gray-800">{reason}</p>
               </div>
             ))}
@@ -791,7 +791,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
             <ul className="space-y-4">
               {content.localInsights.map((insight, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Icon name="MapPin" size={20} className="text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon name="MapPin" size={20} className="text-blue-600 shrink-0 mt-1" />
                   <span className="text-gray-700">{insight}</span>
                 </li>
               ))}
@@ -852,7 +852,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
         <div className="max-w-4xl mx-auto">
           <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
                   {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
                 </div>
@@ -887,7 +887,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
               Request Free Estimate
               <Icon name="ArrowRight" size={20} />
             </Button>
-            <Button variant="outline" size="lg" href={`tel:${businessConfig.contact.phone}`} className="border-white text-white hover:bg-white hover:text-gray-900 shadow-2xl">
+            <Button variant="ctaOutlineLight" size="lg" href={`tel:${businessConfig.contact.phone}`} className="shadow-2xl">
               <Icon name="Phone" size={20} />
               Call Now
             </Button>

@@ -24,7 +24,7 @@ const trustPoints = [
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="bg-linear-to-br from-slate-900 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-bold md:text-6xl">About Burch Contracting</h1>
@@ -66,7 +66,7 @@ export default function AboutPage() {
             </div>
           </Card>
 
-          <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50">
+          <Card className="border-blue-200 bg-linear-to-br from-blue-50 to-cyan-50">
             <h2 className="mb-3 text-2xl font-bold text-gray-900">Start With a Free Estimate</h2>
             <p className="mb-5 text-gray-700">
               If you are planning a kitchen remodel, bathroom renovation, room addition, deck, screened porch, basement finish, or handyman project, we are ready to help.

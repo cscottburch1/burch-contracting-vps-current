@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -55,35 +55,25 @@ export default function CompetitivePricingCalculator({
   const locationConfig = PRICING_CONFIG.locationFactors[locationKey];
 
   // Calculate adders total
-  const addersTotal = useMemo(() => {
+  const addersTotal = (() => {
     if (!serviceConfig.adders) return 0;
     return Array.from(selectedAdders).reduce((sum, index) => {
       const adder = serviceConfig.adders[index];
       return sum + (adder?.cost ?? 0);
     }, 0);
-  }, [selectedAdders, serviceConfig.adders]);
+  })();
 
   // Main calculation
-  const results = useMemo(() => {
-    return calculateProjectCost({
-      squareFootage,
-      baseDirectCost: selectedProject.directCost,
-      locationFactor: locationConfig.factor,
-      materialFactor,
-      complexityFactor,
-      siteConditionFactor,
-      adders: addersTotal,
-      overheadAndProfit: PRICING_CONFIG.defaultOverheadAndProfit,
-    });
-  }, [
+  const results = calculateProjectCost({
     squareFootage,
-    selectedProject.directCost,
-    locationConfig.factor,
+    baseDirectCost: selectedProject.directCost,
+    locationFactor: locationConfig.factor,
     materialFactor,
     complexityFactor,
     siteConditionFactor,
-    addersTotal,
-  ]);
+    adders: addersTotal,
+    overheadAndProfit: PRICING_CONFIG.defaultOverheadAndProfit,
+  });
 
   return (
     <>

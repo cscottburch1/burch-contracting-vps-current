@@ -69,8 +69,8 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
       <Script id={`${page.id}-service-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <Script id={`${page.id}-person-schema`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-16 text-white md:py-24">
-        <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_right,_white,_transparent_40%)]" />
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-16 text-white md:py-24">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.4fr_0.9fr] lg:px-8">
           <div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">{areaLine}</p>
@@ -346,7 +346,7 @@ export default function LocalSeoLanding({ page }: LocalSeoLandingProps) {
         <div className="max-w-4xl mx-auto">
           <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
                   {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
                 </div>

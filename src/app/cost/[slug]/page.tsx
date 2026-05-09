@@ -68,7 +68,7 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
       <Script id={`cost-breadcrumb-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id={`cost-local-business-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-blue-50">
@@ -85,7 +85,7 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
                 <Icon name="Calculator" size={20} />
                 Use Cost Calculator
               </Button>
-              <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+              <Button variant="ctaOutlineLight" size="lg" href={siteConfig.phoneHref}>
                 <Icon name="Phone" size={20} />
                 {siteConfig.phoneDisplay}
               </Button>
@@ -109,7 +109,7 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
                 {page.ranges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">
                     <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{range.label}</div>
-                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl [overflow-wrap:anywhere]">
+                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl wrap-anywhere">
                       {range.range.replace(/-/g, ' - ')}
                     </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">{range.details}</p>
@@ -141,7 +141,7 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
           </div>
 
           <div className="space-y-6">
-            <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50">
+            <Card className="border-blue-200 bg-linear-to-br from-blue-50 to-cyan-50">
               <h2 className="mb-2 text-xl font-bold text-gray-900">Get a Written Estimate</h2>
               <p className="mb-4 text-sm text-gray-600">Stop guessing. We turn online ranges into a project-specific number. Free, no pressure.</p>
               <Button variant="primary" href="/contact" fullWidth>
@@ -219,7 +219,7 @@ export default async function CostLandingPage({ params }: CostLandingPageProps) 
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" href="/contact">Get Free Estimate</Button>
-            <Button variant="outline" href={page.calculatorPath} className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button variant="ctaOutlineLight" href={page.calculatorPath}>
               Use Calculator
             </Button>
           </div>

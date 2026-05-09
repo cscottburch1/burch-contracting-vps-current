@@ -210,7 +210,7 @@ export default function GaragesPage() {
           <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
             Get a free estimate for your garage project. We'll discuss size, style, and features.
           </p>
-          <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
+          <Button variant="ctaLight" size="lg" href="/contact">
             Request Free Estimate
           </Button>
         </div>

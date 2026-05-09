@@ -113,10 +113,8 @@ export default function RootLayout({
         {/* Preconnect to critical third-party domains for faster script loading */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
-        
-        {/* DNS prefetch for fonts - non-blocking */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />

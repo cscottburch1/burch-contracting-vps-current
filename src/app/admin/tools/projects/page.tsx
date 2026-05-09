@@ -478,7 +478,7 @@ export default function ProjectsManagement() {
                 <div className="flex gap-6">
                   {/* Image Preview */}
                   {project.image_url && (
-                    <div className="w-48 h-32 flex-shrink-0">
+                    <div className="w-48 h-32 shrink-0">
                       <img
                         src={project.image_url}
                         alt={project.title}

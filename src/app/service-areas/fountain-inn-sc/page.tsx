@@ -173,10 +173,10 @@ export default function FountainInnPage() {
             Get a free estimate for your addition, garage, outdoor living, or remodeling project.
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
+            <Button variant="ctaLight" size="lg" href="/contact">
               Request Free Estimate
             </Button>
-            <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button variant="ctaOutlineLight" size="lg" href={siteConfig.phoneHref}>
               Call {siteConfig.phoneDisplay}
             </Button>
           </div>

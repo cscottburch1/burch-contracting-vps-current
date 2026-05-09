@@ -431,8 +431,8 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
       <Script id={`local-business-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <Script id={`local-person-${page.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
-        <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_top_left,_white_0,_transparent_45%)]"></div>
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_left,white_0,transparent_45%)]"></div>
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             <Badge variant="blue" className="mb-5 inline-flex px-4 py-2 text-sm">
@@ -452,7 +452,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 <Icon name="ClipboardEdit" size={20} />
                 Get Free Estimate
               </Button>
-              <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+              <Button variant="ctaOutlineLight" size="lg" href={siteConfig.phoneHref}>
                 <Icon name="Phone" size={20} />
                 {siteConfig.phoneDisplay}
               </Button>
@@ -520,7 +520,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
                 {page.priceRanges.map((range) => (
                   <div key={range.label} className="rounded-2xl border border-gray-200 p-5">
                     <div className="text-sm font-semibold uppercase tracking-wide text-blue-700">{range.label}</div>
-                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl [overflow-wrap:anywhere]">
+                    <div className="mt-2 text-xl font-bold leading-tight text-gray-900 sm:text-2xl wrap-anywhere">
                       {range.range.replace(/-/g, ' - ')}
                     </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">{range.details}</p>
@@ -668,7 +668,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
         <div className="max-w-4xl mx-auto">
           <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
                   {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
                 </div>
@@ -696,7 +696,7 @@ export default async function LocalServicePage({ params }: LocalServicePageProps
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" href="/contact">Request Free Estimate</Button>
-            <Button variant="outline" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button variant="ctaOutlineLight" href={siteConfig.phoneHref}>
               Call {siteConfig.phoneDisplay}
             </Button>
           </div>

@@ -512,10 +512,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
       />
 
       {/* Hero Section */}
-      <section className={`relative ${slug === 'basement' ? 'bg-cover bg-center' : 'bg-gradient-to-br from-blue-900 via-blue-800 to-gray-900'} text-white py-24 md:py-32 overflow-hidden`}
+      <section className={`relative ${slug === 'basement' ? 'bg-cover bg-center' : 'bg-linear-to-br from-blue-900 via-blue-800 to-gray-900'} text-white py-24 md:py-32 overflow-hidden`}
         style={slug === 'basement' ? { backgroundImage: 'url(/basement-finishing.webp)' } : {}}>
         {slug === 'basement' && (
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-blue-800/20 to-gray-900/25 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-linear-to-br from-blue-900/20 via-blue-800/20 to-gray-900/25 rounded-3xl"></div>
         )}
         {slug !== 'basement' && (
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
@@ -576,7 +576,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="grid gap-4">
             {service.benefits.map((benefit, index) => (
               <div key={index} className="flex items-start gap-4 p-4 bg-blue-50 rounded-lg hover-lift">
-                <Icon name="CheckCircle2" className="text-blue-600 flex-shrink-0 mt-1" size={24} />
+                <Icon name="CheckCircle2" className="text-blue-600 shrink-0 mt-1" size={24} />
                 <p className="text-lg text-gray-800">{benefit}</p>
               </div>
             ))}
@@ -647,7 +647,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {service.features.map((feature, index) => (
             <Card key={index} className="hover-lift">
               <div className="flex gap-4">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Icon name={feature.icon as IconName} size={28} className="text-blue-600" />
                   </div>
@@ -677,12 +677,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="space-y-8">
             {service.process.map((step, index) => (
               <div key={index} className="flex gap-6 items-start">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold">
                     {step.step}
                   </div>
                 </div>
-                <div className="flex-grow">
+                <div className="grow">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">{step.title}</h3>
                   <p className="text-lg text-gray-600">{step.description}</p>
                 </div>
@@ -738,7 +738,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <div className="max-w-4xl mx-auto">
           <div className="border-l-4 border-blue-600 bg-gray-50 p-6 rounded-r-lg">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold">
                   {primaryAuthor.name.split(' ').map(n => n[0]).join('')}
                 </div>
@@ -773,7 +773,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               Request Free Estimate
               <Icon name="ArrowRight" size={20} />
             </Button>
-            <Button variant="outline" size="lg" href={`tel:${businessConfig.contact.phone}`} className="border-white text-white hover:bg-white hover:text-gray-900 shadow-2xl">
+            <Button variant="ctaOutlineLight" size="lg" href={`tel:${businessConfig.contact.phone}`} className="shadow-2xl">
               <Icon name="Phone" size={20} />
               Call Now
             </Button>

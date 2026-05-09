@@ -51,7 +51,6 @@ async function run() {
   const results = [];
   for (const pathname of checks) {
     // Run sequentially to keep server load low and produce readable output order.
-    // eslint-disable-next-line no-await-in-loop
     const result = await checkUrl(pathname);
     results.push(result);
   }

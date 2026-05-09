@@ -93,7 +93,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
       <Script id={`project-breadcrumb-${project.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Script id={`project-article-${project.slug}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
@@ -125,14 +125,14 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
                 <Button variant="primary" href="/contact" className="bg-orange-600 hover:bg-orange-700">
                   Request Free Estimate
                 </Button>
-                <Button variant="outline" href="tel:8647244600" className="border-white text-white hover:bg-white hover:text-gray-900">
+                <Button variant="ctaOutlineLight" href="tel:8647244600">
                   Call 864-724-4600
                 </Button>
               </div>
             </div>
 
             <div className="rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
-              <div className={`overflow-hidden rounded-xl aspect-[16/10] ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
+              <div className={`overflow-hidden rounded-xl aspect-16/10 ${brandedImage ? 'border border-gray-200 bg-white p-4 sm:p-6' : ''}`}>
                 {responsiveHero ? (
                   <picture>
                     <source media="(min-width: 1280px)" srcSet={responsiveHero.desktop} />
@@ -245,7 +245,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" href="/contact">Request Free Estimate</Button>
-            <Button variant="outline" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
+            <Button variant="ctaOutlineLight" href={siteConfig.phoneHref}>
               Call {siteConfig.phoneDisplay}
             </Button>
           </div>
