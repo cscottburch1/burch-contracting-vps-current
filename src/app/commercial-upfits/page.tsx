@@ -207,7 +207,7 @@ export default function CommercialUpfitsPage() {
       <Section background="blue" padding="lg">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white mb-4 md:text-4xl">Ready for Your Commercial Build-Out?</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
             Let's discuss your tenant upfit or commercial project. Get a free estimate today.
           </p>
           <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">

@@ -169,14 +169,14 @@ export default function SimpsOnvillePage() {
       <Section background="blue" padding="lg">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white mb-4 md:text-4xl">Let's Build Your Simpsonville Project</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
             Get a free estimate for your addition, garage, remodel, or outdoor living project. We'll discuss your vision and provide clear pricing.
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">
               Request Free Estimate
             </Button>
-            <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-blue-700">
+            <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-gray-900">
               Call {siteConfig.phoneDisplay}
             </Button>
           </div>

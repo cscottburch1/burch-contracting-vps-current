@@ -155,7 +155,7 @@ export default function ServiceAreasPage() {
       <Section background="blue" padding="lg">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white mb-4 md:text-4xl">Ready to Start Your Project?</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
             Contact us for a free estimate. We'll discuss your project and provide clear pricing.
           </p>
           <Button variant="primary" size="lg" href="/contact" className="bg-white text-gray-900 hover:bg-gray-100">

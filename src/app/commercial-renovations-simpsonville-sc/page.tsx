@@ -532,7 +532,7 @@ export default function CommercialRenovationsSimpsonvillePage() {
                   <Icon name="Phone" size={20} />
                   Call (864) 724-4600
                 </Button>
-                <Button href="/contact" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-blue-700">
+                <Button href="/contact" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-gray-900">
                   <Icon name="Mail" size={20} />
                   Request Free Estimate
                 </Button>
