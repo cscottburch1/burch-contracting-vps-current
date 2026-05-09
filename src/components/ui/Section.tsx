@@ -10,7 +10,7 @@ interface SectionProps {
 const backgroundStyles = {
   white: 'bg-white',
   gray: 'bg-gray-50',
-  blue: 'bg-blue-50',
+  blue: 'bg-blue-600',
   dark: 'bg-gray-900 text-white'
 };
 
