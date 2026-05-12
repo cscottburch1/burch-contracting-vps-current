@@ -64,6 +64,7 @@ export default function SimpsOnvillePage() {
             For over 30 years, Burch Contracting has served Simpsonville homeowners with quality craftsmanship and clear communication. We understand Simpsonville's neighborhoods, building codes, and homeowner priorities.
           </p>
         </div>
+      </Section>
         
       {/* Services */}
       <Section background="gray" padding="lg">
