@@ -6,12 +6,12 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 
 export const metadata: Metadata = {
   title: 'Screened Porch Builder | Burch Contracting',
-  description: 'Professional screened porch builders serving Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. 50+ porches built since 1995. Aluminum & wood frames. Licensed, insured. Free estimates.',
+  description: 'Professional screened porch builders Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. Free estimates and 30+ years combined experience.',
   alternates: { canonical: absoluteUrl('/outdoor-living/screened-porches') },
   robots: { index: false, follow: true },
   openGraph: {
-    title: 'Screened Porch Builder in Upstate SC | Burch Contracting',
-    description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 50+ porches built since 1995. Free estimates.',
+    title: 'Screened Porch Builder | Burch Contracting',
+    description: 'Professional screened porch builders Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. Free estimates and 30+ years combined experience.',
     url: absoluteUrl('/screened-porches'),
     type: 'website',
   },
@@ -23,7 +23,7 @@ const faqs = [
     answer: 'Screened porches in Simpsonville cost $18,000-$55,000 depending on size and materials. A basic 12x16 aluminum-framed porch averages $22,000-$28,000. Premium wood-framed porches with ceiling fans and tile flooring run $35,000-$55,000. Converting an existing deck is typically 30% less expensive than building from scratch.',
   },
   {
-    question: 'What\'s better: aluminum or wood framing for screened porches?',
+    question: 'Aluminum or wood framing for screened porches? What\'s better?',
     answer: 'Aluminum framing lasts longer in SC\'s humidity (30+ years vs 20-25 for wood) and requires no painting or staining. Wood framing offers more design flexibility and a traditional look but needs maintenance every 3-5 years. I recommend aluminum for low-maintenance clients and wood when you want custom columns or trim details. 70% of my Upstate SC clients choose aluminum.',
   },
   {
