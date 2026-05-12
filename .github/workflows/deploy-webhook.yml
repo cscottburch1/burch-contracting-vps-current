@@ -5,28 +5,5 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    concurrency:
-      group: production-deploy
-      cancel-in-progress: true
-
-    steps:
-      - name: Trigger deployment webhook
-        run: |
-          curl -X POST "${{ secrets.DEPLOY_WEBHOOK_URL }}" \
-            -H "Content-Type: application/json" \
-            -H "X-Deploy-Secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}" \
-            -d '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
-      
-      - name: Wait for deployment
-        run: sleep 30
-      
-      - name: Check deployment status
-        run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://burchcontracting.com/api/health)
-          if [ "$STATUS" -eq 200 ]; then
-            echo "✅ Deployment successful - Site is healthy"
-          else
-            echo "❌ Deployment may have failed - Health check returned $STATUS"
-            exit 1
-          fi
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit

@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   deploy:
@@ -13,9 +14,6 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -47,8 +45,13 @@ jobs:
             rm -rf .next .swc
             npm ci --production=false || (echo "npm ci failed, falling back to npm install" && npm install --production=false)
 
-            # Build
-            npm run build
+            # Build with one automatic repair attempt
+            if ! npm run build; then
+              echo "Initial build failed, attempting auto-repair"
+              rm -rf .next .swc
+              npm install --production=false
+              npm run build
+            fi
             echo "Build complete"
 
             # Restart PM2 — ensure it runs from the correct cwd
@@ -76,6 +79,10 @@ jobs:
               if [ "$STATUS" = "200" ]; then
                 echo "Health check ready: $HEALTH_URL"
                 break
+              fi
+              if [ "$i" -eq 12 ]; then
+                echo "Health check still failing midway; restarting PM2 once for auto-repair"
+                pm2 restart burch-contracting --update-env || true
               fi
               if [ "$i" -eq "$max_attempts" ]; then
                 echo "Health check failed after waiting: $HEALTH_URL (last status: $STATUS)"
