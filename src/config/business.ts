@@ -26,10 +26,10 @@ export const businessConfig = {
   },
 
   social: {
-    facebook: "#",
-    instagram: "#",
-    twitter: "#",
-    linkedin: "#"
+    facebook: "https://www.facebook.com/burchcontracting",
+    instagram: "https://www.instagram.com/burchcontracting",
+    twitter: "https://x.com/burchcontracting",
+    linkedin: "https://www.linkedin.com/company/burch-contracting"
   },
 
   serviceArea: {

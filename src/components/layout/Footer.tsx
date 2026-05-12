@@ -110,7 +110,17 @@ export const Footer: React.FC = () => {
           <Link href="/about" className="hover:text-white">About</Link>
           <Link href="/projects" className="hover:text-white">Projects</Link>
           <Link href="/pricing" className="hover:text-white">Pricing</Link>
+          <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+          <Link href="/terms-of-service" className="hover:text-white">Terms of Service</Link>
+          <Link href="/editorial-policy" className="hover:text-white">Editorial Policy</Link>
           <Link href="/contact" className="hover:text-white">Get Free Estimate</Link>
+        </div>
+
+        <div className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-400">
+          <span className="font-semibold text-white">Follow:</span>
+          <a href={businessConfig.social.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white">Facebook</a>
+          <a href={businessConfig.social.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a>
+          <a href={businessConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn</a>
         </div>
 
         {/* Google Maps Embed */}

@@ -21,16 +21,9 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Additions, Garages & Outdoor Living Contractor in Upstate SC | Burch Contracting',
+  title: 'Upstate SC Additions, Garages & Outdoor Living | Burch Contracting',
   description:
-    'Expert home addition contractor, garage builder, and outdoor living specialist in Upstate SC. Serving Simpsonville, Mauldin, Fountain Inn & Woodruff. Licensed, insured. Free estimates.',
-  keywords: [
-    'Upstate SC contractor',
-    'garage contractor Upstate SC',
-    'room addition contractor Upstate SC',
-    'screened porch contractor Upstate SC',
-    'deck builder Upstate SC',
-  ],
+    'Licensed Upstate SC contractor for additions, garages, decks, and screened porches. Serving Simpsonville, Mauldin, Fountain Inn, and Woodruff with free estimates.',
   alternates: {
     canonical: absoluteUrl('/'),
     languages: {
@@ -121,7 +114,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden py-24 text-white md:py-40">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/public/basement-finishing.webp')" }}
+          style={{ backgroundImage: "url('/basement-finishing.webp')" }}
           aria-hidden="true"
         ></div>
         <div className="absolute inset-0 bg-linear-to-r from-slate-950/85 via-slate-900/75 to-blue-950/60" aria-hidden="true"></div>
@@ -138,6 +131,10 @@ export default async function HomePage() {
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
               SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn & Woodruff with custom garages, home additions, decks, screened porches, remodeling, and light commercial upfits.
+            </p>
+
+            <p className="text-sm md:text-base text-gray-300 mb-6">
+              Reviewed by C. Scott Burch, Owner and Lead Contractor • Updated <time dateTime="2026-05-11">May 11, 2026</time>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

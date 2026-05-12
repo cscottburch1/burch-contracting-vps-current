@@ -32,8 +32,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Additions, Garages & Outdoor Living Contractor in Upstate SC | Burch Contracting',
-  description: 'Burch Contracting is an Upstate SC contractor serving Simpsonville, Mauldin, Fountain Inn and Woodruff with home additions, garages, outdoor living, remodeling and commercial upfits.',
+  title: 'Upstate SC Home Contractor | Burch Contracting',
+  description: 'Licensed Upstate SC contractor for additions, garages, outdoor living, remodeling, and commercial upfits. Serving Simpsonville, Mauldin, Fountain Inn, and Woodruff.',
   authors: [{ name: "Burch Contracting" }],
   creator: "Burch Contracting",
   publisher: "Burch Contracting",
@@ -113,8 +113,7 @@ export default function RootLayout({
         {/* Preconnect to critical third-party domains for faster script loading */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" href="/basement-finishing.webp" as="image" fetchPriority="high" />
         
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />
@@ -132,8 +131,14 @@ export default function RootLayout({
       >
         <GoogleAnalytics />
         <AnalyticsEvents />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-9999 focus:rounded-md focus:bg-blue-700 focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to main content
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
         <DeferredMobileStickyCta />
         
