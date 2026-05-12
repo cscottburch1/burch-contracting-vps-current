@@ -81,7 +81,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     // Core service area pages
     {
-      url: `${baseUrl}/service-areas`,
+      url: `${baseUrl}/areas`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.90,
@@ -118,16 +118,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.92,
     },
     {
-      url: `${baseUrl}/pricing`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/projects`,
+      url: `${baseUrl}/work`,
       lastModified: projectSeoLastModified,
       changeFrequency: 'weekly' as const,
-      priority: 0.84,
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.88,
+    },
+    {
+      url: `${baseUrl}/areas`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.87,
     },
     {
       url: `${baseUrl}/about`,
@@ -135,12 +141,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.75,
     },
-    // Supporting pages
+    // Legacy URLs - kept for redirects
     {
-      url: `${baseUrl}/services`,
+      url: `${baseUrl}/projects`,
+      lastModified: projectSeoLastModified,
+      changeFrequency: 'weekly' as const,
+      priority: 0.60,
+    },
+    {
+      url: `${baseUrl}/pricing`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
-      priority: 0.80,
+      priority: 0.60,
     },
     {
       url: `${baseUrl}/blog`,

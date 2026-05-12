@@ -35,31 +35,85 @@ export const trackEvent = (
   }
 };
 
-// Pre-defined conversion events
+// Pre-defined conversion events using GA4 recommended events
 export const analytics = {
-  // Contact form submission
+  // Contact form submission - GA4 recommended event
   trackContactForm: (formType: string = 'general') => {
-    trackEvent('contact_form_submit', 'Lead Generation', formType);
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'generate_lead', {
+        event_category: 'Lead Generation',
+        event_label: formType,
+        method: 'contact_form',
+      });
+    }
   },
 
-  // Phone number click
-  trackPhoneClick: () => {
-    trackEvent('phone_click', 'Lead Generation', 'Phone: (864) 724-4600');
+  // Phone number click - Custom event with GA4 format
+  trackPhoneClick: (location: string = 'header') => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'phone_click', {
+        event_category: 'Lead Generation',
+        event_label: 'Phone: (864) 724-4600',
+        location: location,
+      });
+    }
   },
 
-  // Email click
-  trackEmailClick: () => {
-    trackEvent('email_click', 'Lead Generation', 'estimates@burchcontracting.com');
+  // Email click - Custom event with GA4 format
+  trackEmailClick: (location: string = 'header') => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'email_click', {
+        event_category: 'Lead Generation',
+        event_label: 'estimates@burchcontracting.com',
+        location: location,
+      });
+    }
   },
 
-  // Service page view
+  // Service page view - Custom event
   trackServiceView: (serviceName: string) => {
     trackEvent('service_view', 'Services', serviceName);
   },
 
-  // Calculator usage
-  trackCalculatorUse: (calculatorType: string) => {
-    trackEvent('calculator_use', 'Engagement', calculatorType);
+  // Calculator start - Custom event for engagement
+  trackCalculatorStart: (calculatorType: string) => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'calculator_start', {
+        event_category: 'Engagement',
+        event_label: calculatorType,
+      });
+    }
+  },
+
+  // Calculator complete - Custom event for conversion
+  trackCalculatorComplete: (calculatorType: string, estimatedValue?: number) => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'calculator_complete', {
+        event_category: 'Engagement',
+        event_label: calculatorType,
+        value: estimatedValue,
+      });
+    }
+  },
+
+  // Get Estimate button click
+  trackGetEstimateClick: (location: string = 'page') => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'get_estimate_click', {
+        event_category: 'Lead Generation',
+        event_label: location,
+      });
+    }
+  },
+
+  // Directions click (for local SEO)
+  trackDirectionsClick: () => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'directions_click', {
+        event_category: 'Local Engagement',
+        event_label: 'Google Maps',
+      });
+    }
   },
 
   // Proposal generated
@@ -72,9 +126,19 @@ export const analytics = {
     trackEvent('portal_signup', 'Conversions', 'Customer Portal');
   },
 
-  // Lead conversion
+  // Lead conversion (use GA4 purchase event for high-value conversions)
   trackLeadConversion: (leadId: string, value?: number) => {
-    trackEvent('lead_converted', 'Conversions', leadId, value);
+    if (typeof window.gtag !== 'undefined' && value) {
+      window.gtag('event', 'purchase', {
+        transaction_id: leadId,
+        value: value,
+        currency: 'USD',
+        items: [{
+          item_name: 'Project Contract',
+          item_category: 'Construction Service',
+        }],
+      });
+    }
   },
 
   // Document download

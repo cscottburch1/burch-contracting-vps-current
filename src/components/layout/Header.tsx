@@ -105,6 +105,7 @@ export const Header: React.FC = () => {
               variant="primary"
               size="sm"
               href="/contact"
+              onClick={() => analytics.trackGetEstimateClick('header')}
               className="bg-orange-600 hover:bg-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
             >
               Get Estimate

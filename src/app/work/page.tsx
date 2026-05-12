@@ -6,6 +6,7 @@ import Icon from '@/components/ui/Icon';
 import { projectSpotlights } from '@/lib/seo/projectSpotlightsData';
 import { absoluteUrl } from '@/lib/seo/site';
 import RecentProjectsSSR from '@/components/RecentProjectsSSR';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Recent Work & Project Gallery | Burch Contracting',
@@ -25,8 +26,17 @@ export default function WorkPage() {
     coreServiceTypes.includes(project.serviceType)
   );
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Our Work', url: absoluteUrl('/work') },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">

@@ -45,6 +45,8 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadError, setUploadError] = useState<string>('');
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -59,26 +61,25 @@ export default function ContactPage() {
       newErrors.phone = 'Please enter a valid phone number';
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.streetAddress.trim()) {
-      newErrors.streetAddress = 'Street address is required';
-    }
-
-    if (!formData.city.trim()) {
-      newErrors.city = 'City is required';
-    }projectType) {
+    if (!formData.projectType) {
       newErrors.projectType = 'Project type is required';
     }
 
     if (!formData.zipCode.trim()) {
       newErrors.zipCode = 'Zip code is required';
     } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
-      newErrors.zipCode = 'Please enter a valid zip code
+      newErrors.zipCode = 'Please enter a valid zip code';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Honeypot check
+    if (formData.website) {
       setErrors({ submit: 'Something went wrong. Please try again.' });
       return;
     }
@@ -111,6 +112,11 @@ export default function ContactPage() {
         formDataToSend.append(key, value);
       });
       formDataToSend.append('recaptchaToken', recaptchaToken);
+      
+      // Append files
+      uploadedFiles.forEach((file, index) => {
+        formDataToSend.append(`file${index}`, file);
+      });
 
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -129,6 +135,8 @@ export default function ContactPage() {
           zipCode: '',
           website: ''
         });
+        setUploadedFiles([]);
+        setUploadError('');
         // Scroll to top to show success message
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -148,6 +156,34 @@ export default function ContactPage() {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadError('');
+    const files = Array.from(e.target.files || []);
+    
+    // Validate file size (max 10MB per file)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    const invalidFiles = files.filter(file => file.size > maxSize);
+    
+    if (invalidFiles.length > 0) {
+      setUploadError(`Some files are too large. Maximum size is 10MB per file.`);
+      return;
+    }
+    
+    // Limit total files to 5
+    const totalFiles = uploadedFiles.length + files.length;
+    if (totalFiles > 5) {
+      setUploadError(`Maximum 5 files allowed. You can upload ${5 - uploadedFiles.length} more file(s).`);
+      return;
+    }
+    
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
+  const removeFile = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+    setUploadError('');
   };
 
   if (submitSuccess) {
@@ -251,6 +287,13 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
           <div className="lg:col-span-2">
             <Card padding="lg">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <p className="text-sm text-blue-800 flex items-start gap-2">
+                  <Icon name="Clock" size={18} className="shrink-0 mt-0.5" />
+                  <span><strong>We reply within 24 hours.</strong> Simple form, fast response. Just name, phone, project type, and zip code.</span>
+                </p>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -285,138 +328,39 @@ export default function ContactPage() {
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
-                      placeholder="(555) 123-4567"
+                      placeholder="(864) 555-1234"
                       required
                     />
                     {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                      errors.email ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="john@example.com"
-                    required
-                  />
-                  {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-                </div>
-
-                <div>
-                  <label htmlFor="streetAddress" className="block text-sm font-semibold text-gray-900 mb-2">
-                    Street Address <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="streetAddress"
-                    name="streetAddress"
-                    value={formData.streetAddress}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                      errors.streetAddress ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="123 Main Street"
-                    required
-                  />
-                  {errors.streetAddress && <p className="mt-1 text-sm text-red-500">{errors.streetAddress}</p>}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="city" className="block text-sm font-semibold text-gray-900 mb-2">
-                      City <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                        errors.city ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="Simpsonville"
-                      required
-                    />
-                    {errors.city && <p className="mt-1 text-sm text-red-500">{errors.city}</p>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="state" className="block text-sm font-semibold text-gray-900 mb-2">
-                      State <span className="text-red-500">*</span>
+                    <label htmlFor="projectType" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Project Type <span className="text-red-500">*</span>
                     </label>
                     <select
-                      id="state"
-                      name="state"
-                      value={formData.state}
+                      id="projectType"
+                      name="projectType"
+                      value={formData.projectType}
                       onChange={handleChange}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.state ? 'border-red-500' : 'border-gray-300'
+                        errors.projectType ? 'border-red-500' : 'border-gray-300'
                       }`}
                       required
                     >
-                      <option value="AL">Alabama</option>
-                      <option value="AK">Alaska</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="AR">Arkansas</option>
-                      <option value="CA">California</option>
-                      <option value="CO">Colorado</option>
-                      <option value="CT">Connecticut</option>
-                      <option value="DE">Delaware</option>
-                      <option value="FL">Florida</option>
-                      <option value="GA">Georgia</option>
-                      <option value="HI">Hawaii</option>
-                      <option value="ID">Idaho</option>
-                      <option value="IL">Illinois</option>
-                      <option value="IN">Indiana</option>
-                      <option value="IA">Iowa</option>
-                      <option value="KS">Kansas</option>
-                      <option value="KY">Kentucky</option>
-                      <option value="LA">Louisiana</option>
-                      <option value="ME">Maine</option>
-                      <option value="MD">Maryland</option>
-                      <option value="MA">Massachusetts</option>
-                      <option value="MI">Michigan</option>
-                      <option value="MN">Minnesota</option>
-                      <option value="MS">Mississippi</option>
-                      <option value="MO">Missouri</option>
-                      <option value="MT">Montana</option>
-                      <option value="NE">Nebraska</option>
-                      <option value="NV">Nevada</option>
-                      <option value="NH">New Hampshire</option>
-                      <option value="NJ">New Jersey</option>
-                      <option value="NM">New Mexico</option>
-                      <option value="NY">New York</option>
-                      <option value="NC">North Carolina</option>
-                      <option value="ND">North Dakota</option>
-                      <option value="OH">Ohio</option>
-                      <option value="OK">Oklahoma</option>
-                      <option value="OR">Oregon</option>
-                      <option value="PA">Pennsylvania</option>
-                      <option value="RI">Rhode Island</option>
-                      <option value="SC">South Carolina</option>
-                      <option value="SD">South Dakota</option>
-                      <option value="TN">Tennessee</option>
-                      <option value="TX">Texas</option>
-                      <option value="UT">Utah</option>
-                      <option value="VT">Vermont</option>
-                      <option value="VA">Virginia</option>
-                      <option value="WA">Washington</option>
-                      <option value="WV">West Virginia</option>
-                      <option value="WI">Wisconsin</option>
-                      <option value="WY">Wyoming</option>
-                      <option value="DC">Washington DC</option>
+                      <option value="">What do you need built?</option>
+                      <option value="garage">Garage</option>
+                      <option value="addition">Home Addition</option>
+                      <option value="deck">Deck</option>
+                      <option value="screened-porch">Screened Porch</option>
+                      <option value="covered-patio">Covered Patio</option>
+                      <option value="remodeling">Remodeling</option>
+                      <option value="commercial">Commercial Upfit</option>
+                      <option value="other">Other / Not Sure</option>
                     </select>
-                    {errors.state && <p className="mt-1 text-sm text-red-500">{errors.state}</p>}
+                    {errors.projectType && <p className="mt-1 text-sm text-red-500">{errors.projectType}</p>}
                   </div>
 
                   <div>
@@ -438,181 +382,6 @@ export default function ContactPage() {
                     />
                     {errors.zipCode && <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>}
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="serviceType" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Service Type <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="serviceType"
-                      name="serviceType"
-                      value={formData.serviceType}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.serviceType ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    >
-                      <option value="">Select a service...</option>
-                      <option value="additions">Home Additions</option>
-                      <option value="garages">Garages</option>
-                      <option value="outdoor-living">Outdoor Living</option>
-                      <option value="outdoor-living/decks">Decks</option>
-                      <option value="outdoor-living/screened-porches">Screened Porches</option>
-                      <option value="outdoor-living/covered-patios">Covered Patios</option>
-                      <option value="remodeling">Remodeling</option>
-                      <option value="commercial-upfits">Commercial Upfits</option>
-                    </select>
-                    {errors.serviceType && <p className="mt-1 text-sm text-red-500">{errors.serviceType}</p>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="budgetRange" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Budget Range <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="budgetRange"
-                      name="budgetRange"
-                      value={formData.budgetRange}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.budgetRange ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    >
-                      <option value="">Select budget range...</option>
-                      <option value="under-5k">Under $5,000</option>
-                      <option value="5k-15k">$5,000 - $15,000</option>
-                      <option value="15k-30k">$15,000 - $30,000</option>
-                      <option value="30k-50k">$30,000 - $50,000</option>
-                      <option value="50k-100k">$50,000 - $100,000</option>
-                      <option value="over-100k">Over $100,000</option>
-                      <option value="flexible">Flexible/Not Sure</option>
-                    </select>
-                    {errors.budgetRange && <p className="mt-1 text-sm text-red-500">{errors.budgetRange}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="timeframe" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Project Timeframe <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="timeframe"
-                      name="timeframe"
-                      value={formData.timeframe}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.timeframe ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    >
-                      <option value="">Select timeframe...</option>
-                      <option value="asap">As Soon As Possible</option>
-                      <option value="within-month">Within 1 Month</option>
-                      <option value="1-3-months">1-3 Months</option>
-                      <option value="3-6-months">3-6 Months</option>
-                      <option value="planning">Just Planning</option>
-                    </select>
-                    {errors.timeframe && <p className="mt-1 text-sm text-red-500">{errors.timeframe}</p>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="referralSource" className="block text-sm font-semibold text-gray-900 mb-2">
-                      How Did You Hear About Us? <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="referralSource"
-                      name="referralSource"
-                      value={formData.referralSource}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.referralSource ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    >
-                      <option value="">Select source...</option>
-                      <option value="google">Google Search</option>
-                      <option value="facebook">Facebook</option>
-                      <option value="referral">Friend/Family Referral</option>
-                      <option value="previous-customer">Previous Customer</option>
-                      <option value="yard-sign">Yard Sign</option>
-                      <option value="other">Other</option>
-                    </select>
-                    {errors.referralSource && <p className="mt-1 text-sm text-red-500">{errors.referralSource}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="preferredDate" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Preferred Consultation Date <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      id="preferredDate"
-                      name="preferredDate"
-                      value={formData.preferredDate}
-                      onChange={handleChange}
-                      min={new Date().toISOString().split('T')[0]}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.preferredDate ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    />
-                    {errors.preferredDate && <p className="mt-1 text-sm text-red-500">{errors.preferredDate}</p>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="preferredTime" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Preferred Time <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="preferredTime"
-                      name="preferredTime"
-                      value={formData.preferredTime}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.preferredTime ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      required
-                    >
-                      <option value="">Select time...</option>
-                      <option value="morning">Morning (8am-12pm)</option>
-                      <option value="afternoon">Afternoon (12pm-4pm)</option>
-                      <option value="evening">Evening (4pm-7pm)</option>
-                      <option value="flexible">Flexible</option>
-                    </select>
-                    {errors.preferredTime && <p className="mt-1 text-sm text-red-500">{errors.preferredTime}</p>}
-                  </div>
-                </div>
-
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                  <p className="text-sm text-blue-800">
-                    <strong>Note:</strong> Requested dates and times are not guaranteed but we will do our best to accommodate your schedule. We'll confirm your appointment within 24 hours.
-                  </p>
-                </div>
-
-                <div>
-                  <label htmlFor="description" className="block text-sm font-semibold text-gray-900 mb-2">
-                    Project Description <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    rows={6}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
-                      errors.description ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Tell us about your project... What work needs to be done? Any specific requirements or concerns?"
-                    required
-                  />
-                  {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
                 </div>
 
                 {/* File Upload Section */}
@@ -638,7 +407,7 @@ export default function ContactPage() {
                         Click to upload or drag and drop
                       </span>
                       <span className="text-xs text-gray-500">
-                        PNG, JPG, PDF, DOC up to 10MB each (max 5 files)
+                        Photos, inspiration images, or plans (PNG, JPG, PDF up to 10MB each)
                       </span>
                     </label>
                   </div>
@@ -675,9 +444,6 @@ export default function ContactPage() {
                       ))}
                     </div>
                   )}
-                  <p className="mt-2 text-xs text-gray-500">
-                    💡 Tip: Upload photos of the area, inspiration images, or reference documents to help us better understand your project.
-                  </p>
                 </div>
 
                 {/* Honeypot field - hidden from humans, visible to bots */}

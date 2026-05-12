@@ -6,6 +6,7 @@ import Icon from '@/components/ui/Icon';
 import { localDominanceServices, serviceHubPages } from '@/lib/seo/localDominanceData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import Link from 'next/link';
+import { buildBreadcrumbSchema, buildLocalBusinessSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Services & Pricing | Burch Contracting',
@@ -24,8 +25,40 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Services & Pricing', url: absoluteUrl('/services') },
+  ]);
+
+  const servicesCatalog = {
+    "@type": "OfferCatalog",
+    "name": "Construction Services",
+    "itemListElement": serviceHubPages.map(service => ({
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": service.service.serviceName,
+        "description": service.shortDescription,
+        "url": absoluteUrl(service.path),
+      }
+    }))
+  };
+
+  const localBusinessSchema = buildLocalBusinessSchema({
+    description: "Full-service contractor for garages, additions, decks, screened porches, and remodeling",
+    hasOfferCatalog: servicesCatalog
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_40%)]" />
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">

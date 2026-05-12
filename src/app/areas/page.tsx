@@ -6,6 +6,7 @@ import Icon from '@/components/ui/Icon';
 import { localDominanceServices, targetCities } from '@/lib/seo/localDominanceData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import Link from 'next/link';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Service Areas: Upstate SC Contractor | Burch Contracting',
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
 };
 
 export default function AreasPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Service Areas', url: absoluteUrl('/areas') },
+  ]);
+
   // Featured cities with dedicated pages
   const featuredCities = [
     { name: 'Simpsonville, SC', slug: '/service-areas/simpsonville-sc', description: 'Full-service contractor for residential additions, garages, decks, and screened porches in Simpsonville' },
@@ -30,6 +36,10 @@ export default function AreasPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
