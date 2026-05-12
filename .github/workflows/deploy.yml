@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.2
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: 72.60.166.68
           username: root
