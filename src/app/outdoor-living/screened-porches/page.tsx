@@ -24,19 +24,19 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'How much does a screened porch cost in Upstate SC?',
-    a: 'Screened porches in Upstate SC typically cost $20,000â€“$55,000 depending on size and materials. A basic 12Ã—16 aluminum-framed porch averages $22,000â€“$28,000. Premium wood-framed porches with fans, lighting, and tile flooring run $35,000â€“$55,000. Converting an existing deck is typically 25â€“30% less expensive.',
+    a: 'Screened porches in Upstate SC typically cost $20,000-$55,000 depending on size and materials. A basic 12x16 aluminum-framed porch averages $22,000-$28,000. Premium wood-framed porches with fans, lighting, and tile flooring run $35,000-$55,000. Converting an existing deck is typically 25-30% less expensive.',
   },
   {
-    q: 'Aluminum vs wood framing â€” which is better?',
-    a: 'Aluminum lasts 30+ years in SC\'s humidity with zero maintenance. Wood framing offers more design flexibility but needs painting or staining every 3â€“5 years. We recommend aluminum for most homeowners and wood when you want custom columns or traditional architectural details.',
+    q: 'Aluminum vs wood framing - which is better?',
+    a: 'Aluminum lasts 30+ years in SC\'s humidity with zero maintenance. Wood framing offers more design flexibility but needs painting or staining every 3-5 years. We recommend aluminum for most homeowners and wood when you want custom columns or traditional architectural details.',
   },
   {
     q: 'Can you convert my existing deck to a screened porch?',
-    a: 'Yes, if the existing deck framing is structurally sound. We inspect joists, beams, and footings first. Converting a 12Ã—16 deck costs significantly less than building from scratch. About 40% of our screened porch projects are deck conversions.',
+    a: 'Yes, if the existing deck framing is structurally sound. We inspect joists, beams, and footings first. Converting a 12x16 deck costs significantly less than building from scratch. About 40% of our screened porch projects are deck conversions.',
   },
   {
     q: 'Do I need a building permit for a screened porch?',
-    a: 'Yes. Screened porches require permits in Greenville County, Simpsonville, Fountain Inn, and Mauldin. We handle all permitting â€” typical approval takes 7â€“14 business days.',
+    a: 'Yes. Screened porches require permits in Greenville County, Simpsonville, Fountain Inn, and Mauldin. We handle all permitting - typical approval takes 7-14 business days.',
   },
 ];
 
@@ -106,7 +106,7 @@ export default function ScreenedPorchesSubPage() {
           <Card className="border border-gray-200">
             <h3 className="text-xl font-bold text-slate-900 mb-2">Deck Conversions</h3>
             <p className="text-gray-600 text-sm">
-              Convert your existing deck into a screened porch. We evaluate your current structure and build around it â€” often at significant savings.
+              Convert your existing deck into a screened porch. We evaluate your current structure and build around it - often at significant savings.
             </p>
           </Card>
         </div>
@@ -163,13 +163,13 @@ export default function ScreenedPorchesSubPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/outdoor-living/decks" className="hover:text-blue-700">
-              Custom Decks â†’
+              {'Custom Decks ->'}
             </Link>
             <Link href="/outdoor-living/covered-patios" className="hover:text-blue-700">
-              Covered Patios â†’
+              {'Covered Patios ->'}
             </Link>
             <Link href="/pricing" className="hover:text-blue-700">
-              Pricing Guide â†’
+              {'Pricing Guide ->'}
             </Link>
           </div>
         </div>
