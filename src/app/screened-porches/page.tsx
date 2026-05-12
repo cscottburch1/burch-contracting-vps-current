@@ -5,8 +5,8 @@ import { absoluteUrl } from '@/lib/seo/site';
 import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Screened Porch Builder in Upstate SC | Burch Contracting',
-  description: 'Professional screened porch builders in Simpsonville, Greenville & Fountain Inn. 200+ porches built since 1995. Aluminum & wood frames. Licensed, insured. Free estimates.',
+  title: 'Screened Porch Builder | Burch Contracting',
+  description: 'Professional screened porch builders serving Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. 50+ porches built since 1995. Aluminum & wood frames. Licensed, insured. Free estimates.',
   alternates: { canonical: absoluteUrl('/outdoor-living/screened-porches') },
   robots: { index: false, follow: true },
   openGraph: {
