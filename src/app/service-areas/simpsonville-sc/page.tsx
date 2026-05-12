@@ -57,7 +57,7 @@ export default function SimpsOnvillePage() {
       </section>
 
       {/* About Local Service */}
-      <Section background="white" padding="lg">
+      <Section background="white" padding="md">
         <div className="mb-12 max-w-3xl">
           <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Local Contractor for Simpsonville</h2>
           <p className="mt-4 text-lg text-gray-600">
