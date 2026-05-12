@@ -124,26 +124,22 @@ export default async function HomePage() {
           <div className="max-w-5xl mx-auto text-center">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="Upstate SC Additions, Garages & Outdoor Living Contractor"
+              aria-label="What Do You Need Built?"
             >
-              Upstate SC Additions, Garages &amp; Outdoor Living Contractor
+              What Do You Need Built?
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              SC Licensed General Contractor #CLG118679 | Serving Simpsonville, Mauldin, Fountain Inn & Woodruff with custom garages, home additions, decks, screened porches, remodeling, and light commercial upfits.
-            </p>
-
-            <p className="text-sm md:text-base text-gray-300 mb-6">
-              Reviewed by C. Scott Burch, Owner and Lead Contractor • Updated <time dateTime="2026-05-11">May 11, 2026</time>
+              Upstate SC Licensed Contractor #CLG118679. Garages, additions, decks, screened porches, remodeling, and commercial upfits.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Button variant="primary" size="lg" href="/contact" className="group shadow-2xl text-lg px-10 py-5">
-                Get My Free Estimate
+                Get Free Estimate
                 <Icon name="ArrowRight" size={22} className="group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" size="lg" href="/projects" className="glass border-white/50 text-white hover:bg-white hover:text-gray-900 shadow-xl text-lg px-10 py-5">
-                View Recent Projects
+              <Button variant="outline" size="lg" href="/work" className="glass border-white/50 text-white hover:bg-white hover:text-gray-900 shadow-xl text-lg px-10 py-5">
+                See Recent Work
               </Button>
             </div>
 
@@ -160,7 +156,7 @@ export default async function HomePage() {
               <span className="text-gray-400">•</span>
               <div className="flex items-center gap-2">
                 <Icon name="MapPin" size={20} className="text-blue-400" />
-                <span className="font-medium">Local Contractor</span>
+                <span className="font-medium">Serving Simpsonville, Mauldin, Fountain Inn & Woodruff</span>
               </div>
             </div>
           </div>

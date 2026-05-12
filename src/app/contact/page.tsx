@@ -18,18 +18,8 @@ type GrecaptchaApi = {
 interface FormData {
   name: string;
   phone: string;
-  email: string;
-  streetAddress: string;
-  city: string;
-  state: string;
+  projectType: string;
   zipCode: string;
-  serviceType: string;
-  budgetRange: string;
-  timeframe: string;
-  referralSource: string;
-  description: string;
-  preferredDate: string;
-  preferredTime: string;
   website: string; // Honeypot field
 }
 
@@ -47,26 +37,14 @@ export default function ContactPage() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
-    email: '',
-    streetAddress: '',
-    city: '',
-    state: 'SC',
+    projectType: '',
     zipCode: '',
-    serviceType: '',
-    budgetRange: '',
-    timeframe: '',
-    referralSource: '',
-    description: '',
-    preferredDate: '',
-    preferredTime: '',
     website: '' // Honeypot field
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [uploadError, setUploadError] = useState<string>('');
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -93,56 +71,14 @@ export default function ContactPage() {
 
     if (!formData.city.trim()) {
       newErrors.city = 'City is required';
-    }
-
-    if (!formData.state.trim()) {
-      newErrors.state = 'State is required';
+    }projectType) {
+      newErrors.projectType = 'Project type is required';
     }
 
     if (!formData.zipCode.trim()) {
       newErrors.zipCode = 'Zip code is required';
     } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
-      newErrors.zipCode = 'Please enter a valid zip code';
-    }
-
-    if (!formData.serviceType) {
-      newErrors.serviceType = 'Service type is required';
-    }
-
-    if (!formData.budgetRange) {
-      newErrors.budgetRange = 'Budget range is required';
-    }
-
-    if (!formData.timeframe) {
-      newErrors.timeframe = 'Project timeframe is required';
-    }
-
-    if (!formData.preferredDate) {
-      newErrors.preferredDate = 'Preferred consultation date is required';
-    }
-
-    if (!formData.preferredTime) {
-      newErrors.preferredTime = 'Preferred time is required';
-    }
-
-    if (!formData.referralSource) {
-      newErrors.referralSource = 'Please let us know how you heard about us';
-    }
-
-    if (!formData.description.trim()) {
-      newErrors.description = 'Project description is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Honeypot check - if filled, it's a bot
-    if (formData.website) {
-      console.log('Spam detected: honeypot filled');
+      newErrors.zipCode = 'Please enter a valid zip code
       setErrors({ submit: 'Something went wrong. Please try again.' });
       return;
     }
@@ -169,20 +105,12 @@ export default function ContactPage() {
         }
       }
 
-      // Use FormData for file upload support
+      // Use FormData for backend submission
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-      // Combine address fields for backend
-      const fullAddress = `${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.zipCode}`;
-      formDataToSend.append('address', fullAddress);
       formDataToSend.append('recaptchaToken', recaptchaToken);
-      
-      // Append files
-      uploadedFiles.forEach((file, index) => {
-        formDataToSend.append(`file${index}`, file);
-      });
 
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -191,28 +119,16 @@ export default function ContactPage() {
 
       if (response.ok) {
         // Track successful contact form submission
-        analytics.trackContactForm(formData.serviceType || 'general');
+        analytics.trackContactForm(formData.projectType || 'general');
         
         setSubmitSuccess(true);
         setFormData({
           name: '',
           phone: '',
-          email: '',
-          streetAddress: '',
-          city: '',
-          state: 'SC',
+          projectType: '',
           zipCode: '',
-          serviceType: '',
-          budgetRange: '',
-          timeframe: '',
-          referralSource: '',
-          description: '',
-          preferredDate: '',
-          preferredTime: '',
           website: ''
         });
-        setUploadedFiles([]);
-        setUploadError('');
         // Scroll to top to show success message
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -226,40 +142,12 @@ export default function ContactPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUploadError('');
-    const files = Array.from(e.target.files || []);
-    
-    // Validate file size (max 10MB per file)
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    const invalidFiles = files.filter(file => file.size > maxSize);
-    
-    if (invalidFiles.length > 0) {
-      setUploadError(`Some files are too large. Maximum size is 10MB per file.`);
-      return;
-    }
-    
-    // Limit total files to 5
-    const totalFiles = uploadedFiles.length + files.length;
-    if (totalFiles > 5) {
-      setUploadError(`Maximum 5 files allowed. You can upload ${5 - uploadedFiles.length} more file(s).`);
-      return;
-    }
-    
-    setUploadedFiles(prev => [...prev, ...files]);
-  };
-
-  const removeFile = (index: number) => {
-    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
-    setUploadError('');
   };
 
   if (submitSuccess) {

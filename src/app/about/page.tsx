@@ -4,22 +4,16 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { absoluteUrl } from '@/lib/seo/site';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'About Burch Contracting | Upstate SC Contractor',
+  title: 'About Scott Burch | Upstate SC Contractor Since 1995',
   description:
-    'Learn about Burch Contracting, an Upstate SC contractor serving Simpsonville, Fountain Inn, and nearby homeowners.',
+    'Meet C. Scott Burch, owner of Burch Contracting. Serving Upstate SC homeowners since 1995 with honest, quality construction work.',
   alternates: {
     canonical: absoluteUrl('/about'),
   },
 };
-
-const trustPoints = [
-  '35+ years serving Upstate South Carolina homeowners',
-  'Licensed and insured residential remodeling team',
-  'Clear communication from estimate through final walkthrough',
-  'Focused on kitchens, bathrooms, additions, decks, porches, basements, and handyman work',
-];
 
 export default function AboutPage() {
   return (
@@ -27,22 +21,22 @@ export default function AboutPage() {
       <section className="bg-linear-to-br from-slate-900 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="mb-6 text-4xl font-bold md:text-6xl">About Burch Contracting</h1>
+            <h1 className="mb-6 text-4xl font-bold md:text-6xl">About Scott Burch</h1>
             <p className="text-lg text-blue-100 md:text-xl mb-6">
-              We help homeowners in Simpsonville, Fountain Inn, Greenville County, and Laurens County plan and build high-value remodeling projects with clear scope and dependable craftsmanship.
+              I've been building garages, additions, decks, and screened porches in Upstate South Carolina since 1995. I'm not a franchise. I'm not a call center. When you call, you're talking to me.
             </p>
             <div className="flex flex-wrap items-center gap-4 text-sm md:text-base">
-              <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
-                <Icon name="User" size={18} />
-                <span className="font-semibold">Owner: C. Scott Burch</span>
-              </div>
               <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
                 <Icon name="Award" size={18} />
                 <span className="font-semibold">SC License #CLG118679</span>
               </div>
               <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
                 <Icon name="Clock" size={18} />
-                <span className="font-semibold">Serving Upstate SC Since 1995</span>
+                <span className="font-semibold">30+ Years Experience</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
+                <Icon name="MapPin" size={18} />
+                <span className="font-semibold">Based in Gray Court, SC</span>
               </div>
             </div>
           </div>
@@ -50,38 +44,163 @@ export default function AboutPage() {
       </section>
 
       <Section background="white" padding="lg">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <Card>
-            <h2 className="mb-4 text-3xl font-bold text-gray-900">What Homeowners Can Expect</h2>
-            <p className="mb-5 leading-relaxed text-gray-700">
-              Every project starts with practical planning. We focus on realistic budgets, transparent timelines, and scope decisions that match your goals, so you can move forward with confidence.
-            </p>
-            <div className="space-y-3">
-              {trustPoints.map((point) => (
-                <div key={point} className="flex items-start gap-3 rounded-lg bg-blue-50 p-3 text-gray-700">
-                  <Icon name="BadgeCheck" size={18} className="mt-0.5 text-blue-700" />
-                  <span>{point}</span>
-                </div>
-              ))}
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1.5fr]">
+          {/* Photo placeholder - replace with actual photo */}
+          <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-gray-200 shadow-xl">
+            <Image
+              src="/images/scott-burch-contractor.jpg"
+              alt="C. Scott Burch on job site"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 400px"
+              priority
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-6">
+              <p className="text-white font-semibold text-lg">C. Scott Burch</p>
+              <p className="text-blue-200 text-sm">Owner & Lead Contractor</p>
             </div>
-          </Card>
+          </div>
 
-          <Card className="border-blue-200 bg-linear-to-br from-blue-50 to-cyan-50">
-            <h2 className="mb-3 text-2xl font-bold text-gray-900">Start With a Free Estimate</h2>
-            <p className="mb-5 text-gray-700">
-              If you are planning a kitchen remodel, bathroom renovation, room addition, deck, screened porch, basement finish, or handyman project, we are ready to help.
-            </p>
-            <div className="space-y-3">
-              <Button variant="primary" href="/contact" fullWidth>
-                <Icon name="ClipboardEdit" size={18} />
-                Request Free Estimate
-              </Button>
-              <Button variant="outline" href="tel:(864) 724-4600" fullWidth>
-                <Icon name="Phone" size={18} />
-                Call (864) 724-4600
-              </Button>
+          <div>
+            <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">Why I Started Burch Contracting</h2>
+            <div className="space-y-4 text-gray-700 leading-relaxed">
+              <p>
+                I started framing houses in 1995, learned the trade from the ground up, and got my general contractor's license because I was tired of seeing homeowners get burned by contractors who overpromise and underdeliver.
+              </p>
+              <p>
+                I don't run a big operation with dozens of crews. It's me, a small team of trusted subs I've worked with for years, and a commitment to doing the work right the first time. No shortcuts. No surprises.
+              </p>
+              <p>
+                When you hire Burch Contracting, you're not getting a salesperson who disappears after you sign. You're getting me on your job site, making sure every detail is done to code and built to last.
+              </p>
+              <p className="font-semibold text-gray-900">
+                That's the difference between a local contractor and a franchise operation. I live here. My reputation is on every garage, addition, and deck I build.
+              </p>
             </div>
-          </Card>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <Card className="border-blue-200 bg-blue-50">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon name="BadgeCheck" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Licensed & Insured</h3>
+                    <p className="text-sm text-gray-700">SC license #CLG118679, fully insured for your protection</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-green-200 bg-green-50">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon name="Users" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Local Team</h3>
+                    <p className="text-sm text-gray-700">Same trusted subcontractors for years, not random day labor</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-orange-200 bg-orange-50">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon name="Phone" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Direct Access</h3>
+                    <p className="text-sm text-gray-700">Call me directly, no call centers or sales reps</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="border-purple-200 bg-purple-50">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Icon name="ShieldCheck" size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-1">Quality Work</h3>
+                    <p className="text-sm text-gray-700">Built to code, built to last, no shortcuts ever</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section background="gray" padding="lg">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-3xl font-bold text-gray-900 text-center md:text-4xl">What You Can Expect</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="bg-white">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-1">
+                  <Icon name="Check" size={18} className="text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Honest Estimates</h3>
+                  <p className="text-gray-600">No hidden fees, no surprise change orders. What I quote is what you pay unless you change the scope.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-1">
+                  <Icon name="Check" size={18} className="text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Clear Communication</h3>
+                  <p className="text-gray-600">I answer my phone. I return calls. You'll know what's happening every step of the way.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-1">
+                  <Icon name="Check" size={18} className="text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">On-Site Oversight</h3>
+                  <p className="text-gray-600">I'm on your job regularly, checking quality and making sure we're on schedule.</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-1">
+                  <Icon name="Check" size={18} className="text-blue-700" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Clean Work Sites</h3>
+                  <p className="text-gray-600">We clean up daily. Your property is respected, not treated like a construction zone dump.</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </Section>
+
+      <Section background="blue" padding="lg">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-white mb-4 md:text-4xl">Ready to Talk About Your Project?</h2>
+          <p className="text-white text-lg mb-8">
+            Call me directly at (864) 724-4600 or request a free estimate online. I'll visit your property, listen to what you want, and give you an honest assessment.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="ctaLight" size="lg" href="/contact">
+              Request Free Estimate
+            </Button>
+            <Button variant="outline" size="lg" href="tel:(864) 724-4600" className="border-white text-white hover:bg-white hover:text-blue-900">
+              <Icon name="Phone" size={18} />
+              Call (864) 724-4600
+            </Button>
+          </div>
         </div>
       </Section>
     </>
