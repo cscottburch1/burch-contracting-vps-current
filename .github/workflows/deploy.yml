@@ -66,4 +66,23 @@ jobs:
               pm2 start npm --name burch-contracting --cwd "$APP_CWD" -- start
             fi
             pm2 save
+
+            # Wait for app readiness before running full smoke checks
+            HEALTH_URL="https://burchcontracting.com/api/health"
+            for i in {1..12}; do
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL" || true)
+              if [ "$STATUS" = "200" ]; then
+                echo "Health check ready: $HEALTH_URL"
+                break
+              fi
+              if [ "$i" -eq 12 ]; then
+                echo "Health check failed after waiting: $HEALTH_URL (last status: $STATUS)"
+                exit 1
+              fi
+              echo "Waiting for health check ($i/12), last status: $STATUS"
+              sleep 5
+            done
+
+            # Full production smoke checks; fail deploy if any endpoint fails
+            npm run verify:production -- --base-url=https://burchcontracting.com
             echo "Deploy finished at $(date)"
