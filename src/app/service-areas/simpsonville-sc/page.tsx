@@ -64,7 +64,33 @@ export default function SimpsOnvillePage() {
             For over 30 years, Burch Contracting has served Simpsonville homeowners with quality craftsmanship and clear communication. We understand Simpsonville's neighborhoods, building codes, and homeowner priorities.
           </p>
         </div>
-
+        
+      {/* Services */}
+      <Section background="gray" padding="lg">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Services for Simpsonville</h2>
+        <p className="text-gray-600 mb-8 max-w-3xl">
+          We deliver all our core services throughout Simpsonville:
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            { title: 'Home Additions', href: '/additions', desc: 'Family rooms, bedrooms & kitchen expansions' },
+            { title: 'Garages', href: '/garages', desc: 'Detached & attached garage construction' },
+            { title: 'Outdoor Living', href: '/outdoor-living', desc: 'Decks, screened porches & patios' },
+            { title: 'Remodeling', href: '/remodeling', desc: 'Kitchen & bathroom renovations' },
+            { title: 'Commercial Upfits', href: '/commercial-upfits', desc: 'Retail, office & restaurant build-outs' },
+          ].map((service) => (
+            <Link
+              key={service.href}
+              href={service.href}
+              className="block p-4 rounded-lg border border-gray-300 hover:border-blue-500 hover:shadow-lg transition-all bg-white"
+            >
+              <h3 className="font-bold text-slate-900 mb-2">{service.title}</h3>
+              <p className="text-gray-600 text-sm mb-3">{service.desc}</p>
+              <span className="text-blue-700 font-semibold text-sm">Learn More →</span>
+            </Link>
+          ))}
+        </div>
+ 
         <div className="grid gap-6 md:grid-cols-2 mb-12">
           <Card className="border border-gray-200">
             <h3 className="text-xl font-bold text-slate-900 mb-3">About Simpsonville</h3>
