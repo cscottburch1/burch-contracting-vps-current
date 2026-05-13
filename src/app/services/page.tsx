@@ -30,7 +30,18 @@ export default function ServicesPage() {
     { name: 'Services & Pricing', url: absoluteUrl('/services') },
   ]);
 
-  const servicesCatalog = {
+  const servicesCatalog: {
+    "@type": "OfferCatalog";
+    name: string;
+    itemListElement: Array<{
+      "@type": "Offer";
+      itemOffered: {
+        "@type": "Service";
+        name: string;
+        description: string;
+      };
+    }>;
+  } = {
     "@type": "OfferCatalog",
     "name": "Construction Services",
     "itemListElement": serviceHubPages.map(service => ({
@@ -39,7 +50,6 @@ export default function ServicesPage() {
         "@type": "Service",
         "name": service.service.serviceName,
         "description": service.shortDescription,
-        "url": absoluteUrl(service.path),
       }
     }))
   };
