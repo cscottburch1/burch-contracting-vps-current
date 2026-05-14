@@ -119,7 +119,7 @@ export default function ScreenedPorchesPage() {
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <div className="text-3xl font-bold text-blue-900 mb-2">200+</div>
+              <div className="text-3xl font-bold text-blue-900 mb-2">50+</div>
               <div className="text-sm text-gray-700">Screened Porches Built</div>
             </div>
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">

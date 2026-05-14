@@ -75,7 +75,7 @@ export default function AboutPage() {
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">Why I Started Burch Contracting</h2>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
-                I started framing houses in 1995, learned the trade from the ground up, and got my general contractor's license because I was tired of seeing homeowners get burned by contractors who overpromise and underdeliver.
+                I started as a construction worker in 1987, learned the trade from the ground up, and got my residential builders license in 1995. Then later in 2014, my general contractor's license because I was tired of seeing homeowners get burned by contractors who overpromise and underdeliver.
               </p>
               <p>
                 I don't run a big operation with dozens of crews. It's me, a small team of trusted subs I've worked with for years, and a commitment to doing the work right the first time. No shortcuts. No surprises.
