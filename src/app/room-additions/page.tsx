@@ -12,7 +12,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Room Additions | Primary Suites | Guest Suites | Greenville, Mauldin, Simpsonville and Fountain Inn SC',
   description: 'Professional room additions in Greenville, Mauldin, Simpsonville, Fountain Inn. Master suites, sunrooms, in-law suites. $150-300/sqft. 30+ years experience. Licensed, insured.',
-  alternates: { canonical: absoluteUrl('/additions') },
+  alternates: { canonical: absoluteUrl('/room-additions') },
   openGraph: {
     title: 'Room Additions - Greenville, Mauldin, Simpsonville and Fountain Inn SC | Burch Contracting',
     description: 'Expand your living space with custom room additions. Expert construction with proper foundations, matching exteriors, and seamless integration. 30+ years building homes in Upstate SC.',

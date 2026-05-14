@@ -7,11 +7,21 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 export const metadata: Metadata = {
   title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
   description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 27 garages built since 1995. 2-car, 3-car, detached garages & apartments. Licensed, insured. Free estimates.',
-  alternates: { canonical: absoluteUrl('/garages') },
-  robots: { index: false, follow: true },
+  alternates: { canonical: absoluteUrl('/garage-builder') },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'Garage Builder in Upstate SC | Detached & Garage Apartments',
-    description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 109 garages built since 1995. Free estimates.',
+    description: 'Professional garage construction in Simpsonville, Greenville & Fountain Inn. 27 garages built since 1995. Free estimates.',
     url: absoluteUrl('/garage-builder'),
     type: 'website',
   },
@@ -119,7 +129,7 @@ export default function GarageBuilderPage() {
           {/* Key Stats */}
           <div className="grid md:grid-cols-4 gap-6 mt-8">
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <div className="text-3xl font-bold text-blue-900 mb-2">109</div>
+              <div className="text-3xl font-bold text-blue-900 mb-2">27</div>
               <div className="text-sm text-gray-700">Garages Built Since 1995</div>
             </div>
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">

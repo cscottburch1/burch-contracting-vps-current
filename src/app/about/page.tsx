@@ -10,9 +10,14 @@ import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 export const metadata: Metadata = {
   title: 'About Scott Burch | Upstate SC Contractor Since 1995',
   description:
-    'Meet C. Scott Burch, owner of Burch Contracting. Serving Upstate SC homeowners since 1995 with honest, quality construction work.',
+    'Meet Scott Burch — licensed SC general contractor (CLG118679) with 35+ years building garages, additions, decks, and screened porches across Upstate SC.',
   alternates: {
     canonical: absoluteUrl('/about'),
+  },
+  openGraph: {
+    url: absoluteUrl('/about'),
+    title: 'About Scott Burch | Licensed SC Contractor | Burch Contracting',
+    type: 'website',
   },
 };
 
