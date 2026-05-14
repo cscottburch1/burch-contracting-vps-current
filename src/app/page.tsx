@@ -213,7 +213,7 @@ export default async function HomePage() {
             </Card>
           </Link>
 
-          <Link href="/garages" className="group block">
+          <Link href="/garage-builder" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-orange-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-orange-100 rounded-2xl flex items-center justify-center group-hover:bg-orange-600 transition-colors">
@@ -233,7 +233,7 @@ export default async function HomePage() {
             </Card>
           </Link>
 
-          <Link href="/additions" className="group block">
+          <Link href="/room-additions" className="group block">
             <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-purple-600">
               <div className="mb-4">
                 <div className="w-20 h-20 mx-auto bg-purple-100 rounded-2xl flex items-center justify-center group-hover:bg-purple-600 transition-colors">
