@@ -119,9 +119,9 @@ export default function GarageBuilderPage() {
       >
         {/* Hero Section */}
         <section className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Professional Garage Builder in Upstate SC
-          </h1>
+          </h2>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
             I've built 27 detached garages across Greenville County since 1995 - from basic 2-car storage garages to premium 3-car workshops with heated living space above. Whether you need vehicle storage in Simpsonville, a workshop in Fountain Inn, or a garage apartment for rental income in Mauldin, I'll design and build a garage that matches your home's architecture and meets your budget.
           </p>

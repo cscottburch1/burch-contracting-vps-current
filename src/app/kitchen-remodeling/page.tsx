@@ -127,9 +127,9 @@ export default function KitchenRemodelingPage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Professional Kitchen Remodeling in Upstate SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've remodeled 25+ kitchens across Greenville County since 1995 - from simple cabinet and countertop refreshes to complete gut renovations with new layouts, custom cabinetry, and high-end appliances. Every project starts with understanding how you cook and entertain, then designing a functional, beautiful space that fits your budget. I coordinate all trades (electrical, plumbing, tile, countertops) so you work with one contractor from design through final cleanup.
             </p>

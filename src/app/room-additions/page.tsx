@@ -127,9 +127,9 @@ export default function RoomAdditionsPage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Professional Room Additions in Upstate SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've built 23 room additions across Greenville County since 1995 - master suites, sunrooms, in-law apartments, and family room expansions. Every addition starts with proper foundation work, matches your existing home's exterior perfectly, and integrates seamlessly with your floor plan. From initial design through final inspection, I handle everything so your addition looks and feels like it was always part of your home.
             </p>

@@ -109,9 +109,9 @@ export default function AduBuilderPage() {
       >
         {/* Hero Section */}
         <section className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Professional ADU Builder in Simpsonville & Upstate SC
-          </h1>
+          </h2>
           <p className="text-xl text-gray-700 leading-relaxed mb-8">
             I've built 7 accessory dwelling units across Greenville County since 2015 - from garage apartments above 2-car garages to standalone backyard cottages with full kitchens and baths. Whether you need a rental property for income ($850-$1,500/month), in-law suite for aging parents, or guest house for extended family, I handle design, permitting, zoning compliance, and turn-key construction.
           </p>

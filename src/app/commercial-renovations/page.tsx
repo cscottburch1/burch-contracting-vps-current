@@ -199,9 +199,9 @@ export default function CommercialRenovationsPage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Commercial Tenant Improvements & Upfits in Upstate SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've completed 47 commercial tenant improvements across Greenville, Simpsonville, Greer, and surrounding Upstate SC communities since 1995. From office build-outs to retail upfits, medical office renovations to restaurant fit-outs, I deliver on-time, on-budget projects with minimal disruption to your business operations.
             </p>

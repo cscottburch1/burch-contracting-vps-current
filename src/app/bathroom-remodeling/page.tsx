@@ -127,9 +127,9 @@ export default function BathroomRemodelingPage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Professional Bathroom Remodeling in Upstate SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've remodeled 60 bathrooms across Greenville County since 1995 - from simple tub-to-shower conversions to complete luxury primary bathroom transformations. Every project includes meticulous tile work, proper waterproofing, modern fixtures, and attention to the details that make bathrooms both beautiful and functional. I coordinate plumbing, electrical, tile, and finish work so you work with one contractor from design through final grout sealing.
             </p>

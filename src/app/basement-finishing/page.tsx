@@ -127,9 +127,9 @@ export default function BasementFinishingPage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Professional Basement Finishing in Upstate SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've finished 127 basements across Greenville County since 1995. From simple storage spaces to luxury home theaters, I handle all aspects: egress windows, moisture control, electrical, plumbing, and complete interior finishing. Every project code-compliant and built to last.
             </p>

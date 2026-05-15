@@ -147,9 +147,9 @@ export default function CommercialRenovationsSimpsonvillePage() {
         {/* Hero Section */}
         <Section background="white" padding="lg">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Commercial Tenant Improvements in Simpsonville, SC
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8">
               I've completed 12 commercial tenant improvement projects in Simpsonville since 1995, serving businesses along Grandview Drive, Fairview Road, and throughout downtown. From office build-outs near Five Forks to retail upfits in Simpsonville Town Center, I deliver quality commercial construction with minimal disruption to your operations.
             </p>
