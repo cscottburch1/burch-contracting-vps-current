@@ -8,7 +8,6 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import DeferredMobileStickyCta from '@/components/DeferredMobileStickyCta';
 import { absoluteUrl, siteConfig } from "@/lib/seo/site";
-import { generateLocalBusinessSchema } from '@/lib/schema-builders';
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -118,17 +117,97 @@ export default function RootLayout({
         {/* AI/LLM discovery reference */}
         <link rel="llms-txt" href="/llms.txt" type="text/plain" />
         
-        {/* LocalBusiness Schema - Sitewide - Inline for immediate parsing */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateLocalBusinessSchema())
-          }}
-        />
       </head>
       <body
         className={`${geistMono.variable} antialiased`}
       >
+        <Script
+          id="local-business-schema"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "LocalBusiness",
+                  "@id": "https://burchcontracting.com/#business",
+                  "name": "Burch Contracting",
+                  "url": "https://burchcontracting.com",
+                  "logo": { "@type": "ImageObject", "url": "https://burchcontracting.com/logo-transparent.webp" },
+                  "image": "https://burchcontracting.com/og-image.webp",
+                  "description": "Licensed SC general contractor (CLG118679) specializing in garage construction, room additions, decks, screened porches, remodeling, and commercial upfits across Upstate South Carolina since 1995.",
+                  "telephone": "+18647244600",
+                  "email": "estimates@burchcontracting.com",
+                  "foundingDate": "1995",
+                  "hasCredential": "SC General Contractor License CLG118679",
+                  "award": "BBB Accredited Business — A+ Rating since 2014",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "1095 Water Tank Rd",
+                    "addressLocality": "Gray Court",
+                    "addressRegion": "SC",
+                    "postalCode": "29645",
+                    "addressCountry": "US"
+                  },
+                  "geo": { "@type": "GeoCoordinates", "latitude": 34.6341746, "longitude": -82.0744941 },
+                  "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:00" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "12:00" }
+                  ],
+                  "areaServed": [
+                    {"@type": "City", "name": "Simpsonville", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Mauldin", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Fountain Inn", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Woodruff", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Gray Court", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Laurens", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Greenville", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Five Forks", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Clinton", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
+                    {"@type": "City", "name": "Greer", "containedInPlace": {"@type": "State", "name": "South Carolina"}}
+                  ],
+                  "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Construction Services",
+                    "itemListElement": [
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Garage Construction", "url": "https://burchcontracting.com/garage-builder"}},
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Room Additions", "url": "https://burchcontracting.com/room-additions"}},
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Deck Building", "url": "https://burchcontracting.com/outdoor-living/decks"}},
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Screened Porch Installation", "url": "https://burchcontracting.com/outdoor-living/screened-porches"}},
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Home Remodeling", "url": "https://burchcontracting.com/remodeling"}},
+                      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Commercial Tenant Upfits", "url": "https://burchcontracting.com/commercial-upfits"}}
+                    ]
+                  },
+                  "sameAs": [
+                    "https://www.facebook.com/burchcontracting",
+                    "https://www.instagram.com/burchcontracting",
+                    "https://www.linkedin.com/company/burch-contracting",
+                    "https://www.bbb.org/us/sc/gray-court/profile/home-additions/burch-contracting-llc-0673-90007875",
+                    "https://www.houzz.com/professionals/general-contractors/burch-contracting-pfvwus-pf~1385114786"
+                  ]
+                },
+                {
+                  "@type": "Person",
+                  "@id": "https://burchcontracting.com/#scott-burch",
+                  "name": "C. Scott Burch",
+                  "jobTitle": "Owner and Lead Contractor",
+                  "worksFor": {"@id": "https://burchcontracting.com/#business"},
+                  "hasCredential": "SC General Contractor License CLG118679",
+                  "knowsAbout": ["garage construction","room additions","deck building","screened porches","home remodeling","commercial upfits"],
+                  "url": "https://burchcontracting.com/about"
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://burchcontracting.com/#website",
+                  "url": "https://burchcontracting.com",
+                  "name": "Burch Contracting",
+                  "publisher": {"@id": "https://burchcontracting.com/#business"}
+                }
+              ]
+            })
+          }}
+        />
         <GoogleAnalytics />
         <AnalyticsEvents />
         <a
