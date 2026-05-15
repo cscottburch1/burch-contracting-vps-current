@@ -97,6 +97,66 @@ export default function ScreenedPorchesPage() {
         }}
       />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How much does a screened porch cost in Simpsonville SC?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Screened porches in Simpsonville cost $18,000-$55,000 depending on size and materials. A basic 12x16 aluminum-framed porch averages $22,000-$28,000. Premium wood-framed porches with ceiling fans and tile flooring run $35,000-$55,000. Converting an existing deck is typically 30% less expensive than building from scratch."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Aluminum or wood framing for screened porches — what's better?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Aluminum framing lasts longer in SC's humidity (30+ years vs 20-25 for wood) and requires no painting or staining. Wood framing offers more design flexibility and a traditional look but needs maintenance every 3-5 years. 70% of my Upstate SC clients choose aluminum."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How long does screened porch construction take?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Most screened porches take 2-4 weeks from permit to completion. Converting an existing deck takes 1-2 weeks. Permitting in Greenville County takes 7-12 business days."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can you convert my existing deck to a screened porch?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, if your deck framing is structurally sound and meets code for the added weight. I inspect joists, beams, and footings first. Converting an existing 12x16 deck costs $18,000-$28,000 vs $28,000-$42,000 to build new. About 40% of my screened porch projects are deck conversions."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What screening material lasts longest in South Carolina?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Fiberglass 20x20 mesh screening lasts 15-20 years in Upstate SC and resists tearing better than aluminum. Pet-resistant screening (TuffScreen or Super Screen) lasts 20+ years but costs 40% more."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a building permit for a screened porch?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, screened porches require permits in Greenville County, Simpsonville, Fountain Inn, and Mauldin. We handle all permitting - approval takes 7-14 business days."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <UniversalPageTemplate
         title="Professional Screened Porch Builder in Upstate SC"
         breadcrumbs={breadcrumbs}

@@ -97,6 +97,66 @@ export default function GarageBuilderPage() {
         }}
       />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How much does a 2-car detached garage cost in Simpsonville SC?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A standard 20x20 2-car detached garage costs $28,000-$42,000 in Simpsonville depending on materials and features. Basic versions with standard roofing and vinyl siding start at $28K. Premium garages with architectural shingles, board-and-batten siding, and attic storage run $35K-$42K. Prices include foundation, framing, roofing, siding, garage doors, and one entry door."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can you build a garage with an apartment above it?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, I build 2-story garage apartments throughout Upstate SC. A 2-car garage (24x24) with a 1-bedroom apartment above costs $85,000-$145,000 depending on finishes. The apartment includes full kitchen, bathroom, HVAC, and separate entrance. These are popular for rental income ($850-$1,200/month in Simpsonville) or in-law suites."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How long does garage construction take?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Most detached garages take 6-10 weeks from permit to completion. A basic 2-car garage takes 3-4 weeks of construction after permitting (which requires 10-14 business days in Greenville County). 3-car garages or those with apartments above take 8-14 weeks."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a building permit for a detached garage?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, all detached garages require building permits in Greenville County, Simpsonville, Fountain Inn, and Mauldin. Permits cover foundation, structural framing, electrical, and roofing. We handle all permitting - approval takes 10-16 business days."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What's the best foundation for a garage in South Carolina?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Reinforced concrete slab foundations work best for Upstate SC garages - they handle our clay-heavy soil and provide level floors for vehicles. Slabs are 4-6 inches thick with rebar grid and wire mesh."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I add electricity and heating to my garage?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, we run electrical service from your main panel or install a sub-panel for larger garages. Standard package includes 4-6 outlets, 3 ceiling lights, and garage door openers (wired). Mini-split heat pumps work well for climate control - $2,800-$4,500 installed for 2-car garages."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <UniversalPageTemplate
         title="Professional Garage Builder in Upstate SC"
         breadcrumbs={breadcrumbs}

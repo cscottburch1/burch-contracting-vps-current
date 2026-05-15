@@ -106,6 +106,66 @@ export default function RoomAdditionsPage() {
         }}
       />
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How much does a room addition cost in Greenville County?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Room additions in Upstate SC cost $150-300 per square foot depending on complexity and finishes. A standard 16x20 master bedroom addition (320 sq ft) averages $55,000-$75,000 including foundation, framing, exterior siding/roofing to match your home, electrical, HVAC extension, insulation, drywall, flooring, and trim."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a building permit for a room addition?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, all room additions require building permits in Greenville County, Simpsonville, Fountain Inn, and Mauldin. I handle all permitting - typical approval takes 10-15 business days. Permit costs run $850-$1,800 depending on addition size."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What type of foundation is best for room additions in Upstate SC?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "In Upstate SC, I most commonly use continuous footings with crawl space, slab-on-grade, or full basement extension. Choice depends on your existing foundation type and lot slope. Our Piedmont clay soil requires footings extending 18-24 inches below grade."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do you handle HVAC for a room addition?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "For additions under 400 sq ft, we typically extend existing ductwork if your system has spare capacity. Larger additions need a mini-split system ($2,500-$4,500 installed) or a zone damper system."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How long does a room addition take to complete?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Room additions typically take 8-16 weeks from permit submission to final inspection. Timeline: 2 weeks permits, 1-2 weeks foundation, 3-4 weeks framing and exterior, 2-3 weeks rough-in, 2 weeks drywall, 2-3 weeks interior finishes."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What kind of ROI can I expect from a room addition?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Room additions in Greenville County typically return 75-85% of project cost in added home value. A $70,000 master suite addition adds approximately $52,000-$60,000 in appraised value. ROI is strongest for master bedroom suites (78-85% return) and bathroom additions (82-87% return)."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
       <UniversalPageTemplate
         title="Room Addition Contractor - Greenville, Mauldin, Simpsonville and Fountain Inn SC"
         description="Expand your living space with custom room additions built to match your home's style and structure."
