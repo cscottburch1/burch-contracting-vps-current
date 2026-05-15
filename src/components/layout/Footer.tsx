@@ -85,9 +85,9 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/additions" className="hover:text-white">Additions</Link></li>
-              <li><Link href="/garages" className="hover:text-white">Garages</Link></li>
-              <li><Link href="/outdoor-living" className="hover:text-white">Outdoor Living</Link></li>
+              <li><Link href="/room-additions" className="hover:text-white">Additions</Link></li>
+              <li><Link href="/garage-builder" className="hover:text-white">Garages</Link></li>
+              <li><Link href="/services" className="hover:text-white">Outdoor Living</Link></li>
               <li><Link href="/remodeling" className="hover:text-white">Remodeling</Link></li>
               <li><Link href="/commercial-upfits" className="hover:text-white">Commercial Upfits</Link></li>
             </ul>
@@ -100,7 +100,7 @@ export const Footer: React.FC = () => {
               <li><Link href="/service-areas/mauldin-sc" className="hover:text-white">Mauldin, SC</Link></li>
               <li><Link href="/service-areas/fountain-inn-sc" className="hover:text-white">Fountain Inn, SC</Link></li>
               <li><Link href="/service-areas/woodruff-sc" className="hover:text-white">Woodruff, SC</Link></li>
-              <li><Link href="/service-areas" className="hover:text-white">All Service Areas</Link></li>
+              <li><Link href="/areas" className="hover:text-white">All Service Areas</Link></li>
             </ul>
           </div>
         </div>
@@ -108,8 +108,8 @@ export const Footer: React.FC = () => {
         {/* Quick links row */}
         <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-sm text-gray-400 border-b border-gray-800 pb-8">
           <Link href="/about" className="hover:text-white">About</Link>
-          <Link href="/projects" className="hover:text-white">Projects</Link>
-          <Link href="/pricing" className="hover:text-white">Pricing</Link>
+          <Link href="/work" className="hover:text-white">Projects</Link>
+          <Link href="/services" className="hover:text-white">Pricing</Link>
           <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
           <Link href="/terms-of-service" className="hover:text-white">Terms of Service</Link>
           <Link href="/editorial-policy" className="hover:text-white">Editorial Policy</Link>
