@@ -95,4 +95,9 @@ jobs:
 
             # Full production smoke checks; fail deploy if any endpoint fails
             npm run verify:production -- --base-url=https://burchcontracting.com
+            
+            # Submit all pages to IndexNow for immediate indexing
+            echo "Submitting URLs to IndexNow..."
+            npm run indexnow:ping || echo "Warning: IndexNow submission failed (non-fatal)"
+            
             echo "Deploy finished at $(date)"
