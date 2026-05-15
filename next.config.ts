@@ -40,11 +40,18 @@ const nextConfig: NextConfig = {
   // Permanent redirect: /calculator hub → /calculators hub
   async redirects() {
     return [
-      {
-        source: '/calculator',
-        destination: '/calculators',
-        permanent: true,
-      },
+      { source: '/calculator', destination: '/calculators', permanent: true },
+      { source: '/garages', destination: '/garage-builder', permanent: true },
+      { source: '/additions', destination: '/room-additions', permanent: true },
+      { source: '/outdoor-living', destination: '/services', permanent: true },
+      { source: '/outdoor-living/covered-patios', destination: '/outdoor-living/screened-porches', permanent: true },
+      { source: '/service-areas', destination: '/areas', permanent: true },
+      { source: '/service-areas/simpsonville-sc', destination: '/service-areas/simpsonville', permanent: true },
+      { source: '/service-areas/mauldin-sc', destination: '/areas', permanent: true },
+      { source: '/service-areas/fountain-inn-sc', destination: '/areas', permanent: true },
+      { source: '/service-areas/woodruff-sc', destination: '/areas', permanent: true },
+      { source: '/projects', destination: '/work', permanent: true },
+      { source: '/pricing', destination: '/services', permanent: true },
     ];
   },
 
