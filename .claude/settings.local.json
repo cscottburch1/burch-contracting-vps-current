@@ -3,7 +3,33 @@
     "allow": [
       "Bash(npm run *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code} %{redirect_url}\\\\n\" https://burchcontracting.com/garage-builder)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code} %{redirect_url}\\\\n\" https://burchcontracting.com/room-additions)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code} %{redirect_url}\\\\n\" https://burchcontracting.com/garages)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code} %{redirect_url}\\\\n\" https://burchcontracting.com/additions)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code} %{redirect_url}\\\\n\" https://burchcontracting.com/projects)",
+      "Bash(curl -s https://burchcontracting.com/garage-builder)",
+      "Bash(curl -s https://burchcontracting.com/garages)",
+      "Bash(curl -s https://burchcontracting.com/llms.txt)",
+      "Bash(curl -s https://burchcontracting.com/portal)",
+      "Bash(gh run *)",
+      "Bash(git remote *)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code} -> %{redirect_url}\\\\n\" https://burchcontracting.com/garages)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code} -> %{redirect_url}\\\\n\" https://burchcontracting.com/additions)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code} -> %{redirect_url}\\\\n\" https://burchcontracting.com/projects)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code} -> %{redirect_url}\\\\n\" https://burchcontracting.com/pricing)",
+      "Bash(curl -sI https://burchcontracting.com/garage-builder)",
+      "Bash(curl -s https://burchcontracting.com)",
+      "Bash(curl -o /dev/null -s -w \"%{http_code}\\\\n\" -L https://burchcontracting.com/garages)",
+      "WebFetch(domain:burchcontracting.com)",
+      "Bash(git fetch *)",
+      "Bash(curl -v -o /dev/null https://burchcontracting.com/garages)",
+      "Bash(git commit --allow-empty -m ' *)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code}\\\\n\" https://burchcontracting.com/garages)",
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code}\\\\n\" https://burchcontracting.com/additions)"
     ]
   }
 }
