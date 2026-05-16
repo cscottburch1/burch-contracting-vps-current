@@ -66,3 +66,9 @@ temp_*
 build_output.txt
 build-latest.txt
 build_output_latest.txt
+
+# IDE and editor settings
+.claude/
+
+# Temporary archives
+*.zip
