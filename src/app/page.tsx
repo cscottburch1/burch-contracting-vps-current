@@ -21,9 +21,9 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Upstate SC Additions, Garages & Outdoor Living | Burch Contracting',
+  title: 'Upstate SC Contractor | Garages, Additions & Outdoor Living | Burch Contracting',
   description:
-    'Licensed Upstate SC contractor for additions, garages, decks, and screened porches. Serving Simpsonville, Mauldin, Fountain Inn, and Woodruff with free estimates.',
+    'SC licensed contractor serving Simpsonville, Mauldin, Fountain Inn & Woodruff. Decks, screened porches, room additions, garages & remodeling. Free estimates. Call (864) 724-4600.',
   alternates: {
     canonical: absoluteUrl('/'),
     languages: {
@@ -124,40 +124,32 @@ export default async function HomePage() {
           <div className="max-w-5xl mx-auto text-center">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="What Do You Need Built?"
+              aria-label="Upstate SC's Trusted Contractor for Garages, Additions & Outdoor Living"
             >
-              What Do You Need Built?
+              Upstate SC&apos;s Trusted Contractor for Garages, Additions &amp; Outdoor Living
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              Upstate SC Licensed Contractor #CLG118679. Garages, additions, decks, screened porches, remodeling, and commercial upfits.
+              Serving homeowners in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Button variant="primary" size="lg" href="/contact" className="group shadow-2xl text-lg px-10 py-5">
-                Get Free Estimate
-                <Icon name="ArrowRight" size={22} className="group-hover:translate-x-1 transition-transform" />
+                Get Your Free Estimate →
               </Button>
               <Button variant="outline" size="lg" href="/work" className="glass border-white/50 text-white hover:bg-white hover:text-gray-900 shadow-xl text-lg px-10 py-5">
-                See Recent Work
+                See Recent Projects
               </Button>
             </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-6 text-sm md:text-base text-gray-200">
-              <div className="flex items-center gap-2">
-                <Icon name="ShieldCheck" size={20} className="text-green-400" />
-                <span className="font-medium">Licensed & Insured</span>
-              </div>
-              <span className="text-gray-400">•</span>
-              <div className="flex items-center gap-2">
-                <Icon name="Award" size={20} className="text-yellow-400" />
-                <span className="font-medium">30+ Years Experience</span>
-              </div>
-              <span className="text-gray-400">•</span>
-              <div className="flex items-center gap-2">
-                <Icon name="MapPin" size={20} className="text-blue-400" />
-                <span className="font-medium">Serving Simpsonville, Mauldin, Fountain Inn & Woodruff</span>
-              </div>
+            <div className="flex flex-wrap justify-center items-center gap-3 text-sm md:text-base text-gray-200">
+              <span className="font-medium">SC Licensed General Contractor #CLG118679</span>
+              <span className="text-gray-400">·</span>
+              <span className="font-medium">Fully Insured</span>
+              <span className="text-gray-400">·</span>
+              <span className="font-medium">BBB A+ Rated</span>
+              <span className="text-gray-400">·</span>
+              <span className="font-medium">Proudly Based in Gray Court, SC</span>
             </div>
           </div>
         </div>
