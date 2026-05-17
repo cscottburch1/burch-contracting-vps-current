@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function GaragesCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Garage Calculator', href: '/calculator/garages' },
   ];
 
@@ -76,6 +76,8 @@ export default function GaragesCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <CompetitivePricingCalculator
         serviceKey="garages"

@@ -6,6 +6,8 @@
  * Default O&P: 22.5% (range: 20-25%)
  */
 
+export const PRICING_LAST_UPDATED = '2026-05-02';
+
 export const PRICING_CONFIG = {
   // Overhead & Profit
   defaultOverheadAndProfit: 0.225, // 22.5%
@@ -26,7 +28,7 @@ export const PRICING_CONFIG = {
       factor: 1.02,
       cities: ['Fountain Inn', 'Simpsonville (South)', 'Mauldin (South)'],
     },
-    simpsonyilleArea: {
+    simpsonvilleArea: {
       name: 'Simpsonville & Greenville County',
       factor: 1.07,
       cities: ['Simpsonville', 'Mauldin', 'Greenville', 'Five Forks', 'Taylors'],

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function DecksCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Deck Cost Calculator', href: '/calculator/decks' },
   ];
 
@@ -76,6 +76,8 @@ export default function DecksCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <CompetitivePricingCalculator
         serviceKey="decks"

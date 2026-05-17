@@ -384,6 +384,30 @@ export function buildCalculatorDatasetSchema(opts: CalculatorSchemaOptions) {
 }
 
 /**
+ * Build ItemList schema for the calculators hub page
+ */
+export function buildCalculatorItemListSchema(
+  calculators: Array<{ name: string; url: string; description: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Free Construction Cost Calculators — Upstate South Carolina",
+    description:
+      "Interactive cost estimators for home and commercial construction in Simpsonville, Fountain Inn, Greenville County, and Laurens County, SC.",
+    url: absoluteUrl("/calculators"),
+    numberOfItems: calculators.length,
+    itemListElement: calculators.map((calc, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: calc.name,
+      url: absoluteUrl(calc.url),
+      description: calc.description,
+    })),
+  };
+}
+
+/**
  * Build Person schema for author bylines
  * Boosts E-E-A-T signals for content authorship
  */

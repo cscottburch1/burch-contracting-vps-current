@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon, { type IconName } from '@/components/ui/Icon';
 import { siteConfig } from '@/lib/seo/site';
+import { PRICING_CONFIG, PRICING_LAST_UPDATED } from '@/lib/pricing/pricingConfig';
 
 export interface CalculatorOption {
   label: string;
@@ -28,8 +29,6 @@ interface ProjectCostCalculatorProps {
 
 type FinishLevel = 'value' | 'standard' | 'premium';
 
-const CONTRACTOR_MARKUP_RATE = 0.2;
-
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -50,17 +49,19 @@ export default function ProjectCostCalculator({
   const [quantity, setQuantity] = useState<number>(options[0]?.defaultQuantity ?? 1);
   const [finishLevel, setFinishLevel] = useState<FinishLevel>('standard');
 
+  const markupRate = PRICING_CONFIG.defaultOverheadAndProfit;
+
   const estimate = useMemo(() => {
     const baseValue = selectedOption.lowRate * quantity;
     const basePremium = selectedOption.highRate * quantity;
     const baseStandard = Math.round((baseValue + basePremium) / 2);
 
-    const value = Math.round(baseValue * (1 + CONTRACTOR_MARKUP_RATE));
-    const premium = Math.round(basePremium * (1 + CONTRACTOR_MARKUP_RATE));
-    const standard = Math.round(baseStandard * (1 + CONTRACTOR_MARKUP_RATE));
+    const value = Math.round(baseValue * (1 + markupRate));
+    const premium = Math.round(basePremium * (1 + markupRate));
+    const standard = Math.round(baseStandard * (1 + markupRate));
 
     const total = finishLevel === 'value' ? value : finishLevel === 'premium' ? premium : standard;
-    const directCosts = Math.round(total / (1 + CONTRACTOR_MARKUP_RATE));
+    const directCosts = Math.round(total / (1 + markupRate));
     const contractorMarkup = total - directCosts;
     const labor = Math.round(total * 0.46);
     const materials = total - labor;
@@ -76,7 +77,7 @@ export default function ProjectCostCalculator({
       materials,
       allowance,
     };
-  }, [finishLevel, quantity, selectedOption]);
+  }, [finishLevel, quantity, selectedOption, markupRate]);
 
   return (
     <>
@@ -90,7 +91,7 @@ export default function ProjectCostCalculator({
             <h1 className="mb-5 text-4xl font-bold leading-tight md:text-6xl">{title}</h1>
             <p className="max-w-2xl text-lg text-blue-100 md:text-xl">{intro}</p>
             <div className="mt-6 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-blue-50">
-              Built around {marketLabel} installed pricing, overhead, and a fixed 20% contractor markup.
+              Competitive local pricing for {marketLabel} — transparent {(markupRate * 100).toFixed(1)}% overhead &amp; profit.
             </div>
           </div>
         </div>
@@ -104,7 +105,7 @@ export default function ProjectCostCalculator({
               <Icon name="Calendar" size={22} className="text-blue-600" />
               <div>
                 <p className="text-sm font-semibold text-blue-900">
-                  <strong>Pricing Data Updated:</strong> April 2026 — Reflects current Upstate SC market rates, material costs, and labor pricing.
+                  <strong>Pricing data updated:</strong> {new Date(PRICING_LAST_UPDATED).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} — reflects current Upstate SC market rates, material costs, and labor pricing.
                 </p>
               </div>
             </div>
@@ -213,7 +214,7 @@ export default function ProjectCostCalculator({
                   <strong>{formatCurrency(estimate.materials)}</strong>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Contractor markup (20%)</span>
+                  <span>Overhead &amp; profit ({(markupRate * 100).toFixed(1)}%)</span>
                   <strong>{formatCurrency(estimate.contractorMarkup)}</strong>
                 </div>
                 <div className="flex items-center justify-between">
@@ -225,9 +226,7 @@ export default function ProjectCostCalculator({
                   <strong>{formatCurrency(estimate.total)}</strong>
                 </div>
                 <p className="rounded-xl bg-gray-50 p-3 text-xs leading-relaxed text-gray-600">
-                  Planning range: {formatCurrency(estimate.value)} to {formatCurrency(estimate.premium)} (includes 20%
-                  contractor markup). Final pricing will depend on site conditions, selected products, and scope
-                  confirmation.
+                  Planning range: {formatCurrency(estimate.value)} to {formatCurrency(estimate.premium)} (includes {(markupRate * 100).toFixed(1)}% overhead &amp; profit). Final pricing depends on site conditions, selected products, and scope confirmation.
                 </p>
               </div>
 

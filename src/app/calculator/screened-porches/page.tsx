@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function ScreenedPorchesCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Screened Porch Calculator', href: '/calculator/screened-porches' },
   ];
 
@@ -76,6 +76,8 @@ export default function ScreenedPorchesCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <CompetitivePricingCalculator
         serviceKey="screenedPorches"

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function BasementFinishingCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
   ];
 
@@ -79,6 +79,8 @@ export default function BasementFinishingCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <ProjectCostCalculator
         title="Basement Finishing Cost Calculator"

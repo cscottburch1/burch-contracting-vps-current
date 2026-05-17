@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function KitchenRemodelingCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
   ];
 
@@ -76,6 +76,8 @@ export default function KitchenRemodelingCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <ProjectCostCalculator
         title="Kitchen Remodeling Cost Calculator"

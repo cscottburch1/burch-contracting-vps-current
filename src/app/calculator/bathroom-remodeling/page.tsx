@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function BathroomRemodelingCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Bathroom Remodeling Calculator', href: '/calculator/bathroom-remodeling' },
   ];
 
@@ -76,6 +76,8 @@ export default function BathroomRemodelingCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <ProjectCostCalculator
         title="Bathroom Remodeling Cost Calculator"

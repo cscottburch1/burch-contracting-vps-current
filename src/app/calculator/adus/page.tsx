@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function ADUCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'ADU Calculator', href: '/calculator/adus' },
   ];
 
@@ -76,6 +76,8 @@ export default function ADUCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <ProjectCostCalculator
         title="ADU Cost Calculator"
