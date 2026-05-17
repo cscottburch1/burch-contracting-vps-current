@@ -59,7 +59,7 @@ export default function ProjectGallery({
         {projects.map((project) => (
           <Card key={project.id} className="group overflow-hidden border border-gray-200 p-0 transition-shadow hover:shadow-xl">
             {/* Image */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+            <div className="relative aspect-4/3 overflow-hidden bg-gray-100">
               <ProjectGalleryImage project={project} />
               
               {/* City Badge */}

@@ -21,9 +21,9 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Upstate SC Contractor | Garages, Additions & Outdoor Living | Burch Contracting',
+  title: 'Remodeling & Additions Upstate SC | Burch Contracting',
   description:
-    'SC licensed contractor serving Simpsonville, Mauldin, Fountain Inn & Woodruff. Decks, screened porches, room additions, garages & remodeling. Free estimates. Call (864) 724-4600.',
+    'Transform your home with Burch Contracting. We specialize in premier residential remodeling, custom additions, and garage builds across Upstate SC.',
   alternates: {
     canonical: absoluteUrl('/'),
     languages: {
@@ -124,9 +124,9 @@ export default async function HomePage() {
           <div className="max-w-5xl mx-auto text-center">
             <h1
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="Upstate SC's Trusted Contractor for Garages, Additions & Outdoor Living"
+              aria-label="Premier Residential Remodeling & Additions in Upstate SC"
             >
-              Upstate SC&apos;s Trusted Contractor for Garages, Additions &amp; Outdoor Living
+              Premier Residential Remodeling &amp; Additions in Upstate SC
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
