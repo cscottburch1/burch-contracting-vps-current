@@ -97,10 +97,13 @@ export function AdminNav() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button — sits in the top-left of the sticky header (h-16 = 64px) */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="no-print lg:hidden fixed top-4 left-4 z-60 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+        className={`no-print lg:hidden fixed top-0 left-0 z-[60] h-16 w-16 flex items-center justify-center transition-colors ${
+          mobileOpen ? 'text-white' : 'text-gray-700 hover:text-blue-600'
+        }`}
+        aria-label="Toggle menu"
       >
         {mobileOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
