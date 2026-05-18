@@ -29,7 +29,10 @@
       "Bash(curl -v -o /dev/null https://burchcontracting.com/garages)",
       "Bash(git commit --allow-empty -m ' *)",
       "Bash(curl -o /dev/null -s -w \"HTTP %{http_code}\\\\n\" https://burchcontracting.com/garages)",
-      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code}\\\\n\" https://burchcontracting.com/additions)"
+      "Bash(curl -o /dev/null -s -w \"HTTP %{http_code}\\\\n\" https://burchcontracting.com/additions)",
+      "Bash(npx tsc *)",
+      "mcp__ide__getDiagnostics",
+      "Bash(git restore *)"
     ]
   }
 }
