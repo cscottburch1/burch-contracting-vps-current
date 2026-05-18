@@ -61,7 +61,7 @@ interface Subcontractor {
   completion_date: string | null;
 }
 
-type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontractors';
+type TabType = 'overview' | 'photos' | 'milestones' | 'activity' | 'subcontractors' | 'documents';
 
 export default function AdminProjectDetailPage() {
   const router = useRouter();
@@ -99,6 +99,15 @@ export default function AdminProjectDetailPage() {
     status: 'pending' as Subcontractor['status']
   });
   const [availableSubcontractors, setAvailableSubcontractors] = useState<Array<{ id: number; name: string; company: string }>>([]);
+  const [documents, setDocuments] = useState<Array<{
+    id: number; filename: string; original_name: string; file_type: string;
+    file_size: number; category: string; description: string; uploaded_by: string; created_at: string;
+  }>>([]);
+  const [uploadingDoc, setUploadingDoc] = useState(false);
+  const [docFile, setDocFile] = useState<File | null>(null);
+  const [docCategory, setDocCategory] = useState('general');
+  const [docDescription, setDocDescription] = useState('');
+  const [docUploadError, setDocUploadError] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -115,6 +124,7 @@ export default function AdminProjectDetailPage() {
       await loadActivities();
       await loadSubcontractors();
       await loadAvailableSubcontractors();
+      await loadDocuments();
     } catch (err: any) {
       console.error('Error loading data:', err);
       setError(err.message || 'Failed to load project data');
@@ -198,13 +208,59 @@ export default function AdminProjectDetailPage() {
     }
   };
 
+  const loadDocuments = async () => {
+    try {
+      const res = await fetch(`/api/admin/documents?project_id=${projectId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setDocuments(data.documents || []);
+      }
+    } catch (error) {
+      console.error('Failed to load documents:', error);
+    }
+  };
+
+  const handleDocUpload = async () => {
+    if (!docFile) return;
+    setUploadingDoc(true);
+    setDocUploadError('');
+    try {
+      const formData = new FormData();
+      formData.append('file', docFile);
+      formData.append('project_id', projectId);
+      formData.append('category', docCategory);
+      formData.append('description', docDescription);
+
+      const res = await fetch('/api/admin/documents', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (res.ok) {
+        setDocFile(null);
+        setDocCategory('general');
+        setDocDescription('');
+        loadDocuments();
+      } else {
+        setDocUploadError(data.error || 'Upload failed');
+      }
+    } catch {
+      setDocUploadError('Upload failed. Please try again.');
+    } finally {
+      setUploadingDoc(false);
+    }
+  };
+
+  const handleDeleteDoc = async (docId: number) => {
+    if (!confirm('Delete this document?')) return;
+    const res = await fetch(`/api/admin/documents/${docId}`, { method: 'DELETE' });
+    if (res.ok) loadDocuments();
+  };
+
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploadingPhoto(true);
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('file', file);
     formData.append('category', photoCategory);
     if (photoCaption) formData.append('caption', photoCaption);
 
@@ -484,6 +540,20 @@ export default function AdminProjectDetailPage() {
               {subcontractors?.length || 0}
             </span>
           </button>
+          <button
+            onClick={() => setActiveTab('documents')}
+            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
+              activeTab === 'documents'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            <Icon name="FileText" className="mr-2" />
+            Documents
+            <span className="ml-2 bg-gray-100 text-gray-900 py-0.5 px-2.5 rounded-full text-xs">
+              {documents?.length || 0}
+            </span>
+          </button>
         </nav>
       </div>
 
@@ -544,6 +614,10 @@ export default function AdminProjectDetailPage() {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Subcontractors</span>
                 <span className="text-2xl font-bold text-blue-600">{subcontractors.length}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Documents</span>
+                <span className="text-2xl font-bold text-blue-600">{documents.length}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Total Quoted</span>
@@ -955,6 +1029,113 @@ export default function AdminProjectDetailPage() {
             <div className="text-center py-12 bg-white rounded-lg shadow">
               <Icon name="Users" className="mx-auto text-gray-400 mb-4 w-12 h-12" />
               <p className="text-gray-500">No subcontractors assigned yet</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === 'documents' && (
+        <div>
+          {/* Upload form */}
+          <div className="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 className="text-lg font-semibold mb-4">Upload Document</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">File*</label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.txt"
+                  onChange={(e) => setDocFile(e.target.files?.[0] || null)}
+                  className="w-full text-sm text-gray-600 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+                {docFile && (
+                  <p className="text-xs text-gray-500 mt-1">{docFile.name} ({(docFile.size / 1024).toFixed(0)} KB)</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select
+                  value={docCategory}
+                  onChange={(e) => setDocCategory(e.target.value)}
+                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                >
+                  <option value="general">General</option>
+                  <option value="contract">Contract</option>
+                  <option value="permit">Permit</option>
+                  <option value="invoice">Invoice</option>
+                  <option value="photo">Photo</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Note (optional)</label>
+                <input
+                  type="text"
+                  value={docDescription}
+                  onChange={(e) => setDocDescription(e.target.value)}
+                  placeholder="Add a note..."
+                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                />
+              </div>
+            </div>
+            {docUploadError && (
+              <p className="text-sm text-red-600 mb-3">{docUploadError}</p>
+            )}
+            <button
+              onClick={handleDocUpload}
+              disabled={!docFile || uploadingDoc}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
+            >
+              {uploadingDoc ? 'Uploading…' : 'Upload Document'}
+            </button>
+          </div>
+
+          {/* Document list */}
+          {documents.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg shadow">
+              <Icon name="FileText" className="mx-auto text-gray-400 mb-4 w-12 h-12" />
+              <p className="text-gray-500">No documents uploaded yet</p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-lg shadow divide-y divide-gray-100">
+              {documents.map((doc) => (
+                <div key={doc.id} className="flex items-center gap-4 p-4 hover:bg-gray-50">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 truncate">{doc.original_name}</p>
+                    <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                      <span>{(doc.file_size / 1024).toFixed(0)} KB</span>
+                      <span>•</span>
+                      <span className="capitalize">{doc.category}</span>
+                      {doc.description && <><span>•</span><span className="truncate max-w-xs">{doc.description}</span></>}
+                      <span>•</span>
+                      <span>{new Date(doc.created_at).toLocaleDateString()}</span>
+                      <span>•</span>
+                      <span className={doc.uploaded_by === 'admin' ? 'text-blue-600 font-medium' : 'text-green-600 font-medium'}>
+                        {doc.uploaded_by === 'admin' ? 'Admin' : 'Customer'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 shrink-0">
+                    <a
+                      href={`/uploads/${doc.filename}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download={doc.original_name}
+                      className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"
+                    >
+                      <Icon name="Download" className="w-4 h-4" />
+                      Download
+                    </a>
+                    <button
+                      onClick={() => handleDeleteDoc(doc.id)}
+                      className="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"
+                    >
+                      <Icon name="Trash2" className="w-4 h-4" />
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

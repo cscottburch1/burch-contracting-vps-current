@@ -35,13 +35,16 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    // Fetch photos
-    const photos = await query<Photo>(
-      `SELECT * FROM project_photos 
-       WHERE project_id = ? 
-       ORDER BY taken_at DESC`,
+    // Fetch photos and add serving URL
+    const rawPhotos = await query(
+      `SELECT * FROM project_photos WHERE project_id = ? ORDER BY created_at DESC`,
       [projectId]
     );
+
+    const photos = (rawPhotos as any[]).map((p) => ({
+      ...p,
+      photo_url: `/uploads/projects/${p.filename}`,
+    }));
 
     return NextResponse.json({ photos });
   } catch (error) {

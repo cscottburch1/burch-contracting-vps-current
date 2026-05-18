@@ -76,11 +76,24 @@ export async function GET(
       [projectId]
     );
 
-    // Get project documents
-    const documents = await query<Document>(
+    // Get project documents and normalise field names for the UI
+    const rawDocs = await query(
       'SELECT * FROM documents WHERE project_id = ? ORDER BY created_at DESC',
       [projectId]
     );
+
+    const documents = (rawDocs as any[]).map((d) => ({
+      id: d.id,
+      project_id: d.project_id,
+      filename: d.original_name || d.filename,
+      filepath: `/uploads/${d.filename}`,
+      filetype: d.file_type || d.filetype || '',
+      filesize: d.file_size ?? d.filesize ?? 0,
+      uploaded_by: d.uploaded_by,
+      category: d.category,
+      description: d.description,
+      created_at: d.created_at,
+    }));
 
     return NextResponse.json({
       project,
