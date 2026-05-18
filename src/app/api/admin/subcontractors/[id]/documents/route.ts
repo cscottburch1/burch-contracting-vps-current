@@ -49,7 +49,11 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: subcontractorId } = await params;
+    const { id: subcontractorIdRaw } = await params;
+    const subcontractorId = parseInt(subcontractorIdRaw, 10);
+    if (isNaN(subcontractorId) || subcontractorId <= 0) {
+      return NextResponse.json({ error: 'Invalid subcontractor ID' }, { status: 400 });
+    }
 
     const formData = await request.formData();
     
@@ -95,11 +99,12 @@ export async function POST(
 
     // Create unique filename
     const timestamp = Date.now();
-    const extension = file.name.split('.').pop();
-    const fileName = `${subcontractorId}_${documentType}_${timestamp}.${extension}`;
-    
+    const ext = (file.name.split('.').pop() || 'bin').replace(/[^a-zA-Z0-9]/g, '');
+    const rand = Math.random().toString(36).slice(2, 8);
+    const fileName = `${subcontractorId}_${timestamp}_${rand}.${ext}`;
+
     // Create directory if it doesn't exist
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'subcontractors', subcontractorId);
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'subcontractors', String(subcontractorId));
     if (!existsSync(uploadDir)) {
       await mkdir(uploadDir, { recursive: true });
     }
