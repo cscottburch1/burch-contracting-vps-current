@@ -152,6 +152,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.83,
     },
+    {
+      url: `${baseUrl}/service-areas/gray-court`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.82,
+    },
     // Core conversion pages
     {
       url: `${baseUrl}/contact`,
