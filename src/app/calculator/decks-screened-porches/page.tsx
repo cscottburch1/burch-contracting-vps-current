@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Deck and Screened Porch Cost Calculator Simpsonville & Fountain Inn SC',
@@ -25,6 +25,10 @@ export default function DecksAndPorchesCalculatorPage() {
     { label: 'Calculators', href: '/calculators' },
     { label: 'Decks & Screened Porches Calculator', href: '/calculator/decks-screened-porches' },
   ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
 
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Deck and Screened Porch Cost Calculator',
@@ -48,6 +52,11 @@ export default function DecksAndPorchesCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"

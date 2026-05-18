@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Kitchen Remodel Cost Calculator Simpsonville & Fountain Inn SC',
@@ -25,6 +25,10 @@ export default function KitchenRemodelingCalculatorPage() {
     { label: 'Calculators', href: '/calculators' },
     { label: 'Kitchen Remodeling Calculator', href: '/calculator/kitchen-remodeling' },
   ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
 
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Kitchen Remodeling Cost Calculator',
@@ -48,6 +52,11 @@ export default function KitchenRemodelingCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"

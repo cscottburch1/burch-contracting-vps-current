@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import ProjectCostCalculator from '@/components/calculators/ProjectCostCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Basement Finishing Cost Calculator Simpsonville & Fountain Inn SC',
@@ -29,6 +29,10 @@ export default function BasementFinishingCalculatorPage() {
     { label: 'Basement Finishing Calculator', href: '/calculator/basement-finishing' },
   ];
 
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
+
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Basement Finishing Cost Calculator',
     description: 'Calculate basement finishing costs for Simpsonville, Fountain Inn, and Greenville County. Estimate rec rooms, home offices, and entertainment spaces with transparent pricing per square foot.',
@@ -51,6 +55,11 @@ export default function BasementFinishingCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"

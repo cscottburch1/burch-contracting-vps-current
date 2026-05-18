@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import CompetitivePricingCalculator from '@/components/calculators/CompetitivePricingCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Home Addition Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
@@ -25,6 +25,10 @@ export default function RoomAdditionsCalculatorPage() {
     { label: 'Calculators', href: '/calculators' },
     { label: 'Room Addition Calculator', href: '/calculator/room-additions' },
   ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
 
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Room Addition Cost Calculator',
@@ -48,6 +52,11 @@ export default function RoomAdditionsCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"

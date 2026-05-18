@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import HandymanClientCalculator from './_ClientCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Handyman Services Cost Calculator | Simpsonville & Fountain Inn SC',
@@ -25,6 +25,10 @@ export default function HandymanCalculatorPage() {
     { label: 'Calculators', href: '/calculators' },
     { label: 'Handyman Services Calculator', href: '/calculator/handyman' },
   ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
 
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Handyman Services Cost Calculator',
@@ -49,6 +53,11 @@ export default function HandymanCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"

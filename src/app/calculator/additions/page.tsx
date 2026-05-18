@@ -3,7 +3,7 @@ import Script from 'next/script';
 import UniversalPageTemplate from '@/components/templates/UniversalPageTemplate';
 import AdditionsClientCalculator from './_ClientCalculator';
 import { absoluteUrl } from '@/lib/seo/site';
-import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema } from '@/lib/seo/schema';
+import { buildCalculatorSoftwareApplicationSchema, buildCalculatorDatasetSchema, buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Home Additions & Outdoor Living Cost Calculator | Simpsonville & Fountain Inn SC',
@@ -25,6 +25,10 @@ export default function AdditionsCalculatorPage() {
     { label: 'Calculators', href: '/calculators' },
     { label: 'Additions & Outdoor Living Calculator', href: '/calculator/additions' },
   ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbs.map((b) => ({ name: b.label, url: absoluteUrl(b.href!) }))
+  );
 
   const calculatorSchema = buildCalculatorSoftwareApplicationSchema({
     name: 'Home Additions & Outdoor Living Cost Calculator',
@@ -49,6 +53,11 @@ export default function AdditionsCalculatorPage() {
 
   return (
     <>
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Script
         id="calculator-software-schema"
         type="application/ld+json"
