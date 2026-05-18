@@ -26,12 +26,17 @@ export default function AreasPage() {
     { name: 'Service Areas', url: absoluteUrl('/areas') },
   ]);
 
-  // Featured cities with dedicated pages
+  // Cities with dedicated service area pages
   const featuredCities = [
     { name: 'Simpsonville, SC', slug: '/service-areas/simpsonville', description: 'Full-service contractor for residential additions, garages, decks, and screened porches in Simpsonville' },
     { name: 'Mauldin, SC', slug: '/service-areas/mauldin', description: 'Licensed contractor serving Mauldin with custom garages, home additions, and outdoor living projects' },
     { name: 'Fountain Inn, SC', slug: '/service-areas/fountain-inn', description: 'Professional deck, porch, garage, and addition services in Fountain Inn and surrounding areas' },
     { name: 'Woodruff, SC', slug: '/service-areas/woodruff', description: 'Expert contractor for garages, additions, and outdoor living in Woodruff and North Greenville County' },
+    { name: 'Greenville, SC', slug: '/service-areas/greenville', description: 'Serving Greenville homeowners with decks, screened porches, garages, and home additions' },
+    { name: 'Five Forks, SC', slug: '/service-areas/five-forks', description: 'Local contractor for Five Forks neighborhoods — garages, room additions, and outdoor living' },
+    { name: 'Greer, SC', slug: '/service-areas/greer', description: 'Professional construction services for Greer homeowners including decks, garages, and additions' },
+    { name: 'Laurens, SC', slug: '/service-areas/laurens', description: 'Serving Laurens County with garages, decks, screened porches, and home additions' },
+    { name: 'Gray Court, SC', slug: '/service-areas/gray-court', description: 'Our home base — Gray Court and surrounding Laurens County served since 1995' },
   ];
 
   return (
@@ -54,9 +59,9 @@ export default function AreasPage() {
       {/* Primary Service Areas */}
       <Section background="white" padding="lg">
         <div className="mb-10 max-w-3xl">
-          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Primary Service Areas</h2>
+          <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">Service Areas with Dedicated Pages</h2>
           <p className="mt-3 text-lg text-gray-600">
-            We're based in Gray Court and focus on these four core markets with the fastest response times and deepest local knowledge.
+            We're based in Gray Court and serve these nine Upstate SC communities. Click your city for local service details, project examples, and neighborhood insights.
           </p>
         </div>
 
