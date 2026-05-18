@@ -3,11 +3,13 @@ import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import { query, queryOne } from './mysql';
 
-const SESSION_SECRET = process.env.CUSTOMER_SESSION_SECRET;
-if (!SESSION_SECRET && process.env.NODE_ENV === 'production') {
-  throw new Error('CUSTOMER_SESSION_SECRET env var is required in production');
+function getSessionSecret(): string {
+  const secret = process.env.CUSTOMER_SESSION_SECRET;
+  if (!secret && process.env.NODE_ENV === 'production') {
+    throw new Error('CUSTOMER_SESSION_SECRET env var is required in production');
+  }
+  return secret || 'dev-only-insecure-secret';
 }
-const _secret = SESSION_SECRET || 'dev-only-insecure-secret';
 
 export interface Customer {
   id: number;
@@ -70,7 +72,7 @@ export async function findCustomerById(id: number): Promise<Customer | null> {
 export async function createCustomerSession(customerId: number): Promise<string> {
   const sessionData = `${customerId}:${Date.now()}`;
   const signature = crypto
-    .createHmac('sha256', _secret)
+    .createHmac('sha256', getSessionSecret())
     .update(sessionData)
     .digest('hex');
   
@@ -88,7 +90,7 @@ export async function verifyCustomerSession(sessionToken: string): Promise<numbe
 
   const sessionData = `${customerIdStr}:${timestamp}`;
   const expectedSignature = crypto
-    .createHmac('sha256', _secret)
+    .createHmac('sha256', getSessionSecret())
     .update(sessionData)
     .digest('hex');
 

@@ -2,11 +2,13 @@ import { cookies } from 'next/headers';
 import { query, queryOne } from './mysql';
 import { SignJWT, jwtVerify } from 'jose';
 
-const jwtSecretValue = process.env.JWT_SECRET;
-if (!jwtSecretValue && process.env.NODE_ENV === 'production') {
-  throw new Error('JWT_SECRET env var is required in production');
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret && process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET env var is required in production');
+  }
+  return new TextEncoder().encode(secret || 'dev-only-insecure-secret');
 }
-const JWT_SECRET = new TextEncoder().encode(jwtSecretValue || 'dev-only-insecure-secret');
 
 export interface TradesmanUser {
   id: number;
@@ -31,14 +33,14 @@ export async function createTradesmanToken(userId: number): Promise<string> {
   const token = await new SignJWT({ userId, type: 'tradesman' })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('30d')
-    .sign(JWT_SECRET);
+    .sign(getJwtSecret());
   
   return token;
 }
 
 export async function verifyTradesmanToken(token: string): Promise<{ userId: number } | null> {
   try {
-    const verified = await jwtVerify(token, JWT_SECRET);
+    const verified = await jwtVerify(token, getJwtSecret());
     const payload = verified.payload as { userId: number; type: string };
     
     if (payload.type === 'tradesman') {
