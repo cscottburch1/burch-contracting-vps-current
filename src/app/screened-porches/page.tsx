@@ -7,18 +7,8 @@ import { generateServiceSchema, generateBreadcrumbSchema } from '@/lib/schema-bu
 export const metadata: Metadata = {
   title: 'Screened Porch Builder | Burch Contracting',
   description: 'Professional screened porch builders Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. Free estimates and 30+ years combined experience.',
-  alternates: { canonical: absoluteUrl('/screened-porches') },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  alternates: { canonical: absoluteUrl('/outdoor-living/screened-porches') },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Screened Porch Builder | Burch Contracting',
     description: 'Professional screened porch builders Simpsonville, Mauldin, Woodruff, Greenville & Fountain Inn. Free estimates and 30+ years combined experience.',

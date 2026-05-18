@@ -1,15 +1,16 @@
 import { Metadata } from 'next';
+import { absoluteUrl } from '@/lib/seo/site';
 
 export const metadata: Metadata = {
-  title: 'Request an Estimate | Burch Contracting',
-  description: 'Request a free estimate from Burch Contracting. Serving Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Call (864) 724-4600 or send us your project details.',
+  title: 'Get a Free Estimate | Simpsonville SC Contractor | Burch Contracting',
+  description: 'Request a free estimate from Burch Contracting. Garages, additions, decks, screened porches & remodeling. Serving Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Call (864) 724-4600.',
   alternates: {
-    canonical: 'https://burchcontracting.com/contact',
+    canonical: absoluteUrl('/contact'),
   },
   openGraph: {
-    title: 'Request an Estimate | Burch Contracting',
+    title: 'Get a Free Estimate | Burch Contracting',
     description: 'Request a free estimate for additions, garages, outdoor living & remodeling in Upstate SC.',
-    url: 'https://burchcontracting.com/contact',
+    url: absoluteUrl('/contact'),
     type: 'website',
   },
 };

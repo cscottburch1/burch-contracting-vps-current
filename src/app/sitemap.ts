@@ -68,18 +68,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.90,
     },
     {
-      url: `${baseUrl}/deck-builder`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.89,
-    },
-    {
-      url: `${baseUrl}/screened-porches`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.88,
-    },
-    {
       url: `${baseUrl}/basement-finishing`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
@@ -102,12 +90,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.86,
-    },
-    {
-      url: `${baseUrl}/commercial-renovations`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.85,
     },
     // Core service area pages (canonical slugs only — no redirect URLs)
     {
@@ -243,13 +225,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const calculators = [
     'garages',
     'room-additions',
+    'decks',
+    'screened-porches',
     'decks-screened-porches',
     'kitchen-remodeling',
     'bathroom-remodeling',
     'basement-finishing',
     'adus',
     'additions',
-    'home-additions',
     'remodeling',
     'commercial-renovations',
     'handyman',
