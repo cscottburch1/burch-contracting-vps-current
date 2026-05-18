@@ -23,6 +23,7 @@ export default function NewProjectPage() {
     description: '',
     start_date: '',
     estimated_completion_date: '',
+    total_cost: '',
     address_line1: '',
     address_line2: '',
     city: 'Simpsonville',
@@ -61,9 +62,11 @@ export default function NewProjectPage() {
 
       if (res.ok) {
         const data = await res.json();
+        toast.success('Project created');
         router.push(`/admin/projects/${data.projectId}`);
       } else {
-        toast.error('Failed to create project');
+        const data = await res.json();
+        toast.error(data.error || 'Failed to create project');
       }
     } catch (error) {
       console.error('Failed to create project:', error);
@@ -74,7 +77,10 @@ export default function NewProjectPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.name === 'state'
+      ? e.target.value.toUpperCase().slice(0, 2)
+      : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   if (loading) {
@@ -206,6 +212,26 @@ export default function NewProjectPage() {
                   value={formData.estimated_completion_date}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Budget */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Budget / Contract Value
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">$</span>
+                <input
+                  type="number"
+                  name="total_cost"
+                  value={formData.total_cost}
+                  onChange={handleChange}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  className="w-full pl-7 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 />
               </div>
             </div>

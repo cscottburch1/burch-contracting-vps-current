@@ -83,6 +83,12 @@ export async function POST(request: Request) {
       description,
       start_date,
       estimated_completion_date,
+      total_cost,
+      address_line1,
+      address_line2,
+      city,
+      state,
+      zip_code,
     } = data;
 
     if (!customer_id || !project_name) {
@@ -96,17 +102,17 @@ export async function POST(request: Request) {
         'SELECT id FROM customers WHERE id = ?',
         [customer_id]
       );
-      
+
       if (!Array.isArray(customers) || customers.length === 0) {
         return NextResponse.json({ error: 'Customer not found' }, { status: 404 });
       }
 
-      // Insert project with correct field names
       const [result] = await connection.execute(
         `INSERT INTO projects (
           customer_id, project_name, project_type, description,
-          start_date, estimated_completion_date, status
-        ) VALUES (?, ?, ?, ?, ?, ?, 'scheduled')`,
+          start_date, estimated_completion_date, total_cost,
+          address_line1, address_line2, city, state, zip_code, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scheduled')`,
         [
           customer_id,
           project_name,
@@ -114,6 +120,12 @@ export async function POST(request: Request) {
           description || null,
           start_date || null,
           estimated_completion_date || null,
+          total_cost ? parseFloat(total_cost) : null,
+          address_line1 || null,
+          address_line2 || null,
+          city || null,
+          state ? String(state).toUpperCase().slice(0, 2) : null,
+          zip_code || null,
         ]
       );
 
