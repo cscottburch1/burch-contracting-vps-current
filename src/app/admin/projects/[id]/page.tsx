@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Icon, { IconName } from '@/components/ui/Icon';
+import { toast } from 'sonner';
 
 interface Project {
   id: number;
@@ -276,11 +277,11 @@ export default function AdminProjectDetailPage() {
         loadActivities();
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to upload photo');
+        toast.error(data.error || 'Failed to upload photo');
       }
     } catch (error) {
       console.error('Failed to upload photo:', error);
-      alert('Failed to upload photo');
+      toast.error('Failed to upload photo');
     } finally {
       setUploadingPhoto(false);
     }
@@ -381,7 +382,7 @@ export default function AdminProjectDetailPage() {
         loadActivities();
       } else {
         const data = await res.json();
-        alert(data.error || 'Failed to assign subcontractor');
+        toast.error(data.error || 'Failed to assign subcontractor');
       }
     } catch (error) {
       console.error('Failed to assign subcontractor:', error);

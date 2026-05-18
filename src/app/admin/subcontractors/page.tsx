@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Subcontractor } from '@/types/subcontractor';
 
 const SPECIALTIES = ['Plumbing', 'Electrical', 'HVAC', 'Carpentry', 'Painting', 'Roofing', 'Flooring', 'Drywall', 'Concrete', 'Landscaping'];
@@ -1364,11 +1365,11 @@ function DocumentUploadButton({
 
   const handleSubmit = () => {
     if (!file) {
-      alert('Please select a file');
+      toast.error('Please select a file');
       return;
     }
     if (!title.trim()) {
-      alert('Please enter a title');
+      toast.error('Please enter a title');
       return;
     }
 

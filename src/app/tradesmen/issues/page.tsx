@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface Issue {
   id: number;
@@ -64,7 +65,7 @@ export default function IssuesPage() {
     e.preventDefault();
     
     if (!formData.project_id || !formData.title || !formData.description) {
-      alert('Please fill in all required fields');
+      toast.error('Please fill in all required fields');
       return;
     }
 
@@ -87,11 +88,11 @@ export default function IssuesPage() {
         });
         loadData();
       } else {
-        alert('Failed to submit issue');
+        toast.error('Failed to submit issue');
       }
     } catch (error) {
       console.error('Failed to submit:', error);
-      alert('Failed to submit issue');
+      toast.error('Failed to submit issue');
     } finally {
       setSubmitting(false);
     }

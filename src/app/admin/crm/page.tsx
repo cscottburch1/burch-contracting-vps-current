@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -104,7 +105,7 @@ export default function AdminCRMPage() {
       }
     } catch (error) {
       console.error('Error updating lead status:', error);
-      alert('Failed to update lead status');
+      toast.error('Failed to update lead status');
       await fetchLeads();
     } finally {
       setUpdatingLeadId(null);

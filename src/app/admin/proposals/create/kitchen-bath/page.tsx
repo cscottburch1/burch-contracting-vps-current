@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Download, Mail, Save } from 'lucide-react';
 
 interface LineItem {
@@ -136,12 +137,12 @@ export default function KitchenBathProposalPage() {
 
   const handleSaveProposal = async (status: 'draft' | 'sent') => {
     if (!selectedCustomerId) {
-      alert('Please select a customer');
+      toast.error('Please select a customer');
       return;
     }
 
     if (lineItems.some(item => !item.category || !item.description)) {
-      alert('Please fill in all line item categories and descriptions');
+      toast.error('Please fill in all line item categories and descriptions');
       return;
     }
 
@@ -182,11 +183,11 @@ export default function KitchenBathProposalPage() {
       }
 
       const data = await res.json();
-      alert(`Proposal ${proposalNumber} saved successfully!`);
+      toast.success(`Proposal ${proposalNumber} saved successfully!`);
       router.push(`/admin/proposals/${data.proposalId}`);
     } catch (err) {
       console.error('Error saving proposal:', err);
-      alert('Failed to save proposal');
+      toast.error('Failed to save proposal');
     } finally {
       setLoading(false);
     }
@@ -194,10 +195,10 @@ export default function KitchenBathProposalPage() {
 
   const handleEmailPDF = async () => {
     if (!selectedCustomerId) {
-      alert('Please save the proposal first');
+      toast.error('Please save the proposal first');
       return;
     }
-    alert('Email PDF functionality will be implemented after saving the proposal');
+    toast.info('Email PDF functionality will be implemented after saving the proposal');
   };
 
   const handleExportExcel = () => {

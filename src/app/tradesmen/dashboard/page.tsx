@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import BottomNav from '@/components/tradesmen/BottomNav';
 import QuickActions from '@/components/tradesmen/QuickActions';
 
@@ -131,7 +132,7 @@ export default function TradesmanDashboard() {
 
   const handleLogout = async () => {
     await fetch('/api/tradesmen/logout', { method: 'POST' });
-    alert('Logged out successfully!');
+    toast.success('Logged out successfully!');
     router.push('/tradesmen');
   };
 

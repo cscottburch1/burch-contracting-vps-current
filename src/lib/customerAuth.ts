@@ -3,7 +3,11 @@ import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import { query, queryOne } from './mysql';
 
-const SESSION_SECRET = process.env.CUSTOMER_SESSION_SECRET || 'change-this-secret-key-in-production';
+const SESSION_SECRET = process.env.CUSTOMER_SESSION_SECRET;
+if (!SESSION_SECRET && process.env.NODE_ENV === 'production') {
+  throw new Error('CUSTOMER_SESSION_SECRET env var is required in production');
+}
+const _secret = SESSION_SECRET || 'dev-only-insecure-secret';
 
 export interface Customer {
   id: number;
@@ -66,7 +70,7 @@ export async function findCustomerById(id: number): Promise<Customer | null> {
 export async function createCustomerSession(customerId: number): Promise<string> {
   const sessionData = `${customerId}:${Date.now()}`;
   const signature = crypto
-    .createHmac('sha256', SESSION_SECRET)
+    .createHmac('sha256', _secret)
     .update(sessionData)
     .digest('hex');
   
@@ -84,11 +88,13 @@ export async function verifyCustomerSession(sessionToken: string): Promise<numbe
 
   const sessionData = `${customerIdStr}:${timestamp}`;
   const expectedSignature = crypto
-    .createHmac('sha256', SESSION_SECRET)
+    .createHmac('sha256', _secret)
     .update(sessionData)
     .digest('hex');
 
-  if (signature !== expectedSignature) return null;
+  const a = Buffer.from(signature);
+  const b = Buffer.from(expectedSignature);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
 
   // Check if session is expired (30 days)
   const sessionAge = Date.now() - parseInt(timestamp, 10);

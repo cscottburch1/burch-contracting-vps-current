@@ -1,14 +1,33 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 import mysql from '@/lib/mysql';
+
+export async function GET() {
+  try {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const [proposals] = await mysql.query(
+      `SELECT * FROM proposals ORDER BY created_at DESC LIMIT 100`
+    );
+
+    return NextResponse.json({ proposals });
+
+  } catch (error) {
+    console.error('Error fetching proposals:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch proposals' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    // Use the same cookie name set by admin login
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -34,42 +53,11 @@ export async function POST(request: Request) {
       status = 'draft'
     } = data;
 
-    // Ensure proposals table exists (prevents crashes if database was not migrated)
-    await mysql.query(
-      `CREATE TABLE IF NOT EXISTS proposals (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        proposal_number VARCHAR(50) NOT NULL,
-        customer_id INT NULL,
-        customer_name VARCHAR(255),
-        customer_email VARCHAR(255),
-        customer_phone VARCHAR(50),
-        customer_address VARCHAR(255),
-        proposal_date DATE,
-        expiration_date DATE,
-        proposal_type VARCHAR(100),
-        labor_subtotal DECIMAL(10,2) NOT NULL DEFAULT 0,
-        service_charge DECIMAL(10,2) NOT NULL DEFAULT 0,
-        subtotal DECIMAL(10,2) NOT NULL DEFAULT 0,
-        tax_rate DECIMAL(5,2) NOT NULL DEFAULT 0,
-        tax DECIMAL(10,2) NOT NULL DEFAULT 0,
-        total DECIMAL(10,2) NOT NULL DEFAULT 0,
-        notes TEXT,
-        status VARCHAR(50) DEFAULT 'draft',
-        items_json LONGTEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX idx_customer_id (customer_id),
-        UNIQUE KEY uq_proposal_number (proposal_number)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `
-    );
-
-    // Insert proposal into database
     const [result] = await mysql.query(
-      `INSERT INTO proposals 
-      (proposal_number, customer_id, customer_name, customer_email, customer_phone, 
-       customer_address, proposal_date, expiration_date, proposal_type, 
-       labor_subtotal, service_charge, subtotal, tax_rate, tax, total, notes, status, items_json, created_at) 
+      `INSERT INTO proposals
+      (proposal_number, customer_id, customer_name, customer_email, customer_phone,
+       customer_address, proposal_date, expiration_date, proposal_type,
+       labor_subtotal, service_charge, subtotal, tax_rate, tax, total, notes, status, items_json, created_at)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`,
       [
         proposalNumber,
@@ -93,10 +81,9 @@ export async function POST(request: Request) {
       ]
     );
 
-    // If customer is selected, add note to customer CRM
     if (customerId) {
       await mysql.query(
-        `INSERT INTO customer_notes (customer_id, note, created_by, created_at) 
+        `INSERT INTO customer_notes (customer_id, note, created_by, created_at)
          VALUES (?, ?, 'admin', NOW())`,
         [
           customerId,
@@ -105,8 +92,8 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       proposalId: (result as any).insertId,
       message: 'Proposal saved successfully'
     });
@@ -120,65 +107,10 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  try {
-    const cookieStore = await cookies();
-    const adminToken = cookieStore.get('admin_session');
-    
-    if (!adminToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    await mysql.query(
-      `CREATE TABLE IF NOT EXISTS proposals (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        proposal_number VARCHAR(50) NOT NULL,
-        customer_id INT NULL,
-        customer_name VARCHAR(255),
-        customer_email VARCHAR(255),
-        customer_phone VARCHAR(50),
-        customer_address VARCHAR(255),
-        proposal_date DATE,
-        expiration_date DATE,
-        proposal_type VARCHAR(100),
-        labor_subtotal DECIMAL(10,2) NOT NULL DEFAULT 0,
-        service_charge DECIMAL(10,2) NOT NULL DEFAULT 0,
-        subtotal DECIMAL(10,2) NOT NULL DEFAULT 0,
-        tax_rate DECIMAL(5,2) NOT NULL DEFAULT 0,
-        tax DECIMAL(10,2) NOT NULL DEFAULT 0,
-        total DECIMAL(10,2) NOT NULL DEFAULT 0,
-        notes TEXT,
-        status VARCHAR(50) DEFAULT 'draft',
-        items_json LONGTEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX idx_customer_id (customer_id),
-        UNIQUE KEY uq_proposal_number (proposal_number)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `
-    );
-
-    const [proposals] = await mysql.query(
-      `SELECT * FROM proposals ORDER BY created_at DESC LIMIT 100`
-    );
-
-    return NextResponse.json({ proposals });
-
-  } catch (error) {
-    console.error('Error fetching proposals:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch proposals' },
-      { status: 500 }
-    );
-  }
-}
-
 export async function PATCH(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -194,7 +126,7 @@ export async function PATCH(request: Request) {
       [status, id]
     );
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: 'Proposal updated successfully'
     });

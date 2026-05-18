@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface ProfileData {
   id: number;
@@ -57,13 +58,13 @@ export default function SubcontractorProfilePage() {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file');
+      toast.error('Please upload an image file');
       return;
     }
 
     // Validate file size (2MB max)
     if (file.size > 2 * 1024 * 1024) {
-      alert('Logo must be less than 2MB');
+      toast.error('Logo must be less than 2MB');
       return;
     }
 
@@ -82,10 +83,10 @@ export default function SubcontractorProfilePage() {
       const data = await res.json();
       setProfile({ ...profile!, logo_url: data.logo_url });
       setFormData({ ...formData, logo_url: data.logo_url });
-      alert('Logo uploaded successfully!');
+      toast.success('Logo uploaded successfully!');
     } catch (error) {
       console.error('Logo upload error:', error);
-      alert('Failed to upload logo');
+      toast.error('Failed to upload logo');
     } finally {
       setUploadingLogo(false);
     }
@@ -105,10 +106,10 @@ export default function SubcontractorProfilePage() {
       const data = await res.json();
       setProfile(data.profile);
       setEditing(false);
-      alert('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Save error:', error);
-      alert('Failed to save profile');
+      toast.error('Failed to save profile');
     } finally {
       setSaving(false);
     }

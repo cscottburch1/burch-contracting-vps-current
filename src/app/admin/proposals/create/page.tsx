@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function CreateProposalPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function CreateProposalPage() {
     } else if (type === 'kitchen-bath') {
       router.push('/admin/proposals/create/kitchen-bath');
     } else {
-      alert(`${type} proposal template coming soon!`);
+      toast.info(`${type} proposal template coming soon!`);
     }
   };
 

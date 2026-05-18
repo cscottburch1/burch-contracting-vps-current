@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { InvoiceTemplate, InvoiceData, InvoiceItem } from '@/components/templates/InvoiceTemplate';
+import { toast } from 'sonner';
 
 interface Customer {
   id: number;
@@ -142,12 +143,12 @@ export default function CreateInvoicePage() {
 
   const handleSave = async (status: string = 'draft') => {
     if (!invoiceData.customerName) {
-      alert('Please enter customer information');
+      toast.error('Please enter customer information');
       return;
     }
 
     if (invoiceData.items.length === 0 || invoiceData.items[0].description === '') {
-      alert('Please add at least one line item');
+      toast.error('Please add at least one line item');
       return;
     }
 
@@ -178,15 +179,15 @@ export default function CreateInvoicePage() {
 
       if (response.ok) {
         const data = await response.json();
-        alert('Invoice saved successfully!');
+        toast.success('Invoice saved successfully!');
         router.push('/admin/invoices');
       } else {
         const error = await response.json();
-        alert('Failed to save invoice: ' + (error.error || 'Unknown error'));
+        toast.error('Failed to save invoice: ' + (error.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error saving invoice:', error);
-      alert('Failed to save invoice. Please try again.');
+      toast.error('Failed to save invoice. Please try again.');
     } finally {
       setSaving(false);
     }

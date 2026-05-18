@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -129,7 +130,7 @@ export default function CustomerDetailPage() {
       });
     } catch (error) {
       console.error('Error fetching customer:', error);
-      alert('Failed to load customer details. Please try again.');
+      toast.error('Failed to load customer details. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -149,10 +150,10 @@ export default function CustomerDetailPage() {
 
       setShowEditForm(false);
       fetchCustomerDetails();
-      alert('Customer updated successfully!');
+      toast.success('Customer updated successfully!');
     } catch (error) {
       console.error('Error updating customer:', error);
-      alert('Failed to update customer');
+      toast.error('Failed to update customer');
     }
   };
 
@@ -165,15 +166,15 @@ export default function CustomerDetailPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.error || 'Failed to delete customer');
+        toast.error(data.error || 'Failed to delete customer');
         return;
       }
 
-      alert('Customer deleted successfully!');
+      toast.success('Customer deleted successfully!');
       router.push('/admin/customers');
     } catch (error) {
       console.error('Error deleting customer:', error);
-      alert('Failed to delete customer');
+      toast.error('Failed to delete customer');
     } finally {
       setShowDeleteConfirm(false);
     }
@@ -246,17 +247,15 @@ export default function CustomerDetailPage() {
       }
 
       if (successfulUploads > 0 && failedUploads.length === 0) {
-        alert(`Successfully uploaded ${successfulUploads} document(s).`);
+        toast.success(`Successfully uploaded ${successfulUploads} document(s).`);
       } else if (successfulUploads > 0 && failedUploads.length > 0) {
-        alert(
-          `Uploaded ${successfulUploads} document(s), but ${failedUploads.length} failed:\n${failedUploads.join('\n')}`
-        );
+        toast.warning(`Uploaded ${successfulUploads} document(s), but ${failedUploads.length} failed.`);
       } else if (failedUploads.length > 0) {
-        alert(`Failed to upload documents:\n${failedUploads.join('\n')}`);
+        toast.error(`Failed to upload ${failedUploads.length} document(s).`);
       }
     } catch (error) {
       console.error('Error uploading documents:', error);
-      alert('Failed to upload documents');
+      toast.error('Failed to upload documents');
     } finally {
       setUploading(false);
     }
@@ -272,14 +271,14 @@ export default function CustomerDetailPage() {
       });
 
       if (response.ok) {
-        alert('Document deleted successfully');
+        toast.success('Document deleted');
         fetchDocuments();
       } else {
-        alert('Failed to delete document');
+        toast.error('Failed to delete document');
       }
     } catch (error) {
       console.error('Error deleting document:', error);
-      alert('Failed to delete document');
+      toast.error('Failed to delete document');
     }
   };
 
@@ -338,7 +337,7 @@ export default function CustomerDetailPage() {
       fetchCustomerDetails();
     } catch (error) {
       console.error('Error creating project:', error);
-      alert('Failed to create project');
+      toast.error('Failed to create project');
     }
   };
 
@@ -372,13 +371,13 @@ export default function CustomerDetailPage() {
 
       if (!response.ok) throw new Error('Failed to update project');
 
-      alert('Project updated successfully!');
+      toast.success('Project updated successfully!');
       setShowEditProjectModal(false);
       setEditingProject(null);
       fetchCustomerDetails();
     } catch (error) {
       console.error('Error updating project:', error);
-      alert('Failed to update project');
+      toast.error('Failed to update project');
     }
   };
 
@@ -393,13 +392,13 @@ export default function CustomerDetailPage() {
 
       if (!response.ok) throw new Error('Failed to delete project');
 
-      alert('Project deleted successfully!');
+      toast.success('Project deleted successfully!');
       setShowDeleteProjectModal(false);
       setDeletingProject(null);
       fetchCustomerDetails();
     } catch (error) {
       console.error('Error deleting project:', error);
-      alert('Failed to delete project');
+      toast.error('Failed to delete project');
     }
   };
 

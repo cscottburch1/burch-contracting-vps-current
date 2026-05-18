@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface DailyReport {
   id: number;
@@ -133,7 +134,7 @@ export default function DailyReportsPage() {
       setFormData(prev => ({ ...prev, photos: newPhotos }));
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Some photos failed to upload');
+      toast.warning('Some photos failed to upload');
     } finally {
       setUploading(false);
     }
@@ -149,7 +150,7 @@ export default function DailyReportsPage() {
     e.preventDefault();
     
     if (!formData.project_id || !formData.work_completed) {
-      alert('Please fill in required fields');
+      toast.error('Please fill in required fields');
       return;
     }
 
@@ -177,11 +178,11 @@ export default function DailyReportsPage() {
           photos: []
         }));
       } else {
-        alert('Failed to submit report');
+        toast.error('Failed to submit report');
       }
     } catch (error) {
       console.error('Failed to submit:', error);
-      alert('Failed to submit report');
+      toast.error('Failed to submit report');
     } finally {
       setSubmitting(false);
     }

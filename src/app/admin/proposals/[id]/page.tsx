@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -95,7 +96,7 @@ export default function ProposalDetailPage() {
       }
     } catch (error) {
       console.error('Error fetching proposal:', error);
-      alert('Failed to load proposal details');
+      toast.error('Failed to load proposal details');
     } finally {
       setLoading(false);
     }
@@ -114,11 +115,11 @@ export default function ProposalDetailPage() {
       if (response.ok) {
         await fetchProposalDetails();
       } else {
-        alert('Failed to update status');
+        toast.error('Failed to update status');
       }
     } catch (error) {
       console.error('Error updating status:', error);
-      alert('Failed to update status');
+      toast.error('Failed to update status');
     } finally {
       setStatusUpdating(false);
     }
@@ -132,15 +133,15 @@ export default function ProposalDetailPage() {
       });
 
       if (response.ok) {
-        alert('Proposal deleted successfully');
+        toast.success('Proposal deleted successfully');
         router.push('/admin/proposals');
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to delete proposal');
+        toast.error(data.error || 'Failed to delete proposal');
       }
     } catch (error) {
       console.error('Error deleting proposal:', error);
-      alert('Failed to delete proposal');
+      toast.error('Failed to delete proposal');
     }
     setShowDeleteConfirm(false);
   };
@@ -174,14 +175,14 @@ export default function ProposalDetailPage() {
       });
 
       if (response.ok) {
-        alert('Proposal email sent successfully!');
+        toast.success('Proposal email sent successfully!');
         updateStatus('sent');
       } else {
-        alert('Failed to send email');
+        toast.error('Failed to send email');
       }
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Failed to send email');
+      toast.error('Failed to send email');
     }
   };
 

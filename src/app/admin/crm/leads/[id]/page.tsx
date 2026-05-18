@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -104,7 +105,7 @@ export default function LeadDetailPage() {
       fetchLeadDetails(); // Refresh to get new activities
     } catch (error) {
       console.error('Error updating lead:', error);
-      alert('Failed to update lead');
+      toast.error('Failed to update lead');
     }
   };
 
@@ -130,7 +131,7 @@ export default function LeadDetailPage() {
       fetchLeadDetails(); // Refresh data
     } catch (error) {
       console.error('Error adding note:', error);
-      alert('Failed to add note');
+      toast.error('Failed to add note');
     }
   };
 
@@ -149,7 +150,7 @@ export default function LeadDetailPage() {
       router.push('/admin/crm');
     } catch (error) {
       console.error('Error deleting lead:', error);
-      alert('Failed to delete lead');
+      toast.error('Failed to delete lead');
     }
   };
 
@@ -178,7 +179,7 @@ export default function LeadDetailPage() {
     } catch (error) {
       console.error('Error updating status:', error);
       setLead({ ...lead, status: previousStatus });
-      alert('Failed to update status');
+      toast.error('Failed to update status');
     } finally {
       setUpdatingStatus(false);
     }
@@ -186,7 +187,7 @@ export default function LeadDetailPage() {
 
   const handleConvertToCustomer = async () => {
     if (!customerPassword.trim()) {
-      alert('Please enter a password for the customer portal');
+      toast.error('Please enter a password for the customer portal');
       return;
     }
 
@@ -211,11 +212,11 @@ export default function LeadDetailPage() {
       
       const newCustomerId = data.customerId || data.customer?.id;
       
-      alert('Lead successfully converted to customer!');
+      toast.success('Lead successfully converted to customer!');
       router.push(`/admin/customers/${newCustomerId}`);
     } catch (error: any) {
       console.error('Error converting lead:', error);
-      alert(error.message || 'Failed to convert lead to customer');
+      toast.error(error.message || 'Failed to convert lead to customer');
     }
   };
 

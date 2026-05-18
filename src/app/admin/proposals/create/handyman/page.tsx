@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface ServiceItem {
   category: string;
@@ -235,7 +236,7 @@ export default function HandymanProposalPage() {
 
   const handleSave = async () => {
     if (!customerName || items.length === 0) {
-      alert('Please add customer name and at least one service item.');
+      toast.error('Please add customer name and at least one service item.');
       return;
     }
 
@@ -276,14 +277,14 @@ export default function HandymanProposalPage() {
       });
 
       if (res.ok) {
-        alert('Proposal saved successfully!');
+        toast.success('Proposal saved successfully!');
       } else {
         const error = await res.json();
-        alert(`Failed to save: ${error.error || 'Unknown error'}`);
+        toast.error(`Failed to save: ${error.error || 'Unknown error'}`);
       }
     } catch (err) {
       console.error('Save error:', err);
-      alert('Failed to save proposal. Please try again.');
+      toast.error('Failed to save proposal. Please try again.');
     } finally {
       setSaving(false);
     }
@@ -291,12 +292,12 @@ export default function HandymanProposalPage() {
 
   const handleEmailToCustomer = async () => {
     if (!customerEmail) {
-      alert('Customer email is required to send proposal.');
+      toast.error('Customer email is required to send proposal.');
       return;
     }
 
     if (!customerName || items.length === 0) {
-      alert('Please complete the proposal before emailing.');
+      toast.error('Please complete the proposal before emailing.');
       return;
     }
 
@@ -329,14 +330,14 @@ export default function HandymanProposalPage() {
       });
 
       if (res.ok) {
-        alert(`Proposal sent to ${customerEmail} successfully!`);
+        toast.success(`Proposal sent to ${customerEmail} successfully!`);
       } else {
         const error = await res.json();
-        alert(`Failed to send email: ${error.error || 'Unknown error'}`);
+        toast.error(`Failed to send email: ${error.error || 'Unknown error'}`);
       }
     } catch (err) {
       console.error('Email error:', err);
-      alert('Failed to send email. Please try again.');
+      toast.error('Failed to send email. Please try again.');
     } finally {
       setEmailing(false);
     }

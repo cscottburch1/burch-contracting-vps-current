@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 import { sendEmail } from '@/lib/mailer';
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -26,7 +24,6 @@ export async function POST(request: Request) {
       notes
     } = data;
 
-    // Build items table
     const itemsRows = items.map((item: any) => `
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151;">${item.description}</td>
@@ -50,7 +47,7 @@ export async function POST(request: Request) {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          
+
           <!-- Header with Logo -->
           <tr>
             <td style="padding: 40px 40px 20px; text-align: center; border-bottom: 3px solid #1e40af;">
@@ -158,9 +155,9 @@ export async function POST(request: Request) {
               <div style="background-color: #eff6ff; padding: 20px; border-radius: 6px; border: 1px solid #bfdbfe;">
                 <div style="font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 10px;">Payment Instructions:</div>
                 <div style="font-size: 13px; color: #1e40af; line-height: 1.6;">
-                  • Checks payable to: <strong>Burch Contracting LLC</strong><br>
-                  • Mail to: PO Box 123, Simpsonville, SC 29681<br>
-                  • Questions? Call us at <strong>(864) 724-4600</strong>
+                  &bull; Checks payable to: <strong>Burch Contracting LLC</strong><br>
+                  &bull; Mail to: PO Box 123, Simpsonville, SC 29681<br>
+                  &bull; Questions? Call us at <strong>(864) 724-4600</strong>
                 </div>
               </div>
             </td>
@@ -170,10 +167,10 @@ export async function POST(request: Request) {
           <tr>
             <td style="padding: 30px 40px; text-align: center; border-top: 1px solid #e5e7eb; background-color: #f9fafb;">
               <div style="font-size: 16px; font-weight: bold; color: #1e40af; margin-bottom: 5px;">BURCH CONTRACTING</div>
-              <div style="font-size: 12px; color: #6b7280; margin-bottom: 10px;">Construction & Remodeling</div>
+              <div style="font-size: 12px; color: #6b7280; margin-bottom: 10px;">Construction &amp; Remodeling</div>
               <div style="font-size: 12px; color: #6b7280;">
-                📞 (864) 724-4600 | ✉️ estimates@burchcontracting.com<br>
-                🌐 <a href="https://burchcontracting.com" style="color: #2563eb; text-decoration: none;">burchcontracting.com</a>
+                (864) 724-4600 | estimates@burchcontracting.com<br>
+                <a href="https://burchcontracting.com" style="color: #2563eb; text-decoration: none;">burchcontracting.com</a>
               </div>
             </td>
           </tr>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -108,7 +109,7 @@ export default function InvoiceDetailPage() {
       }
     } catch (error) {
       console.error('Error fetching invoice:', error);
-      alert('Failed to load invoice details');
+      toast.error('Failed to load invoice details');
     } finally {
       setLoading(false);
     }
@@ -126,7 +127,7 @@ export default function InvoiceDetailPage() {
       });
 
       if (response.ok) {
-        alert('Payment recorded successfully');
+        toast.success('Payment recorded successfully');
         setShowPaymentModal(false);
         setPaymentForm({
           amount: '',
@@ -137,11 +138,11 @@ export default function InvoiceDetailPage() {
         await fetchInvoiceDetails();
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to record payment');
+        toast.error(data.error || 'Failed to record payment');
       }
     } catch (error) {
       console.error('Error recording payment:', error);
-      alert('Failed to record payment');
+      toast.error('Failed to record payment');
     }
   };
 
@@ -171,13 +172,13 @@ export default function InvoiceDetailPage() {
       });
 
       if (response.ok) {
-        alert('Invoice sent successfully!');
+        toast.success('Invoice sent successfully!');
       } else {
-        alert('Failed to send invoice');
+        toast.error('Failed to send invoice');
       }
     } catch (error) {
       console.error('Error sending invoice:', error);
-      alert('Failed to send invoice');
+      toast.error('Failed to send invoice');
     }
   };
 
@@ -189,15 +190,15 @@ export default function InvoiceDetailPage() {
       });
 
       if (response.ok) {
-        alert('Invoice deleted successfully');
+        toast.success('Invoice deleted successfully');
         router.push('/admin/invoices');
       } else {
         const data = await response.json();
-        alert(data.error || 'Failed to delete invoice');
+        toast.error(data.error || 'Failed to delete invoice');
       }
     } catch (error) {
       console.error('Error deleting invoice:', error);
-      alert('Failed to delete invoice');
+      toast.error('Failed to delete invoice');
     }
     setShowDeleteConfirm(false);
   };

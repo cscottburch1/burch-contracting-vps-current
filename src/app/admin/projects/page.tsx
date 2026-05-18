@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 
@@ -60,13 +61,13 @@ export default function AdminProjectsPage() {
 
       if (!response.ok) throw new Error('Failed to delete project');
 
-      alert('Project deleted successfully!');
+      toast.success('Project deleted successfully!');
       setShowDeleteModal(false);
       setDeletingProject(null);
       fetchProjects();
     } catch (error) {
       console.error('Error deleting project:', error);
-      alert('Failed to delete project');
+      toast.error('Failed to delete project');
     }
   };
 

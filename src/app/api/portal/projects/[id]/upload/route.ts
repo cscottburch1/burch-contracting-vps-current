@@ -15,6 +15,8 @@ const ALLOWED_TYPES = [
   'text/plain',
 ];
 
+const ALLOWED_CATEGORIES = new Set(['general', 'contract', 'permit', 'photo', 'invoice', 'other']);
+
 const MAX_SIZE = 10 * 1024 * 1024; // 10 MB
 
 export async function POST(
@@ -29,6 +31,9 @@ export async function POST(
 
     const { id } = await params;
     const projectId = parseInt(id, 10);
+    if (isNaN(projectId)) {
+      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+    }
 
     const [project] = await query(
       'SELECT id FROM projects WHERE id = ? AND customer_id = ?',
@@ -41,7 +46,8 @@ export async function POST(
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const category = (formData.get('category') as string) || 'general';
+    const rawCategory = (formData.get('category') as string) || 'general';
+    const category = ALLOWED_CATEGORIES.has(rawCategory) ? rawCategory : 'general';
     const description = (formData.get('description') as string) || '';
 
     if (!file || file.size === 0) {

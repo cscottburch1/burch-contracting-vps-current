@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -101,7 +102,7 @@ export default function CalendarPage() {
       resetForm();
     } catch (error) {
       console.error('Error creating event:', error);
-      alert('Failed to create event');
+      toast.error('Failed to create event');
     }
   };
 
@@ -123,7 +124,7 @@ export default function CalendarPage() {
       resetForm();
     } catch (error) {
       console.error('Error updating event:', error);
-      alert('Failed to update event');
+      toast.error('Failed to update event');
     }
   };
 
@@ -140,7 +141,7 @@ export default function CalendarPage() {
       await fetchEvents();
     } catch (error) {
       console.error('Error deleting event:', error);
-      alert('Failed to delete event');
+      toast.error('Failed to delete event');
     }
   };
 
@@ -162,7 +163,7 @@ export default function CalendarPage() {
       }
     } catch (error) {
       console.error('Error exporting calendar:', error);
-      alert('Failed to export calendar');
+      toast.error('Failed to export calendar');
     }
   };
 

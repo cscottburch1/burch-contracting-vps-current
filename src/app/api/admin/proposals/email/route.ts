@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    // Use the admin session cookie set at login
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -31,11 +28,9 @@ export async function POST(request: Request) {
       proposalType
     } = data;
 
-    // Generate HTML for items based on proposal type
     let itemsHtml = '';
-    
+
     if (proposalType === 'Kitchen/Bath Remodeling') {
-      // Kitchen/Bath format with category, description, qty, unit, price, total
       itemsHtml = items.map((item: any) => `
         <tr>
           <td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-weight: 600; color: #1f2937;">${item.category || ''}</td>
@@ -47,7 +42,6 @@ export async function POST(request: Request) {
         </tr>
       `).join('');
     } else {
-      // Handyman format with service, qty, price, total
       itemsHtml = items.map((item: any) => `
         <tr>
           <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${item.service}</td>
@@ -59,7 +53,6 @@ export async function POST(request: Request) {
       `).join('');
     }
 
-    // Table header based on proposal type
     const tableHeader = proposalType === 'Kitchen/Bath Remodeling' ? `
       <thead>
         <tr style="background-color: #f3f4f6; border-bottom: 2px solid #d1d5db;">
@@ -90,7 +83,6 @@ export async function POST(request: Request) {
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
   <div style="max-width: 800px; margin: 0 auto; background-color: white; padding: 40px;">
-    <!-- Header -->
     <div style="border-bottom: 4px solid #2563eb; padding-bottom: 20px; margin-bottom: 30px;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 12px;">
@@ -107,7 +99,6 @@ export async function POST(request: Request) {
       </div>
     </div>
 
-    <!-- Customer & Company Info -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
       <div>
         <h3 style="margin: 0 0 10px 0; color: #111827; font-size: 16px;">From:</h3>
@@ -129,17 +120,11 @@ export async function POST(request: Request) {
       </div>
     </div>
 
-    <!-- Dates -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-      <div>
-        <strong style="color: #374151;">Date:</strong> ${proposalDate}
-      </div>
-      <div>
-        <strong style="color: #374151;">Valid Until:</strong> ${expirationDate}
-      </div>
+      <div><strong style="color: #374151;">Date:</strong> ${proposalDate}</div>
+      <div><strong style="color: #374151;">Valid Until:</strong> ${expirationDate}</div>
     </div>
 
-    <!-- Services Table -->
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
       ${tableHeader}
       <tbody>
@@ -147,7 +132,6 @@ export async function POST(request: Request) {
       </tbody>
     </table>
 
-    <!-- Totals -->
     <div style="margin-left: auto; width: 300px; margin-bottom: 30px;">
       <div style="padding: 10px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; margin-bottom: 15px;">
         <p style="margin: 0; font-size: 12px; color: #1e40af;"><strong>Note:</strong> All labor rates are labor only. Materials charged as needed per job.</p>
@@ -158,7 +142,7 @@ export async function POST(request: Request) {
       </div>
       <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
         <span style="color: #374151;">Service Charge <span style="font-size: 11px;">(due in advance)</span>:</span>
-        <span style="font-weight: 600; color: ${serviceCharge === 0 ? '#059669' : '#111827'};">${serviceCharge === 0 ? '<del>$69.00</del> ✓ Waived' : `$${serviceCharge.toFixed(2)}`}</span>
+        <span style="font-weight: 600; color: ${serviceCharge === 0 ? '#059669' : '#111827'};">${serviceCharge === 0 ? '<del>$69.00</del> Waived' : `$${serviceCharge.toFixed(2)}`}</span>
       </div>
       <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
         <span style="color: #374151;">Subtotal:</span>
@@ -174,9 +158,8 @@ export async function POST(request: Request) {
       </div>
     </div>
 
-    <!-- Terms -->
     <div style="border-top: 1px solid #d1d5db; padding-top: 20px; margin-bottom: 20px;">
-      <h3 style="margin: 0 0 10px 0; color: #111827; font-size: 16px;">Terms & Conditions:</h3>
+      <h3 style="margin: 0 0 10px 0; color: #111827; font-size: 16px;">Terms &amp; Conditions:</h3>
       <ul style="margin: 0; padding-left: 20px; color: #374151; line-height: 1.8;">
         <li>Service charge ($69.00) is due in advance to schedule work (waived on jobs with labor over $199)</li>
         <li>50% deposit required to schedule work</li>
@@ -193,16 +176,14 @@ export async function POST(request: Request) {
     </div>
     ` : ''}
 
-    <!-- Call to Action -->
     <div style="text-align: center; margin: 40px 0; padding: 30px; background-color: #eff6ff; border-radius: 8px;">
       <h3 style="margin: 0 0 15px 0; color: #1e40af; font-size: 20px;">Ready to Get Started?</h3>
       <p style="margin: 0 0 20px 0; color: #374151;">Reply to this email or call us to accept this proposal and schedule your project.</p>
       <a href="tel:+18647244600" style="display: inline-block; background-color: #2563eb; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: 600;">
-        📞 Call (864) 724-4600
+        Call (864) 724-4600
       </a>
     </div>
 
-    <!-- Footer -->
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; text-align: center; color: #9ca3af; font-size: 12px;">
       <p style="margin: 0;">Burch Contracting | (864) 724-4600 | estimates@burchcontracting.com</p>
       <p style="margin: 5px 0 0 0;">Simpsonville, SC 29681 | www.burchcontracting.com</p>
@@ -212,7 +193,6 @@ export async function POST(request: Request) {
 </html>
     `;
 
-    // Send email using nodemailer directly
     const nodemailer = require('nodemailer');
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -231,7 +211,7 @@ export async function POST(request: Request) {
       html: emailHtml
     });
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: 'Proposal emailed successfully'
     });

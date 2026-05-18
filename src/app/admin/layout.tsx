@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AdminNav } from '@/components/admin/AdminNav';
+import { Toaster } from 'sonner';
 
 export default function AdminLayout({
   children,
@@ -19,7 +20,12 @@ export default function AdminLayout({
 
   // Don't show sidebar on login page
   if (pathname === '/admin') {
-    return <>{children}</>;
+    return (
+      <>
+        {children}
+        <Toaster position="top-right" richColors closeButton />
+      </>
+    );
   }
 
   return (
@@ -36,6 +42,7 @@ export default function AdminLayout({
           {children}
         </main>
       </div>
+      <Toaster position="top-right" richColors closeButton />
     </div>
   );
 }

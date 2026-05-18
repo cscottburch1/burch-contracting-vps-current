@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface MaterialRequest {
   id: number;
@@ -64,7 +65,7 @@ export default function MaterialRequestsPage() {
     e.preventDefault();
     
     if (!formData.project_id || !formData.item_name || !formData.quantity) {
-      alert('Please fill in all required fields');
+      toast.error('Please fill in all required fields');
       return;
     }
 
@@ -88,11 +89,11 @@ export default function MaterialRequestsPage() {
         });
         loadData();
       } else {
-        alert('Failed to submit request');
+        toast.error('Failed to submit request');
       }
     } catch (error) {
       console.error('Failed to submit:', error);
-      alert('Failed to submit request');
+      toast.error('Failed to submit request');
     } finally {
       setSubmitting(false);
     }

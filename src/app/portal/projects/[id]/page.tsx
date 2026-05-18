@@ -8,6 +8,7 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
+import { toast } from 'sonner';
 
 interface Project {
   id: number;
@@ -214,7 +215,7 @@ export default function ProjectDetailsPage() {
       { method: 'DELETE' }
     );
     if (res.ok) fetchAll();
-    else alert('Failed to delete document');
+    else toast.error('Failed to delete document');
   };
 
   if (loading) {

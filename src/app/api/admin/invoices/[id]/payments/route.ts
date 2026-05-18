@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 import mysql from '@/lib/mysql';
 
 export async function POST(
@@ -7,10 +7,8 @@ export async function POST(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -21,28 +19,12 @@ export async function POST(
       return NextResponse.json({ error: 'Valid payment amount required' }, { status: 400 });
     }
 
-    // Create invoice_payments table if not exists
-    await mysql.query(`
-      CREATE TABLE IF NOT EXISTS invoice_payments (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        invoice_id INT NOT NULL,
-        amount DECIMAL(10, 2) NOT NULL,
-        payment_method VARCHAR(50),
-        payment_date DATE NOT NULL,
-        notes TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
-      )
-    `);
-
-    // Record payment
     await mysql.query(
-      `INSERT INTO invoice_payments (invoice_id, amount, payment_method, payment_date, notes) 
+      `INSERT INTO invoice_payments (invoice_id, amount, payment_method, payment_date, notes)
        VALUES (?, ?, ?, ?, ?)`,
       [invoiceId, amount, payment_method || 'cash', payment_date || new Date().toISOString().split('T')[0], notes || '']
     );
 
-    // Update invoice amount_paid and status
     const [invoices] = await mysql.query(
       `SELECT total, amount_paid FROM invoices WHERE id = ?`,
       [invoiceId]
@@ -52,7 +34,7 @@ export async function POST(
       const invoice = (invoices as any[])[0];
       const newAmountPaid = parseFloat(invoice.amount_paid || 0) + parseFloat(amount);
       const total = parseFloat(invoice.total);
-      
+
       let newStatus = 'unpaid';
       if (newAmountPaid >= total) {
         newStatus = 'paid';
@@ -66,7 +48,7 @@ export async function POST(
       );
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: 'Payment recorded successfully'
     });

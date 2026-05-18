@@ -7,6 +7,7 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
+import { toast } from 'sonner';
 
 interface Customer {
   id: number;
@@ -88,12 +89,12 @@ export default function DashboardPage() {
     e.preventDefault();
 
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      alert('New passwords do not match');
+      toast.error('New passwords do not match');
       return;
     }
 
     if (passwordForm.newPassword.length < 8) {
-      alert('Password must be at least 8 characters');
+      toast.error('Password must be at least 8 characters');
       return;
     }
 
@@ -111,15 +112,15 @@ export default function DashboardPage() {
       const data = await response.json();
 
       if (response.ok) {
-        alert('Password changed successfully!');
+        toast.success('Password changed successfully!');
         setShowPasswordModal(false);
         setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
       } else {
-        alert(data.error || 'Failed to change password');
+        toast.error(data.error || 'Failed to change password');
       }
     } catch (error) {
       console.error('Error changing password:', error);
-      alert('Failed to change password');
+      toast.error('Failed to change password');
     }
   };
 

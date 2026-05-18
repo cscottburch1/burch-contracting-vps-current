@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface Project {
   id: number;
@@ -110,19 +111,19 @@ export default function ProjectPhotoUploadPage() {
       }
 
       if (successCount > 0) {
-        alert(`✅ Successfully uploaded ${successCount} photo(s)!`);
+        toast.success(`Successfully uploaded ${successCount} photo(s)!`);
         setSelectedFiles([]);
         setCaption('');
         await loadProjectData();
-        
+
         if (fileInputRef.current) fileInputRef.current.value = '';
         if (cameraInputRef.current) cameraInputRef.current.value = '';
       } else {
-        alert('❌ Upload failed. Please try again.');
+        toast.error('Upload failed. Please try again.');
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('❌ Upload failed. Please check your connection.');
+      toast.error('Upload failed. Please check your connection.');
     } finally {
       setUploading(false);
       setUploadProgress(0);

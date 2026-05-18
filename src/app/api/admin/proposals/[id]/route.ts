@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 import mysql from '@/lib/mysql';
 
 export async function GET(
@@ -7,10 +7,8 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -41,36 +39,30 @@ export async function PATCH(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { id: proposalId } = await context.params;
     const data = await request.json();
 
-    // Support both status-only updates and full proposal updates
     if (data.status && Object.keys(data).length === 1) {
-      // Just update status
       await mysql.query(
         `UPDATE proposals SET status = ?, updated_at = NOW() WHERE id = ?`,
         [data.status, proposalId]
       );
     } else {
-      // Full proposal update
       const { customer_id, items, subtotal, tax, total, notes } = data;
-      
       await mysql.query(
-        `UPDATE proposals 
-         SET customer_id = ?, items = ?, subtotal = ?, tax = ?, total = ?, notes = ?, updated_at = NOW() 
+        `UPDATE proposals
+         SET customer_id = ?, items = ?, subtotal = ?, tax = ?, total = ?, notes = ?, updated_at = NOW()
          WHERE id = ?`,
         [customer_id, JSON.stringify(items), subtotal, tax, total, notes || '', proposalId]
       );
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: 'Proposal updated successfully'
     });
@@ -89,16 +81,13 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('admin_session');
-    
-    if (!adminSession) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { id: proposalId } = await context.params;
 
-    // Check if proposal is already accepted (prevent deletion of accepted proposals)
     const [proposals] = await mysql.query(
       `SELECT status FROM proposals WHERE id = ?`,
       [proposalId]
@@ -118,7 +107,7 @@ export async function DELETE(
 
     await mysql.query(`DELETE FROM proposals WHERE id = ?`, [proposalId]);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: 'Proposal deleted successfully'
     });

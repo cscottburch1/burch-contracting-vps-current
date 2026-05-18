@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import Icon from '@/components/ui/Icon';
 
 interface Customer {
@@ -62,11 +63,11 @@ export default function NewProjectPage() {
         const data = await res.json();
         router.push(`/admin/projects/${data.projectId}`);
       } else {
-        alert('Failed to create project');
+        toast.error('Failed to create project');
       }
     } catch (error) {
       console.error('Failed to create project:', error);
-      alert('Failed to create project');
+      toast.error('Failed to create project');
     } finally {
       setSubmitting(false);
     }

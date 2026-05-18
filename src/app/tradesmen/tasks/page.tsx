@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface Task {
   id: number;
@@ -75,11 +76,11 @@ export default function TasksPage() {
       if (response.ok) {
         loadTasks(selectedProject);
       } else {
-        alert('Failed to update task');
+        toast.error('Failed to update task');
       }
     } catch (error) {
       console.error('Failed to update task:', error);
-      alert('Failed to update task');
+      toast.error('Failed to update task');
     } finally {
       setUpdating(null);
     }
