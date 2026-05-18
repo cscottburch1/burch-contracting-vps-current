@@ -42,7 +42,7 @@ export async function POST(
     }
 
     const timestamp = Date.now();
-    const ext = file.name.split('.').pop();
+    const ext = (file.name.split('.').pop() || 'jpg').replace(/[^a-zA-Z0-9]/g, '');
     const filename = `project-${projectId}-${timestamp}.${ext}`;
     const uploadDir = join(process.cwd(), 'public', 'uploads', 'projects');
     await writeFile(join(uploadDir, filename), Buffer.from(await file.arrayBuffer()));

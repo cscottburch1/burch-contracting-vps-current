@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 8);
-    const extension = file.name.split('.').pop();
+    const extension = (file.name.split('.').pop() || 'bin').replace(/[^a-zA-Z0-9]/g, '');
     const filename = `${timestamp}-${randomStr}.${extension}`;
 
     const uploadsDir = join(process.cwd(), 'public', 'uploads');
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     await writeFile(join(uploadsDir, filename), Buffer.from(await file.arrayBuffer()));
 
-    const result: any = await mysql.query(
+    const [result]: any = await mysql.query(
       `INSERT INTO documents (customer_id, project_id, filename, original_name, file_type, file_size, category, description, uploaded_by)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'admin')`,
       [customerId || null, projectId || null, filename, file.name, file.type, file.size, category, description]
@@ -101,7 +101,7 @@ export async function GET(request: Request) {
 
     sql += ' ORDER BY created_at DESC';
 
-    const documents = await mysql.query(sql, params);
+    const [documents] = await mysql.query(sql, params) as any;
     return NextResponse.json({ documents });
 
   } catch (error) {

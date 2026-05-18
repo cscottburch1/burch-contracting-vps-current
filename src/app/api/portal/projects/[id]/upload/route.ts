@@ -64,7 +64,7 @@ export async function POST(
 
     const timestamp = Date.now();
     const rand = Math.random().toString(36).slice(2, 8);
-    const ext = file.name.split('.').pop();
+    const ext = (file.name.split('.').pop() || 'bin').replace(/[^a-zA-Z0-9]/g, '');
     const storedName = `portal-${timestamp}-${rand}.${ext}`;
 
     const uploadsDir = join(process.cwd(), 'public', 'uploads');
