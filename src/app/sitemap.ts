@@ -201,12 +201,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.82,
     },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: appLastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.78,
-    },
   ];
 
   // Services pages (sub-service routes)
