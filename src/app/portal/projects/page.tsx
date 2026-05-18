@@ -55,6 +55,7 @@ export default function ProjectsPage() {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingDetails, setLoadingDetails] = useState(false);
+  const [mobileView, setMobileView] = useState<'list' | 'detail'>('list');
 
   useEffect(() => {
     fetchProjects();
@@ -107,6 +108,7 @@ export default function ProjectsPage() {
   const selectProject = (project: Project) => {
     setSelectedProject(project);
     fetchProjectDetails(project.id);
+    setMobileView('detail');
   };
 
   const getStatusColor = (status: string) => {
@@ -156,17 +158,17 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Projects</h1>
-              <p className="text-gray-600">Track your projects in real-time</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">My Projects</h1>
+              <p className="text-gray-600 text-sm sm:text-base">Track your projects in real-time</p>
             </div>
             <button
-              onClick={() => router.push('/portal')}
-              className="text-gray-600 hover:text-gray-800 font-semibold flex items-center gap-2"
+              onClick={() => router.push('/portal/dashboard')}
+              className="text-gray-600 hover:text-gray-800 font-semibold flex items-center gap-2 text-sm"
             >
-              <Icon name="ArrowLeft" size={20} />
-              Back to Portal
+              <Icon name="ArrowLeft" size={18} />
+              Dashboard
             </button>
           </div>
         </div>
@@ -188,7 +190,7 @@ export default function ProjectsPage() {
         ) : (
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Projects List */}
-            <div className="lg:col-span-1 space-y-4">
+            <div className={`lg:col-span-1 space-y-4 ${mobileView === 'detail' ? 'hidden lg:block' : ''}`}>
               {projects.map((project) => (
                 <div
                   key={project.id}
@@ -241,7 +243,17 @@ export default function ProjectsPage() {
             </div>
 
             {/* Project Details */}
-            <div className="lg:col-span-2">
+            <div className={`lg:col-span-2 ${mobileView === 'list' ? 'hidden lg:block' : ''}`}>
+              {/* Mobile back button */}
+              <div className="lg:hidden mb-4">
+                <button
+                  onClick={() => { setMobileView('list'); setSelectedProject(null); }}
+                  className="flex items-center gap-2 text-blue-600 font-semibold text-sm"
+                >
+                  <Icon name="ArrowLeft" size={18} />
+                  Back to Projects
+                </button>
+              </div>
               {!selectedProject ? (
                 <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                   <Icon name="MousePointer" size={48} className="mx-auto text-gray-400 mb-4" />

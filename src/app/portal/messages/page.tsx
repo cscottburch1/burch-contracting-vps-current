@@ -138,25 +138,25 @@ export default function MessagesPage() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Messages</h1>
-              <p className="text-gray-600">Communicate directly with our team</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Messages</h1>
+              <p className="text-gray-600 text-sm sm:text-base">Communicate directly with our team</p>
             </div>
             <button
               onClick={() => router.push('/portal/dashboard')}
-              className="text-gray-600 hover:text-gray-800 font-semibold flex items-center gap-2"
+              className="text-gray-600 hover:text-gray-800 font-semibold flex items-center gap-2 text-sm"
             >
-              <Icon name="ArrowLeft" size={20} />
-              Back to Portal
+              <Icon name="ArrowLeft" size={18} />
+              Dashboard
             </button>
           </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* New Message Form */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-8">
+          {/* New Message Form — below threads on mobile, sidebar on desktop */}
+          <div className="order-2 lg:order-1 lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-6 sm:sticky sm:top-16">
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Icon name="Plus" size={24} />
                 New Message
@@ -208,8 +208,8 @@ export default function MessagesPage() {
             </div>
           </div>
 
-          {/* Message Threads */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* Message Threads — shown first on mobile */}
+          <div className="order-1 lg:order-2 lg:col-span-2 space-y-4">
             {threads.length === 0 ? (
               <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                 <Icon name="MessageCircle" size={64} className="mx-auto text-gray-400 mb-4" />
