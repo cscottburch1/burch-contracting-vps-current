@@ -168,8 +168,8 @@ export default function CoveredPatiosPage() {
             <Link href="/outdoor-living/screened-porches" className="hover:text-blue-700">
               Screened Porches â†’
             </Link>
-            <Link href="/pricing" className="hover:text-blue-700">
-              Pricing Guide â†’
+            <Link href="/cost" className="hover:text-blue-700">
+              Pricing Guide →
             </Link>
           </div>
         </div>
