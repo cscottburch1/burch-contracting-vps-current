@@ -88,11 +88,12 @@ export default function CommercialRenovationsSimpsonvillePage() {
             aggregateRating: {
               '@type': 'AggregateRating',
               ratingValue: '5.0',
-              reviewCount: 12,
+              ratingCount: 47,
+              reviewCount: 47,
               bestRating: 5,
               worstRating: 1,
             },
-            priceRange: '$$-$$$',
+            priceRange: '$$$',
             openingHours: 'Mo-Fr 08:00-17:00',
           }),
         }}

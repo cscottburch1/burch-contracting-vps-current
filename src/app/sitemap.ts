@@ -178,6 +178,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.78,
     },
     {
+      url: `${baseUrl}/locations`,
+      lastModified: localSeoLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.80,
+    },
+    {
       url: `${baseUrl}/blog`,
       lastModified: localSeoLastModified,
       changeFrequency: 'weekly' as const,
