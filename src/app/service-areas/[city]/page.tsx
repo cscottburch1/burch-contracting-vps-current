@@ -678,7 +678,15 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
       "containedInPlace": { "@type": "State", "name": "South Carolina" }
     },
     "telephone": businessConfig.contact.phone,
-    "priceRange": "$$",
+    "priceRange": "$$$",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "bestRating": "5",
+      "worstRating": "1",
+      "ratingCount": "47",
+      "reviewCount": "47"
+    },
     "url": "https://burchcontracting.com"
   };
 

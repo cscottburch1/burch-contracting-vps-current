@@ -510,6 +510,23 @@ export default async function ServicePage({ params }: ServicePageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
+      {service.faq?.length > 0 && (
+        <Script
+          id={`service-faq-schema-${slug}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: service.faq.map((item) => ({
+                '@type': 'Question',
+                name: item.question,
+                acceptedAnswer: { '@type': 'Answer', text: item.answer },
+              })),
+            }),
+          }}
+        />
+      )}
 
       {/* Hero Section */}
       <section className={`relative ${slug === 'basement' ? 'bg-cover bg-center' : 'bg-linear-to-br from-blue-900 via-blue-800 to-gray-900'} text-white py-24 md:py-32 overflow-hidden`}
