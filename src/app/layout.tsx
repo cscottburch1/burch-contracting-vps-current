@@ -45,11 +45,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.webp', type: 'image/webp' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: '/favicon.webp',
     apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
@@ -226,9 +224,7 @@ export default function RootLayout({
           {`
             if ('serviceWorker' in navigator) {
               window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                  .then(reg => console.log('Service Worker registered'))
-                  .catch(err => console.log('Service Worker registration failed:', err));
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
               });
             }
           `}

@@ -122,10 +122,7 @@ export default async function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto text-center">
-            <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              aria-label="Premier Residential Remodeling & Additions in Upstate SC"
-            >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               Premier Residential Remodeling &amp; Additions in Upstate SC
             </h1>
             
@@ -399,7 +396,7 @@ export default async function HomePage() {
             Proudly Serving Upstate South Carolina
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Proudly serving Simpsonville, Mauldin, Fountain Inn, and Woodruff — and nearby Upstate SC communities
+            Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, Five Forks, and surrounding communities
           </p>
         </div>
         <ClickableCityGrid columns={3} compact={true} />

@@ -87,7 +87,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-gray-400">
               <li><Link href="/room-additions" className="hover:text-white">Additions</Link></li>
               <li><Link href="/garage-builder" className="hover:text-white">Garages</Link></li>
-              <li><Link href="/services" className="hover:text-white">Outdoor Living</Link></li>
+              <li><Link href="/outdoor-living/decks" className="hover:text-white">Decks &amp; Porches</Link></li>
               <li><Link href="/remodeling" className="hover:text-white">Remodeling</Link></li>
               <li><Link href="/commercial-upfits" className="hover:text-white">Commercial Upfits</Link></li>
             </ul>
@@ -109,7 +109,7 @@ export const Footer: React.FC = () => {
         <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-sm text-gray-400 border-b border-gray-800 pb-8">
           <Link href="/about" className="hover:text-white">About</Link>
           <Link href="/work" className="hover:text-white">Projects</Link>
-          <Link href="/services" className="hover:text-white">Pricing</Link>
+          <Link href="/cost" className="hover:text-white">Cost Guides</Link>
           <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
           <Link href="/terms-of-service" className="hover:text-white">Terms of Service</Link>
           <Link href="/editorial-policy" className="hover:text-white">Editorial Policy</Link>

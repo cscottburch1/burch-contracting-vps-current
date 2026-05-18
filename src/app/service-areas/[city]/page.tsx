@@ -547,6 +547,11 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
       description: 'Expert deck building, garage construction, screened porch installation, and home additions in Simpsonville SC. Licensed, insured, BBB A+ rated contractor serving Simpsonville for 30+ years. Professional craftsmanship, free estimates!',
       keywords: 'deck builder Simpsonville SC, garage contractor Simpsonville, screened porch Simpsonville SC, home additions Simpsonville, room additions Simpsonville, deck construction Simpsonville, garage builder Simpsonville, contractor Simpsonville SC'
     },
+    mauldin: {
+      title: 'Deck Builder, Garage Contractor & Home Additions Mauldin SC | Burch Contracting',
+      description: 'Expert deck building, garage construction, screened porch installation, and home additions in Mauldin SC. Licensed, insured, BBB A+ rated contractor serving Mauldin for 30+ years. Free estimates — call (864) 724-4600.',
+      keywords: 'deck builder Mauldin SC, garage contractor Mauldin, screened porch Mauldin SC, home additions Mauldin, room additions Mauldin, deck construction Mauldin, contractor Mauldin SC'
+    },
     'fountain-inn': {
       title: 'Deck Builder, Garage & Screened Porch Contractor Fountain Inn SC | Burch Contracting',
       description: 'Professional deck construction, garage building, screened porches, and room additions in Fountain Inn SC. Licensed contractor with 30+ years serving Fountain Inn. Quality craftsmanship, honest pricing, free estimates. Call today!',
@@ -556,6 +561,21 @@ export async function generateMetadata({ params }: ServiceAreaPageProps): Promis
       title: 'Deck Builder, Garage Contractor & Home Additions Woodruff SC | Burch Contracting',
       description: 'Trusted deck building, garage construction, screened porch installation, and room additions in Woodruff SC. Licensed, insured contractor serving Woodruff with honest pricing and quality work. Free consultations!',
       keywords: 'deck builder Woodruff SC, garage contractor Woodruff, screened porch Woodruff SC, home additions Woodruff, room additions Woodruff, deck construction Woodruff, contractor Woodruff SC'
+    },
+    greenville: {
+      title: 'Deck Builder, Garage Contractor & Home Additions Greenville SC | Burch Contracting',
+      description: 'Professional deck construction, garage building, screened porches, and home additions in Greenville SC. Licensed SC general contractor (CLG118679) with 30+ years serving Greenville homeowners. BBB A+ rated. Free estimates!',
+      keywords: 'deck builder Greenville SC, garage contractor Greenville, screened porch Greenville SC, home additions Greenville, room additions Greenville, deck construction Greenville, contractor Greenville SC'
+    },
+    'five-forks': {
+      title: 'Deck Builder, Garage Contractor & Home Additions Five Forks SC | Burch Contracting',
+      description: 'Expert deck building, garage construction, screened porch installation, and room additions in Five Forks SC. Local licensed contractor with 30+ years serving Five Forks families. Honest pricing, free estimates.',
+      keywords: 'deck builder Five Forks SC, garage contractor Five Forks, screened porch Five Forks SC, home additions Five Forks, room additions Five Forks, contractor Five Forks SC'
+    },
+    'gray-court': {
+      title: 'Deck Builder, Garage Contractor & Home Additions Gray Court SC | Burch Contracting',
+      description: 'Local deck building, garage construction, screened porch installation, and home additions in Gray Court SC. Burch Contracting is based in Gray Court — serving our community for 30+ years. Free estimates!',
+      keywords: 'deck builder Gray Court SC, garage contractor Gray Court, screened porch Gray Court SC, home additions Gray Court, contractor Gray Court SC'
     },
     laurens: {
       title: 'Deck Builder, Garage Contractor & Home Additions Laurens SC | Burch Contracting',
@@ -609,7 +629,7 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
   const relatedLocationPages = serviceLandingPages.filter((page) => page.city.toLowerCase().startsWith(content.name.toLowerCase())).slice(0, 6);
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
-    { name: 'Service Areas', url: absoluteUrl('/services') },
+    { name: 'Service Areas', url: absoluteUrl('/areas') },
     { name: content.displayName, url: absoluteUrl(`/service-areas/${city}`) },
   ]);
   const personSchema = buildPersonSchema({
@@ -620,6 +640,19 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
     image: primaryAuthor.image,
     sameAs: primaryAuthor.sameAs,
   });
+  const cityCoordinates: Record<string, { latitude: number; longitude: number }> = {
+    simpsonville:   { latitude: 34.7387, longitude: -82.2543 },
+    mauldin:        { latitude: 34.7793, longitude: -82.3090 },
+    greenville:     { latitude: 34.8526, longitude: -82.3940 },
+    'five-forks':   { latitude: 34.7833, longitude: -82.2333 },
+    'fountain-inn': { latitude: 34.6882, longitude: -82.1971 },
+    woodruff:       { latitude: 34.7382, longitude: -82.0326 },
+    'gray-court':   { latitude: 34.6342, longitude: -82.0745 },
+    laurens:        { latitude: 34.4993, longitude: -82.0132 },
+    greer:          { latitude: 34.9387, longitude: -82.2262 },
+  };
+  const coords = cityCoordinates[city] ?? { latitude: 34.6342, longitude: -82.0745 };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -628,19 +661,25 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
     "description": `Professional contracting services in ${content.displayName}`,
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": content.name,
-      "addressRegion": "SC"
+      "streetAddress": "1095 Water Tank Rd",
+      "addressLocality": "Gray Court",
+      "addressRegion": "SC",
+      "postalCode": "29645",
+      "addressCountry": "US"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "addressLocality": content.name
+      "latitude": coords.latitude,
+      "longitude": coords.longitude
     },
     "areaServed": {
       "@type": "City",
-      "name": content.name
+      "name": content.name,
+      "containedInPlace": { "@type": "State", "name": "South Carolina" }
     },
     "telephone": businessConfig.contact.phone,
-    "priceRange": "$$"
+    "priceRange": "$$",
+    "url": "https://burchcontracting.com"
   };
 
   return (

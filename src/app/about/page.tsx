@@ -3,9 +3,9 @@ import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
-import { absoluteUrl } from '@/lib/seo/site';
-import Image from 'next/image';
-import { buildBreadcrumbSchema } from '@/lib/seo/schema';
+import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import { buildBreadcrumbSchema, buildPersonSchema } from '@/lib/seo/schema';
+import { primaryAuthor } from '@/lib/seo/author';
 
 export const metadata: Metadata = {
   title: 'About Scott Burch | Upstate SC Contractor Since 1995',
@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   openGraph: {
     url: absoluteUrl('/about'),
     title: 'About Scott Burch | Licensed SC Contractor | Burch Contracting',
+    description: 'Meet Scott Burch — licensed SC general contractor (CLG118679) with 35+ years building garages, additions, decks, and screened porches across Upstate SC.',
     type: 'website',
+    images: [{ url: absoluteUrl(siteConfig.defaultOgImage), width: 1200, height: 630 }],
   },
 };
 
@@ -26,12 +28,24 @@ export default function AboutPage() {
     { name: 'Home', url: absoluteUrl('/') },
     { name: 'About Scott Burch', url: absoluteUrl('/about') },
   ]);
+  const personSchema = buildPersonSchema({
+    name: primaryAuthor.name,
+    jobTitle: `${primaryAuthor.role}, SC License ${primaryAuthor.licenseNumber}`,
+    description: primaryAuthor.bio,
+    email: primaryAuthor.email,
+    image: primaryAuthor.image,
+    sameAs: primaryAuthor.sameAs,
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <section className="bg-linear-to-br from-slate-900 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -60,19 +74,28 @@ export default function AboutPage() {
 
       <Section background="white" padding="lg">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1.5fr]">
-          {/* Photo placeholder - replace with actual photo */}
-          <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-gray-200 shadow-xl">
-            <Image
-              src="/images/scott-burch-contractor.jpg"
-              alt="C. Scott Burch on job site"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 400px"
-              priority
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-6">
-              <p className="text-white font-semibold text-lg">C. Scott Burch</p>
-              <p className="text-blue-200 text-sm">Owner & Lead Contractor</p>
+          {/* Scott Burch profile card */}
+          <div className="relative aspect-3/4 overflow-hidden rounded-2xl shadow-xl bg-linear-to-br from-blue-900 via-blue-800 to-slate-900 flex flex-col items-center justify-center gap-6 p-8">
+            <div className="w-32 h-32 rounded-full bg-white/15 border-4 border-white/30 flex items-center justify-center text-white font-bold text-5xl select-none">
+              SB
+            </div>
+            <div className="text-center text-white">
+              <p className="font-bold text-2xl mb-1">C. Scott Burch</p>
+              <p className="text-blue-200 text-sm mb-4">Owner &amp; Lead Contractor</p>
+              <div className="flex flex-col gap-2 text-sm text-blue-100">
+                <div className="flex items-center gap-2 justify-center">
+                  <Icon name="Award" size={16} />
+                  <span>SC License #CLG118679</span>
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <Icon name="Clock" size={16} />
+                  <span>35+ Years Experience</span>
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <Icon name="MapPin" size={16} />
+                  <span>Gray Court, SC</span>
+                </div>
+              </div>
             </div>
           </div>
 

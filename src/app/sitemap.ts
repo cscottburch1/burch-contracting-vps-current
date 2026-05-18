@@ -32,40 +32,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     // Core service hubs — primary authority pages
     {
-      url: `${baseUrl}/additions`,
+      url: `${baseUrl}/garage-builder`,
       lastModified: appLastModified,
       changeFrequency: 'weekly' as const,
-      priority: 0.95,
+      priority: 0.97,
     },
     {
-      url: `${baseUrl}/garages`,
+      url: `${baseUrl}/room-additions`,
       lastModified: appLastModified,
       changeFrequency: 'weekly' as const,
-      priority: 0.95,
-    },
-    {
-      url: `${baseUrl}/outdoor-living`,
-      lastModified: appLastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.95,
+      priority: 0.96,
     },
     {
       url: `${baseUrl}/outdoor-living/decks`,
       lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.88,
+      changeFrequency: 'weekly' as const,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/outdoor-living/screened-porches`,
       lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.88,
-    },
-    {
-      url: `${baseUrl}/outdoor-living/covered-patios`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.88,
+      changeFrequency: 'weekly' as const,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/remodeling`,
@@ -79,7 +67,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.90,
     },
-    // Core service area pages
+    {
+      url: `${baseUrl}/deck-builder`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.89,
+    },
+    {
+      url: `${baseUrl}/screened-porches`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.88,
+    },
+    {
+      url: `${baseUrl}/basement-finishing`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.87,
+    },
+    {
+      url: `${baseUrl}/kitchen-remodeling`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.87,
+    },
+    {
+      url: `${baseUrl}/bathroom-remodeling`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.87,
+    },
+    {
+      url: `${baseUrl}/adu-builder`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.86,
+    },
+    {
+      url: `${baseUrl}/commercial-renovations`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    },
+    // Core service area pages (canonical slugs only — no redirect URLs)
     {
       url: `${baseUrl}/areas`,
       lastModified: appLastModified,
@@ -87,28 +117,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.90,
     },
     {
-      url: `${baseUrl}/service-areas/simpsonville-sc`,
+      url: `${baseUrl}/service-areas/simpsonville`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.88,
     },
     {
-      url: `${baseUrl}/service-areas/mauldin-sc`,
+      url: `${baseUrl}/service-areas/mauldin`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.87,
     },
     {
-      url: `${baseUrl}/service-areas/fountain-inn-sc`,
+      url: `${baseUrl}/service-areas/fountain-inn`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.87,
     },
     {
-      url: `${baseUrl}/service-areas/woodruff-sc`,
+      url: `${baseUrl}/service-areas/woodruff`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.86,
+    },
+    {
+      url: `${baseUrl}/service-areas/greenville`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.86,
+    },
+    {
+      url: `${baseUrl}/service-areas/five-forks`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/service-areas/greer`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.84,
+    },
+    {
+      url: `${baseUrl}/service-areas/laurens`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.83,
     },
     // Core conversion pages
     {
@@ -130,40 +184,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.88,
     },
     {
-      url: `${baseUrl}/areas`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.87,
-    },
-    {
       url: `${baseUrl}/about`,
       lastModified: appLastModified,
       changeFrequency: 'monthly' as const,
-      priority: 0.75,
-    },
-    // Legacy URLs - kept for redirects
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: projectSeoLastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.60,
-    },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: appLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.60,
+      priority: 0.78,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: localSeoLastModified,
       changeFrequency: 'weekly' as const,
-      priority: 0.70,
+      priority: 0.72,
     },
     {
       url: `${baseUrl}/cost`,
       lastModified: costSeoLastModified,
       changeFrequency: 'weekly' as const,
+      priority: 0.72,
+    },
+    {
+      url: `${baseUrl}/calculators`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
       priority: 0.70,
     },
   ];
@@ -200,14 +241,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Calculators
   const calculators = [
-    'handyman',
-    'remodeling',
-    'additions',
-    'kitchen-remodeling',
-    'bathroom-remodeling',
+    'garages',
     'room-additions',
     'decks-screened-porches',
-    'garages',
+    'kitchen-remodeling',
+    'bathroom-remodeling',
+    'basement-finishing',
+    'adus',
+    'additions',
+    'home-additions',
+    'remodeling',
+    'commercial-renovations',
+    'handyman',
   ];
 
   const calculatorRoutes = calculators.map(calc => ({
@@ -217,20 +262,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // Service areas — primary 4 targets only (others served via [city] dynamic route)
-  const serviceAreas = [
-    'simpsonville-sc',
-    'mauldin-sc',
-    'fountain-inn-sc',
-    'woodruff-sc',
-  ];
-
-  const areaRoutes = serviceAreas.map(area => ({
-    url: `${baseUrl}/service-areas/${area}`,
-    lastModified: localSeoLastModified,
-    changeFrequency: 'monthly' as const,
-    priority: 0.87,
-  }));
+  // areaRoutes are now included inline in staticRoutes above (canonical slugs only)
+  const areaRoutes: typeof staticRoutes = [];
 
   const localServiceRoutes = serviceLandingPages.map((page) => ({
     url: `${baseUrl}/locations/${page.slug}`,
