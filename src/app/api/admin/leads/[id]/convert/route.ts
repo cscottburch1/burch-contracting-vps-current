@@ -52,7 +52,8 @@ export async function POST(
       [id, `Lead converted to customer (ID: ${customerId})`, 'general', adminUser.email]
     );
 
-    const customer = await queryOne('SELECT * FROM customers WHERE id = ?', [customerId]);
+    const rawCustomer = await queryOne('SELECT * FROM customers WHERE id = ?', [customerId]) as any;
+    const { password_hash: _ph, ...customer } = rawCustomer;
 
     return NextResponse.json({ customer, customerId });
   } catch (error) {

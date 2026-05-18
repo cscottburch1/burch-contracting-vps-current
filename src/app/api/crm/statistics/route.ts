@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
-import {} from '@/lib/leadService';
 
 export async function GET(request: Request) {
   try {
