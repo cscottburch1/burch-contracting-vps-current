@@ -17,6 +17,7 @@ type ContactPayload = {
   phone: string;
   email: string;
   address?: string;
+  zipCode?: string;
   serviceType?: string;
   budgetRange?: string;
   timeframe?: string;
@@ -36,6 +37,7 @@ function parsePayload(formData: FormData): ContactPayload {
     phone: asCleanString(formData.get('phone')),
     email: asCleanString(formData.get('email')),
     address: asCleanString(formData.get('address')),
+    zipCode: asCleanString(formData.get('zipCode')),
     serviceType: asCleanString(formData.get('serviceType')),
     budgetRange: asCleanString(formData.get('budgetRange')),
     timeframe: asCleanString(formData.get('timeframe')),
@@ -137,15 +139,11 @@ export async function POST(request: Request) {
             `Name: ${payload.name}\n` +
             `Phone: ${payload.phone}\n` +
             `Email: ${payload.email}\n` +
-            `Address: ${payload.address || 'N/A'}\n` +
-            `Service: ${payload.serviceType || 'N/A'}\n` +
-            `Budget: ${payload.budgetRange || 'N/A'}\n` +
-            `Timeframe: ${payload.timeframe || 'N/A'}\n` +
-            `Preferred Date: ${payload.preferredDate || 'N/A'}\n` +
-            `Preferred Time: ${payload.preferredTime || 'N/A'}\n` +
+            `Zip Code: ${payload.zipCode || 'N/A'}\n` +
+            `Project Type: ${payload.serviceType || 'N/A'}\n` +
             `Description: ${payload.description}\n` +
-            `Attachments: ${uploadedNames.length}\n\n` +
-            `View: ${(process.env.NEXT_PUBLIC_BASE_URL || 'https://burchcontracting.com') + '/admin/crm/leads/' + leadId}`,
+            `Attachments: ${uploadedNames.length > 0 ? uploadedNames.length + ' file(s) uploaded' : 'None'}\n\n` +
+            `View Lead Details: ${(process.env.NEXT_PUBLIC_BASE_URL || 'https://burchcontracting.com') + '/admin/crm/leads/' + leadId}`,
           replyTo: payload.email,
         });
 
