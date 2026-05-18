@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { verifyAdminAuth } from '@/lib/adminAuth';
-import { ensureLeadSchema, getLeadAttachmentByStoredName } from '@/lib/leadService';
+import { getLeadAttachmentByStoredName } from '@/lib/leadService';
 
 const CONTENT_TYPES: Record<string, string> = {
   pdf: 'application/pdf',
@@ -36,7 +36,6 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureLeadSchema();
 
     const { id, filename } = await context.params;
     const safeLeadId = sanitizeSegment(String(id));

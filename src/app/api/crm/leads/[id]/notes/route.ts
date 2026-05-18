@@ -2,35 +2,6 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
 
-async function ensureCrmSupportTables() {
-  await query(`
-    CREATE TABLE IF NOT EXISTS lead_notes (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      lead_id INT NOT NULL,
-      note_type ENUM('general', 'call', 'email', 'meeting', 'follow_up') DEFAULT 'general',
-      content TEXT NOT NULL,
-      is_important BOOLEAN DEFAULT FALSE,
-      created_by VARCHAR(255),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      INDEX idx_lead_id (lead_id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  `);
-
-  await query(`
-    CREATE TABLE IF NOT EXISTS lead_activities (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      lead_id INT NOT NULL,
-      activity_type ENUM('status_change', 'note_added', 'email_sent', 'call_made', 'meeting_scheduled', 'proposal_sent') NOT NULL,
-      description TEXT NOT NULL,
-      metadata JSON,
-      created_by VARCHAR(255),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      INDEX idx_lead_id (lead_id),
-      INDEX idx_activity_type (activity_type)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  `);
-}
-
 async function getTableColumns(tableName: string): Promise<Set<string>> {
   const columns = await query<{ COLUMN_NAME: string }>(
     `SELECT COLUMN_NAME
@@ -55,8 +26,6 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureCrmSupportTables();
-
     const { id } = await context.params;
     const notes = await query(
       'SELECT * FROM lead_notes WHERE lead_id = ? ORDER BY created_at DESC',
@@ -80,8 +49,6 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureCrmSupportTables();
-
     const { id } = await context.params;
     const body = await request.json();
     const { content, note_type, is_important } = body;
@@ -98,12 +65,10 @@ export async function POST(
       noteInsertColumns.push('note_type');
       noteInsertValues.push(note_type || 'general');
     }
-
     if (noteColumns.has('is_important')) {
       noteInsertColumns.push('is_important');
       noteInsertValues.push(Boolean(is_important));
     }
-
     if (noteColumns.has('created_by')) {
       noteInsertColumns.push('created_by');
       noteInsertValues.push(getAdminIdentifier(adminUser));
@@ -115,7 +80,6 @@ export async function POST(
       noteInsertValues
     );
 
-    // Log activity, but do not fail note creation if this insert has schema issues.
     try {
       const activityColumns = await getTableColumns('lead_activities');
       const activityInsertColumns: string[] = ['lead_id', 'activity_type', 'description'];

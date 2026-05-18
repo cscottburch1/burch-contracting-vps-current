@@ -5,27 +5,25 @@ import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
-// Create project_photos table if it doesn't exist
-async function ensureProjectPhotosTable() {
-  await query(`
-    CREATE TABLE IF NOT EXISTS project_photos (
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      project_id INT NOT NULL,
-      filename VARCHAR(255) NOT NULL,
-      original_name VARCHAR(255) NOT NULL,
-      category ENUM('before', 'progress', 'after', 'other') DEFAULT 'progress',
-      caption TEXT,
-      file_size INT,
-      uploaded_by VARCHAR(100),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-      INDEX idx_project_id (project_id),
-      INDEX idx_category (category)
-    )
-  `);
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'];
+const ALLOWED_CATEGORIES = new Set(['before', 'progress', 'after', 'other']);
+
+async function isAssignedToProject(tradesmanId: number, projectId: number): Promise<boolean> {
+  const [direct] = await Promise.all([
+    query(
+      'SELECT id FROM tradesman_project_assignments WHERE tradesman_id = ? AND project_id = ?',
+      [tradesmanId, projectId]
+    ),
+  ]);
+  if (Array.isArray(direct) && direct.length > 0) return true;
+
+  const sub = await query(
+    'SELECT id FROM project_subcontractors WHERE subcontractor_id = ? AND project_id = ?',
+    [tradesmanId, projectId]
+  );
+  return Array.isArray(sub) && sub.length > 0;
 }
 
-// GET - List photos for a project
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -37,24 +35,19 @@ export async function GET(
     }
 
     const params = await context.params;
-    const projectId = parseInt(params.id);
+    const projectId = parseInt(params.id, 10);
+    if (isNaN(projectId)) {
+      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+    }
 
-    // Verify tradesman is assigned to this project
-    const assignments = await query(
-      'SELECT id FROM tradesman_project_assignments WHERE tradesman_id = ? AND project_id = ?',
-      [tradesman.id, projectId]
-    );
-
-    if (!Array.isArray(assignments) || assignments.length === 0) {
+    if (!(await isAssignedToProject(tradesman.id, projectId))) {
       return NextResponse.json({ error: 'Not assigned to this project' }, { status: 403 });
     }
 
-    await ensureProjectPhotosTable();
-
     const photos = await query(
       `SELECT id, filename, original_name, category, caption, file_size, uploaded_by, created_at
-       FROM project_photos 
-       WHERE project_id = ? 
+       FROM project_photos
+       WHERE project_id = ?
        ORDER BY created_at DESC`,
       [projectId]
     );
@@ -66,7 +59,6 @@ export async function GET(
   }
 }
 
-// POST - Upload photo(s)
 export async function POST(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -78,88 +70,59 @@ export async function POST(
     }
 
     const params = await context.params;
-    const projectId = parseInt(params.id);
+    const projectId = parseInt(params.id, 10);
+    if (isNaN(projectId)) {
+      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+    }
 
-    // Verify tradesman is assigned to this project
-    const assignments = await query(
-      'SELECT id FROM tradesman_project_assignments WHERE tradesman_id = ? AND project_id = ?',
-      [tradesman.id, projectId]
-    );
-
-    if (!Array.isArray(assignments) || assignments.length === 0) {
+    if (!(await isAssignedToProject(tradesman.id, projectId))) {
       return NextResponse.json({ error: 'Not assigned to this project' }, { status: 403 });
     }
 
-    // Verify project exists
     const projects = await query('SELECT id FROM projects WHERE id = ?', [projectId]);
     if (!Array.isArray(projects) || projects.length === 0) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    await ensureProjectPhotosTable();
-
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const category = (formData.get('category') as string) || 'progress';
+    const rawCategory = (formData.get('category') as string) || 'progress';
+    const category = ALLOWED_CATEGORIES.has(rawCategory) ? rawCategory : 'progress';
     const caption = (formData.get('caption') as string) || '';
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
-
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'];
-    if (!allowedTypes.includes(file.type.toLowerCase())) {
-      return NextResponse.json(
-        { error: 'Invalid file type. Only images are allowed.' },
-        { status: 400 }
-      );
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type.toLowerCase())) {
+      return NextResponse.json({ error: 'Invalid file type. Only images are allowed.' }, { status: 400 });
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      return NextResponse.json({ error: 'File too large. Maximum size is 20MB.' }, { status: 400 });
     }
 
-    // Validate file size (20MB max for photos from mobile)
-    const maxSize = 20 * 1024 * 1024;
-    if (file.size > maxSize) {
-      return NextResponse.json(
-        { error: 'File too large. Maximum size is 20MB.' },
-        { status: 400 }
-      );
-    }
-
-    // Generate unique filename
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(7);
     const ext = file.name.split('.').pop() || 'jpg';
     const filename = `project-${projectId}-${timestamp}-${random}.${ext}`;
-    
-    // Save file
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    
+
     const uploadDir = join(process.cwd(), 'public', 'uploads');
-    
-    // Ensure uploads directory exists
     if (!existsSync(uploadDir)) {
       await mkdir(uploadDir, { recursive: true });
     }
-    
-    const filepath = join(uploadDir, filename);
-    
-    await writeFile(filepath, buffer);
 
-    // Save to database
+    await writeFile(join(uploadDir, filename), Buffer.from(await file.arrayBuffer()));
+
     const result = await query(
-      `INSERT INTO project_photos 
-       (project_id, filename, original_name, category, caption, file_size, uploaded_by) 
+      `INSERT INTO project_photos
+       (project_id, filename, original_name, category, caption, file_size, uploaded_by)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [projectId, filename, file.name, category, caption, file.size, tradesman.name]
     );
 
-    const insertResult = result as any;
-
     return NextResponse.json({
       success: true,
       photo: {
-        id: insertResult.insertId,
+        id: (result as any).insertId,
         filename,
         original_name: file.name,
         category,

@@ -5,7 +5,6 @@ import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 import { calculateLeadScore } from '@/lib/leadScoring';
 import { assertCriticalEnv, getEmailEnvHealth } from '@/lib/envCheck';
 import {
-  ensureLeadSchema,
   createLead,
   saveLeadAttachments,
   logLeadActivity,
@@ -93,7 +92,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: fileValidation.message }, { status: 400 });
     }
 
-    await ensureLeadSchema();
 
     const score = calculateLeadScore({
       budgetRange: payload.budgetRange,

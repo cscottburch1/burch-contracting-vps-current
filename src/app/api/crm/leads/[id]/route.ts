@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query, queryOne } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
-import { ensureLeadSchema, getLeadAttachments, logLeadActivity } from '@/lib/leadService';
+import { getLeadAttachments, logLeadActivity } from '@/lib/leadService';
 
 function getAdminIdentifier(adminUser: any): string {
   return adminUser?.email || adminUser?.name || `admin:${adminUser?.userId || 'unknown'}`;
@@ -17,7 +17,6 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureLeadSchema();
 
     const { id } = await context.params;
     const lead = await queryOne<any>('SELECT * FROM contact_leads WHERE id = ?', [id]);
@@ -51,7 +50,6 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureLeadSchema();
 
     const { id } = await context.params;
     const body = await request.json();
@@ -172,7 +170,6 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureLeadSchema();
 
     const { id } = await context.params;
     await query('DELETE FROM contact_leads WHERE id = ?', [id]);

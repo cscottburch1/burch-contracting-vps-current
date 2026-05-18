@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/mysql';
 import { verifyAdminAuth } from '@/lib/adminAuth';
-import { ensureLeadSchema } from '@/lib/leadService';
+import {} from '@/lib/leadService';
 
 export async function GET(request: Request) {
   try {
@@ -10,7 +10,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await ensureLeadSchema();
 
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');

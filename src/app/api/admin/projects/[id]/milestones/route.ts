@@ -2,28 +2,6 @@ import { NextResponse } from 'next/server';
 import { getCurrentAdminUser } from '@/lib/adminAuth';
 import pool from '@/lib/mysql';
 
-// Create project_milestones table if it doesn't exist
-async function ensureProjectMilestonesTable() {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS project_milestones (
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      project_id INT NOT NULL,
-      title VARCHAR(255) NOT NULL,
-      description TEXT,
-      due_date DATE,
-      completed_date DATE,
-      status ENUM('pending', 'in_progress', 'completed', 'delayed') DEFAULT 'pending',
-      order_index INT DEFAULT 0,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-      INDEX idx_project_id (project_id),
-      INDEX idx_status (status)
-    )
-  `);
-}
-
-// GET - Fetch all milestones for a project
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -35,14 +13,12 @@ export async function GET(
     }
 
     const params = await context.params;
-    const projectId = parseInt(params.id);
-
-    await ensureProjectMilestonesTable();
+    const projectId = parseInt(params.id, 10);
 
     const [milestones] = await pool.query(
-      `SELECT id, title, description, due_date, 
+      `SELECT id, title, description, due_date,
               completed_date, status, order_index, created_at, updated_at
-       FROM project_milestones 
+       FROM project_milestones
        WHERE project_id = ?
        ORDER BY order_index ASC, due_date ASC`,
       [projectId]
@@ -51,14 +27,10 @@ export async function GET(
     return NextResponse.json({ milestones: milestones || [] });
   } catch (error) {
     console.error('Fetch milestones error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch milestones' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch milestones' }, { status: 500 });
   }
 }
 
-// POST - Create new milestone
 export async function POST(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -70,15 +42,12 @@ export async function POST(
     }
 
     const params = await context.params;
-    const projectId = parseInt(params.id);
+    const projectId = parseInt(params.id, 10);
 
-    // Verify project exists
     const [projects] = await pool.query('SELECT id FROM projects WHERE id = ?', [projectId]);
     if (!Array.isArray(projects) || projects.length === 0) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
-
-    await ensureProjectMilestonesTable();
 
     const { title, description, due_date, status, order_index } = await request.json();
 
@@ -87,13 +56,12 @@ export async function POST(
     }
 
     const [result] = await pool.query(
-      `INSERT INTO project_milestones 
-       (project_id, title, description, due_date, status, order_index) 
+      `INSERT INTO project_milestones
+       (project_id, title, description, due_date, status, order_index)
        VALUES (?, ?, ?, ?, ?, ?)`,
       [projectId, title, description || null, due_date || null, status || 'pending', order_index || 0]
     );
 
-    // Log activity
     await pool.query(
       `INSERT INTO project_activity (project_id, activity_type, description, user_name)
        VALUES (?, 'milestone_created', ?, ?)`,
@@ -114,9 +82,6 @@ export async function POST(
     });
   } catch (error) {
     console.error('Create milestone error:', error);
-    return NextResponse.json(
-      { error: 'Failed to create milestone' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to create milestone' }, { status: 500 });
   }
 }
