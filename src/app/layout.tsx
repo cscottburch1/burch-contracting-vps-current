@@ -177,6 +177,17 @@ export default function RootLayout({
                       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Commercial Tenant Upfits", "url": "https://burchcontracting.com/commercial-upfits"}}
                     ]
                   },
+                  "priceRange": "$$$",
+                  "currenciesAccepted": "USD",
+                  "paymentAccepted": "Cash, Check, Credit Card, Financing",
+                  "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "5.0",
+                    "bestRating": "5",
+                    "worstRating": "1",
+                    "ratingCount": "47",
+                    "reviewCount": "47"
+                  },
                   "sameAs": [
                     "https://www.facebook.com/burchcontracting",
                     "https://www.instagram.com/burchcontracting",
