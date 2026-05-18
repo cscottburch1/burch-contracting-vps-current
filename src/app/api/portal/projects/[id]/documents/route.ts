@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { unlink } from 'fs/promises';
+import { join } from 'path';
 import { getCustomerFromSession } from '@/lib/customerAuth';
 import { query } from '@/lib/mysql';
 
@@ -62,13 +64,13 @@ export async function DELETE(
     }
 
     const { searchParams } = new URL(request.url);
-    const documentId = searchParams.get('documentId');
-    if (!documentId) {
-      return NextResponse.json({ error: 'Document ID required' }, { status: 400 });
+    const documentId = parseInt(searchParams.get('documentId') || '', 10);
+    if (isNaN(documentId) || documentId <= 0) {
+      return NextResponse.json({ error: 'Invalid document ID' }, { status: 400 });
     }
 
     const docs = await query(
-      `SELECT d.* FROM documents d
+      `SELECT d.id, d.filename FROM documents d
        INNER JOIN projects p ON d.project_id = p.id
        WHERE d.id = ? AND p.customer_id = ? AND d.uploaded_by = 'customer'`,
       [documentId, customer.id]
@@ -78,7 +80,14 @@ export async function DELETE(
       return NextResponse.json({ error: 'Document not found or unauthorized' }, { status: 404 });
     }
 
+    const doc = docs[0] as any;
     await query('DELETE FROM documents WHERE id = ?', [documentId]);
+
+    try {
+      await unlink(join(process.cwd(), 'public', 'uploads', doc.filename));
+    } catch {
+      // File may already be missing; non-fatal
+    }
 
     return NextResponse.json({ success: true, message: 'Document deleted successfully' });
   } catch (error) {
