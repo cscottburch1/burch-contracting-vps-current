@@ -12,8 +12,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Bathroom Remodeling Contractor | Upstate SC | Burch Contracting',
   description: 'Professional bathroom remodeling in Greenville, Simpsonville, Fountain Inn. Custom tile, vanities, tub-to-shower conversions. $8K-$55K. 35+ years experience.',
-  alternates: { canonical: absoluteUrl('/remodeling') },
-  robots: { index: false, follow: true },
+  alternates: { canonical: absoluteUrl('/bathroom-remodeling') },
   openGraph: {
     title: 'Bathroom Remodeling Contractor - Upstate SC | Burch Contracting',
     description: 'Transform your bathroom with custom tile work, modern vanities, and walk-in showers. 35+ years experience with 60+ bathroom remodels completed.',

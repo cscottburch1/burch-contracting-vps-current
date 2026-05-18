@@ -153,7 +153,7 @@ export const ClickableCityGrid: React.FC<ClickableCityGridProps> = ({
             className="group block"
             aria-label={`View ${city.displayName} services and projects`}
           >
-            <Card className={`h-full bg-gradient-to-br ${city.colorClass} border-2 border-transparent transition-all duration-200 hover:shadow-xl hover:-translate-y-1`}>
+            <Card className={`h-full bg-linear-to-br ${city.colorClass} border-2 border-transparent transition-all duration-200 hover:shadow-xl hover:-translate-y-1`}>
               <div className="flex flex-col items-center text-center p-4">
                 {/* Map Pin Icon */}
                 <div className="mb-3">

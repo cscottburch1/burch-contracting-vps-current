@@ -41,7 +41,7 @@ export default function BlogIndexPage() {
     <>
       <Script id="blog-item-list-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemListSchema) }} />
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-bold md:text-6xl">Remodeling Planning Guides</h1>

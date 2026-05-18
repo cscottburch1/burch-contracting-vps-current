@@ -73,7 +73,7 @@ export default function RecentProjectsSSR() {
               key={project.slug}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
-              <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
+              <div className="relative h-48 overflow-hidden bg-linear-to-br from-blue-50 to-blue-100">
                 <ProjectImage project={project} />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800">

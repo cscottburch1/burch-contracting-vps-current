@@ -128,7 +128,7 @@ export default function SubcontractorProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
+      <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white group">
             <span className="text-xl group-hover:translate-x-[-4px] transition-transform">←</span>

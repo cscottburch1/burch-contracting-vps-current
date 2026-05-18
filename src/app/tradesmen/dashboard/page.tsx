@@ -159,7 +159,7 @@ export default function TradesmanDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
+      <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
           <div className="flex-1 min-w-0">
             <h1 className="text-lg sm:text-xl font-bold truncate">Welcome, {user?.name?.split(' ')[0]}! 👋</h1>
@@ -189,7 +189,7 @@ export default function TradesmanDashboard() {
       <div className="max-w-4xl mx-auto p-3 sm:p-4">
         {/* Pending Approval Banner */}
         {(user as any)?.status === 'pending' && (
-          <div className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center gap-3">
+          <div className="bg-linear-to-r from-yellow-500 to-amber-500 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center gap-3">
             <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -206,7 +206,7 @@ export default function TradesmanDashboard() {
 
         {/* Install App Banner */}
         {showInstallButton && (
-          <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center justify-between">
+          <div className="bg-linear-to-r from-green-600 to-green-700 text-white rounded-xl shadow-lg p-4 mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1">
               <svg className="w-8 h-8 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -274,7 +274,7 @@ export default function TradesmanDashboard() {
 
         {/* Clock Status */}
         {stats?.isClockedIn && (
-          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 mb-5 sm:mb-6 shadow-md">
+          <div className="bg-linear-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 mb-5 sm:mb-6 shadow-md">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">

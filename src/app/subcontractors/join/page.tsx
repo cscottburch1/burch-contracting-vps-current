@@ -124,8 +124,8 @@ export default function SubcontractorJoinPage() {
   // Show success page if submission was successful
   if (submitSuccess) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-        <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
+      <main className="min-h-screen bg-linear-to-b from-blue-50 to-white">
+        <section className="relative bg-linear-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -161,7 +161,7 @@ export default function SubcontractorJoinPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <main className="min-h-screen bg-linear-to-b from-blue-50 to-white">
       {/* Load reCAPTCHA only on subcontractor form pages */}
       {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
         <Script
@@ -170,7 +170,7 @@ export default function SubcontractorJoinPage() {
         />
       )}
       {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+        <section className="bg-linear-to-r from-blue-900 to-blue-700 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
               <h1 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6">Join Our Subcontractor Network</h1>
@@ -304,7 +304,7 @@ export default function SubcontractorJoinPage() {
         </section>
 
         {/* Mobile App Section */}
-        <section className="py-20 bg-gradient-to-r from-green-600 to-green-700">
+        <section className="py-20 bg-linear-to-r from-green-600 to-green-700">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-white mb-4">
@@ -486,7 +486,7 @@ export default function SubcontractorJoinPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-900 to-blue-700 text-white">
+        <section className="py-20 bg-linear-to-r from-blue-900 to-blue-700 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl font-bold mb-6">Ready to Join Our Team?</h2>
             <p className="text-xl mb-8 text-blue-100">

@@ -58,7 +58,7 @@ export default function MiniCalculatorEmbed({ serviceType, title, description }:
   };
 
   return (
-    <Card className="border-2 border-blue-600 bg-gradient-to-br from-blue-50 to-white">
+    <Card className="border-2 border-blue-600 bg-linear-to-br from-blue-50 to-white">
       <div className="mb-4 flex items-start justify-between">
         <div>
           <h3 className="text-2xl font-bold text-gray-900">{title}</h3>

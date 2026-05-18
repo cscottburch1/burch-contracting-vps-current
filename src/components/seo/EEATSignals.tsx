@@ -89,7 +89,7 @@ export const EEATSignals: React.FC<EEATSignalsProps> = ({
 
   // Full variant
   return (
-    <div className={`bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-xl p-6 shadow-sm ${className}`}>
+    <div className={`bg-linear-to-br from-blue-50 to-white border border-blue-200 rounded-xl p-6 shadow-sm ${className}`}>
       <div className="text-center mb-6">
         <h3 className="text-xl font-bold text-gray-900 mb-2">
           Trusted Expertise You Can Count On

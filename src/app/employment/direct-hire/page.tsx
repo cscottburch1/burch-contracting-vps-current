@@ -159,8 +159,8 @@ export default function DirectHireEmployeesPage() {
   // Success page
   if (submitSuccess) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-        <section className="relative bg-gradient-to-br from-gray-900 via-green-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
+      <main className="min-h-screen bg-linear-to-b from-green-50 to-white">
+        <section className="relative bg-linear-to-br from-gray-900 via-green-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4em0wIDI4YzAgNC40MTgtMy41ODIgOC04IDhzLTgtMy41ODItOC04IDMuNTgyLTggOC04IDggMy41ODIgOCA4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -194,7 +194,7 @@ export default function DirectHireEmployeesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <main className="min-h-screen bg-linear-to-b from-green-50 to-white">
       {/* Load reCAPTCHA only on employment form pages */}
       {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
         <Script
@@ -211,7 +211,7 @@ export default function DirectHireEmployeesPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-900 to-green-700 text-white py-20">
+      <section className="bg-linear-to-r from-green-900 to-green-700 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6">Direct Hire Employment</h1>

@@ -21,7 +21,7 @@ export default function QuickActions({ projects, isClockedIn }: QuickActionsProp
       {firstProject && (
         <Link
           href={`/tradesmen/project/${firstProject.id}`}
-          className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
+          className="bg-linear-to-br from-purple-500 to-purple-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
         >
           <div className="flex flex-col items-center gap-2">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ export default function QuickActions({ projects, isClockedIn }: QuickActionsProp
       {/* Daily Report */}
       <Link
         href="/tradesmen/reports"
-        className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
+        className="bg-linear-to-br from-green-500 to-green-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
       >
         <div className="flex flex-col items-center gap-2">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,8 +53,8 @@ export default function QuickActions({ projects, isClockedIn }: QuickActionsProp
         href="/tradesmen/time"
         className={`p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all ${
           isClockedIn
-            ? 'bg-gradient-to-br from-amber-500 to-orange-600'
-            : 'bg-gradient-to-br from-blue-500 to-blue-600'
+            ? 'bg-linear-to-br from-amber-500 to-orange-600'
+            : 'bg-linear-to-br from-blue-500 to-blue-600'
         } text-white`}
       >
         <div className="flex flex-col items-center gap-2">
@@ -69,7 +69,7 @@ export default function QuickActions({ projects, isClockedIn }: QuickActionsProp
       {/* Materials Request */}
       <Link
         href="/tradesmen/materials"
-        className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
+        className="bg-linear-to-br from-indigo-500 to-indigo-600 text-white p-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all"
       >
         <div className="flex flex-col items-center gap-2">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

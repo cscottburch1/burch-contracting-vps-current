@@ -133,7 +133,7 @@ export default function TasksPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 shadow-lg sticky top-0 z-10">
+      <div className="bg-linear-to-r from-purple-600 to-indigo-600 text-white p-4 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
           <button 
             onClick={() => router.push('/tradesmen/dashboard')} 

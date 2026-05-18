@@ -236,7 +236,7 @@ export default function CreateInvoicePage() {
 
   return (
     <>
-      <section className="no-print bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12">
+      <section className="no-print bg-linear-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold">Create Invoice</h1>
           <p className="text-gray-300 mt-2">Generate professional invoices for your customers</p>

@@ -12,8 +12,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Kitchen Remodeling Contractor | Upstate SC | Burch Contracting',
   description: 'Professional kitchen remodeling in Greenville, Simpsonville, Fountain Inn. Custom cabinets, countertops, backsplash. $25K-$85K. 30+ years experience. Licensed, insured.',
-  alternates: { canonical: absoluteUrl('/remodeling') },
-  robots: { index: false, follow: true },
+  alternates: { canonical: absoluteUrl('/kitchen-remodeling') },
   openGraph: {
     title: 'Kitchen Remodeling Contractor - Upstate SC | Burch Contracting',
     description: 'Transform your kitchen with custom cabinets, granite or quartz countertops, designer backsplash, and modern appliances. Expert remodeling with 30+ years experience.',

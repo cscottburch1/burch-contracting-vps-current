@@ -6,6 +6,14 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
+const faqs = [
+  { q: 'How much does a kitchen remodel cost?', a: 'Kitchen remodels in SC range from $20,000 (modest updates) to $60,000+ (premium renovations). A mid-range kitchen remodel with new cabinetry, countertops, flooring, and appliances costs $35,000–$50,000. Costs depend on size, materials, and scope.' },
+  { q: 'How long does a kitchen remodel take?', a: 'Most kitchen remodels take 4–8 weeks. Simple updates (cabinets, countertops) can be 3–4 weeks. Complex remodels with layout changes take 8–12 weeks. Permitting adds 2–3 weeks.' },
+  { q: 'How much does a bathroom remodel cost?', a: 'Bathroom remodels cost $8,000–$25,000+. A modest bathroom remodel (tile, vanity, fixtures) runs $10,000–$15,000. A luxury bathroom with heated floors and high-end fixtures runs $20,000–$35,000.' },
+  { q: 'Can I stay in my home during a remodel?', a: 'For bathroom remodels, yes—we typically keep at least one bathroom functional. Kitchen remodels are more disruptive but possible with planning. We minimize dust, noise, and disruption.' },
+  { q: 'Do I need permits for a kitchen/bathroom remodel?', a: 'Yes, most kitchen and bathroom remodels require permits (especially if moving plumbing/electrical). Permits ensure code compliance and proper ventilation. We handle permitting.' },
+];
+
 export const metadata: Metadata = {
   title: 'Home Remodeling Contractor in Upstate SC | Burch Contracting',
   description:
@@ -35,13 +43,25 @@ export default function RemodellingPage() {
     { name: 'Remodeling', url: absoluteUrl('/remodeling') },
   ]);
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero */}
@@ -128,13 +148,18 @@ export default function RemodellingPage() {
       <Section background="gray" padding="lg">
         <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          {['Simpsonville', 'Mauldin', 'Fountain Inn', 'Woodruff'].map((city) => (
+          {[
+            { name: 'Simpsonville', slug: 'simpsonville' },
+            { name: 'Mauldin', slug: 'mauldin' },
+            { name: 'Fountain Inn', slug: 'fountain-inn' },
+            { name: 'Woodruff', slug: 'woodruff' },
+          ].map(({ name, slug }) => (
             <Link
-              key={city}
-              href={`/service-areas/${city.toLowerCase()}-sc`}
+              key={slug}
+              href={`/service-areas/${slug}`}
               className="block p-6 rounded-lg border border-gray-300 hover:border-blue-500 hover:shadow-lg transition-all"
             >
-              <h3 className="font-bold text-slate-900">{city}, SC</h3>
+              <h3 className="font-bold text-slate-900">{name}, SC</h3>
               <p className="text-gray-600 text-sm">Kitchen & Bathroom Remodeling</p>
             </Link>
           ))}
@@ -181,28 +206,7 @@ export default function RemodellingPage() {
       <Section background="gray" padding="lg">
         <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Remodeling FAQs</h2>
         <div className="space-y-6 max-w-3xl">
-          {[
-            {
-              q: 'How much does a kitchen remodel cost?',
-              a: 'Kitchen remodels in SC range from $20,000 (modest updates) to $60,000+ (premium renovations). A mid-range kitchen remodel with new cabinetry, countertops, flooring, and appliances costs $35,000–$50,000. Costs depend on size, materials, and scope.'
-            },
-            {
-              q: 'How long does a kitchen remodel take?',
-              a: 'Most kitchen remodels take 4–8 weeks. Simple updates (cabinets, countertops) can be 3–4 weeks. Complex remodels with layout changes take 8–12 weeks. Permitting adds 2–3 weeks.'
-            },
-            {
-              q: 'How much does a bathroom remodel cost?',
-              a: 'Bathroom remodels cost $8,000–$25,000+. A modest bathroom remodel (tile, vanity, fixtures) runs $10,000–$15,000. A luxury bathroom with heated floors and high-end fixtures runs $20,000–$35,000.'
-            },
-            {
-              q: 'Can I stay in my home during a remodel?',
-              a: 'For bathroom remodels, yes—we typically keep at least one bathroom functional. Kitchen remodels are more disruptive but possible with planning. We minimize dust, noise, and disruption.'
-            },
-            {
-              q: 'Do I need permits for a kitchen/bathroom remodel?',
-              a: 'Yes, most kitchen and bathroom remodels require permits (especially if moving plumbing/electrical). Permits ensure code compliance and proper ventilation. We handle permitting.'
-            },
-          ].map((faq, idx) => (
+          {faqs.map((faq, idx) => (
             <div key={idx}>
               <h3 className="font-bold text-slate-900 mb-2">{faq.q}</h3>
               <p className="text-gray-700">{faq.a}</p>

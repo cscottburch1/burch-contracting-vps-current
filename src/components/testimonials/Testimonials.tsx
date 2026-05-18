@@ -140,7 +140,7 @@ export default function Testimonials({
         </div>
 
         {/* CTA: Leave a Review */}
-        <div className="mt-10 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 p-8 text-center text-white">
+        <div className="mt-10 rounded-lg bg-linear-to-r from-blue-600 to-blue-700 p-8 text-center text-white">
           <h3 className="mb-2 text-2xl font-bold">Had a Great Experience?</h3>
           <p className="mb-5 text-blue-100">
             We'd love to hear about your project! Your feedback helps us improve and helps other homeowners make informed decisions.

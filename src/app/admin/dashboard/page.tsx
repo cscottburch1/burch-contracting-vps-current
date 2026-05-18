@@ -16,7 +16,7 @@ export default async function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-10 mb-6">
           <div className="mb-8">
@@ -31,17 +31,17 @@ export default async function AdminDashboard() {
               Primary Workflow
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <a href="/admin/customers" className="bg-gradient-to-br from-indigo-600 to-indigo-700 text-white p-6 rounded-xl text-center hover:from-indigo-700 hover:to-indigo-800 transition transform hover:scale-105 shadow-lg">
+              <a href="/admin/customers" className="bg-linear-to-br from-indigo-600 to-indigo-700 text-white p-6 rounded-xl text-center hover:from-indigo-700 hover:to-indigo-800 transition transform hover:scale-105 shadow-lg">
                 <div className="text-4xl mb-3">👥</div>
                 <div className="text-xl font-bold mb-2">Customers</div>
                 <div className="text-indigo-100 text-sm">Add customer → Create project → Track progress</div>
               </a>
-              <a href="/admin/projects" className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-6 rounded-xl text-center hover:from-blue-700 hover:to-blue-800 transition transform hover:scale-105 shadow-lg">
+              <a href="/admin/projects" className="bg-linear-to-br from-blue-600 to-blue-700 text-white p-6 rounded-xl text-center hover:from-blue-700 hover:to-blue-800 transition transform hover:scale-105 shadow-lg">
                 <div className="text-4xl mb-3">🏗️</div>
                 <div className="text-xl font-bold mb-2">Project Tracker</div>
                 <div className="text-blue-100 text-sm">View all projects, milestones & progress</div>
               </a>
-              <a href="/admin/subcontractors" className="bg-gradient-to-br from-orange-600 to-orange-700 text-white p-6 rounded-xl text-center hover:from-orange-700 hover:to-orange-800 transition transform hover:scale-105 shadow-lg">
+              <a href="/admin/subcontractors" className="bg-linear-to-br from-orange-600 to-orange-700 text-white p-6 rounded-xl text-center hover:from-orange-700 hover:to-orange-800 transition transform hover:scale-105 shadow-lg">
                 <div className="text-4xl mb-3">🔧</div>
                 <div className="text-xl font-bold mb-2">Subcontractors</div>
                 <div className="text-orange-100 text-sm">Manage subs, upload docs, assign projects</div>
@@ -102,7 +102,7 @@ export default async function AdminDashboard() {
           </div>
 
           {/* Quick Tips */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-6 rounded-lg">
+          <div className="bg-linear-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-6 rounded-lg">
             <h3 className="font-bold text-lg mb-3 text-gray-900">💡 Quick Workflow Tips</h3>
             <ul className="space-y-2 text-gray-700">
               <li className="flex items-start gap-2">

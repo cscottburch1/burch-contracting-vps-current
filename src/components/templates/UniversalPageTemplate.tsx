@@ -188,7 +188,7 @@ export const UniversalPageTemplate: React.FC<UniversalPageTemplateProps> = ({
       )}
 
       {showCTA && (
-        <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg p-8 text-white text-center mb-8">
+        <div className="bg-linear-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg p-8 text-white text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">{ctaTitle}</h2>
           <p className="text-blue-100 mb-6 max-w-2xl mx-auto">{ctaDescription}</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -300,7 +300,7 @@ export const UniversalPageTemplate: React.FC<UniversalPageTemplateProps> = ({
           )}
 
           {showCTA && (
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg p-8 text-white text-center">
+            <div className="bg-linear-to-br from-blue-600 to-blue-700 rounded-xl shadow-lg p-8 text-white text-center">
               <h2 className="text-2xl md:text-3xl font-bold mb-3">{ctaTitle}</h2>
               <p className="text-blue-100 mb-6 max-w-2xl mx-auto">{ctaDescription}</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

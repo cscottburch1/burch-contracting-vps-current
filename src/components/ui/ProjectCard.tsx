@@ -105,7 +105,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   // Otherwise, use old props (for backward compatibility)
   return (
     <Card hover onClick={onClick} className="overflow-hidden h-full flex flex-col" padding="none">
-      <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+      <div className="h-48 bg-linear-to-br from-blue-100 to-blue-200 flex items-center justify-center">
         {image ? (
           <img src={image} alt={title} className="w-full h-full object-cover" />
         ) : (

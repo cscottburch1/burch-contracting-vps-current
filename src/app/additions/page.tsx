@@ -120,13 +120,18 @@ export default function AdditionsPage() {
       <Section background="gray" padding="lg">
         <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          {['Simpsonville', 'Mauldin', 'Fountain Inn', 'Woodruff'].map((city) => (
+          {[
+            { name: 'Simpsonville', slug: 'simpsonville' },
+            { name: 'Mauldin', slug: 'mauldin' },
+            { name: 'Fountain Inn', slug: 'fountain-inn' },
+            { name: 'Woodruff', slug: 'woodruff' },
+          ].map(({ name, slug }) => (
             <Link
-              key={city}
-              href={`/service-areas/${city.toLowerCase()}-sc`}
+              key={slug}
+              href={`/service-areas/${slug}`}
               className="block p-6 rounded-lg border border-gray-300 hover:border-blue-500 hover:shadow-lg transition-all"
             >
-              <h3 className="font-bold text-slate-900">{city}, SC</h3>
+              <h3 className="font-bold text-slate-900">{name}, SC</h3>
               <p className="text-gray-600 text-sm">Room Additions & Home Expansions</p>
             </Link>
           ))}

@@ -196,7 +196,7 @@ export const AdvancedCalculator: React.FC<AdvancedCalculatorProps> = ({
       {/* Calculator Result */}
       <div ref={resultRef} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+        <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-6">
           <h3 className="text-2xl font-bold mb-2">{result.projectType} Estimate</h3>
           <p className="text-blue-100 text-sm">
             Generated {result.timestamp.toLocaleDateString()} at {result.timestamp.toLocaleTimeString()}
@@ -275,7 +275,7 @@ export const AdvancedCalculator: React.FC<AdvancedCalculatorProps> = ({
       </div>
 
       {/* Get Official Quote CTA */}
-      <div className="bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-lg p-6">
+      <div className="bg-linear-to-br from-blue-50 to-white border border-blue-200 rounded-lg p-6">
         <div className="text-center">
           <h4 className="text-xl font-bold text-gray-900 mb-2">
             Ready to Get Started?

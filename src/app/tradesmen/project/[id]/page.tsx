@@ -152,7 +152,7 @@ export default function ProjectPhotoUploadPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
+      <div className="bg-linear-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-5 shadow-lg sticky top-0 z-10">
         <div className="max-w-4xl mx-auto">
           <Link href="/tradesmen/dashboard" className="flex items-center text-blue-100 hover:text-white mb-2 group">
             <span className="text-xl group-hover:translate-x-[-4px] transition-transform">←</span>
@@ -196,14 +196,14 @@ export default function ProjectPhotoUploadPage() {
             <div className="space-y-3 sm:space-y-4">
               <button
                 onClick={openCamera}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
+                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
               >
                 <span className="text-4xl">📷</span>
                 Take Photo
               </button>
               <button
                 onClick={openGallery}
-                className="w-full bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
+                className="w-full bg-linear-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 active:scale-[0.98] text-white font-bold py-5 sm:py-6 rounded-xl flex items-center justify-center gap-3 text-lg sm:text-xl shadow-xl transition-all"
               >
                 <span className="text-4xl">🖼️</span>
                 Choose from Gallery
@@ -212,7 +212,7 @@ export default function ProjectPhotoUploadPage() {
           ) : (
             <div className="space-y-4 sm:space-y-5">
               {/* Selected Files */}
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-4 sm:p-5">
+              <div className="bg-linear-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-4 sm:p-5">
                 <p className="font-bold text-blue-900 mb-2 text-base sm:text-lg flex items-center gap-2">
                   <span className="text-2xl">✓</span>
                   {selectedFiles.length} photo(s) selected
@@ -260,7 +260,7 @@ export default function ProjectPhotoUploadPage() {
                 <div>
                   <div className="bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
                     <div
-                      className="bg-gradient-to-r from-green-500 to-green-600 h-full transition-all duration-300"
+                      className="bg-linear-to-r from-green-500 to-green-600 h-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -286,7 +286,7 @@ export default function ProjectPhotoUploadPage() {
                 <button
                   onClick={handleUpload}
                   disabled={uploading}
-                  className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:scale-[0.98] text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg text-base sm:text-lg transition-all flex items-center justify-center gap-2"
+                  className="flex-1 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:scale-[0.98] text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed shadow-lg text-base sm:text-lg transition-all flex items-center justify-center gap-2"
                 >
                   {uploading ? (
                     <>
@@ -329,7 +329,7 @@ export default function ProjectPhotoUploadPage() {
                     alt={photo.caption || 'Project photo'}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                  <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/70 to-transparent p-2">
                     <span className="inline-block px-2.5 py-1 bg-blue-600 rounded-lg text-xs font-semibold text-white shadow-lg">
                       {photo.category}
                     </span>

@@ -6,6 +6,14 @@ import { absoluteUrl, siteConfig } from '@/lib/seo/site';
 import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 import Link from 'next/link';
 
+const faqs = [
+  { q: "What's included in a tenant upfit?", a: 'Upfits typically include demolition of existing spaces, rough-in for utilities (electrical, plumbing, HVAC), walls and partitions, flooring, ceiling, lighting, and final finishes. Specific scope depends on lease requirements and use type.' },
+  { q: 'How long does a commercial build-out take?', a: 'Small retail or office upfits (1,000–2,000 sqft) take 4–8 weeks. Larger spaces or complex F&B facilities take 8–16 weeks. We provide aggressive timelines and track daily progress.' },
+  { q: 'What permits do commercial projects require?', a: 'All commercial build-outs require building permits. F&B spaces need health department approvals. We obtain all necessary permits and coordinate inspections.' },
+  { q: 'Can you work around an operating lease?', a: 'Yes, if the space is still occupied during upfit. We coordinate work schedules, manage dust and noise, and work evenings/weekends if needed. Your lease terms dictate the approach.' },
+  { q: 'How are commercial costs estimated?', a: 'Commercial projects are bid on square footage, scope of work, and complexity. Most build-outs run $30–$100+ per sqft depending on finishes, utilities, and health/safety codes. We provide fixed-price estimates after site review.' },
+];
+
 export const metadata: Metadata = {
   title: 'Commercial Tenant Upfits in Upstate SC | Burch Contracting',
   description:
@@ -35,13 +43,25 @@ export default function CommercialUpfitsPage() {
     { name: 'Commercial Upfits', url: absoluteUrl('/commercial-upfits') },
   ]);
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero */}
@@ -120,13 +140,18 @@ export default function CommercialUpfitsPage() {
       <Section background="gray" padding="lg">
         <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-2">
-          {['Simpsonville', 'Mauldin', 'Fountain Inn', 'Woodruff'].map((city) => (
+          {[
+            { name: 'Simpsonville', slug: 'simpsonville' },
+            { name: 'Mauldin', slug: 'mauldin' },
+            { name: 'Fountain Inn', slug: 'fountain-inn' },
+            { name: 'Woodruff', slug: 'woodruff' },
+          ].map(({ name, slug }) => (
             <Link
-              key={city}
-              href={`/service-areas/${city.toLowerCase()}-sc`}
+              key={slug}
+              href={`/service-areas/${slug}`}
               className="block p-6 rounded-lg border border-gray-300 hover:border-blue-500 hover:shadow-lg transition-all"
             >
-              <h3 className="font-bold text-slate-900">{city}, SC</h3>
+              <h3 className="font-bold text-slate-900">{name}, SC</h3>
               <p className="text-gray-600 text-sm">Commercial Tenant Upfits & Build-Outs</p>
             </Link>
           ))}
@@ -173,28 +198,7 @@ export default function CommercialUpfitsPage() {
       <Section background="gray" padding="lg">
         <h2 className="text-3xl font-bold text-slate-900 mb-8 md:text-4xl">Commercial FAQs</h2>
         <div className="space-y-6 max-w-3xl">
-          {[
-            {
-              q: 'What\'s included in a tenant upfit?',
-              a: 'Upfits typically include demolition of existing spaces, rough-in for utilities (electrical, plumbing, HVAC), walls and partitions, flooring, ceiling, lighting, and final finishes. Specific scope depends on lease requirements and use type.'
-            },
-            {
-              q: 'How long does a commercial build-out take?',
-              a: 'Small retail or office upfits (1,000–2,000 sqft) take 4–8 weeks. Larger spaces or complex F&B facilities take 8–16 weeks. We provide aggressive timelines and track daily progress.'
-            },
-            {
-              q: 'What permits do commercial projects require?',
-              a: 'All commercial build-outs require building permits. F&B spaces need health department approvals. We obtain all necessary permits and coordinate inspections.'
-            },
-            {
-              q: 'Can you work around an operating lease?',
-              a: 'Yes, if the space is still occupied during upfit. We coordinate work schedules, manage dust and noise, and work evenings/weekends if needed. Your lease terms dictate the approach.'
-            },
-            {
-              q: 'How are commercial costs estimated?',
-              a: 'Commercial projects are bid on square footage, scope of work, and complexity. Most build-outs run $30–$100+ per sqft depending on finishes, utilities, and health/safety codes. We provide fixed-price estimates after site review.'
-            },
-          ].map((faq, idx) => (
+          {faqs.map((faq, idx) => (
             <div key={idx}>
               <h3 className="font-bold text-slate-900 mb-2">{faq.q}</h3>
               <p className="text-gray-700">{faq.a}</p>
