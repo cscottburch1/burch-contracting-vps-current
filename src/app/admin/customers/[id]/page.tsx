@@ -109,17 +109,14 @@ export default function CustomerDetailPage() {
   const fetchCustomerDetails = async () => {
     setLoading(true);
     try {
-      console.log('Fetching customer details for ID:', customerId);
       const response = await fetch(`/api/admin/customers/${customerId}`);
-      
+
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('API error:', response.status, errorData);
         throw new Error(errorData.error || 'Failed to fetch customer');
       }
-      
+
       const data = await response.json();
-      console.log('Customer data received:', data);
       setCustomer(data.customer);
       setProjects(data.projects || []);
       setEditForm({
