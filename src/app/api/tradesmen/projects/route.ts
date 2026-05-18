@@ -14,11 +14,11 @@ export async function GET() {
     const projects = await query(
       `SELECT DISTINCT
         p.id,
-        p.title,
+        p.project_name AS title,
         p.description,
         p.status,
         p.start_date,
-        p.end_date,
+        p.estimated_completion_date AS end_date,
         c.name as customer_name,
         COALESCE(tpa.role, ps.role, 'Crew Member') as role,
         COALESCE(tpa.assigned_date, ps.assigned_date) as assigned_date,

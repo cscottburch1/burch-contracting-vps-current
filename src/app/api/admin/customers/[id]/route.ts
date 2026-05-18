@@ -14,10 +14,11 @@ export async function GET(
 
     const { id } = await context.params;
     
-    const customer = await queryOne('SELECT * FROM customers WHERE id = ?', [id]);
-    if (!customer) {
+    const rawCustomer = await queryOne('SELECT * FROM customers WHERE id = ?', [id]) as any;
+    if (!rawCustomer) {
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 });
     }
+    const { password_hash: _ph, ...customer } = rawCustomer;
 
     const projectsRaw = await query('SELECT * FROM projects WHERE customer_id = ? ORDER BY created_at DESC', [id]);
     
@@ -63,7 +64,8 @@ export async function PATCH(
       [name, email, phone || null, address || null, id]
     );
 
-    const customer = await queryOne('SELECT * FROM customers WHERE id = ?', [id]);
+    const rawUpdated = await queryOne('SELECT * FROM customers WHERE id = ?', [id]) as any;
+    const { password_hash: _p, ...customer } = rawUpdated;
     return NextResponse.json({ success: true, customer });
   } catch (error) {
     console.error('Error updating customer:', error);

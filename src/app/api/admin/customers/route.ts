@@ -24,7 +24,8 @@ export async function GET(request: Request) {
 
     sql += ' ORDER BY created_at DESC';
 
-    const customers = await query(sql, params);
+    const rawCustomers = await query(sql, params) as any[];
+    const customers = rawCustomers.map(({ password_hash, ...rest }) => rest);
 
     return NextResponse.json({ customers });
   } catch (error) {

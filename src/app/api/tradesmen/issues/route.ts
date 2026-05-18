@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     let issues;
     if (projectId) {
       issues = await query(
-        `SELECT i.*, p.title as project_title 
+        `SELECT i.*, p.project_name as project_title 
          FROM tradesman_issues i
          JOIN projects p ON i.project_id = p.id
          WHERE i.tradesman_id = ? AND i.project_id = ?
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
       );
     } else {
       issues = await query(
-        `SELECT i.*, p.title as project_title 
+        `SELECT i.*, p.project_name as project_title 
          FROM tradesman_issues i
          JOIN projects p ON i.project_id = p.id
          WHERE i.tradesman_id = ?
