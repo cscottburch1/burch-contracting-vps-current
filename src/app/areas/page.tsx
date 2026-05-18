@@ -28,10 +28,10 @@ export default function AreasPage() {
 
   // Featured cities with dedicated pages
   const featuredCities = [
-    { name: 'Simpsonville, SC', slug: '/service-areas/simpsonville-sc', description: 'Full-service contractor for residential additions, garages, decks, and screened porches in Simpsonville' },
-    { name: 'Mauldin, SC', slug: '/service-areas/mauldin-sc', description: 'Licensed contractor serving Mauldin with custom garages, home additions, and outdoor living projects' },
-    { name: 'Fountain Inn, SC', slug: '/service-areas/fountain-inn-sc', description: 'Professional deck, porch, garage, and addition services in Fountain Inn and surrounding areas' },
-    { name: 'Woodruff, SC', slug: '/service-areas/woodruff-sc', description: 'Expert contractor for garages, additions, and outdoor living in Woodruff and North Greenville County' },
+    { name: 'Simpsonville, SC', slug: '/service-areas/simpsonville', description: 'Full-service contractor for residential additions, garages, decks, and screened porches in Simpsonville' },
+    { name: 'Mauldin, SC', slug: '/service-areas/mauldin', description: 'Licensed contractor serving Mauldin with custom garages, home additions, and outdoor living projects' },
+    { name: 'Fountain Inn, SC', slug: '/service-areas/fountain-inn', description: 'Professional deck, porch, garage, and addition services in Fountain Inn and surrounding areas' },
+    { name: 'Woodruff, SC', slug: '/service-areas/woodruff', description: 'Expert contractor for garages, additions, and outdoor living in Woodruff and North Greenville County' },
   ];
 
   return (

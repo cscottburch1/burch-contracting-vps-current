@@ -72,7 +72,7 @@ const relatedPages = [
   {
     title: 'Home Remodeling Services',
     href: '/home-renovations',
-    description: 'Complete home remodeling including roomadditions and renovations'
+    description: 'Complete home remodeling including room additions and renovations'
   },
 ];
 

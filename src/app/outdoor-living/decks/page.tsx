@@ -24,19 +24,19 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'How much does a custom deck cost in Simpsonville SC?',
-    a: 'Decks in Upstate SC typically cost $30â€“$50 per square foot installed. A standard 12Ã—16 pressure-treated deck runs $12,000â€“$15,000. Composite decks with stairs and railings typically run $18,000â€“$28,000. We provide detailed written estimates at no charge.',
+    a: 'Decks in Upstate SC typically cost $30–$50 per square foot installed. A standard 12×16 pressure-treated deck runs $12,000–$15,000. Composite decks with stairs and railings typically run $18,000–$28,000. We provide detailed written estimates at no charge.',
   },
   {
     q: 'What deck material is best for SC\'s climate?',
-    a: 'Composite decking handles SC humidity and temperature swings without warping or rotting. It lasts 25â€“30+ years with minimal maintenance. Pressure-treated wood is more affordable but needs sealing every 2â€“3 years. We recommend composite for most homeowners.',
+    a: 'Composite decking handles SC humidity and temperature swings without warping or rotting. It lasts 25–30+ years with minimal maintenance. Pressure-treated wood is more affordable but needs sealing every 2–3 years. We recommend composite for most homeowners.',
   },
   {
     q: 'Do I need a permit for a deck in Greenville County?',
-    a: 'Yes. Decks above 18 inches or over 200 square feet require a building permit in Greenville County. We handle all permitting for you â€” typical approval takes 7â€“12 business days.',
+    a: 'Yes. Decks above 18 inches or over 200 square feet require a building permit in Greenville County. We handle all permitting for you â€” typical approval takes 7–12 business days.',
   },
   {
     q: 'How long does deck construction take?',
-    a: 'Most decks take 1â€“2 weeks of construction after permits are approved. Complex multi-level decks may take 2â€“3 weeks. We keep you updated throughout.',
+    a: 'Most decks take 1–2 weeks of construction after permits are approved. Complex multi-level decks may take 2–3 weeks. We keep you updated throughout.',
   },
 ];
 
@@ -44,15 +44,28 @@ export default function DecksPage() {
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
     { name: 'Services', url: absoluteUrl('/services') },
-    { name: 'Outdoor Living', url: absoluteUrl('/outdoor-living') },
     { name: 'Decks', url: absoluteUrl('/outdoor-living/decks') },
   ]);
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero */}
@@ -94,7 +107,7 @@ export default function DecksPage() {
           <Card className="border border-gray-200">
             <h3 className="text-xl font-bold text-slate-900 mb-2">Composite Decks</h3>
             <p className="text-gray-600 text-sm">
-              Low-maintenance composite decking that resists rot, fading, and warping. Lasts 25â€“30+ years with minimal upkeep.
+              Low-maintenance composite decking that resists rot, fading, and warping. Lasts 25–30+ years with minimal upkeep.
             </p>
           </Card>
           <Card className="border border-gray-200">
@@ -117,10 +130,10 @@ export default function DecksPage() {
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Deck Building Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            { city: 'Simpsonville', slug: 'simpsonville-sc' },
-            { city: 'Mauldin', slug: 'mauldin-sc' },
-            { city: 'Fountain Inn', slug: 'fountain-inn-sc' },
-            { city: 'Woodruff', slug: 'woodruff-sc' },
+            { city: 'Simpsonville', slug: 'simpsonville' },
+            { city: 'Mauldin', slug: 'mauldin' },
+            { city: 'Fountain Inn', slug: 'fountain-inn' },
+            { city: 'Woodruff', slug: 'woodruff' },
           ].map(({ city, slug }) => (
             <Link
               key={slug}
@@ -157,19 +170,19 @@ export default function DecksPage() {
             <Button variant="primary" size="lg" href="/contact">
               Request Free Estimate
             </Button>
-            <Button variant="secondary" size="lg" href="/outdoor-living">
-              See All Outdoor Living
+            <Button variant="secondary" size="lg" href="/outdoor-living/screened-porches">
+              See Screened Porches
             </Button>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/outdoor-living/screened-porches" className="hover:text-blue-700">
-              Screened Porches â†’
+              Screened Porches →
             </Link>
-            <Link href="/outdoor-living/covered-patios" className="hover:text-blue-700">
-              Covered Patios â†’
+            <Link href="/room-additions" className="hover:text-blue-700">
+              Room Additions →
             </Link>
-            <Link href="/pricing" className="hover:text-blue-700">
-              Pricing Guide â†’
+            <Link href="/cost" className="hover:text-blue-700">
+              Cost Guides →
             </Link>
           </div>
         </div>

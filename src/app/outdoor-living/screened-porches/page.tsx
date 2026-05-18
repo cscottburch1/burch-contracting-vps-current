@@ -44,15 +44,28 @@ export default function ScreenedPorchesSubPage() {
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
     { name: 'Services', url: absoluteUrl('/services') },
-    { name: 'Outdoor Living', url: absoluteUrl('/outdoor-living') },
     { name: 'Screened Porches', url: absoluteUrl('/outdoor-living/screened-porches') },
   ]);
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  };
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Hero */}
@@ -117,10 +130,10 @@ export default function ScreenedPorchesSubPage() {
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Screened Porch Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            { city: 'Simpsonville', slug: 'simpsonville-sc' },
-            { city: 'Mauldin', slug: 'mauldin-sc' },
-            { city: 'Fountain Inn', slug: 'fountain-inn-sc' },
-            { city: 'Woodruff', slug: 'woodruff-sc' },
+            { city: 'Simpsonville', slug: 'simpsonville' },
+            { city: 'Mauldin', slug: 'mauldin' },
+            { city: 'Fountain Inn', slug: 'fountain-inn' },
+            { city: 'Woodruff', slug: 'woodruff' },
           ].map(({ city, slug }) => (
             <Link
               key={slug}
@@ -157,19 +170,19 @@ export default function ScreenedPorchesSubPage() {
             <Button variant="primary" size="lg" href="/contact">
               Request Free Estimate
             </Button>
-            <Button variant="secondary" size="lg" href="/outdoor-living">
-              See All Outdoor Living
+            <Button variant="secondary" size="lg" href="/outdoor-living/decks">
+              See Custom Decks
             </Button>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/outdoor-living/decks" className="hover:text-blue-700">
-              {'Custom Decks ->'}
+              Custom Decks →
             </Link>
-            <Link href="/outdoor-living/covered-patios" className="hover:text-blue-700">
-              {'Covered Patios ->'}
+            <Link href="/room-additions" className="hover:text-blue-700">
+              Room Additions →
             </Link>
-            <Link href="/pricing" className="hover:text-blue-700">
-              {'Pricing Guide ->'}
+            <Link href="/cost" className="hover:text-blue-700">
+              Cost Guides →
             </Link>
           </div>
         </div>

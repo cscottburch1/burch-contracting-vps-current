@@ -96,10 +96,10 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Service Areas</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/service-areas/simpsonville-sc" className="hover:text-white">Simpsonville, SC</Link></li>
-              <li><Link href="/service-areas/mauldin-sc" className="hover:text-white">Mauldin, SC</Link></li>
-              <li><Link href="/service-areas/fountain-inn-sc" className="hover:text-white">Fountain Inn, SC</Link></li>
-              <li><Link href="/service-areas/woodruff-sc" className="hover:text-white">Woodruff, SC</Link></li>
+              <li><Link href="/service-areas/simpsonville" className="hover:text-white">Simpsonville, SC</Link></li>
+              <li><Link href="/service-areas/mauldin" className="hover:text-white">Mauldin, SC</Link></li>
+              <li><Link href="/service-areas/fountain-inn" className="hover:text-white">Fountain Inn, SC</Link></li>
+              <li><Link href="/service-areas/woodruff" className="hover:text-white">Woodruff, SC</Link></li>
               <li><Link href="/areas" className="hover:text-white">All Service Areas</Link></li>
             </ul>
           </div>
