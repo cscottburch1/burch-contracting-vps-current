@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { getCurrentAdminUser } from '@/lib/adminAuth';
 import mysql from '@/lib/mysql';
 
 export async function POST() {
   try {
-    const cookieStore = await cookies();
-    const adminToken = cookieStore.get('admin_token');
-    
-    if (!adminToken) {
+    const admin = await getCurrentAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
