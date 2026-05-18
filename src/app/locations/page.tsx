@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Section } from '@/components/ui/Section';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { localDominanceServices, targetCities } from '@/lib/seo/localDominanceData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Service Areas in Upstate SC | Burch Contracting',
@@ -19,8 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function LocationsIndexPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Service Areas', url: absoluteUrl('/locations') },
+  ]);
+
   return (
     <>
+      <Script id="locations-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">

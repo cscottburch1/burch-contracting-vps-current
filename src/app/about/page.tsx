@@ -61,7 +61,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
                 <Icon name="Clock" size={18} />
-                <span className="font-semibold">30+ Years Experience</span>
+                <span className="font-semibold">35+ Years Experience</span>
               </div>
               <div className="flex items-center gap-2 rounded-full border border-blue-300/30 bg-blue-900/40 px-4 py-2">
                 <Icon name="MapPin" size={18} />
@@ -234,9 +234,9 @@ export default function AboutPage() {
             <Button variant="ctaLight" size="lg" href="/contact">
               Request Free Estimate
             </Button>
-            <Button variant="outline" size="lg" href="tel:(864) 724-4600" className="border-white text-white hover:bg-white hover:text-blue-900">
+            <Button variant="outline" size="lg" href={siteConfig.phoneHref} className="border-white text-white hover:bg-white hover:text-blue-900">
               <Icon name="Phone" size={18} />
-              Call (864) 724-4600
+              Call {siteConfig.phoneDisplay}
             </Button>
           </div>
         </div>

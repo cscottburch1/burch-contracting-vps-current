@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { costLandingPages } from '@/lib/seo/costSeoData';
 import { absoluteUrl, siteConfig } from '@/lib/seo/site';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Remodeling Cost Guides | Burch Contracting',
@@ -37,9 +38,15 @@ const costItemListSchema = {
 };
 
 export default function CostIndexPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Cost Guides', url: absoluteUrl('/cost') },
+  ]);
+
   return (
     <>
       <Script id="cost-item-list-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(costItemListSchema) }} />
+      <Script id="cost-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

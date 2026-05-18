@@ -62,7 +62,7 @@ export default async function ProjectSpotlightPage({ params }: ProjectSpotlightP
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
-    { name: 'Projects', url: absoluteUrl('/projects') },
+    { name: 'Our Work', url: absoluteUrl('/work') },
     { name: project.title, url: absoluteUrl(`/projects/${project.slug}`) },
   ]);
 

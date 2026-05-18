@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { blogPosts } from '@/lib/seo/localSeoData';
 import { absoluteUrl } from '@/lib/seo/site';
+import { buildBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const metadata: Metadata = {
   title: 'Remodeling Blog and Planning Guides | Burch Contracting',
@@ -37,9 +38,15 @@ const blogItemListSchema = {
 };
 
 export default function BlogIndexPage() {
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: 'Home', url: absoluteUrl('/') },
+    { name: 'Blog', url: absoluteUrl('/blog') },
+  ]);
+
   return (
     <>
       <Script id="blog-item-list-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemListSchema) }} />
+      <Script id="blog-breadcrumb" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-blue-900 to-cyan-900 py-20 text-white md:py-28">
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
