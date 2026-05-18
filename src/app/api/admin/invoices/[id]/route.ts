@@ -12,7 +12,11 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: invoiceId } = await context.params;
+    const { id: rawId } = await context.params;
+    const invoiceId = parseInt(rawId, 10);
+    if (isNaN(invoiceId) || invoiceId <= 0) {
+      return NextResponse.json({ error: 'Invalid invoice ID' }, { status: 400 });
+    }
 
     const [invoices] = await mysql.query(
       `SELECT i.*, c.name as customer_name, c.email as customer_email, c.phone as customer_phone
@@ -57,7 +61,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: invoiceId } = await context.params;
+    const { id: rawId } = await context.params;
+    const invoiceId = parseInt(rawId, 10);
+    if (isNaN(invoiceId) || invoiceId <= 0) {
+      return NextResponse.json({ error: 'Invalid invoice ID' }, { status: 400 });
+    }
     const data = await request.json();
 
     const updates: string[] = [];
@@ -76,7 +84,7 @@ export async function PATCH(
       values.push(data.project_id);
     }
     if (data.items !== undefined) {
-      updates.push('items = ?');
+      updates.push('items_json = ?');
       values.push(JSON.stringify(data.items));
     }
     if (data.subtotal !== undefined) {
@@ -138,7 +146,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: invoiceId } = await context.params;
+    const { id: rawId } = await context.params;
+    const invoiceId = parseInt(rawId, 10);
+    if (isNaN(invoiceId) || invoiceId <= 0) {
+      return NextResponse.json({ error: 'Invalid invoice ID' }, { status: 400 });
+    }
 
     const [payments] = await mysql.query(
       `SELECT COUNT(*) as count FROM invoice_payments WHERE invoice_id = ?`,

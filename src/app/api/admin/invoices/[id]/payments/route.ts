@@ -12,7 +12,11 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: invoiceId } = await context.params;
+    const { id: rawId } = await context.params;
+    const invoiceId = parseInt(rawId, 10);
+    if (isNaN(invoiceId) || invoiceId <= 0) {
+      return NextResponse.json({ error: 'Invalid invoice ID' }, { status: 400 });
+    }
     const { amount, payment_method, payment_date, notes } = await request.json();
 
     if (!amount || amount <= 0) {

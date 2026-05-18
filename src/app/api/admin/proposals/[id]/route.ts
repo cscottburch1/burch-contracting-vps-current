@@ -12,7 +12,11 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: proposalId } = await context.params;
+    const { id: rawId } = await context.params;
+    const proposalId = parseInt(rawId, 10);
+    if (isNaN(proposalId) || proposalId <= 0) {
+      return NextResponse.json({ error: 'Invalid proposal ID' }, { status: 400 });
+    }
 
     const [proposals] = await mysql.query(
       `SELECT * FROM proposals WHERE id = ?`,
@@ -44,7 +48,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: proposalId } = await context.params;
+    const { id: rawId } = await context.params;
+    const proposalId = parseInt(rawId, 10);
+    if (isNaN(proposalId) || proposalId <= 0) {
+      return NextResponse.json({ error: 'Invalid proposal ID' }, { status: 400 });
+    }
     const data = await request.json();
 
     if (data.status && Object.keys(data).length === 1) {
@@ -56,7 +64,7 @@ export async function PATCH(
       const { customer_id, items, subtotal, tax, total, notes } = data;
       await mysql.query(
         `UPDATE proposals
-         SET customer_id = ?, items = ?, subtotal = ?, tax = ?, total = ?, notes = ?, updated_at = NOW()
+         SET customer_id = ?, items_json = ?, subtotal = ?, tax = ?, total = ?, notes = ?, updated_at = NOW()
          WHERE id = ?`,
         [customer_id, JSON.stringify(items), subtotal, tax, total, notes || '', proposalId]
       );
@@ -86,7 +94,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id: proposalId } = await context.params;
+    const { id: rawId } = await context.params;
+    const proposalId = parseInt(rawId, 10);
+    if (isNaN(proposalId) || proposalId <= 0) {
+      return NextResponse.json({ error: 'Invalid proposal ID' }, { status: 400 });
+    }
 
     const [proposals] = await mysql.query(
       `SELECT status FROM proposals WHERE id = ?`,
