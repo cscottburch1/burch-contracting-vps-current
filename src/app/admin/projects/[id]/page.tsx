@@ -69,6 +69,7 @@ export default function AdminProjectDetailPage() {
   const params = useParams();
   const projectId = (params?.id as string) || '';
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const switchTab = (tab: TabType) => { setActiveTab(tab); setPendingDelete(null); };
   const [project, setProject] = useState<Project | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [milestones, setMilestones] = useState<Milestone[]>([]);
@@ -110,6 +111,8 @@ export default function AdminProjectDetailPage() {
   const [docDescription, setDocDescription] = useState('');
   const [docUploadError, setDocUploadError] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [editingStatus, setEditingStatus] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<{ type: string; id: number } | null>(null);
 
   useEffect(() => {
     if (projectId) {
@@ -119,13 +122,15 @@ export default function AdminProjectDetailPage() {
 
   const loadAllData = async () => {
     try {
-      await loadProject();
-      await loadPhotos();
-      await loadMilestones();
-      await loadActivities();
-      await loadSubcontractors();
-      await loadAvailableSubcontractors();
-      await loadDocuments();
+      await Promise.all([
+        loadProject(),
+        loadPhotos(),
+        loadMilestones(),
+        loadActivities(),
+        loadSubcontractors(),
+        loadAvailableSubcontractors(),
+        loadDocuments(),
+      ]);
     } catch (err: any) {
       console.error('Error loading data:', err);
       setError(err.message || 'Failed to load project data');
@@ -202,7 +207,13 @@ export default function AdminProjectDetailPage() {
       const res = await fetch('/api/admin/subcontractors');
       if (res.ok) {
         const data = await res.json();
-        setAvailableSubcontractors(data.subcontractors);
+        setAvailableSubcontractors(
+          (data.subcontractors || []).map((s: any) => ({
+            id: s.id,
+            name: s.contact_name || s.name || '',
+            company: s.company_name || s.company || '',
+          }))
+        );
       }
     } catch (error) {
       console.error('Failed to load available subcontractors:', error);
@@ -218,6 +229,27 @@ export default function AdminProjectDetailPage() {
       }
     } catch (error) {
       console.error('Failed to load documents:', error);
+    }
+  };
+
+  const handleUpdateStatus = async (newStatus: string) => {
+    try {
+      const res = await fetch(`/api/admin/projects/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setProject(data.project);
+        toast.success('Status updated');
+      } else {
+        toast.error('Failed to update status');
+      }
+    } catch {
+      toast.error('Failed to update status');
+    } finally {
+      setEditingStatus(false);
     }
   };
 
@@ -239,6 +271,7 @@ export default function AdminProjectDetailPage() {
         setDocCategory('general');
         setDocDescription('');
         loadDocuments();
+        toast.success('Document uploaded');
       } else {
         setDocUploadError(data.error || 'Upload failed');
       }
@@ -250,9 +283,18 @@ export default function AdminProjectDetailPage() {
   };
 
   const handleDeleteDoc = async (docId: number) => {
-    if (!confirm('Delete this document?')) return;
-    const res = await fetch(`/api/admin/documents/${docId}`, { method: 'DELETE' });
-    if (res.ok) loadDocuments();
+    if (pendingDelete?.type === 'doc' && pendingDelete.id === docId) {
+      setPendingDelete(null);
+      const res = await fetch(`/api/admin/documents/${docId}`, { method: 'DELETE' });
+      if (res.ok) {
+        loadDocuments();
+        toast.success('Document deleted');
+      } else {
+        toast.error('Failed to delete document');
+      }
+    } else {
+      setPendingDelete({ type: 'doc', id: docId });
+    }
   };
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -288,40 +330,47 @@ export default function AdminProjectDetailPage() {
   };
 
   const handleDeletePhoto = async (photoId: number) => {
-    if (!confirm('Delete this photo?')) return;
-
-    try {
-      const res = await fetch(`/api/admin/projects/${projectId}/photos/${photoId}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        loadPhotos();
-        loadActivities();
+    if (pendingDelete?.type === 'photo' && pendingDelete.id === photoId) {
+      setPendingDelete(null);
+      try {
+        const res = await fetch(`/api/admin/projects/${projectId}/photos/${photoId}`, {
+          method: 'DELETE',
+        });
+        if (res.ok) {
+          loadPhotos();
+          loadActivities();
+          toast.success('Photo deleted');
+        } else {
+          toast.error('Failed to delete photo');
+        }
+      } catch {
+        toast.error('Failed to delete photo');
       }
-    } catch (error) {
-      console.error('Failed to delete photo:', error);
+    } else {
+      setPendingDelete({ type: 'photo', id: photoId });
     }
   };
 
   const handleCreateMilestone = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const res = await fetch(`/api/admin/projects/${projectId}/milestones`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(milestoneForm),
       });
-
       if (res.ok) {
         setMilestoneForm({ title: '', description: '', due_date: '', status: 'pending' });
         setShowAddMilestone(false);
         loadMilestones();
         loadActivities();
+        toast.success('Milestone created');
+      } else {
+        const data = await res.json();
+        toast.error(data.error || 'Failed to create milestone');
       }
-    } catch (error) {
-      console.error('Failed to create milestone:', error);
+    } catch {
+      toast.error('Failed to create milestone');
     }
   };
 
@@ -332,30 +381,37 @@ export default function AdminProjectDetailPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       });
-
       if (res.ok) {
         loadMilestones();
         loadActivities();
+        toast.success('Milestone updated');
+      } else {
+        toast.error('Failed to update milestone');
       }
-    } catch (error) {
-      console.error('Failed to update milestone:', error);
+    } catch {
+      toast.error('Failed to update milestone');
     }
   };
 
   const handleDeleteMilestone = async (milestoneId: number) => {
-    if (!confirm('Delete this milestone?')) return;
-
-    try {
-      const res = await fetch(`/api/admin/projects/${projectId}/milestones/${milestoneId}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        loadMilestones();
-        loadActivities();
+    if (pendingDelete?.type === 'milestone' && pendingDelete.id === milestoneId) {
+      setPendingDelete(null);
+      try {
+        const res = await fetch(`/api/admin/projects/${projectId}/milestones/${milestoneId}`, {
+          method: 'DELETE',
+        });
+        if (res.ok) {
+          loadMilestones();
+          loadActivities();
+          toast.success('Milestone deleted');
+        } else {
+          toast.error('Failed to delete milestone');
+        }
+      } catch {
+        toast.error('Failed to delete milestone');
       }
-    } catch (error) {
-      console.error('Failed to delete milestone:', error);
+    } else {
+      setPendingDelete({ type: 'milestone', id: milestoneId });
     }
   };
 
@@ -380,12 +436,13 @@ export default function AdminProjectDetailPage() {
         setShowAddSubcontractor(false);
         loadSubcontractors();
         loadActivities();
+        toast.success('Subcontractor assigned');
       } else {
         const data = await res.json();
         toast.error(data.error || 'Failed to assign subcontractor');
       }
-    } catch (error) {
-      console.error('Failed to assign subcontractor:', error);
+    } catch {
+      toast.error('Failed to assign subcontractor');
     }
   };
 
@@ -396,13 +453,15 @@ export default function AdminProjectDetailPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       });
-
       if (res.ok) {
         loadSubcontractors();
         loadActivities();
+        toast.success('Status updated');
+      } else {
+        toast.error('Failed to update status');
       }
-    } catch (error) {
-      console.error('Failed to update subcontractor:', error);
+    } catch {
+      toast.error('Failed to update status');
     }
   };
 
@@ -435,8 +494,10 @@ export default function AdminProjectDetailPage() {
     );
   }
 
-  const statusColors = {
+  const statusColors: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-800',
+    scheduled: 'bg-purple-100 text-purple-800',
+    active: 'bg-blue-100 text-blue-800',
     in_progress: 'bg-blue-100 text-blue-800',
     completed: 'bg-green-100 text-green-800',
     on_hold: 'bg-gray-100 text-gray-800',
@@ -465,9 +526,31 @@ export default function AdminProjectDetailPage() {
               {project.street_address}, {project.city}, {project.state} {project.zip_code}
             </p>
           </div>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[project.status as keyof typeof statusColors]}`}>
-            {project.status.replace('_', ' ').toUpperCase()}
-          </span>
+          {editingStatus ? (
+            <div className="flex items-center gap-2">
+              <select
+                defaultValue={project.status}
+                autoFocus
+                onChange={(e) => handleUpdateStatus(e.target.value)}
+                onBlur={() => setEditingStatus(false)}
+                className="rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="scheduled">Scheduled</option>
+                <option value="in_progress">In Progress</option>
+                <option value="on_hold">On Hold</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          ) : (
+            <button
+              onClick={() => setEditingStatus(true)}
+              title="Click to change status"
+              className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer hover:ring-2 hover:ring-offset-1 hover:ring-blue-400 transition-all ${statusColors[project.status] || 'bg-gray-100 text-gray-800'}`}
+            >
+              {project.status.replace(/_/g, ' ').toUpperCase()}
+            </button>
+          )}
         </div>
       </div>
 
@@ -475,7 +558,7 @@ export default function AdminProjectDetailPage() {
       <div className="border-b border-gray-200 mb-6">
         <nav className="-mb-px flex space-x-8">
           <button
-            onClick={() => setActiveTab('overview')}
+            onClick={() => switchTab('overview')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'overview'
                 ? 'border-blue-500 text-blue-600'
@@ -486,7 +569,7 @@ export default function AdminProjectDetailPage() {
             Overview
           </button>
           <button
-            onClick={() => setActiveTab('photos')}
+            onClick={() => switchTab('photos')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'photos'
                 ? 'border-blue-500 text-blue-600'
@@ -500,7 +583,7 @@ export default function AdminProjectDetailPage() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab('milestones')}
+            onClick={() => switchTab('milestones')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'milestones'
                 ? 'border-blue-500 text-blue-600'
@@ -514,7 +597,7 @@ export default function AdminProjectDetailPage() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab('activity')}
+            onClick={() => switchTab('activity')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'activity'
                 ? 'border-blue-500 text-blue-600'
@@ -528,7 +611,7 @@ export default function AdminProjectDetailPage() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab('subcontractors')}
+            onClick={() => switchTab('subcontractors')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'subcontractors'
                 ? 'border-blue-500 text-blue-600'
@@ -542,7 +625,7 @@ export default function AdminProjectDetailPage() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab('documents')}
+            onClick={() => switchTab('documents')}
             className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
               activeTab === 'documents'
                 ? 'border-blue-500 text-blue-600'
@@ -684,12 +767,21 @@ export default function AdminProjectDetailPage() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      onClick={() => handleDeletePhoto(photo.id)}
-                      className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700"
-                    >
-                      <Icon name="X" className="w-4 h-4" />
-                    </button>
+                    {pendingDelete?.type === 'photo' && pendingDelete.id === photo.id ? (
+                      <button
+                        onClick={() => handleDeletePhoto(photo.id)}
+                        className="bg-red-700 text-white px-2 py-1 rounded text-xs font-medium"
+                      >
+                        Confirm
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleDeletePhoto(photo.id)}
+                        className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700"
+                      >
+                        <Icon name="X" className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
                   <span className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                     {photo.category}
@@ -821,12 +913,21 @@ export default function AdminProjectDetailPage() {
                       <option value="completed">Completed</option>
                       <option value="delayed">Delayed</option>
                     </select>
-                    <button
-                      onClick={() => handleDeleteMilestone(milestone.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      <Icon name="X" />
-                    </button>
+                    {pendingDelete?.type === 'milestone' && pendingDelete.id === milestone.id ? (
+                      <button
+                        onClick={() => handleDeleteMilestone(milestone.id)}
+                        className="text-xs bg-red-600 text-white px-2 py-1 rounded font-medium"
+                      >
+                        Confirm
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleDeleteMilestone(milestone.id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        <Icon name="X" />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1127,13 +1228,22 @@ export default function AdminProjectDetailPage() {
                       <Icon name="Download" className="w-4 h-4" />
                       Download
                     </a>
-                    <button
-                      onClick={() => handleDeleteDoc(doc.id)}
-                      className="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"
-                    >
-                      <Icon name="Trash2" className="w-4 h-4" />
-                      Delete
-                    </button>
+                    {pendingDelete?.type === 'doc' && pendingDelete.id === doc.id ? (
+                      <button
+                        onClick={() => handleDeleteDoc(doc.id)}
+                        className="bg-red-600 text-white px-3 py-1.5 rounded text-sm font-medium"
+                      >
+                        Confirm Delete
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleDeleteDoc(doc.id)}
+                        className="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1"
+                      >
+                        <Icon name="Trash2" className="w-4 h-4" />
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
