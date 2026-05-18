@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { toast } from 'sonner';
 import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
 
@@ -62,10 +63,10 @@ export const AdvancedCalculator: React.FC<AdvancedCalculatorProps> = ({
       onSave?.();
       
       // Show success message
-      alert('Estimate saved successfully! You can access it later from your browser.');
+      toast.success('Estimate saved successfully! You can access it later from your browser.');
     } catch (error) {
       console.error('Error saving estimate:', error);
-      alert('Failed to save estimate. Please try again.');
+      toast.error('Failed to save estimate. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -123,7 +124,7 @@ export const AdvancedCalculator: React.FC<AdvancedCalculatorProps> = ({
       pdf.save(fileName);
     } catch (error) {
       console.error('Error generating PDF:', error);
-      alert('Failed to generate PDF. Please try printing instead.');
+      toast.error('Failed to generate PDF. Please try printing instead.');
     } finally {
       setIsGeneratingPDF(false);
     }

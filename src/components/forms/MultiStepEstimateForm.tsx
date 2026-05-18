@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { Icon } from '../ui/Icon';
 import { Button } from '../ui/Button';
 import { businessConfig } from '@/config/business';
@@ -138,10 +139,10 @@ export const MultiStepEstimateForm: React.FC<MultiStepEstimateFormProps> = ({
       console.log('Form submitted:', formData);
       
       // Show success message or redirect
-      alert('Thank you! Your estimate request has been submitted. We\'ll contact you within 24 hours.');
+      toast.success('Thank you! Your estimate request has been submitted. We\'ll contact you within 24 hours.');
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('There was an error submitting your request. Please try calling us at ' + businessConfig.contact.phone);
+      toast.error('There was an error submitting your request. Please try calling us at ' + businessConfig.contact.phone);
     } finally {
       setIsSubmitting(false);
     }
