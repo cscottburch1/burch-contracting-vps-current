@@ -213,6 +213,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.82,
     },
+    // Recruiting / employment pages
+    {
+      url: `${baseUrl}/employment`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.55,
+    },
+    {
+      url: `${baseUrl}/employment/direct-hire`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.50,
+    },
+    {
+      url: `${baseUrl}/subcontractors/join`,
+      lastModified: appLastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.50,
+    },
   ];
 
   // Services pages (sub-service routes)
