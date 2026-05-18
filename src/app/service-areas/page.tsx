@@ -11,12 +11,13 @@ export const metadata: Metadata = {
   description:
     'Burch Contracting serves Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Additions, garages, decks, outdoor living & remodeling.',
   alternates: {
-    canonical: absoluteUrl('/service-areas'),
+    canonical: absoluteUrl('/areas'),
   },
+  robots: { index: false, follow: true },
   openGraph: {
     title: 'Service Areas | Burch Contracting',
     description: 'We serve Simpsonville, Mauldin, Fountain Inn & Woodruff SC.',
-    url: absoluteUrl('/service-areas'),
+    url: absoluteUrl('/areas'),
     type: 'website',
   },
 };
@@ -30,22 +31,22 @@ export default function ServiceAreasPage() {
   const cities = [
     {
       name: 'Simpsonville, SC',
-      slug: 'simpsonville-sc',
+      slug: 'simpsonville',
       description: 'Home additions, garages, decks & outdoor living for Simpsonville homeowners.',
     },
     {
       name: 'Mauldin, SC',
-      slug: 'mauldin-sc',
+      slug: 'mauldin',
       description: 'Remodeling, garage construction & outdoor spaces for Mauldin neighborhoods.',
     },
     {
       name: 'Fountain Inn, SC',
-      slug: 'fountain-inn-sc',
+      slug: 'fountain-inn',
       description: 'Custom additions, decks, screened porches & more for Fountain Inn families.',
     },
     {
       name: 'Woodruff, SC',
-      slug: 'woodruff-sc',
+      slug: 'woodruff',
       description: 'Professional contracting services for Woodruff & surrounding areas.',
     },
   ];
