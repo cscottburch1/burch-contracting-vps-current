@@ -18,8 +18,10 @@ type GrecaptchaApi = {
 interface FormData {
   name: string;
   phone: string;
+  email: string;
   projectType: string;
   zipCode: string;
+  description: string;
   website: string; // Honeypot field
 }
 
@@ -37,8 +39,10 @@ export default function ContactPage() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
+    email: '',
     projectType: '',
     zipCode: '',
+    description: '',
     website: '' // Honeypot field
   });
 
@@ -61,6 +65,12 @@ export default function ContactPage() {
       newErrors.phone = 'Please enter a valid phone number';
     }
 
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
     if (!formData.projectType) {
       newErrors.projectType = 'Project type is required';
     }
@@ -69,6 +79,10 @@ export default function ContactPage() {
       newErrors.zipCode = 'Zip code is required';
     } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
       newErrors.zipCode = 'Please enter a valid zip code';
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = 'Project description is required';
     }
 
     setErrors(newErrors);
@@ -109,7 +123,12 @@ export default function ContactPage() {
       // Use FormData for backend submission
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
+        // Map projectType to serviceType for backend compatibility
+        if (key === 'projectType') {
+          formDataToSend.append('serviceType', value);
+        } else {
+          formDataToSend.append(key, value);
+        }
       });
       formDataToSend.append('recaptchaToken', recaptchaToken);
       
@@ -131,8 +150,10 @@ export default function ContactPage() {
         setFormData({
           name: '',
           phone: '',
+          email: '',
           projectType: '',
           zipCode: '',
+          description: '',
           website: ''
         });
         setUploadedFiles([]);
@@ -150,7 +171,7 @@ export default function ContactPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -290,7 +311,7 @@ export default function ContactPage() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-blue-800 flex items-start gap-2">
                   <Icon name="Clock" size={18} className="shrink-0 mt-0.5" />
-                  <span><strong>We reply within 24 hours.</strong> Simple form, fast response. Just name, phone, project type, and zip code.</span>
+                  <span><strong>We reply within 24 hours.</strong> Tell us about your project and we'll provide a detailed estimate.</span>
                 </p>
               </div>
 
@@ -333,6 +354,25 @@ export default function ContactPage() {
                     />
                     {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                      errors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="john@example.com"
+                    required
+                  />
+                  {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -382,6 +422,26 @@ export default function ContactPage() {
                     />
                     {errors.zipCode && <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>}
                   </div>
+                </div>
+
+                {/* Description Field */}
+                <div>
+                  <label htmlFor="description" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Project Description <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={4}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 resize-none ${
+                      errors.description ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="Tell us about your project. What are you looking to build? Any specific requirements or timeline?"
+                    required
+                  />
+                  {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
                 </div>
 
                 {/* File Upload Section */}
