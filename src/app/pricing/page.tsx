@@ -75,7 +75,7 @@ export default function PricingPage() {
               <li>• Kitchen extension: $50k–$80k+</li>
               <li>• Timeline: 8–16 weeks</li>
             </ul>
-            <Link href="/additions" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
+            <Link href="/room-additions" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
               Learn More →
             </Link>
           </Card>
@@ -93,7 +93,7 @@ export default function PricingPage() {
               <li>• 3-car garage: $28k–$50k</li>
               <li>• Timeline: 6–12 weeks</li>
             </ul>
-            <Link href="/garages" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
+            <Link href="/garage-builder" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
               Learn More →
             </Link>
           </Card>
@@ -111,7 +111,7 @@ export default function PricingPage() {
               <li>• Covered patio: $15k–$25k</li>
               <li>• Timeline: 3–8 weeks</li>
             </ul>
-            <Link href="/outdoor-living" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
+            <Link href="/services" className="text-blue-700 font-semibold text-sm hover:underline mt-4 inline-block">
               Learn More →
             </Link>
           </Card>

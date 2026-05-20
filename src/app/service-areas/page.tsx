@@ -134,9 +134,9 @@ export default function ServiceAreasPage() {
         </p>
         <div className="grid gap-4 md:grid-cols-2">
           {[
-            { title: 'Additions', href: '/additions' },
-            { title: 'Garages', href: '/garages' },
-            { title: 'Outdoor Living', href: '/outdoor-living' },
+            { title: 'Additions', href: '/room-additions' },
+            { title: 'Garages', href: '/garage-builder' },
+            { title: 'Outdoor Living', href: '/services' },
             { title: 'Remodeling', href: '/remodeling' },
             { title: 'Commercial Upfits', href: '/commercial-upfits' },
           ].map((service) => (
