@@ -79,8 +79,8 @@ export const Header: React.FC = () => {
               Home
             </Link>
 
-            <Link href="/work" className={navLinkClass(isActive('/work') || isActive('/projects'))}>
-              Work
+            <Link href="/projects" className={navLinkClass(isActive('/projects') || isActive('/work'))}>
+              Projects
             </Link>
 
             <Link href="/services" className={navLinkClass(isActive('/services'))}>
@@ -139,8 +139,8 @@ export const Header: React.FC = () => {
                 Home
               </Link>
 
-              <Link href="/work" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
-                Work
+              <Link href="/projects" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
+                Projects
               </Link>
 
               <Link href="/services" className="py-2 text-lg font-semibold text-black hover:text-blue-700">
