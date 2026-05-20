@@ -50,7 +50,7 @@ const nextConfig: NextConfig = {
       { source: '/service-areas/mauldin-sc', destination: '/service-areas/mauldin', permanent: true },
       { source: '/service-areas/fountain-inn-sc', destination: '/service-areas/fountain-inn', permanent: true },
       { source: '/service-areas/woodruff-sc', destination: '/service-areas/woodruff', permanent: true },
-      { source: '/projects', destination: '/work', permanent: true },
+      { source: '/work', destination: '/projects', permanent: true },
       { source: '/pricing', destination: '/services', permanent: true },
     ];
   },
