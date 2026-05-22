@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   title: 'Recent Work & Project Gallery | Burch Contracting',
   description:
     'View real project photos from garages, additions, decks, and screened porches built across Upstate South Carolina.',
-  alternates: { canonical: absoluteUrl('/work') },
+  alternates: { canonical: absoluteUrl('/projects') },
   openGraph: {
     title: 'Recent Work | Burch Contracting',
     description: 'Browse real projects: garages, additions, decks, and screened porches.',
-    url: absoluteUrl('/work'),
+    url: absoluteUrl('/projects'),
   },
 };
 
@@ -28,7 +28,7 @@ export default function WorkPage() {
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: 'Home', url: absoluteUrl('/') },
-    { name: 'Our Work', url: absoluteUrl('/work') },
+    { name: 'Our Work', url: absoluteUrl('/projects') },
   ]);
 
   return (

@@ -108,7 +108,7 @@ export const Footer: React.FC = () => {
         {/* Quick links row */}
         <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-sm text-gray-400 border-b border-gray-800 pb-8">
           <Link href="/about" className="hover:text-white">About</Link>
-          <Link href="/work" className="hover:text-white">Projects</Link>
+          <Link href="/projects" className="hover:text-white">Projects</Link>
           <Link href="/cost" className="hover:text-white">Cost Guides</Link>
           <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
           <Link href="/terms-of-service" className="hover:text-white">Terms of Service</Link>

@@ -166,7 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.92,
     },
     {
-      url: `${baseUrl}/work`,
+      url: `${baseUrl}/projects`,
       lastModified: projectSeoLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.90,
