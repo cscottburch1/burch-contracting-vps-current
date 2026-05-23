@@ -8,7 +8,7 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 interface Project {
   id: number;
   title: string;
-  category: 'handyman' | 'remodeling' | 'additions';
+  category: 'garages' | 'decks' | 'screened-porches' | 'room-additions';
   description: string;
   short_description: string;
   image_url: string;
@@ -37,7 +37,7 @@ export default function ProjectsManagement() {
 
   const [form, setForm] = useState({
     title: '',
-    category: 'handyman' as 'handyman' | 'remodeling' | 'additions',
+    category: 'garages' as 'garages' | 'decks' | 'screened-porches' | 'room-additions',
     description: '',
     short_description: '',
     image_url: '',
@@ -152,7 +152,7 @@ export default function ProjectsManagement() {
   const resetForm = () => {
     setForm({
       title: '',
-      category: 'handyman',
+      category: 'garages',
       description: '',
       short_description: '',
       image_url: '',
@@ -176,9 +176,10 @@ export default function ProjectsManagement() {
 
   const getCategoryColor = (category: string) => {
     switch(category) {
-      case 'handyman': return 'bg-blue-100 text-blue-800';
-      case 'remodeling': return 'bg-green-100 text-green-800';
-      case 'additions': return 'bg-purple-100 text-purple-800';
+      case 'garages': return 'bg-orange-100 text-orange-800';
+      case 'decks': return 'bg-green-100 text-green-800';
+      case 'screened-porches': return 'bg-teal-100 text-teal-800';
+      case 'room-additions': return 'bg-purple-100 text-purple-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -243,34 +244,44 @@ export default function ProjectsManagement() {
             All Projects ({projects.length})
           </button>
           <button
-            onClick={() => setCategoryFilter('handyman')}
+            onClick={() => setCategoryFilter('garages')}
             className={`px-4 py-2 rounded-lg font-medium ${
-              categoryFilter === 'handyman'
-                ? 'bg-blue-600 text-white'
+              categoryFilter === 'garages'
+                ? 'bg-orange-600 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            🔧 Handyman ({projects.filter(p => p.category === 'handyman').length})
+            🏠 Garages ({projects.filter(p => p.category === 'garages').length})
           </button>
           <button
-            onClick={() => setCategoryFilter('remodeling')}
+            onClick={() => setCategoryFilter('decks')}
             className={`px-4 py-2 rounded-lg font-medium ${
-              categoryFilter === 'remodeling'
+              categoryFilter === 'decks'
                 ? 'bg-green-600 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            🏗️ Remodeling ({projects.filter(p => p.category === 'remodeling').length})
+            🪵 Decks ({projects.filter(p => p.category === 'decks').length})
           </button>
           <button
-            onClick={() => setCategoryFilter('additions')}
+            onClick={() => setCategoryFilter('screened-porches')}
             className={`px-4 py-2 rounded-lg font-medium ${
-              categoryFilter === 'additions'
+              categoryFilter === 'screened-porches'
+                ? 'bg-teal-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            🌿 Screened Porches ({projects.filter(p => p.category === 'screened-porches').length})
+          </button>
+          <button
+            onClick={() => setCategoryFilter('room-additions')}
+            className={`px-4 py-2 rounded-lg font-medium ${
+              categoryFilter === 'room-additions'
                 ? 'bg-purple-600 text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-100'
             }`}
           >
-            ➕ Additions ({projects.filter(p => p.category === 'additions').length})
+            ➕ Room Additions ({projects.filter(p => p.category === 'room-additions').length})
           </button>
         </div>
 
@@ -300,9 +311,10 @@ export default function ProjectsManagement() {
                     className="w-full px-4 py-2 border rounded-lg"
                     required
                   >
-                    <option value="handyman">🔧 Handyman Services</option>
-                    <option value="remodeling">🏗️ Remodeling</option>
-                    <option value="additions">➕ Additions</option>
+                    <option value="garages">🏠 Garage Construction</option>
+                    <option value="decks">🪵 Deck Building</option>
+                    <option value="screened-porches">🌿 Screened Porches</option>
+                    <option value="room-additions">➕ Room Additions</option>
                   </select>
                 </div>
               </div>
@@ -494,9 +506,10 @@ export default function ProjectsManagement() {
                         <h3 className="text-xl font-bold">{project.title}</h3>
                         <div className="flex gap-2 mt-2">
                           <span className={`px-3 py-1 rounded-full text-sm ${getCategoryColor(project.category)}`}>
-                            {project.category === 'handyman' && '🔧 Handyman'}
-                            {project.category === 'remodeling' && '🏗️ Remodeling'}
-                            {project.category === 'additions' && '➕ Additions'}
+                            {project.category === 'garages' && '🏠 Garage Construction'}
+                            {project.category === 'decks' && '🪵 Deck Building'}
+                            {project.category === 'screened-porches' && '🌿 Screened Porch'}
+                            {project.category === 'room-additions' && '➕ Room Addition'}
                           </span>
                           {project.featured && (
                             <span className="px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
