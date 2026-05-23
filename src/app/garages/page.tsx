@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl('/garages'),
   },
+  robots: 'noindex, nofollow',
   openGraph: {
     title: 'Garage Builder & Garage Construction in Upstate SC | Burch Contracting',
     description: 'Professional garage construction in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
