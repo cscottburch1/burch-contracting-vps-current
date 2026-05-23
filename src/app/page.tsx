@@ -134,7 +134,7 @@ export default async function HomePage() {
               <Button variant="primary" size="lg" href="/contact" className="group shadow-2xl text-lg px-10 py-5">
                 Get Your Free Estimate →
               </Button>
-              <Button variant="outline" size="lg" href="/work" className="glass border-white/50 text-white hover:bg-white hover:text-gray-900 shadow-xl text-lg px-10 py-5">
+              <Button variant="outline" size="lg" href="/projects" className="glass border-white/50 text-white hover:bg-white hover:text-gray-900 shadow-xl text-lg px-10 py-5">
                 See Recent Projects
               </Button>
             </div>
