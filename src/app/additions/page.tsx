@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl('/additions'),
   },
+  robots: 'noindex, nofollow',
   openGraph: {
     title: 'Home Additions Contractor in Upstate SC | Burch Contracting',
     description: 'Professional home additions & room expansions in Simpsonville, Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
