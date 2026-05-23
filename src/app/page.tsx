@@ -21,7 +21,7 @@ import { generateSampleTestimonials } from '@/lib/sampleData';
 import { generateHowToSchema } from '@/lib/schema-builders';
 
 export const metadata: Metadata = {
-  title: 'Contractor in Simpsonville SC | Garages, Additions & Remodeling | Burch Contracting',
+  title: 'Garage Builder & Room Additions Simpsonville SC | Burch Contracting',
   description:
     'Licensed contractor in Simpsonville SC since 1995. Custom garages, room additions, decks, screened porches & remodeling. Serving Mauldin, Fountain Inn & Woodruff SC. Free estimates.',
   alternates: {
