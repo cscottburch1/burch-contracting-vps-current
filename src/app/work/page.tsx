@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   description:
     'View real project photos from garages, additions, decks, and screened porches built across Upstate South Carolina.',
   alternates: { canonical: absoluteUrl('/projects') },
+  robots: 'noindex, nofollow',
   openGraph: {
     title: 'Recent Work | Burch Contracting',
     description: 'Browse real projects: garages, additions, decks, and screened porches.',

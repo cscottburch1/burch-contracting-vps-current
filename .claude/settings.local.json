@@ -1,5 +1,7 @@
 {
+  "skipDangerousModePermissionPrompt": true,
   "permissions": {
+    "defaultMode": "bypassPermissions",
     "allow": [
       "Bash(npm run *)",
       "Bash(git add *)",
@@ -70,7 +72,27 @@
       "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('tailwind:', p.dependencies?.tailwindcss || p.devDependencies?.tailwindcss\\)\")",
       "Bash(npx next *)",
       "Bash(findstr -i \"favicon\")",
-      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\cscot\\\\burch-contracting-fresh\\\\public\" -Recurse | Where-Object { $_.Name -match \"favicon|scott\" } | Select-Object FullName)"
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\cscot\\\\burch-contracting-fresh\\\\public\" -Recurse | Where-Object { $_.Name -match \"favicon|scott\" } | Select-Object FullName)",
+      "Bash(git rm *)",
+      "Bash(git reset *)",
+      "Bash(cat src/app/robots.ts)",
+      "Bash(cat src/app/robots.txt)",
+      "Bash(head -30 src/app/sitemaps/local-pages.xml/route.ts)",
+      "Bash(head -30 src/app/sitemaps/local-pages.xml/page.tsx)",
+      "Bash(ls public/apple-touch-icon.png)",
+      "Bash(ls public/manifest.json)",
+      "Bash(ls public/llms.txt)",
+      "Bash(sed -i 's/â€\"/ – /g; s/â€™/'\"'\"'/g; s/â€˜/'\"'\"'/g; s/â†'/→/g)",
+      "Bash(s/Ã—/×/g' src/app/outdoor-living/covered-patios/page.tsx && echo \"Fixed\")",
+      "Bash(python3 fix_encoding.py)",
+      "Bash(ls -la .env*)",
+      "Bash(dir .env* /b)",
+      "Bash(cat src/lib/envCheck.ts)",
+      "Bash(find src *)",
+      "Bash(curl -s \"https://api.github.com/repos/cscottburch1/burch-contracting-fresh/actions/runs?per_page=5\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f\\\\\"Run #{r['run_number']}: {r['name']} | {r['status']} | {r['conclusion']} | {r['head_sha'][:8]}\\\\\"\\) for r in data.get\\('workflow_runs',[]\\)]\")",
+      "PowerShell($response = Invoke-RestMethod -Uri \"https://api.github.com/repos/cscottburch1/burch-contracting-fresh/actions/runs?per_page=5\" -ErrorAction Stop; foreach \\($run in $response.workflow_runs\\) { Write-Host \"Run #$\\($run.run_number\\): $\\($run.name\\) | $\\($run.status\\) | $\\($run.conclusion\\) | $\\($run.head_sha.Substring\\(0,8\\)\\)\" })",
+      "Bash(git pull *)"
     ]
   }
 }
