@@ -46,7 +46,8 @@ export async function GET(
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
 
-    const filePath = join(process.cwd(), 'public', 'uploads', 'leads', safeLeadId, safeFilename);
+    const uploadBase = process.env.UPLOAD_DIR ?? join(process.cwd(), 'public', 'uploads');
+    const filePath = join(uploadBase, 'leads', safeLeadId, safeFilename);
     if (!existsSync(filePath)) {
       return NextResponse.json({ error: 'File is missing from storage' }, { status: 404 });
     }

@@ -90,7 +90,8 @@ export async function ensureDirectory(dirPath: string): Promise<void> {
 export async function storeLeadFiles(leadId: number, files: File[]): Promise<UploadedFileRecord[]> {
   if (files.length === 0) return [];
 
-  const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+  const uploadBase = process.env.UPLOAD_DIR ?? join(process.cwd(), 'public', 'uploads');
+  const leadDir = join(uploadBase, 'leads', String(leadId));
   await ensureDirectory(leadDir);
 
   const records: UploadedFileRecord[] = [];
