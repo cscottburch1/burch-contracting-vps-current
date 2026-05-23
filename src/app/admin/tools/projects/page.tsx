@@ -33,6 +33,7 @@ export default function ProjectsManagement() {
   const [showForm, setShowForm] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [message, setMessage] = useState('');
+  const [uploadingImage, setUploadingImage] = useState<'image_url' | 'before_image' | 'after_image' | null>(null);
   const { authLoading, authError } = useAdminAuth();
 
   const [form, setForm] = useState({
@@ -170,7 +171,32 @@ export default function ProjectsManagement() {
     setShowForm(false);
   };
 
-  const filteredProjects = projects.filter(project => 
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: 'image_url' | 'before_image' | 'after_image'
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingImage(field);
+    const data = new FormData();
+    data.append('file', file);
+    try {
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: data });
+      if (res.ok) {
+        const { url } = await res.json();
+        setForm(f => ({ ...f, [field]: url }));
+      } else {
+        setMessage('Image upload failed');
+      }
+    } catch {
+      setMessage('Image upload failed');
+    } finally {
+      setUploadingImage(null);
+      e.target.value = '';
+    }
+  };
+
+  const filteredProjects = projects.filter(project =>
     categoryFilter === 'all' || project.category === categoryFilter
   );
 
@@ -343,36 +369,49 @@ export default function ProjectsManagement() {
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Main Image URL</label>
-                  <input
-                    type="url"
-                    value={form.image_url}
-                    onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                    placeholder="https://images.unsplash.com/..."
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Before Image URL</label>
-                  <input
-                    type="url"
-                    value={form.before_image}
-                    onChange={(e) => setForm({ ...form, before_image: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                    placeholder="Optional before photo"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">After Image URL</label>
-                  <input
-                    type="url"
-                    value={form.after_image}
-                    onChange={(e) => setForm({ ...form, after_image: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                    placeholder="Optional after photo"
-                  />
-                </div>
+                {(
+                  [
+                    { field: 'image_url' as const, label: 'Main Image' },
+                    { field: 'before_image' as const, label: 'Before Image' },
+                    { field: 'after_image' as const, label: 'After Image' },
+                  ] as const
+                ).map(({ field, label }) => (
+                  <div key={field}>
+                    <label className="block text-sm font-medium mb-2">{label}</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        value={form[field]}
+                        onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                        className="flex-1 min-w-0 px-3 py-2 border rounded-lg text-sm"
+                        placeholder="Paste URL or upload →"
+                      />
+                      <label
+                        className={`shrink-0 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium text-white transition-colors ${
+                          uploadingImage === field
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-blue-600 hover:bg-blue-700'
+                        }`}
+                      >
+                        {uploadingImage === field ? '…' : 'Upload'}
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/jpeg,image/png,image/webp,image/gif"
+                          disabled={uploadingImage !== null}
+                          onChange={(e) => handleImageUpload(e, field)}
+                        />
+                      </label>
+                    </div>
+                    {form[field] && (
+                      <img
+                        src={form[field]}
+                        alt="preview"
+                        className="mt-2 h-16 w-full object-cover rounded border"
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
 
               <div className="grid grid-cols-4 gap-4">
