@@ -40,6 +40,9 @@ export default function LeadDetailPage() {
   const [customerPassword, setCustomerPassword] = useState('');
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
+  // Attachment upload
+  const [uploadingFiles, setUploadingFiles] = useState(false);
+
   useEffect(() => {
     checkAuth();
   }, []);
@@ -217,6 +220,30 @@ export default function LeadDetailPage() {
     } catch (error: any) {
       console.error('Error converting lead:', error);
       toast.error(error.message || 'Failed to convert lead to customer');
+    }
+  };
+
+  const handleAttachmentUpload = async (fileList: FileList) => {
+    if (fileList.length === 0) return;
+    setUploadingFiles(true);
+    try {
+      const formData = new FormData();
+      Array.from(fileList).forEach((file) => formData.append('file', file));
+      const response = await fetch(`/api/crm/leads/${leadId}/attachments`, {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        toast.error(data.error || 'Upload failed');
+      } else {
+        toast.success('Files uploaded successfully');
+        fetchLeadDetails();
+      }
+    } catch {
+      toast.error('Upload failed');
+    } finally {
+      setUploadingFiles(false);
     }
   };
 
@@ -618,11 +645,31 @@ export default function LeadDetailPage() {
             </Card>
 
             {/* Attachments Section */}
-            {lead.attachment_details && lead.attachment_details.length > 0 && (
-              <Card>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Attachments ({lead.attachment_details.length})
+            <Card>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Attachments{lead.attachment_details && lead.attachment_details.length > 0 ? ` (${lead.attachment_details.length})` : ''}
                 </h3>
+                <label className={`cursor-pointer px-3 py-1.5 text-sm rounded-lg transition-colors flex items-center gap-1 ${uploadingFiles ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
+                  {uploadingFiles ? 'Uploading...' : '+ Add Files'}
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf,.doc,.docx,.txt"
+                    className="hidden"
+                    disabled={uploadingFiles}
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        handleAttachmentUpload(e.target.files);
+                        e.target.value = '';
+                      }
+                    }}
+                  />
+                </label>
+              </div>
+              {(!lead.attachment_details || lead.attachment_details.length === 0) ? (
+                <p className="text-sm text-gray-500 py-2">No attachments. Use the button above to add files.</p>
+              ) : (
                 <div className="space-y-2">
                   {lead.attachment_details.map((attachment) => {
                     const filename = attachment.stored_filename;
@@ -632,25 +679,34 @@ export default function LeadDetailPage() {
                       ? attachment.file_path
                       : `/api/crm/leads/${lead.id}/attachments/${encodeURIComponent(normalizedFilename)}`;
                     const downloadUrl = isExternal ? fileUrl : `${fileUrl}?download=1`;
-                    const urlPath = attachment.original_filename || normalizedFilename;
-                    const ext = urlPath.split('.').pop()?.toLowerCase() || '';
-                    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
                     const displayName = attachment.original_filename || normalizedFilename;
+                    const ext = displayName.split('.').pop()?.toLowerCase() || '';
+                    const isImage =
+                      ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(ext) ||
+                      attachment.mime_type.startsWith('image/');
+                    const isPdf = ext === 'pdf' || attachment.mime_type === 'application/pdf';
                     return (
                       <div key={attachment.id} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
                         <div className="flex-shrink-0 text-2xl">
-                          {isImage ? '🖼️' : ext === 'pdf' ? '📄' : '📎'}
+                          {isImage ? '🖼️' : isPdf ? '📄' : '📎'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
                           <p className="text-xs text-gray-500">
                             {attachment.mime_type} • {formatFileSize(attachment.file_size)} • Uploaded {formatDate(attachment.uploaded_at)}
                           </p>
-                          {isImage && (
-                            <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
-                              View image
-                            </a>
-                          )}
+                          <div className="flex gap-3 mt-0.5">
+                            {isImage && (
+                              <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                                View image
+                              </a>
+                            )}
+                            {isPdf && (
+                              <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                                View PDF
+                              </a>
+                            )}
+                          </div>
                         </div>
                         <a
                           href={downloadUrl}
@@ -663,8 +719,8 @@ export default function LeadDetailPage() {
                     );
                   })}
                 </div>
-              </Card>
-            )}
+              )}
+            </Card>
 
             {/* Notes Section */}
             <Card>

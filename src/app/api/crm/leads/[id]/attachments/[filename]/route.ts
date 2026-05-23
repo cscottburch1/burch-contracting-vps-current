@@ -59,11 +59,18 @@ export async function GET(
     const shouldDownload = url.searchParams.get('download') === '1';
     const disposition = shouldDownload ? 'attachment' : 'inline';
 
-    return new NextResponse(fileBuffer, {
+    // RFC 8187 filename encoding: ASCII fallback + UTF-8 encoded name
+    const displayName = attachment.original_filename || safeFilename;
+    const asciiFallback = displayName.replace(/[^\x20-\x7E]/g, '_').replace(/["\\]/g, '_');
+    const encodedName = encodeURIComponent(displayName).replace(/'/g, '%27');
+    const contentDisposition = `${disposition}; filename="${asciiFallback}"; filename*=UTF-8''${encodedName}`;
+
+    return new Response(fileBuffer, {
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `${disposition}; filename="${attachment.original_filename || safeFilename}"`,
+        'Content-Disposition': contentDisposition,
         'Cache-Control': 'private, max-age=0, no-cache',
+        'Content-Length': String(fileBuffer.length),
       },
     });
   } catch (error) {

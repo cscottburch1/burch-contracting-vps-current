@@ -58,6 +58,8 @@ AggregateCache.uca
 # Uploaded files
 /public/uploads/resumes/*
 !/public/uploads/resumes/.gitkeep
+/public/uploads/leads/*
+!/public/uploads/leads/.gitkeep
 
 # Temporary / generated artifacts
 /tmp/
