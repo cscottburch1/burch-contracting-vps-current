@@ -154,17 +154,17 @@ export default function RootLayout({
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "12:00" }
                   ],
                   "areaServed": [
-                    {"@type": "City", "name": "Simpsonville", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Mauldin", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Fountain Inn", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Woodruff", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Gray Court", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Laurens", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Greenville", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Five Forks", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Clinton", "containedInPlace": {"@type": "State", "name": "South Carolina"}},
-                    {"@type": "City", "name": "Greer", "containedInPlace": {"@type": "State", "name": "South Carolina"}}
+                    {"@type": "City", "name": "Simpsonville", "sameAs": "https://en.wikipedia.org/wiki/Simpsonville,_South_Carolina"},
+                    {"@type": "City", "name": "Mauldin"},
+                    {"@type": "City", "name": "Fountain Inn"},
+                    {"@type": "City", "name": "Woodruff"},
+                    {"@type": "City", "name": "Greenville"},
+                    {"@type": "City", "name": "Greer"},
+                    {"@type": "City", "name": "Five Forks"},
+                    {"@type": "City", "name": "Laurens"},
+                    {"@type": "City", "name": "Gray Court"}
                   ],
+                  "hasMap": "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
                   "hasOfferCatalog": {
                     "@type": "OfferCatalog",
                     "name": "Construction Services",
