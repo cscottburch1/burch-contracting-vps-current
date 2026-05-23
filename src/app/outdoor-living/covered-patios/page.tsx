@@ -117,10 +117,10 @@ export default function CoveredPatiosPage() {
         <h2 className="text-2xl font-bold text-slate-900 mb-6">Covered Patio Service Areas</h2>
         <div className="grid gap-4 md:grid-cols-4">
           {[
-            { city: 'Simpsonville', slug: 'simpsonville-sc' },
-            { city: 'Mauldin', slug: 'mauldin-sc' },
-            { city: 'Fountain Inn', slug: 'fountain-inn-sc' },
-            { city: 'Woodruff', slug: 'woodruff-sc' },
+            { city: 'Simpsonville', slug: 'simpsonville' },
+            { city: 'Mauldin', slug: 'mauldin' },
+            { city: 'Fountain Inn', slug: 'fountain-inn' },
+            { city: 'Woodruff', slug: 'woodruff' },
           ].map(({ city, slug }) => (
             <Link
               key={slug}
