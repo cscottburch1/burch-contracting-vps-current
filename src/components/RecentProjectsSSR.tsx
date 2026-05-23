@@ -1,61 +1,54 @@
-'use client';
-
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
-import { getResponsiveProjectImageSet, isBrandedProjectImage, projectSpotlights } from '@/lib/seo/projectSpotlightsData';
+import { query } from '@/lib/mysql';
+import { ProjectCardImage } from './ProjectCardImage';
 
-interface ProjectImageProps {
-  project: typeof projectSpotlights[0];
+interface DbProject {
+  id: number;
+  title: string;
+  category: string;
+  short_description: string | null;
+  image_url: string | null;
+  completion_date: string | null;
+  project_duration: string | null;
+  location: string | null;
+  featured: boolean;
 }
 
-function ProjectImage({ project }: ProjectImageProps) {
-  const [imgError, setImgError] = useState(false);
-  const responsiveImage = getResponsiveProjectImageSet(project.image);
-  const fallbackImage = '/images/projects/placeholder.webp';
+const CATEGORY_LABELS: Record<string, string> = {
+  'garages': 'Garage Construction',
+  'decks': 'Deck Building',
+  'screened-porches': 'Screened Porch',
+  'room-additions': 'Room Addition',
+  // legacy values — safe to keep during transition
+  'handyman': 'Handyman',
+  'remodeling': 'Remodeling',
+  'additions': 'Additions',
+};
 
-  // Use fallback if image failed to load
-  const imageSrc = imgError ? fallbackImage : (responsiveImage ? responsiveImage.mobile : project.image);
-
-  if (isBrandedProjectImage(project.image) || imgError) {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-white p-4">
-        <Image
-          src={imageSrc}
-          alt={project.imageAlt}
-          className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
-          width={600}
-          height={336}
-          onError={() => setImgError(true)}
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+"
-        />
-      </div>
+async function getProjects(): Promise<DbProject[]> {
+  try {
+    return await query<DbProject>(
+      `SELECT id, title, category, short_description, image_url,
+              completion_date, project_duration, location, featured
+       FROM recent_projects
+       WHERE is_active = TRUE
+       ORDER BY display_order ASC, completion_date DESC
+       LIMIT 6`
     );
+  } catch {
+    return [];
   }
-
-  return (
-    <Image
-      src={imageSrc}
-      alt={project.imageAlt}
-      title={project.imageAlt}
-      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-      width={600}
-      height={336}
-      onError={() => setImgError(true)}
-      placeholder="blur"
-      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+"
-    />
-  );
 }
 
 /**
  * Server-rendered recent projects section.
- * Uses static projectSpotlights data so the HTML is fully crawlable
- * without waiting for any client-side fetch.
+ * Reads from the recent_projects DB table managed via admin/tools/projects.
+ * Returns null (section hidden) when no active projects exist yet.
  */
-export default function RecentProjectsSSR() {
-  const featured = projectSpotlights.filter((p) => p.representative).slice(0, 6);
+export default async function RecentProjectsSSR() {
+  const projects = await getProjects();
+
+  if (projects.length === 0) return null;
 
   return (
     <section className="py-20 bg-gray-50">
@@ -68,16 +61,25 @@ export default function RecentProjectsSSR() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featured.map((project) => (
+          {projects.map((project) => (
             <article
-              key={project.slug}
+              key={project.id}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition group"
             >
-              <div className="relative h-48 overflow-hidden bg-linear-to-br from-blue-50 to-blue-100">
-                <ProjectImage project={project} />
+              <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
+                {project.image_url ? (
+                  <ProjectCardImage
+                    src={project.image_url}
+                    alt={`${project.title} — Burch Contracting`}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                    No photo
+                  </div>
+                )}
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800">
-                    {project.serviceType}
+                    {CATEGORY_LABELS[project.category] ?? project.category}
                   </span>
                 </div>
               </div>
@@ -87,23 +89,23 @@ export default function RecentProjectsSSR() {
                   {project.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{project.summary}</p>
+                {project.short_description && (
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {project.short_description}
+                  </p>
+                )}
 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <span className="flex items-center gap-1">
-                    <span aria-hidden="true">📍</span>
-                    {project.city}
-                  </span>
-                  <span className="text-gray-600">{project.timeline}</span>
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  {project.location && (
+                    <span className="flex items-center gap-1">
+                      <span aria-hidden="true">📍</span>
+                      {project.location}
+                    </span>
+                  )}
+                  {project.project_duration && (
+                    <span className="text-gray-600">{project.project_duration}</span>
+                  )}
                 </div>
-
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition"
-                >
-                  View Project Details
-                  <span aria-hidden="true" className="ml-1">→</span>
-                </Link>
               </div>
             </article>
           ))}
