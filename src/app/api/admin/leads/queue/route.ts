@@ -53,7 +53,8 @@ async function attachQueuedFilesToLead(leadId: number, queuedFiles: QueuedLead['
     return [] as string[];
   }
 
-  const leadDir = join(process.cwd(), 'public', 'uploads', 'leads', String(leadId));
+  const uploadBase = process.env.UPLOAD_DIR ?? join(process.cwd(), 'public', 'uploads');
+  const leadDir = join(uploadBase, 'leads', String(leadId));
   await ensureDir(leadDir);
 
   const attachmentNames: string[] = [];
