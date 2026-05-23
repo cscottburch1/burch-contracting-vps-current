@@ -196,7 +196,7 @@ export default function MigrationPage() {
 
           {result && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2">
                 {result.results?.map((line: string, idx: number) => (
                   <div key={idx} className="text-sm">{line}</div>
@@ -215,7 +215,7 @@ export default function MigrationPage() {
 
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{error}</p>
               <button
                 onClick={() => {
@@ -249,7 +249,7 @@ export default function MigrationPage() {
 
           {passwordResetResult && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2">
                 {passwordResetResult.results?.map((line: string, idx: number) => (
                   <div key={idx} className="text-sm">{line}</div>
@@ -268,7 +268,7 @@ export default function MigrationPage() {
 
           {passwordResetError && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{passwordResetError}</p>
               <button
                 onClick={() => {
@@ -302,7 +302,7 @@ export default function MigrationPage() {
 
           {projectTrackerResult && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2 mb-4">
                 <p className="font-semibold">{projectTrackerResult.message}</p>
                 <p className="text-sm">Tables created:</p>
@@ -331,7 +331,7 @@ export default function MigrationPage() {
 
           {projectTrackerError && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{projectTrackerError}</p>
               <button
                 onClick={() => {
@@ -365,7 +365,7 @@ export default function MigrationPage() {
 
           {proposalsResult && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2 mb-4">
                 <p className="font-semibold">{proposalsResult.message}</p>
                 <p className="text-sm">Tables created: proposals, customer_notes</p>
@@ -389,7 +389,7 @@ export default function MigrationPage() {
 
           {proposalsError && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{proposalsError}</p>
               <button
                 onClick={() => {
@@ -406,7 +406,7 @@ export default function MigrationPage() {
 
         {/* Documents Migration */}
         <div className="bg-white rounded-xl shadow-lg p-10">
-          <h1 className="text-4xl font-bold mb-4">ðŸ“„ Document Management Migration</h1>
+          <h1 className="text-4xl font-bold mb-4">📄 Document Management Migration</h1>
           <p className="text-gray-600 mb-8">
             Create database tables for document management across subcontractors, customers, and projects. 
             This enables document uploads, approval workflow, and expiration tracking.
@@ -424,7 +424,7 @@ export default function MigrationPage() {
 
           {documentsResult && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2 mb-4">
                 <p className="font-semibold">{documentsResult.message}</p>
                 <p className="text-sm">Tables created:</p>
@@ -453,7 +453,7 @@ export default function MigrationPage() {
 
           {documentsError && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{documentsError}</p>
               <button
                 onClick={() => {
@@ -470,14 +470,14 @@ export default function MigrationPage() {
 
         {/* Lead Scoring Migration */}
         <div className="bg-white rounded-xl shadow-lg p-10 border-4 border-blue-400">
-          <h1 className="text-4xl font-bold mb-4">ðŸŽ¯ Lead Scoring & Intelligence Migration</h1>
+          <h1 className="text-4xl font-bold mb-4">🎯 Lead Scoring & Intelligence Migration</h1>
           <p className="text-gray-600 mb-6">
             Add intelligent lead scoring to your CRM system. This migration adds the <code className="bg-gray-100 px-2 py-1 rounded">lead_score</code> column 
             to automatically calculate and track lead quality based on budget, timeframe, service type, and referral source.
           </p>
           
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-            <p className="font-semibold text-blue-900">âœ¨ What this enables:</p>
+            <p className="font-semibold text-blue-900">✨ What this enables:</p>
             <ul className="list-disc list-inside text-sm text-blue-800 mt-2 space-y-1">
               <li>Automatic priority assignment (Urgent/High/Medium/Low)</li>
               <li>Lead quality scores (0-375 points)</li>
@@ -493,13 +493,13 @@ export default function MigrationPage() {
               disabled={leadScoringRunning}
               className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold hover:from-blue-700 hover:to-purple-700 transition disabled:opacity-50 text-xl shadow-lg"
             >
-              {leadScoringRunning ? 'Running Migration...' : 'ðŸš€ Run Lead Scoring Migration'}
+              {leadScoringRunning ? 'Running Migration...' : '🚀 Run Lead Scoring Migration'}
             </button>
           )}
 
           {leadScoringResult && (
             <div className="bg-green-100 border border-green-400 text-green-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ“ Migration Successful!</h2>
+              <h2 className="text-2xl font-bold mb-4">✓ Migration Successful!</h2>
               <div className="space-y-2 mb-4">
                 <p className="font-semibold">{leadScoringResult.message}</p>
                 <div className="text-sm mt-3">
@@ -535,7 +535,7 @@ export default function MigrationPage() {
 
           {leadScoringError && (
             <div className="bg-red-100 border border-red-400 text-red-800 p-6 rounded-lg mb-6">
-              <h2 className="text-2xl font-bold mb-4">âœ— Migration Failed</h2>
+              <h2 className="text-2xl font-bold mb-4">✗ Migration Failed</h2>
               <p className="mb-4">{leadScoringError}</p>
               <button
                 onClick={() => {
