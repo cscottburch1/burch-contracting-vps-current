@@ -248,7 +248,7 @@ export default function ContactPage() {
                 <ul className="list-none space-y-4 text-sm text-gray-700">
                   <li className="flex gap-3">
                     <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
-                    <span className="pt-0.5">We review your request and reach out within one business day to confirm details.</span>
+                    <span className="pt-0.5">We review your request and reach out within two business days to confirm details.</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
@@ -311,7 +311,7 @@ export default function ContactPage() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-blue-800 flex items-start gap-2">
                   <Icon name="Clock" size={18} className="shrink-0 mt-0.5" />
-                  <span><strong>We reply within 24 hours.</strong> Tell us about your project and we'll provide a detailed estimate.</span>
+                  <span><strong>We typically reply within 48 hours.</strong> Tell us about your project and we'll provide a detailed estimate.</span>
                 </p>
               </div>
 
