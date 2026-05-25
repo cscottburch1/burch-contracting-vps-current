@@ -218,7 +218,7 @@ export default function ContactPage() {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">Thank You!</h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8 animate-fade-in-up stagger-1 opacity-0">
-              We've received your request and will get back to you within 24 hours.
+              We've received your request and will get back to you within 24-48 hours.
             </p>
           </div>
         </section>
