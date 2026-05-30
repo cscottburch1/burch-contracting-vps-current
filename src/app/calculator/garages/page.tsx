@@ -91,7 +91,7 @@ export default function GaragesCalculatorPage() {
       <CompetitivePricingCalculator
         serviceKey="garages"
         title="Garage Cost Calculator"
-        intro="Plan your garage project with competitive local pricing. Choose from attached garages, detached structures, or upgraded workshop spaces with transparent cost breakdowns."
+        intro="A standard two-car detached garage in Upstate SC costs $28,000–$48,000 fully finished — slab, framing, roof, doors, and basic electrical. Attached garages run slightly less. Workshop upgrades, insulation, and HVAC add $4,000–$12,000. Use this calculator to price your build."
         icon="Warehouse"
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />

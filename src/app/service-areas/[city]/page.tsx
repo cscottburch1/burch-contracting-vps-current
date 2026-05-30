@@ -34,6 +34,7 @@ const cityContent: Record<string, {
   whyChooseUs: string[];
   localInsights: string[];
   servicesIntro: string;
+  cityIntro?: string;
 }> = {
   simpsonville: {
     name: "Simpsonville",
@@ -85,7 +86,8 @@ const cityContent: Record<string, {
       "Convenient access to Greenville while maintaining small-town charm",
       "Continued residential growth drives demand for home improvements"
     ],
-    servicesIntro: "Burch Contracting delivers expert deck building, garage construction, screened porch installation, and home addition services throughout Simpsonville, SC. Our professional contractors specialize in outdoor living spaces and structural additions with quality craftsmanship, premium materials, and reliable service."
+    servicesIntro: "Burch Contracting delivers expert deck building, garage construction, screened porch installation, and home addition services throughout Simpsonville, SC. Our professional contractors specialize in outdoor living spaces and structural additions with quality craftsmanship, premium materials, and reliable service.",
+    cityIntro: "Simpsonville is our highest-volume market — more garages, decks, and additions built here than anywhere else we serve.",
   },
   greenville: {
     name: "Greenville",
@@ -141,7 +143,8 @@ const cityContent: Record<string, {
       "Strong emphasis on preserving historic character while encouraging innovation",
       "Swamp Rabbit Trail connects city neighborhoods and attracts outdoor enthusiasts"
     ],
-    servicesIntro: "From historic North Main estates requiring careful restoration to modern downtown condos needing contemporary updates, we bring the expertise Greenville homeowners expect."
+    servicesIntro: "From historic North Main estates requiring careful restoration to modern downtown condos needing contemporary updates, we bring the expertise Greenville homeowners expect.",
+    cityIntro: "Greenville projects range from downtown infill lots to established neighborhoods off Augusta Road — each one needs a different approach.",
   },
   "five-forks": {
     name: "Five Forks",
@@ -197,7 +200,8 @@ const cityContent: Record<string, {
       "Convenient to both Greenville amenities and Simpsonville's hometown feel",
       "Active neighborhood associations foster community connections"
     ],
-    servicesIntro: "Five Forks homeowners value quality, reliability, and responsive service. We understand the needs of this family-focused community and deliver the professionalism you expect."
+    servicesIntro: "Five Forks homeowners value quality, reliability, and responsive service. We understand the needs of this family-focused community and deliver the professionalism you expect.",
+    cityIntro: "Five Forks is one of the fastest-growing areas in Upstate SC — HOA rules here are strict and permit timelines reflect that.",
   },
   woodruff: {
     name: "Woodruff",
@@ -300,7 +304,8 @@ const cityContent: Record<string, {
       "Convenient access to Laurens, Clinton, and Greenville for work",
       "Growing interest in hobby farming and sustainable living"
     ],
-    servicesIntro: "Gray Court homeowners need contractors who understand rural properties and country living. We're experienced with the unique challenges and opportunities of homes on acreage."
+    servicesIntro: "Gray Court homeowners need contractors who understand rural properties and country living. We're experienced with the unique challenges and opportunities of homes on acreage.",
+    cityIntro: "Gray Court is home — our shop is on Water Tank Rd and most of our crew lives within 10 miles of here.",
   },
   "fountain-inn": {
     name: "Fountain Inn",
@@ -456,7 +461,8 @@ const cityContent: Record<string, {
       "County seat provides employment and services",
       "Strong community connections and local traditions"
     ],
-    servicesIntro: "Serving Laurens and Laurens County with professional deck building, garage construction, screened porch installation, and room addition services. Burch Contracting delivers 30+ years of experience, quality materials, and honest service to every project."
+    servicesIntro: "Serving Laurens and Laurens County with professional deck building, garage construction, screened porch installation, and room addition services. Burch Contracting delivers 30+ years of experience, quality materials, and honest service to every project.",
+    cityIntro: "Laurens County has its own permitting office and its own inspection cadence — separate from Greenville County, and we work with both regularly.",
   },
   greer: {
     name: "Greer",
@@ -508,7 +514,8 @@ const cityContent: Record<string, {
       "Manufacturing provides strong local employment base",
       "City invests in community improvements and parks"
     ],
-    servicesIntro: "Greer homeowners deserve quality craftsmanship from contractors who understand both historic properties and modern family needs. Burch Contracting brings expertise in deck building, garage construction, screened porches, and home additions to this growing community."
+    servicesIntro: "Greer homeowners deserve quality craftsmanship from contractors who understand both historic properties and modern family needs. Burch Contracting brings expertise in deck building, garage construction, screened porches, and home additions to this growing community.",
+    cityIntro: "Greer sits on the Greenville-Spartanburg line, which means some jobs fall under Greenville County permits and some under Spartanburg — we know which is which.",
   }
 };
 
@@ -720,6 +727,11 @@ export default async function ServiceAreaPage({ params }: ServiceAreaPageProps) 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               {content.tagline}
             </h1>
+            {content.cityIntro && (
+              <p className="text-xl md:text-2xl text-gray-200 mb-4 leading-relaxed">
+                {content.cityIntro}
+              </p>
+            )}
             <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
               {content.servicesIntro}
             </p>

@@ -91,7 +91,7 @@ export default function DecksCalculatorPage() {
       <CompetitivePricingCalculator
         serviceKey="decks"
         title="Deck Cost Calculator"
-        intro="Plan your deck project with competitive local pricing. Choose from pressure-treated, composite, or premium materials and see transparent cost breakdowns with all factors included."
+        intro="Decks in Upstate SC typically cost $30–$50 per square foot installed — a 12x16 deck (192 sqft) runs $6,000–$9,600 in pressure-treated lumber or $10,000–$14,000 in composite. Size, height off ground, railing system, and whether you need stairs are the four biggest cost drivers. Use this calculator to build your estimate."
         icon="Trees"
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />

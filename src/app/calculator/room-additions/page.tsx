@@ -91,7 +91,7 @@ export default function RoomAdditionsCalculatorPage() {
       <CompetitivePricingCalculator
         serviceKey="homeAdditions"
         title="Home Addition Cost Calculator"
-        intro="Plan your home addition project with competitive local pricing. From simple room additions to luxury master suites with transparent cost breakdowns for all factors."
+        intro="Room additions in Greenville County run $150–$300 per square foot depending on foundation type, roofline complexity, and finish level. A 400 sqft addition lands between $60,000–$120,000 fully finished. HVAC tie-in and foundation design are the two biggest variables. Use this calculator to estimate your project."
         icon="Construction"
         marketArea="Simpsonville, Fountain Inn, Gray Court & Greenville County"
       />
