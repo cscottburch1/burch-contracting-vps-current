@@ -18,6 +18,7 @@ export default function TermsOfServicePage() {
         Effective date: <time dateTime="2026-05-11">May 11, 2026</time>
       </p>
       <div className="mt-8 space-y-6 text-gray-700">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Terms of Service</h2>
         <p>
           Website content is provided for informational purposes and does not constitute a final project quote or binding contract.
         </p>

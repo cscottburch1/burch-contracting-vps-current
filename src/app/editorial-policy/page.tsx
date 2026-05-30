@@ -18,6 +18,7 @@ export default function EditorialPolicyPage() {
         Last reviewed: <time dateTime="2026-05-11">May 11, 2026</time>
       </p>
       <div className="mt-8 space-y-6 text-gray-700">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Editorial Standards</h2>
         <p>
           Content is written and reviewed with input from Burch Contracting project experience in Upstate South Carolina.
         </p>

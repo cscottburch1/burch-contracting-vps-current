@@ -74,7 +74,15 @@ export function buildLocalBusinessSchema(overrides: LocalBusinessSchemaOverrides
     hasMap: "https://www.google.com/maps/place/Burch+Contracting/@34.6341746,-82.0744941,17z",
     priceRange: "$$-$$$",
     openingHours: "Mo-Fr 08:00-17:00",
-    award: "Better Business Bureau A+ rating",
+    award: "BBB A+ Rating since 2014",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: "6",
+      reviewCount: "6",
+    },
     inLanguage: "en-US",
     contactPoint: {
       "@type": "ContactPoint",

@@ -124,7 +124,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Licensed & Insured</h3>
-                    <p className="text-sm text-gray-700">SC license #CLG118679, fully insured for your protection</p>
+                    <p className="text-sm text-gray-700">Burch Contracting holds South Carolina General Contractor license #CLG118679, issued by the SC Contractor Licensing Board. We carry general liability and workers&apos; compensation insurance on every job. You can verify our license at llr.sc.gov/clb. We&apos;ve held BBB A+ accreditation since 2014 with zero unresolved complaints.</p>
                   </div>
                 </div>
               </Card>

@@ -18,6 +18,7 @@ export default function PrivacyPolicyPage() {
         Effective date: <time dateTime="2026-05-11">May 11, 2026</time>
       </p>
       <div className="mt-8 space-y-6 text-gray-700">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Privacy Policy</h2>
         <p>
           Burch Contracting collects contact and project information you submit through our website to respond to estimate requests,
           schedule consultations, and provide services.
