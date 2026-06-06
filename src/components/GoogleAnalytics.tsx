@@ -2,30 +2,24 @@
 
 import Script from 'next/script';
 
+const GA_ID = 'G-LLFLXVVFT6';
+
 export default function GoogleAnalytics() {
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-
-  if (!measurementId) {
-    return null;
-  }
-
   return (
     <>
       <Script
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
       />
       <Script
         id="google-analytics"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${measurementId}', {
-              page_path: window.location.pathname,
-            });
+            gtag('config', '${GA_ID}');
           `,
         }}
       />
