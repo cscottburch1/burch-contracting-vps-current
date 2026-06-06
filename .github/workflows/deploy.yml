@@ -21,6 +21,7 @@ jobs:
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
+          timeout: 2m
           command_timeout: 15m
           script: |
             set -e
