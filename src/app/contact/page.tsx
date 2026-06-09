@@ -19,8 +19,14 @@ interface FormData {
   name: string;
   phone: string;
   email: string;
+  address: string;
+  city: string;
+  state: string;
   projectType: string;
   zipCode: string;
+  budgetRange: string;
+  timeframe: string;
+  referralSource: string;
   description: string;
   website: string; // Honeypot field
 }
@@ -40,8 +46,14 @@ export default function ContactPage() {
     name: '',
     phone: '',
     email: '',
+    address: '',
+    city: '',
+    state: '',
     projectType: '',
     zipCode: '',
+    budgetRange: '',
+    timeframe: '',
+    referralSource: '',
     description: '',
     website: '' // Honeypot field
   });
@@ -71,14 +83,26 @@ export default function ContactPage() {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.projectType) {
-      newErrors.projectType = 'Project type is required';
+    if (!formData.address.trim()) {
+      newErrors.address = 'Street address is required';
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required';
+    }
+
+    if (!formData.state.trim()) {
+      newErrors.state = 'State is required';
     }
 
     if (!formData.zipCode.trim()) {
       newErrors.zipCode = 'Zip code is required';
     } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
       newErrors.zipCode = 'Please enter a valid zip code';
+    }
+
+    if (!formData.projectType) {
+      newErrors.projectType = 'Project type is required';
     }
 
     if (!formData.description.trim()) {
@@ -123,13 +147,19 @@ export default function ContactPage() {
       // Use FormData for backend submission
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        // Map projectType to serviceType for backend compatibility
         if (key === 'projectType') {
           formDataToSend.append('serviceType', value);
+        } else if (key === 'address' || key === 'city' || key === 'state') {
+          // Combined into a single address field below
         } else {
           formDataToSend.append(key, value);
         }
       });
+      // Combine address parts into one field
+      const fullAddress = [formData.address, formData.city, formData.state, formData.zipCode]
+        .filter(Boolean)
+        .join(', ');
+      formDataToSend.append('address', fullAddress);
       formDataToSend.append('recaptchaToken', recaptchaToken);
       
       // Append files
@@ -151,8 +181,14 @@ export default function ContactPage() {
           name: '',
           phone: '',
           email: '',
+          address: '',
+          city: '',
+          state: '',
           projectType: '',
           zipCode: '',
+          budgetRange: '',
+          timeframe: '',
+          referralSource: '',
           description: '',
           website: ''
         });
@@ -375,32 +411,63 @@ export default function ContactPage() {
                   {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="projectType" className="block text-sm font-semibold text-gray-900 mb-2">
-                      Project Type <span className="text-red-500">*</span>
+                <div>
+                  <label htmlFor="address" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Street Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                      errors.address ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    placeholder="123 Oak Street"
+                    required
+                  />
+                  {errors.address && <p className="mt-1 text-sm text-red-500">{errors.address}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="md:col-span-1">
+                    <label htmlFor="city" className="block text-sm font-semibold text-gray-900 mb-2">
+                      City <span className="text-red-500">*</span>
                     </label>
-                    <select
-                      id="projectType"
-                      name="projectType"
-                      value={formData.projectType}
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={formData.city}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
-                        errors.projectType ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                        errors.city ? 'border-red-500' : 'border-gray-300'
                       }`}
+                      placeholder="Raleigh"
                       required
-                    >
-                      <option value="">What do you need built?</option>
-                      <option value="garage">Garage</option>
-                      <option value="addition">Home Addition</option>
-                      <option value="deck">Deck</option>
-                      <option value="screened-porch">Screened Porch</option>
-                      <option value="covered-patio">Covered Patio</option>
-                      <option value="remodeling">Remodeling</option>
-                      <option value="commercial">Commercial Upfit</option>
-                      <option value="other">Other / Not Sure</option>
-                    </select>
-                    {errors.projectType && <p className="mt-1 text-sm text-red-500">{errors.projectType}</p>}
+                    />
+                    {errors.city && <p className="mt-1 text-sm text-red-500">{errors.city}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="state" className="block text-sm font-semibold text-gray-900 mb-2">
+                      State <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
+                        errors.state ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="NC"
+                      maxLength={2}
+                      required
+                    />
+                    {errors.state && <p className="mt-1 text-sm text-red-500">{errors.state}</p>}
                   </div>
 
                   <div>
@@ -416,12 +483,104 @@ export default function ContactPage() {
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 placeholder:text-gray-400 ${
                         errors.zipCode ? 'border-red-500' : 'border-gray-300'
                       }`}
-                      placeholder="29681"
+                      placeholder="27601"
                       maxLength={10}
                       required
                     />
                     {errors.zipCode && <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>}
                   </div>
+                </div>
+
+                <div>
+                  <label htmlFor="projectType" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Project Type <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="projectType"
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900 ${
+                      errors.projectType ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                    required
+                  >
+                    <option value="">What do you need built?</option>
+                    <option value="garage">Garage</option>
+                    <option value="addition">Home Addition</option>
+                    <option value="deck">Deck</option>
+                    <option value="screened-porch">Screened Porch</option>
+                    <option value="covered-patio">Covered Patio</option>
+                    <option value="remodeling">Remodeling</option>
+                    <option value="commercial">Commercial Upfit</option>
+                    <option value="other">Other / Not Sure</option>
+                  </select>
+                  {errors.projectType && <p className="mt-1 text-sm text-red-500">{errors.projectType}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="budgetRange" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Approximate Budget <span className="text-gray-500 font-normal">(Optional)</span>
+                    </label>
+                    <select
+                      id="budgetRange"
+                      name="budgetRange"
+                      value={formData.budgetRange}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900"
+                    >
+                      <option value="">Select a range</option>
+                      <option value="under-10k">Under $10,000</option>
+                      <option value="10k-25k">$10,000 – $25,000</option>
+                      <option value="25k-50k">$25,000 – $50,000</option>
+                      <option value="50k-100k">$50,000 – $100,000</option>
+                      <option value="over-100k">Over $100,000</option>
+                      <option value="not-sure">Not Sure Yet</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="timeframe" className="block text-sm font-semibold text-gray-900 mb-2">
+                      Desired Timeframe <span className="text-gray-500 font-normal">(Optional)</span>
+                    </label>
+                    <select
+                      id="timeframe"
+                      name="timeframe"
+                      value={formData.timeframe}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900"
+                    >
+                      <option value="">Select a timeframe</option>
+                      <option value="asap">As soon as possible</option>
+                      <option value="1-3months">Within 1–3 months</option>
+                      <option value="3-6months">3–6 months</option>
+                      <option value="6-12months">6–12 months</option>
+                      <option value="flexible">Flexible / Planning ahead</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="referralSource" className="block text-sm font-semibold text-gray-900 mb-2">
+                    How did you hear about us? <span className="text-gray-500 font-normal">(Optional)</span>
+                  </label>
+                  <select
+                    id="referralSource"
+                    name="referralSource"
+                    value={formData.referralSource}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-900"
+                  >
+                    <option value="">Select one</option>
+                    <option value="google">Google Search</option>
+                    <option value="referral">Friend or Family Referral</option>
+                    <option value="neighbor">Saw Work in Neighborhood</option>
+                    <option value="repeat">Previous Customer</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="nextdoor">Nextdoor</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
 
                 {/* Description Field */}
