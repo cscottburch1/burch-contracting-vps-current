@@ -123,13 +123,11 @@ export default async function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Premier Residential Remodeling &amp; Additions in Upstate SC
+              Building Decks, Garages &amp; Additions for Upstate SC Homeowners Since 1995
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              Burch Contracting is a licensed general contractor based in Gray Court, SC (#CLG118679) that               serves customers in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
-               serves customers in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
-
+              Scott Burch started this company in 1995 and has been building for homeowners in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks ever since. Decks, screened porches, room additions, garages, and commercial upfits — done without shortcuts. SC Licensed #CLG118679.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -250,7 +248,7 @@ export default async function HomePage() {
       <Section background="gray" padding="lg">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Homeowners Choose <span className="gradient-text">Burch Contracting</span>
+            Why Upstate SC Homeowners Keep Coming Back to <span className="gradient-text">Burch Contracting</span>
           </h2>
         </div>
 
@@ -261,8 +259,8 @@ export default async function HomePage() {
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">30+ Years Experience in Upstate SC</h3>
-                <p className="text-gray-600">Serving local homeowners since 1995 with proven expertise and craftsmanship</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">30+ Years Working Right Here</h3>
+                <p className="text-gray-600">We've been building in Upstate SC since 1995 — that's three decades of knowing local codes, local suppliers, and what actually holds up long-term</p>
               </div>
             </div>
 
@@ -271,8 +269,8 @@ export default async function HomePage() {
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">Local, Licensed & Insured Contractor</h3>
-                <p className="text-gray-600">BBB A+ rating and fully insured for your complete protection</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">Licensed, Insured & Accountable</h3>
+                <p className="text-gray-600">SC License #CLG118679, fully insured, BBB A+ rated — not because we have to say it, but because it matters to the people hiring us</p>
               </div>
             </div>
 
@@ -281,8 +279,8 @@ export default async function HomePage() {
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">No Shortcuts – Built to Last</h3>
-                <p className="text-gray-600">Quality materials and proper construction methods, every time</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">No Shortcuts. Period.</h3>
+                <p className="text-gray-600">If it's not worth doing right, it's not worth doing. We use the right materials and the right methods — even when the easy way is cheaper</p>
               </div>
             </div>
 
@@ -291,8 +289,8 @@ export default async function HomePage() {
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">Clear Pricing & Communication</h3>
-                <p className="text-gray-600">Honest estimates and transparent communication throughout your project</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">You'll Always Know Where Things Stand</h3>
+                <p className="text-gray-600">We give you a straight answer on price and timeline upfront — no low-ball to win the bid and inflate it later</p>
               </div>
             </div>
 
@@ -301,8 +299,8 @@ export default async function HomePage() {
                 <Icon name="Check" size={20} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">Real Project Experience (Not Just Sales)</h3>
-                <p className="text-gray-600">Working contractor who understands construction, not just selling it</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">Scott Actually Shows Up</h3>
+                <p className="text-gray-600">You're not dealing with a salesperson who hands you off to a crew. Scott is on the job and responsible for the outcome</p>
               </div>
             </div>
           </div>
@@ -313,10 +311,10 @@ export default async function HomePage() {
       <Section background="white" padding="lg">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Simple Process
+            How It Works
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From first contact to project completion, we make the process straightforward
+            We keep it simple so you can focus on what matters — your project
           </p>
         </div>
 
@@ -327,9 +325,9 @@ export default async function HomePage() {
                 1
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Request Your Free Estimate</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Tell Us What You're Thinking</h3>
             <p className="text-gray-600">
-              Call us or fill out our contact form to get started
+              Call or use the form — no commitment, just a conversation
             </p>
           </Card>
 
@@ -339,9 +337,9 @@ export default async function HomePage() {
                 2
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">On-Site Visit & Project Review</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">We Come Take a Look</h3>
             <p className="text-gray-600">
-              We visit your property to understand your vision and site conditions
+              We visit your property, hear what you have in mind, and figure out what it takes to get there
             </p>
           </Card>
 
@@ -351,9 +349,9 @@ export default async function HomePage() {
                 3
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Clear Scope & Pricing</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">You Get a Real Number</h3>
             <p className="text-gray-600">
-              Receive a detailed estimate with transparent pricing and timeline
+              A detailed written estimate — scope, price, and timeline — before any work begins
             </p>
           </Card>
 
@@ -363,9 +361,9 @@ export default async function HomePage() {
                 4
               </div>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Professional Construction</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">We Build It</h3>
             <p className="text-gray-600">
-              We build your project with quality craftsmanship and attention to detail
+              We show up, do the work, and don't leave until it's right
             </p>
           </Card>
         </div>
@@ -467,10 +465,10 @@ export default async function HomePage() {
       <Section background="dark" padding="lg">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Ready to Start Your Project?
+            Let's Talk About Your Project
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
-            Get a clear estimate from a trusted local contractor
+            No pressure, no sales pitch — just a straight conversation about what you want to build
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
