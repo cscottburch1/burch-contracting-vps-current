@@ -127,11 +127,9 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              Burch Contracting is a licensed general contractor based in Gray Court, SC (#CLG118679) that builds garages, decks, screened porches, room additions, and ADUs for homeowners across Simpsonville, Mauldin, Fountain Inn, Woodruff, and Greenville. Family-owned since 1995. Free estimates, no subcontracted work, one crew start to finish.
-            </p>
+              Burch Contracting is a licensed general contractor based in Gray Court, SC (#CLG118679) that               serves customers in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
+               serves customers in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
 
-            <p className="text-xl md:text-2xl text-gray-200 mb-12 leading-relaxed max-w-4xl mx-auto">
-              Serving homeowners in Simpsonville, Mauldin, Fountain Inn, Woodruff, Greenville, and Five Forks since 1995. Decks, screened porches, room additions, remodeling, and commercial upfits — built right the first time.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
