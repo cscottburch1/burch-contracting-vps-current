@@ -72,7 +72,9 @@ export default function CompetitivePricingCalculator({
   const sfHint = SF_HINTS[serviceKey];
 
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projectOptions[0]?.id ?? '');
-  const [squareFootage, setSquareFootage] = useState<number>(sfHint ? Math.round((sfHint.min + sfHint.max) / 2 / 50) * 50 : 250);
+  const defaultSF = sfHint ? Math.round((sfHint.min + sfHint.max) / 2 / 50) * 50 : 250;
+  const [squareFootage, setSquareFootage] = useState<number>(defaultSF);
+  const [sqftInput, setSqftInput] = useState<string>(String(defaultSF));
   const [locationKey, setLocationKey] = useState<LocationKey>('fountainInnArea');
   const [materialFactor, setMaterialFactor] = useState<number>(1.0);
   const [complexityFactor, setComplexityFactor] = useState<number>(1.0);
@@ -221,8 +223,16 @@ export default function CompetitivePricingCalculator({
                   type="number"
                   min="1"
                   step="1"
-                  value={squareFootage}
-                  onChange={(e) => setSquareFootage(Math.max(1, Number(e.target.value) || 1))}
+                  value={sqftInput}
+                  onChange={(e) => {
+                    setSqftInput(e.target.value);
+                    const n = Number(e.target.value);
+                    if (n >= 1) setSquareFootage(n);
+                  }}
+                  onBlur={() => {
+                    const n = Number(sqftInput);
+                    if (!sqftInput || n < 1) setSqftInput(String(squareFootage));
+                  }}
                   className="mb-5 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none"
                 />
 
