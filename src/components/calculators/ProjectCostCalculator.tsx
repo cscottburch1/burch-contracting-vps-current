@@ -47,6 +47,7 @@ export default function ProjectCostCalculator({
 }: ProjectCostCalculatorProps) {
   const [selectedOption, setSelectedOption] = useState<CalculatorOption>(options[0]);
   const [quantity, setQuantity] = useState<number>(options[0]?.defaultQuantity ?? 1);
+  const [qtyInput, setQtyInput] = useState<string>(String(options[0]?.defaultQuantity ?? 1));
   const [finishLevel, setFinishLevel] = useState<FinishLevel>('standard');
 
   const markupRate = PRICING_CONFIG.defaultOverheadAndProfit;
@@ -135,6 +136,7 @@ export default function ProjectCostCalculator({
                     onClick={() => {
                       setSelectedOption(option);
                       setQuantity(option.defaultQuantity);
+                      setQtyInput(String(option.defaultQuantity));
                     }}
                     className={`w-full rounded-2xl border-2 p-5 text-left transition ${
                       selectedOption.label === option.label
@@ -175,8 +177,16 @@ export default function ProjectCostCalculator({
               <input
                 type="number"
                 min="1"
-                value={quantity}
-                onChange={(event) => setQuantity(Math.max(1, Number(event.target.value) || 1))}
+                value={qtyInput}
+                onChange={(e) => {
+                  setQtyInput(e.target.value);
+                  const n = parseInt(e.target.value, 10);
+                  if (n >= 1) setQuantity(n);
+                }}
+                onBlur={() => {
+                  const n = parseInt(qtyInput, 10);
+                  if (isNaN(n) || n < 1) setQtyInput(String(quantity));
+                }}
                 className="mb-6 w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none"
               />
 

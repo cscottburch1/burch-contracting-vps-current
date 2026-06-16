@@ -58,6 +58,7 @@ function formatUSD(n: number) {
 export default function CommercialRenovationsClientCalculator() {
   const [selectedService, setSelectedService] = useState<ServiceRate | null>(null);
   const [quantity, setQuantity] = useState(1000);
+  const [qtyInput, setQtyInput] = useState('1000');
   const [materialQuality, setMaterialQuality] = useState<'low' | 'mid' | 'high'>('mid');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
@@ -112,12 +113,12 @@ export default function CommercialRenovationsClientCalculator() {
                     key={service.name}
                     onClick={() => {
                       setSelectedService(service);
-                      if (service.unit === 'sq ft') setQuantity(1000);
-                      else if (service.unit === 'project') setQuantity(1);
-                      else if (service.unit === 'room') setQuantity(1);
-                      else if (service.unit === 'seat') setQuantity(40);
-                      else if (service.unit === 'fixture') setQuantity(4);
-                      else setQuantity(1);
+                      const defaultQty =
+                        service.unit === 'sq ft' ? 1000 :
+                        service.unit === 'seat' ? 40 :
+                        service.unit === 'fixture' ? 4 : 1;
+                      setQuantity(defaultQty);
+                      setQtyInput(String(defaultQty));
                     }}
                     className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                       selectedService?.name === service.name ? 'border-blue-600 bg-blue-50' : 'border-gray-200 hover:border-blue-300 bg-white'
@@ -153,8 +154,16 @@ export default function CommercialRenovationsClientCalculator() {
                     <input
                       type="number"
                       min="1"
-                      value={quantity}
-                      onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                      value={qtyInput}
+                      onChange={(e) => {
+                        setQtyInput(e.target.value);
+                        const n = parseInt(e.target.value, 10);
+                        if (n >= 1) setQuantity(n);
+                      }}
+                      onBlur={() => {
+                        const n = parseInt(qtyInput, 10);
+                        if (isNaN(n) || n < 1) setQtyInput(String(quantity));
+                      }}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     />
                     <p className="text-xs text-gray-500 mt-1">

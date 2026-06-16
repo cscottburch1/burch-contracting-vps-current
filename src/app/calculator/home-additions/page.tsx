@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: 'Home Addition Cost Calculator Simpsonville & Fountain Inn SC | Burch Contracting',
   description:
     'Calculate home addition costs with competitive local pricing. From basic additions to luxury master suites. Transparent 22.5% overhead & profit.',
-  alternates: { canonical: absoluteUrl('/calculator/room-additions') },
-  robots: { index: false, follow: false },
+  alternates: { canonical: absoluteUrl('/calculator/home-additions') },
+  robots: { index: true, follow: true },
   openGraph: {
     title: 'Home Addition Cost Calculator | Competitive Local Pricing | Burch Contracting',
     description:
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function HomeAdditionsCalculatorPage() {
   const breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Calculators', href: '/cost' },
+    { label: 'Calculators', href: '/calculators' },
     { label: 'Home Addition Calculator', href: '/calculator/home-additions' },
   ];
 
@@ -85,6 +85,8 @@ export default function HomeAdditionsCalculatorPage() {
         { title: 'Free Estimate', href: '/contact', description: 'Get a detailed quote' },
       ]}
       showCTA={false}
+      hideTitle={true}
+      rawContent={true}
     >
       <CompetitivePricingCalculator
         serviceKey="homeAdditions"
