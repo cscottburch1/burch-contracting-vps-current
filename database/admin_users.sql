@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
   INDEX idx_active (is_active)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert default owner account (password: Breana3397@@)
+-- Insert default owner account (*************)
 -- Password hash generated with bcrypt
 INSERT INTO admin_users (email, password_hash, name, role, is_active) 
 VALUES (
